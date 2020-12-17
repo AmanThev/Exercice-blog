@@ -1,0 +1,129 @@
+body{
+    margin:             0;
+    padding:            0;
+    background-color:   #372c0c !important;
+    background:         no-repeat top/80% url(../img/layout/ticket.png);
+}
+
+h1.login, h1.signup{
+    color:          beige;
+    font-family:    'Kaushan Script', cursive;
+    font-size:      5rem;
+    margin:         1rem;
+    text-align:     center;
+}
+
+a.homepage{
+    font-size:  1rem;
+    color:      beige;
+    position:   absolute;
+    top:        2rem;
+    right:      2rem;
+}
+
+a.homepage:hover{
+	color: beige;
+}
+
+a.homepage i.fas:last-child{
+    padding-right: .4rem;
+}
+
+a.homepage:hover i.fas:last-child{
+    animation: slide 1s infinite;
+}
+
+@keyframes slide{
+    0%{
+       padding-right: .4rem;
+    }
+    100%{
+        padding-right: 1rem;
+    }
+}
+
+section{
+	position:       relative;
+	left:           50%;
+	transform:      translate(-50%, -50%);
+	width:          590px;
+	background:     rgba(0, 0, 0,.5);
+	box-sizing:     border-box;
+	box-shadow:     0 15px 25px rgba(0, 0, 0,.9);
+    border-radius:  10px;
+    top:            15.5rem;
+}
+
+section.login{
+	padding:    50px;
+	
+}
+
+section.signup{
+	padding:    30px;
+}
+
+section .inputBox{
+	position: relative;
+}
+
+section .inputBox input{
+	width:          100%;
+	padding:        10px 0;
+	font-size:      16px;
+	color:          beige;
+	letter-spacing: 1px;
+	margin-bottom:  30px;
+	border:         none;
+	border-bottom:  1px solid #fff;
+	outline:        none; 
+	background:     transparent;
+}
+
+
+section .inputBox label{
+	position:       absolute;
+	top:            0;
+	left:           0;
+	padding:        10px 0;
+	font-size:      16px;
+	color:          beige;
+	pointer-events: none;
+	transition:     .5s;
+}
+
+section .inputBox input:focus ~ label, section .inputBox input:valid ~ label{
+	top:        -18px;
+	left:       0;
+	font-size:  12px;
+}
+
+section input[type="submit"]{
+	border:         none;
+	outline:        none;
+	color:          #372c0c;
+	background:     beige;
+	padding:        10px 20px;
+	cursor:         pointer;
+    border-radius:  5px;
+    font-weight:    1000;
+    font-size:      .8rem;
+}
+
+section input[type="submit"]:hover{
+    background-color:#bfbea0;
+}
+
+section p{
+	margin-top: 1rem;
+	color:      beige;
+}
+
+section a{
+	color: beige;
+}
+
+section a:hover{
+    text-decoration: underline;
+    color:          beige;
+}

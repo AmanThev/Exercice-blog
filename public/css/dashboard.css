@@ -1,0 +1,471 @@
+body{
+    margin:             0;
+    padding:            0;
+    background-color:   #b3afa5 !important;
+}
+
+footer{
+    width: 86%;
+    margin: 2rem 0 0 12rem;
+}
+
+div.title-dash{
+    background:         #272727;
+    color:              whitesmoke;
+    padding:            1.15rem;
+    display:            flex;
+    border:             1px solid black;
+    justify-content:    space-between;
+    position:           sticky;
+    top:                0;
+    position:           sticky;
+    top:                0;
+    z-index:            100;
+}
+
+div.title-dash h1{
+    font-size: 1.5rem;
+}
+
+div.title-dash a{
+    font-size:  1rem;
+    color:      whitesmoke;
+    flex:       space-around;
+}
+
+div.title-dash a i.fas:last-child{
+    padding-right: .4rem;
+}
+
+div.title-dash a:hover i.fas:last-child{
+    animation: slide 1s infinite;
+}
+
+@keyframes slide{
+    0%{
+       padding-right: .4rem;
+    }
+    100%{
+        padding-right: 1rem;
+    }
+}
+
+nav {
+    background:     #505050;
+    width:          200px;
+    font-size:      1rem;
+    color:          whitesmoke;
+    border-right:   1px solid black;
+    text-align:     center;
+    position:       fixed;
+    height:         100%;
+}
+
+nav h2{
+    font-size:  1.5rem;
+    background: #272727;
+    padding:    .75rem 0;
+}
+
+nav a{
+    display:        flex;
+    padding:        .75rem 2rem;
+    color:          whitesmoke;
+}
+
+nav a:hover{
+    background:         #272727;
+    color:              white;
+    text-decoration:    none;
+}
+
+nav i{
+    margin-right:   .8rem;
+    font-size:      1.4rem;
+}
+
+section {
+    margin-left: 13rem;
+}
+
+span{
+    margin: .5rem;
+}
+
+section.dash-home{
+    display:    flex;
+    flex-wrap:  wrap;
+}
+   
+section.dash-home article{
+    border:     1px solid #5e8091;
+    width:      570px;
+    margin:     2rem .5rem;
+    background: white;
+    overflow:   hidden;
+    padding:    1.6rem
+}
+
+section.dash-home h2{
+    color:          #7aa7bd;
+    text-align:     center;
+    margin:         1rem 2rem;
+    border-bottom:  1px solid;
+    font-weight:     600; 
+}
+
+section.dash-home h3{
+    margin:         2rem 1rem 1rem 1rem;
+    font-size:      1.3rem;  
+    font-weight:    500;   
+}
+
+section.dash-home img{
+    width:          15%;
+    margin:         0 2rem;
+    border-radius:  50%;
+}
+
+section.dash-home p{
+    margin-left:    2rem;
+    margin-right:   2rem;
+    font-size:      1rem;
+}
+
+section.dash-home p.best{
+    color:          darkblue;
+    padding-left:   2rem;
+    font-weight:    550;
+}
+
+section.dash-home p.title-table{
+    font-size: 2rem;
+}
+
+section.dash-home span{
+    margin: 0 2rem;
+}
+
+
+section.dash-home div.separate{
+    width: 			    80%;
+    height: 			1px;
+    margin: 			0 auto 0 auto;
+    background-color:   #5e8091;
+    box-shadow:         0px 0px 5px #5e8091;
+}
+
+section.dash-home p.last-comment{
+    text-align: justify;
+}
+
+section.dash-home span.last-comment{
+    float: right;
+}
+
+section.dash-home p.post-title span{
+    font-weight: 450;
+}
+
+/**
+    **** dashboard/post ****
+**/
+
+table{
+    margin-left:    12rem;
+    text-align:     center;
+    border:         2px solid #5e8091;
+}
+
+button.create-button{
+    margin:         0 0 2rem 13rem;
+    padding:        1rem;
+    border-radius:  7%;
+    background:     #7aa7bd;
+    border:         1px solid #5e8091;
+    color:          #33454e;
+}
+
+th, td{
+    border:     1px solid #5e8091;
+    padding:    .5rem 1.5rem;
+}
+
+th{
+    background: #7aa7bd;
+}
+
+tr{
+    background: white;
+}
+
+tr.private{
+    background: #a4a7a8;
+}
+
+td:last-child{
+    text-align: left;
+}
+
+td.title-table{
+    text-align: center;
+}
+
+td a{
+    display: block;
+}
+
+form, h3{
+    margin-left: 13rem;
+}
+
+h3.title-page{
+    margin-top: 2rem;
+    margin-left: 15rem;
+    font-family: Copperplate;
+    font-size: 4.3rem;
+    text-decoration: underline #7aa7bd;
+    color: #33454e;
+    text-shadow: 1px 1px 5px #d53a22, 1em 0 6em #7aa7bd, 0 0 0.2em blue;
+}
+
+.custom-dropdown-small{
+	font-size: .9rem;
+}
+
+.custom-dropdown_select{
+	font-size:  inherit; 
+	padding:    .5rem;
+	margin:     1rem 0; 
+}
+
+.custom-dropdown_select-red{
+	background-color:   #d53a22;
+	color:              #fff;
+}
+
+.custom-dropdown{
+	display:        inline-block;
+	vertical-align: middle;
+}
+
+
+.custom-dropdown_select{
+	padding-right:      2rem; 			
+	border:             0;
+	border-radius:      3px;
+	-webkit-appearance: none;
+	-moz-appearance:    none;
+	appearance:         none;    
+}
+
+.custom-dropdown::before, .custom-dropdown::after{
+	content:        "";
+	position:       relative;
+    pointer-events: none;
+}
+
+.custom-dropdown::after{
+        content:        "\25BC";
+        height:         1rem;
+        font-size:      .625em;
+        line-height:    1;
+        right:          2em;
+        top:            -0.11rem; 
+        margin-top:     -0.5em;
+}
+
+.custom-dropdown-red::after{
+	color: rgba(0,0,0,.4);
+}
+
+button.submit{
+    border-radius:      7%;
+    background-color:   #fff;
+	color:              #d53a22;
+    border:             1px solid #d53a22;
+}
+
+button.submit:hover{
+    background-color: #dfdddd ;
+}
+
+/**
+    **** dashboard/forum ****
+**/
+
+section.forum{
+    border:         2px solid #2980b9;
+    border-radius:  2px;
+    background:     #3498db;
+    color:          white;
+}
+
+section.forum a{
+    color: white;
+}
+
+section.forum ul{
+    list-style: none;
+}
+
+section.forum ul.list-cat{
+    border-top: 1px solid #2980b9;
+    padding:    0;
+    margin:     0; /* retirer pour l'effet de glissement révélation subCat */
+}
+
+section.forum ul.list-cat.active{
+    background: #0068ae;
+}
+
+section.forum li.category div{
+    display:            flex;
+    flex-direction:     row;
+    justify-content:    space-between;
+    padding:            0.5rem 5rem 0.5rem 2rem;
+}
+
+section.forum ul.list-cat a:hover{
+    color:           #dadaa0;
+    text-decoration: none;
+}
+
+section.forum a.link-cat:before{
+	content:        "";
+    position:       absolute;
+    display:        inline-block;
+	width:          14px;
+	height:         14px;
+	background:     #3498db;
+    transform:      rotate(45deg);
+    margin:         20px 1px;
+    z-index:        1;
+    transition:     opacity .5s, margin 1s;
+    visibility:     hidden;
+    opacity:        0;
+}
+
+section.forum ul.active a.link-cat:before{
+    margin:         32.5px 0;
+    background:     #0068ae;
+    visibility:     visible;
+    border-bottom:  1px solid #2980b9;
+    border-right:   1px solid #2980b9;
+    opacity:        1;
+}
+
+section.forum a.link-cat:after {
+    content:            "\f00d";
+    font-family:        "Font Awesome 5 Free";
+     position:          relative;
+     top:               -5px;
+    font-weight:        bold;
+    cursor:             pointer;
+    padding-left:       .5em;
+    opacity:            0;
+    transition:         .5s;
+} 
+
+section.forum ul.active a.link-cat:after {
+    opacity:    1;
+    top:        0;
+}
+
+section span.link-forum-cat a:nth-child(2):before, section span.link-forum-cat a:nth-child(3):before, section span.link-forum a:nth-child(3):before, section span.link-forum a:nth-child(4):before{
+    content:       "";
+    position:      relative;
+    background:    white;
+    border:        1px solid white;
+    margin:        0.5em;
+}
+
+section.forum ul.list-subCat{
+    background: #333;
+    overflow:   hidden;
+    max-height: 0;
+}
+
+section.forum ul.list-cat.active ul.list-subCat{
+    max-height: 100%;
+}
+
+section.forum li.subCategory{
+    margin-left: -2.5em;
+    border-left: 6px solid transparent;
+}
+
+section.forum li.subCategory:hover{
+    border-left: 6px solid #dadaa0;
+    background: #272a35;
+}
+
+section.forum li.subCategory.disabled:hover{
+    border-left: 6px solid transparent;
+    background: #333;
+}
+
+section.forum li.subCategory i{
+    margin-left:    .75em;
+    transition:     transform 1s;
+}
+
+section.forum li.subCategory p{
+    font-style:     italic;
+    font-size:      .8em;
+    display:        inline;
+    padding-right:  5em;
+}
+
+section.forum ul.list-subCat a.disabled{
+    pointer-events: none;
+    cursor:         auto;
+}
+
+section.forum ul.list-subCat a.disabled i{
+    display: none;
+}
+
+section.forum ul.list-subCat.active i.fa-caret-down{
+    transform: rotate(-180deg);
+}
+
+section.forum ul.list-topic{
+    background: #dadaa0;
+    color:      black;
+    overflow:   hidden;
+    max-height: 0;
+}
+
+section.forum ul.list-subCat.active ul.list-topic{
+    max-height: 100%;
+}
+
+section.forum ul.list-topic a{
+    color: black;
+}
+
+section ul.list-topic span.link-forum a:nth-child(3):before, section ul.list-topic span.link-forum a:nth-child(4):before{
+    border: 1px solid black;
+}
+
+section.forum li.topic span:first-of-type p{
+    font-size:      1em;
+    padding-right:  1em;
+}
+
+section.forum ul.list-topic a:hover{
+    color: #3498db;
+}
+
+section ul.list-topic p.no-resolved{
+    color: green;
+}
+
+section ul.list-topic p.resolved{
+    color: red;
+}
+
+section ul.list-topic p.pending{
+    color: purple;
+}

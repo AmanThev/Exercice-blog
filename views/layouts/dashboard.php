@@ -1,0 +1,51 @@
+<?php
+
+use App\URL\UrlPublic;
+use App\URL\CreateUrl;
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $title ?? 'Dashboard'; ?></title>
+    <link rel="stylesheet" type="text/css" href="<?= URLPublic::publicPath('css/dashboard.css'); ?>">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/2c5e081666.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="title-dash"> 
+        <h1>Admin Panel</h1>
+        <a href="<?= CreateUrl::url('home') ?>"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>Back to website</a>
+    </div>
+<header>
+    <nav>
+        <h2>Administration</h2>
+        <a href="<?= CreateUrl::url('dashboard') ?>"><i class="fas fa-tachometer-alt"></i>DashBoard</a>
+        <a href="<?= CreateUrl::url('dashboard/posts') ?>"><i class="fas fa-edit"></i>Posts</a>
+        <a href="<?= CreateUrl::url('dashboard/reviews') ?>"><i class="fas fa-film"></i>Reviews</a>
+        <a href="<?= CreateUrl::url('dashboard/comments') ?>"><i class="fas fa-comment"></i>Comments</a>
+        <a href="<?= CreateUrl::url('dashboard/forum') ?>"><i class="fab fa-forumbee"></i>Forum</a>
+        <a href="<?= CreateUrl::url('quiz') ?>"><i class="fas fa-question-circle"></i>Quiz</a>
+        <a href="<?= CreateUrl::url('dashboard/users') ?>"><i class="fas fa-user"></i>Users</a>
+    </nav>    
+</div>
+</header>
+
+<div class="container-fluid">
+    <?= $content ?>
+
+    <footer class="bg-light py-4 footer">
+        <div class="container">
+            <?php if (defined('DEBUG_TIME')): ?>
+            Page générée en <?= round(1000 * (microtime(true) - DEBUG_TIME)) ?> ms
+            <?php endif ?>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

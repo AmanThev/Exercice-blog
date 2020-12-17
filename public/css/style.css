@@ -1,0 +1,2178 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+
+/*
+    ****    views/layout.php    ****
+*/
+
+body{
+    margin:             0;
+    padding:            0;
+    background-color:   #372c0c !important;
+}
+
+header{
+	margin:             0;
+	padding-top:        60px;
+	background:         url(../img/layout/background.jpg);
+	background-size:    cover;
+    background-repeat:  no-repeat;
+    height:             500px;
+    text-align:         center;
+}
+
+
+/*header div.lighting{
+    animation: lighting 2s linear;
+}
+
+@keyframes lighting{
+	0%{
+		opacity: 0;
+	}
+	100%{
+		opacity: 1;
+	}
+}*/
+
+header h1{
+    color:          #dadaa0;
+    font-family:    'Kaushan Script', cursive;
+    font-size:      200px;
+}
+
+header p{
+    color:  beige;
+    margin: 35px 0;
+}
+
+header a{
+    text-decoration:    none;
+    font-weight:        500;
+    font-size:          1.5rem;
+}
+
+header a:hover{
+    text-decoration:    none;
+    color:              #dadaa0;
+}
+
+header a.login{
+    position:           absolute;
+    top:                2rem;
+    right:              2rem;
+    box-sizing:         border-box;
+    display:            inline-block;
+    font-weight:        700;
+    user-select:        none;
+    background-color:   transparent;
+    border:             1px solid transparent;
+    padding:            .3rem 1.5rem;
+    font-size:          1rem;
+    line-height:         1.5;
+    border-radius:      .25rem;
+    transition:         color .15s ease-in-out,background-color .15s ease-in-out;
+    color:              beige;
+    cursor:             pointer;
+}
+
+header a.login:hover{
+    color:              black;
+    background-color:   beige;
+}
+
+header nav a{
+    margin: 0 30px;
+    color:  #bfbea0;
+}
+
+header div.separate-header{
+    margin: 			15px auto;
+    width: 			    50%;
+    height: 			2px;
+    background-color:   beige;
+}
+
+a#scrolltotop{
+    border-radius:                  50%;
+    padding:                        3px;
+    font-size:                      15px;
+    text-align:                     center;
+    color:                          #111;
+    width:                          40px;
+    height:                         40px;
+    background:                     #fff;
+    position:                       fixed;
+    right:                          35px;
+    opacity:                        1;
+    z-index:                        1000;
+    transition:                     all ease-in 0.2s;
+    backface-visibility:            hidden;
+    -webkit-backface-visibility:    hidden;
+    text-decoration:                none;
+}
+
+a#scrolltotop:before{ 
+    position:       relative;
+    content:        "";
+    display:        inline-block;
+    width:          6px;
+    height:         6px;
+     border:        solid #111111;
+    border-width:   0 3px 3px 0;
+    transform:      rotate(-135deg);
+    padding:        3px;
+    margin:         14px auto;
+}
+
+a#scrolltotop.scrollInvisible{
+    bottom:     -35px;
+    opacity:    0;
+    transition: all ease-in 0.5s;
+}
+  
+a#scrolltotop.scrollVisible{
+    bottom: 30px;
+    opacity:1;
+}
+
+/*
+    ****    views/home.php  ****
+*/
+
+section div.spotlight{
+    position:       relative;
+    display:        flex;
+    flex-direction: column;
+    word-wrap:      break-word;
+    margin:         0.8rem 0;
+    width:          900px;
+    height:         300px;
+    overflow:       hidden;
+    border-radius:  0.5rem;
+    box-shadow:     0 0 5px beige;    
+}
+
+section div.spotlight img{
+    filter:     invert(35%);
+}
+
+section img{
+    border-style:   none;
+    max-width:      900px;
+    max-height:     300px;
+}
+
+section div.spotlight-img-overlay{
+    position:   absolute;
+    bottom:     0;
+    padding:    1.25rem;
+}
+
+section h1.spotlight-title{
+    margin-bottom:  1rem;
+    color:          #dadaa0;
+    font-size:      2rem;
+}
+
+section p.spotlight-text{
+    color: beige;
+}
+
+section p.spotlight-text:last-child {
+    margin-bottom:  0;
+    font-size:      0.7rem;
+}
+
+section a.spotlight-read{
+    background-image:   linear-gradient(to right, #251e09, #454335);
+    padding:            5px 12px 8px;
+    border-radius:      10px;
+    line-height:        20px;
+    font-weight:        600;
+    font-size:          14px;
+    color:              #fff;
+    text-decoration:    none;
+}
+
+section a.spotlight-read:hover {
+	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
+	text-decoration: 	none;
+	color: 				black;
+}
+
+section div.latest-card{
+    margin:             30px 0 20px 0;
+    border:             1px solid #251e09;
+    width:              901px;
+    height:             575px;
+    border-radius:      0.5rem;
+    background-color:   #251e09;
+    box-shadow:         0 0 5px beige;
+}
+
+section div.latest-card h1{
+    margin:         15px 0 20px 45px;
+    color:          beige;
+    text-decoration: underline;
+}
+
+section div.latest-deck{
+    display:                    flex;
+    flex-flow:                  row wrap;
+    margin-left:                -15px;
+    width:                      915px;
+    height:                     500px;
+    border-bottom-left-radius:  0.5rem;
+    border-bottom-right-radius: 0.5rem; 
+    overflow:                   hidden;
+}
+
+section div.latest{
+    position:           relative;
+    display:            flex;
+    flex-direction:     column;
+    word-wrap:          break-word;
+    background-color:   #fff;
+    flex:               31.5%;
+    margin-left:        15px;
+    max-width:          290px;
+    max-height:         500px;
+}
+
+section div.latest:first-child{
+    border-bottom-left-radius:  0.5rem;
+}
+
+section img.latest-img{
+    width:                      100%;
+    max-height:                 195px;
+    min-height:                 195px;
+}
+
+section div.latest-body{
+    flex:       1 1 auto;
+    min-height: 1px;
+    padding:    1.25rem;
+}
+
+section a.latest-read{
+    background-image:   linear-gradient(to right, #251e09, #454335);
+    padding:            5px 12px 8px;
+    border-radius:      10px;
+    line-height:        20px;
+    font-weight:        600;
+    font-size:          14px;
+    color:              #fff;
+    text-decoration:    none;
+}
+
+section a.latest-read:hover {
+	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
+	text-decoration: 	none;
+	color: 				black;
+}
+
+section a.latest-read.posts {
+    position:   absolute;
+    bottom:     4rem;
+    left:       1rem;
+}
+
+section a.latest-read.reviews {
+    position:   absolute;
+    bottom:     1rem;
+    left:       1rem;
+}
+
+section div.latest-footer{
+    padding:            .75rem 1.25rem;
+    background-color:   rgba(0,0,0,.03);
+    border-top:         1px solid rgba(0,0,0,.125);
+}
+
+aside{
+    background-color:   #251e09;
+    box-shadow:         0px 0px 10px beige;
+    border:             0.1px solid beige;
+    border-radius:      0.5rem;
+    padding:            25px;
+    color:              white;
+    font-size:          0.9em;
+    position:           absolute;
+    top:                32.1rem;
+    left:               58rem;
+    width:              500px;
+}
+
+aside div.search-home{
+    text-align: center;
+    margin:     20px;
+}
+
+aside input.search-home-text{
+    border: 		2px solid beige;
+    background:     #e7e7e7;
+    color: 			black;
+    line-height: 	35px;
+    padding: 		0 10px;
+    margin:         0 6px;
+    border-radius: 	40px;
+    width: 			250px;
+}
+
+aside input.search-home-text:focus{
+    background-color: white;
+}
+
+aside button.search-home-btn{
+    background:     none;
+    border: 	    1px solid white;
+    border-radius:  0.5rem; 
+    color: 		    beige;
+    transition:     0.4s;
+    padding:        0.5rem 0.8rem;
+}
+
+aside button.search-home-btn:hover{
+    color:              black;
+    background-color:   beige;
+}
+
+aside div.poll{
+    border:     2px solid white;
+    padding:    35px;
+    margin:     40px 0 30px 0;
+    color:      beige;
+}
+
+aside div.poll h1{
+    text-decoration:    underline;
+    margin-bottom:      20px;
+}
+
+aside div.poll-radio{
+    margin-left: 20px;
+}
+
+aside div.poll button{
+    margin-top:     20px;
+    margin-left:    30px;
+    background:     none;
+    border: 	    1px solid white;
+    border-radius:  0.5rem; 
+    transition:     0.4s;
+    padding:        0.5rem 0.8rem;
+    color:          beige;
+    font-weight:    800;
+}
+
+aside div.poll button:hover{
+    color:              black;
+    background-color:   beige;
+}
+
+/*
+    ****    view/blog.php    ****
+*/
+
+h1#title-blog{
+    text-align:     center;
+    margin:         20px;
+    color:          beige;
+    font-family:    fantasy, sans-serif;
+    font-size:      5.5rem;
+}
+
+section.top-blog{
+    border:         1px solid white;
+    height:         500px;
+    background:     #251e09;
+    box-shadow:     0px 0px 10px beige;
+    border-radius:  0.5rem;
+    overflow:       hidden;
+}
+
+section.top-blog h2{
+    margin:         25px 0 20px 45px;
+    color:          beige;
+    text-decoration: underline;
+}
+
+section div.last-post{
+    border:     2px solid #251e09;
+    height:     500px;
+    background: #251e09;
+    box-shadow: 0 25px 30px rgba(0, 0, 0, .5);
+    display:    flex;
+    overflow:   hidden;
+}
+
+section div.img-last-post{
+    width:                  calc(50% - 50px);
+    height:                 100%;
+    box-sizing:             border-box;
+    border-bottom:          400px solid transparent;
+    background-position:    -100px -150px;
+    transform:              skewx(-6deg);
+    transform-origin:       top left;
+}
+
+section div.img-last-post img{
+    min-height: 495px;
+    width:      100%;
+}
+
+section div.content-last-post{
+    width:          calc(60% + 50px);
+    height:         100%;
+    box-sizing:     border-box;
+    padding:        30px 50px;
+    font-family:    sans-serif;
+    color:          #fff;
+}
+
+section div.content-last-post span{
+    position:           relative;
+    top:                15%;
+    left:               80%;
+    background-color:   #454335;
+    padding:            12px;
+    border:             1px solid transparent;
+}
+
+section div.content-last-post a{
+    line-height:        20px;
+    font-weight:        600;
+    font-size:          14px;
+    color:              #fff;
+    text-decoration:    none;
+}
+
+section div.content-last-post span:hover {
+	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
+	text-decoration: 	none;
+    color: 				black;
+    border:             1px solid #fff;
+}
+
+div.bottom-blog{
+    margin-top: 70px;
+    color: beige;
+}
+
+div.search-blog{
+    border: 1px solid white;
+    width:  300px;
+}
+
+section.all-post{
+    position:           relative;
+    top:                -43px;
+    left:               325px;
+    width:              1085px;
+    border:             1px solid white;
+    border-radius:      0.5rem;
+    background-color:   #251e09;
+    box-shadow:         0px 0px 10px beige;
+    overflow:           hidden;
+}
+
+section.all-post h2#title-for-all-post{
+    margin:         25px 0 -20px 45px;
+    color:          beige;
+    text-decoration: underline;
+}
+
+section div.deck-all-post{
+    display:    flex;
+    flex-flow:  row wrap;
+}
+
+section div.box-all-post{
+    position:           relative;
+    display:            flex;
+    flex-direction:     column;
+    word-wrap:          break-word;
+    margin:             15px 0 15px 15px;
+    max-width:          340px;
+    max-height:         500px;
+    border:             1px solid beige;
+    transition:         .5s;
+}
+
+section div.box-all-post:hover{
+    box-shadow:         0px 0px 10px beige;
+}
+
+section div.img-all-post img{
+    width:      100%;
+    filter:     invert(35%);
+    transition: .5s;
+    max-height: 228px;
+}
+
+section div.box-all-post:hover div.img-all-post img{
+    filter:     invert(0%);
+    transition: .5s;
+}
+
+section div.content-all-post h2{
+    position:   relative;
+    text-align: center;
+    top:        -6rem;
+}
+
+section div.content-all-post{
+    margin-top: -3.5rem;
+    padding:    1.25rem;
+    flex:       1 1 auto;
+}
+
+section a.read-all-post{
+    position:           absolute;
+    top:                9.5rem;
+    left:               12rem;
+    background-image:   linear-gradient(to right, #251e09, #454335);
+    padding:            5px 12px 8px;
+    margin:             20px;
+    border-radius:      10px;
+    line-height:        20px;
+    font-weight:        600;
+    font-size:          14px;
+    color:              #fff;
+    text-decoration:    none;
+    transition:         0.5s;
+    transform:          translateY(-40px);
+    opacity:            0;
+    visibility:         hidden;
+}
+
+section  div.box-all-post:hover a.read-all-post{
+    visibility: visible;
+    transform:  translateY(0);
+	opacity:    1;
+	visibility: visible;
+}
+
+section a.read-all-post:hover {
+	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
+	text-decoration: 	none;
+	color: 				black;
+}
+
+section div.footer-all-post{
+    padding:            .75rem 1.25rem;
+    background-color:   rgba(0,0,0,.03);
+    border-top:         1px solid rgba(0,0,0,.125);
+}
+
+section div.pagination-all-post{
+    margin: 10px auto;
+    width:  200px;
+}
+
+section div.pagination-all-post ul{
+    display:    flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: .25rem;
+    text-align: center;
+}
+
+section div.pagination-all-post li.active a{
+    color: black;
+    background-color: beige;
+}
+
+section div.pagination-all-post a{
+   color:           beige;
+   text-decoration: none;
+   font-weight:     600;
+   font-size:       14px;
+   border:          1px solid beige;
+   margin:          .3rem .1rem;
+   padding:         .5rem;
+}
+
+section div.pagination-all-post a:hover{
+    color: black;
+    background-color: beige;
+}
+
+section div.pagination-all-post li.disabled a{
+    color: #6c757d;
+    pointer-events: none;
+    cursor: auto;
+}
+
+section.all-post form{
+    display:    inline-block;
+    position:   relative;
+    top:        .5rem;
+    left:       55rem;
+    transform:  translate(-50%,-50%);
+}
+
+section.all-post form.search-post-box{
+    background:     beige;
+    height:         60px;
+    border-radius:  40px;
+    padding:        10px;
+}
+
+section.all-post a.search-post-btn{
+    color:              #2f3640;
+    float:              right;
+    width:              40px;
+    height:             40px;
+    border-radius:      50%;
+    background:         beige;
+    display:            flex;
+    justify-content:    center;
+    align-items:        center;
+    transition:         .4s;
+}
+
+section.all-post input.search-post-text{
+    border:         none;
+    background:     none;
+    outline:        none;
+    float:          left;
+    padding:        0;
+    color:          #2f3640;
+    font-size:      16px;
+    transition:     .4s;
+    line-height:    40px;
+    width:          0px;
+}
+
+section.all-post form.search-post-box:hover > input.search-post-text{
+    width:      240px;
+    padding:    0 6px;
+}
+
+section.all-post form.search-post-box:hover >  a.search-post-btn{
+    background: #251e09;
+    color:      beige;
+}
+
+section.all-post input.search-post-text:focus{
+    width: 240px;
+}
+
+section.all-post form input.search-post-text:focus > a.search-post-btn{
+    background: #251e09;
+    color:      beige;
+}
+
+/*
+    ****    view/reviews.php    ****
+*/
+
+h1#title-reviews{
+    text-align:     center;
+    margin:         20px;
+    color:          beige;
+    font-family:    fantasy, sans-serif;
+    font-size:      5.5rem;
+}
+
+.section-last-reviews{
+    border:             1px solid white;
+    border-radius:      0.5rem;
+    background-color:   #251e09;
+    box-shadow:         0px 0px 10px beige;
+    overflow:           hidden;   
+}
+
+section h1{
+    font-size: 2rem;
+    text-decoration: underline;
+    color: beige;
+    margin: 20px;
+}
+
+section div.last-reviews{
+    position: relative;
+    overflow:       hidden;
+    height:         500px;
+    border-top:     2px solid beige;  
+    background:     #251e09;
+    box-shadow:     0 25px 30px rgba(0, 0, 0, .5);
+}
+
+section div.last-reviews figure div.deck-last-reviews{
+    float: left;
+    width: 20%;
+}
+
+section div.img-last-reviews{
+    width:                  40%;
+    height:                 100%;
+    float:                  left;
+    box-sizing:             border-box;
+    border-bottom:          400px solid transparent;
+    background-position:    -100px -150px;
+}
+
+section div.img-last-reviews img{
+    width:      100%;
+    text-align: center;
+    min-height: 500px;
+}
+
+section div.content-last-reviews{
+    width:          60%;
+    height:         100%;
+    float:          right;
+    box-sizing:     border-box;
+    padding:        30px 50px;
+    font-family:    sans-serif;
+    color:          #fff;
+}
+
+section div.content-last-reviews h2{
+    font-size:  3rem;
+    color:      beige;
+}
+
+section div.content-last-reviews span{
+    position:           absolute;
+    transform:          translate(625%, -50%);
+    top:                400px;
+    background-color:   #454335;
+    padding:            12px;
+    border:             1px solid transparent;
+}
+
+section div.content-last-reviews a{
+    line-height:        20px;
+    font-weight:        600;
+    font-size:          14px;
+    color:              #fff;
+    text-decoration:    none;
+}
+
+section div.content-last-reviews span:hover {
+	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
+	text-decoration: 	none;
+    color: 				black;
+    border:             1px solid #fff;
+}
+
+section div.last-reviews figure{
+    position: absolute;
+    /* position:   relative;*/
+    width:      500%;
+    /* height:     500px; */
+    margin:     0px;
+    left:       0;
+    /* animation:  20s slide infinite; */
+}
+
+section div.last-reviews figure:nth-child(1){
+    left:0px;
+    animation:sliderfirst 45s linear infinite;
+}
+
+section div.last-reviews figure:nth-child(2){
+    left:1450px;
+    animation:slidersecond 45s linear infinite;
+}
+
+section div.last-reviews figure:nth-child(3){
+    left:2900px;
+    animation:sliderthird 45s linear infinite;
+}
+
+section div.last-reviews figure:nth-child(4){
+    left:4350px;
+    animation:sliderfourth 45s linear infinite;
+}
+
+section div.last-reviews figure:nth-child(5){
+    left:-2800px;
+    animation:sliderfifth 45s linear infinite;
+}
+
+@keyframes sliderfirst {
+    0%{ 
+        left: 0px; 
+    }
+    10%{
+        left:0px;
+    }
+    19%{
+        left: -1400px;
+        opacity: 1;
+    }
+    20%{
+        left: -2800px;
+        opacity: 0;
+    }
+    40%{
+        left: 4000px;
+        opacity: 0;
+    }
+    60%{
+        left: 2800px;
+    }
+    80%{
+        left: 1450px;
+    }
+    90%{
+        left: 1450px;
+    }
+    99%{
+        left: 0px;
+        opacity: 1;
+    }
+    100%{
+        left: 0px;
+    }
+}
+
+@keyframes slidersecond {
+    0%{ 
+        left: 1450px; 
+    }
+    10%{
+        left: 1450px;
+    }
+    19%{
+        left: 0px;
+        opacity: 1;
+    }
+    30%{
+        left:0px;
+        opacity: 1;
+    }
+    39%{
+        left: -1400px;
+        opacity: 1;
+    }
+    40%{
+        left: -2800px;
+        opacity: 0;
+    }
+    60%{
+        left: 4000px;
+        opacity: 0;
+    }
+    80%{
+        left: 2800px;
+    }
+    100%{
+        left: 1450px;
+    }
+}
+
+@keyframes sliderthird {
+    0%{ 
+        left: 2900px; 
+    }
+    20%{
+        left: 1450px;
+    }
+    30%{
+        left: 1450px;
+    }
+    39%{
+        left: 0px;
+        opacity: 1;
+    }
+    50%{
+        left:0px;
+        opacity: 1;
+    }
+    59%{
+        left: -1400px;
+        opacity: 1;
+    }
+    60%{
+        left: -2800px;
+        opacity: 0;
+    }
+    80%{
+        left: 4000px;
+        opacity: 0;
+    }
+    100%{
+        left: 2900px;
+    }
+}
+
+@keyframes sliderfourth {
+    0%{ 
+        left: 4350px; 
+    }
+    20%{
+        left: 2900px;
+    }
+    40%{
+        left: 1450px;
+    }
+    50%{
+        left: 1450px;
+    }
+    59%{
+        left: 0px;
+        opacity: 1;
+    }
+    70%{
+        left:0px;
+        opacity: 1;
+    }
+    79%{
+        left: -1400px;
+        opacity: 1;
+    }
+    80%{
+        left: -2800px;
+        opacity: 0;
+    }
+    100%{
+        left: 4350px;
+        opacity: 0;
+    }
+}
+
+@keyframes sliderfifth {
+    0%{ 
+        left: -2800px; 
+        opacity: 0;
+    }
+    20%{
+        left: 4350px;
+        opacity: 0;
+    }
+    40%{
+        left: 2900px;
+    }
+    60%{
+        left: 1450px;
+    }
+    70%{
+        left: 1450px;
+    }
+    79%{
+        left: 0px;
+        opacity: 1;
+    }
+    90%{
+        left:0px;
+        opacity: 1;
+    }
+    99%{
+        left: -1400px;
+        opacity: 1;
+    }
+    100%{
+        left: -2800px;
+        opacity: 0;
+    }
+}
+
+/* @keyframes slide{
+    0%{
+        left: 0%;
+    }
+    19%{
+        left: 0%;
+    }
+    21%{
+        left: -100%;
+    }
+    39%{
+        left: -100%;
+    }
+    41%{
+        left: -200%;
+    }
+    59%{
+        left: -200%;
+    }
+    61%{
+        left: -300%;
+    }
+    79%{
+        left: -300%;
+    }
+    81%{
+        left: -400%;
+    }
+    100%{
+        left: -400%;
+    }
+} */
+
+div.bottom-reviews{
+    margin: 20px 0;
+    margin: 50px 0;
+    color: beige;
+}
+
+section.all-reviews{
+    position:           relative;
+    top:                -20px;
+    left:               325px;
+    width:              1085px;
+    min-height:         685px;
+    border:             1px solid white;
+    border-radius:      0.5rem;
+    background-color:   #251e09;
+    box-shadow:         0px 0px 10px beige;
+    overflow:           hidden;
+}
+
+section.all-reviews h1{
+    margin:         25px 0 -20px 45px;
+    color:          beige;
+    text-decoration: underline;
+}
+
+section div.deck-all-reviews{
+    display:            flex;
+    flex-flow:          row wrap;
+    justify-content:    space-around
+}
+
+section div.box-all-reviews{
+    position:           relative;
+    word-wrap:          break-word;
+    margin:             10px 10px;
+    width:              340px;
+    height:             500px;
+    border:             1px solid beige;
+    background:         rgb( 78, 77, 67);
+    overflow: hidden;
+}
+
+section div.box-all-reviews div.img-all-reviews{
+    position: 			absolute;
+    bottom: 			0;
+    left: 				0;
+    width:              100%;
+    display: 			flex;
+    justify-content: 	center;
+	align-items: 		center;
+	overflow: 			hidden;
+}
+
+section div.box-all-reviews div.img-all-reviews img{
+    min-width:  340px;
+    min-height: 500px;
+    opacity:    1;
+    transition: 1.25s;
+}
+
+section div.box-all-reviews:hover div.img-all-reviews img{
+   opacity:	0;
+   width: 0;
+}
+
+section div.box-all-reviews div.content-all-reviews{
+    height:     100%;
+    width:      100%;
+    box-sizing: border-box;
+    padding:    2rem;
+    transition: 1s;
+    opacity:    0; 
+}
+
+section div.box-all-reviews:hover div.content-all-reviews{
+    z-index: 1000;
+    opacity: 1; 
+}
+ 
+section div.box-all-reviews:hover div.content-all-reviews:after{
+    content:        url(../img/other/film.png);
+    position:       absolute;
+    bottom:         10%;
+    opacity:        .1;
+    pointer-events: none;
+    rotate:         60deg;
+}
+
+section div.box-all-reviews div.content-all-reviews h2{
+    margin-bottom:  1rem; 
+    text-align: center;
+}
+  
+section div.box-all-reviews div.content-all-reviews h2.short-title{
+    margin-bottom: 2rem;
+}
+
+section div.box-all-reviews div.content-all-reviews p{
+    margin:     2rem 0;
+    text-align: justify;
+}
+
+section div.box-all-reviews div.content-all-reviews a{
+    position:           absolute;
+    text-decoration:    none;
+    top:                27rem;
+    left:               5rem;
+    background-image:   linear-gradient(to right, #251e09, #454335);
+    padding:            12px 8px;
+    border-radius:      10px;
+    line-height:        20px;
+    font-weight:        600;
+    font-size:          14px;
+    color:              #fff;
+    height:             3rem;
+    width:              50%;
+    text-align:         center;
+    z-index:            2000;
+}
+
+section div.box-all-reviews div.content-all-reviews a:hover{
+	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
+	text-decoration: 	none;
+	color: 				black;
+}
+
+section div.pagination-all-reviews{
+    margin: 10px auto;
+    width:  200px;
+}
+
+section div.pagination-all-reviews ul{
+    display:        flex;
+    padding-left:   0;
+    list-style:     none;
+    border-radius:  .25rem;
+    text-align:     center;
+}
+
+section div.pagination-all-reviews li.active a{
+    color:              black;
+    background-color:   beige;
+}
+
+section div.pagination-all-reviews a{
+   color:           beige;
+   text-decoration: none;
+   font-weight:     600;
+   font-size:       14px;
+   border:          1px solid beige;
+   margin:          .3rem .1rem;
+   padding:         .5rem;
+}
+
+section div.pagination-all-reviews a:hover{
+    color:              black;
+    background-color:   beige;
+}
+
+section div.pagination-all-post li.disabled a{
+    color: #6c757d;
+    pointer-events: none;
+    cursor: auto;
+}
+
+section.all-reviews form{
+    display:    inline-block;
+    position:   relative;
+    top:        .5rem;
+    left:       55rem;
+    transform:  translate(-50%,-50%);
+}
+
+section.all-reviews form.search-reviews-box{
+    background:     beige;
+    height:         60px;
+    border-radius:  40px;
+    padding:        10px;
+}
+
+section.all-reviews a.search-reviews-btn{
+    color:              #2f3640;
+    float:              right;
+    width:              40px;
+    height:             40px;
+    border-radius:      50%;
+    background:         beige;
+    display:            flex;
+    justify-content:    center;
+    align-items:        center;
+    transition:         .4s;
+}
+
+section.all-reviews input.search-reviews-text{
+    border:         none;
+    background:     none;
+    outline:        none;
+    float:          left;
+    padding:        0;
+    color:          #2f3640;
+    font-size:      16px;
+    transition:     .4s;
+    line-height:    40px;
+    width:          0px;
+}
+
+section.all-reviews form.search-reviews-box:hover > input.search-reviews-text{
+    width:      240px;
+    padding:    0 6px;
+}
+
+section.all-reviews form.search-reviews-box:hover >  a.search-reviews-btn{
+    background: #251e09;
+    color:      beige;
+}
+
+section.all-reviews input.search-reviews-text:focus{
+    width: 240px;
+}
+
+section.all-reviews form input.search-reviews-text:focus > a.search-reviews-btn{
+    background: #251e09;
+    color:      beige;
+}
+
+aside.date-reviews{
+    background-color:   #251e09;
+    box-shadow:         0px 0px 10px beige;
+    border:             0.1px solid beige;
+    border-radius:      0.5rem;
+    color:              white;
+    font-size:          0.9em;
+    width:              300px;
+    left:               auto;
+    top:                auto;
+    display:            flex;
+    flex-direction:     column;
+    padding:            15px 15px;
+}
+
+aside.date-reviews h2{
+    color:          beige;
+    text-decoration: underline;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+}
+
+aside.date-reviews a.list-item{
+    text-decoration:    none;
+    width:              120px;
+    text-align:         center;
+    display:            block;
+    padding:            .75rem 1.25rem;
+    margin-bottom:      -1px;
+    background-color:   rgb( 78, 77, 67);
+    color:              #fff;
+    border:             1px solid rgba(0,0,0,.125);
+    margin-left:        2rem;
+}
+
+aside.date-reviews .list-item.years{
+    background-color:   transparent;
+    color:              white;
+    border:             0;
+}
+
+aside.date-reviews a.list-item.decades:hover{
+    background-color: rgb( 44, 44, 38);
+}
+
+aside.date-reviews .list-item.years:hover{
+    background-color: rgb(  202, 202, 162)
+}
+
+aside.date-reviews a.list-item.decades:first-child{
+    border-top-left-radius: .3rem;
+    border-top-right-radius:.3rem;
+}
+
+aside.date-reviews a.list-item.decades:last-child{
+    border-bottom-left-radius: .3rem;
+    border-bottom-right-radius:.3rem;
+}
+
+aside.date-reviews a.list-item.decades.active{
+    background-color:   white;
+    color:              #372c0c;
+    border-color:       transparent;
+    z-index:            0;
+}
+
+aside.date-reviews a.list-item.years.active{
+    background-color:   #fff;
+    color:              #372c0c;
+}
+
+aside.date-reviews a.list-item.years.disabled{
+    color:          grey;
+    pointer-events: none;
+    cursor:         not-allowed;
+}
+
+/*
+    ****    view/post.php    ****
+*/
+
+section.post{
+    border:             1px solid white;
+    border-radius:      0.5rem;
+    background-color:   #251e09;
+    box-shadow:         0px 0px 10px beige;
+    overflow:           hidden;  
+	padding : 			10px;
+    margin: 		    30px 0;
+    color:              beige;
+}
+
+section.post h1{
+    text-align:     center;
+    margin-bottom:  2.5rem;
+}
+
+section.post div.comment-user{
+    border:     1px solid beige;
+    padding:    0 1.5rem 1.5rem 1.5rem;
+    margin:     0.5rem;
+}
+
+section.post span.photo-profile{
+    display:        inline-block;
+    position:       relative;
+    top:            2.5rem;
+    background:     beige;
+    border-radius:  50%;
+    width:          60px;
+    height:         60px;
+    border:         2px solid black;
+    overflow:       hidden;   
+}
+
+section.post span.photo-profile.member{
+    border: 3px solid rgb(89, 0, 255);
+}
+
+section.post span.photo-profile.admin{
+    border: 3px solid red;
+}
+
+section.post span.photo-profile img{
+    width:  100%;
+    height: 100%;
+}
+
+section.post h2{
+    font-size:      1rem;
+    margin-left:    4.5rem;
+}
+
+section.post p.total-comments{
+    margin-left:        2.5rem;
+    font-size:          1.3rem;
+    text-decoration:    underline;
+}
+
+section.post p.comment-content{
+    margin: 2rem 0 0 2.5rem;
+}
+
+section.post p.comment-empty{
+    margin: 2rem 2.5rem;
+}
+
+section.post span.date-comment{
+    float:      right;
+    font-size:  12px;
+}
+
+section.post form{
+    display:    flex;
+    flex-flow:  column wrap;
+}
+
+section.post form label{
+    font-size:          1rem;
+    font-weight:        600;
+    text-decoration:    underline;
+    line-height:        1.5;
+    padding-left:       15px;
+    padding-top:        calc(.375rem + 1px);
+    padding-bottom:     calc(.375rem + 1px);
+    margin-left:        2.5rem;
+}
+
+section.post form small{
+    margin: 0 auto 1.5rem 4.5rem;
+}
+
+section.post form input, section.post form textarea {
+    border:         2px solid #372c0c;
+    border-radius:  0.5rem;
+    display:        block;
+    width:          90%;
+    margin:         auto;
+    height:         calc(1.5em + .75rem + 2px);
+    padding:        .5rem .8rem;
+    font-size:      1rem;
+    font-weight:    400;
+    line-height:    1.5;
+}
+
+section.post form textarea{
+    height: 20rem;
+}
+
+section.post form input:focus, section.post form textarea:focus{
+    border: .15rem solid skyblue;
+}
+
+section.post form button{
+    display:        inline-block;
+    cursor:         pointer;
+    border:         2px solid beige;
+    background-color: #372c0c;
+    color:          beige;
+    width:          10rem;
+    font-weight:    600;
+    font-size:      1.2rem;
+    margin:         1rem auto;
+    padding:        .4rem .8rem;
+    line-height:    1.5;
+    border-radius:  .25rem;
+    user-select:    none;
+}
+
+section.post div.vote{
+	width: 	150px;
+    float: 	right;
+    margin: 0 2rem 1.5rem 0;
+}
+
+section.post .vote-form {
+	display: inline-block;
+}
+
+section.post div.vote-bar{
+	width: 				100%;
+	height: 			4px;
+	background-color: 	#f2504b;
+}
+
+section.post div.vote-progress{
+    width: 				0%;
+    height: 			4px;
+    background-color: 	#63b96b;
+}
+
+section.post div.vote-btns{
+	margin-top: 10px;
+	text-align: right;
+}
+
+section.post button.vote-btn{
+	width:      2rem;
+    font-size:  1rem;
+    margin:     0 .6rem;
+    padding:    .4rem;
+    border:     none;
+    background: transparent;
+    display:    ruby-text-container;
+}
+
+section.post button.vote-like:hover, section.post .is-liked button.vote-like{
+	color: #63b96b;
+}
+
+section.post button.vote-dislike:hover, section.post .is-disliked button.vote-dislike{
+	color: #f2504b;
+}
+
+/*
+    ****    view/film.php    ****
+*/
+
+section.film{
+    border:             1px solid white;
+    border-radius:      0.5rem;
+    background-color:   #251e09;
+    box-shadow:         0px 0px 10px beige;
+    overflow:           hidden;  
+	padding : 			10px;
+    margin: 		    30px 0;
+    color:              beige;
+}
+
+section.header-film h1, section.header-film p{
+    text-align: center;
+}
+
+section.header-film h1{
+    font-size: 7rem;
+}
+
+section.header-film img{
+    float:  left;
+    width:  200px;
+    height: 250px;
+}
+
+section.content-film{
+    color:              beige;
+    display:            flex;
+    vertical-align:     wrap;
+    justify-content:    space-between;
+}
+
+section.content-film h2{
+    text-decoration: underline;
+}
+
+section.content-film article{
+    border:             1px solid white;
+    border-radius:      0.5rem;
+    background-color:   #251e09;
+    box-shadow:         0px 0px 10px beige;
+    overflow:           hidden;  
+	padding : 			20px;
+    margin: 		    30px 0;
+}
+
+section.content-film article.info-film{
+    width: 28%;
+}
+
+section.content-film article.info-film table, th, td{
+    border-collapse:    separate;
+}
+
+section.content-film article.info-film td{
+    border:             0px;
+    text-align:     left;
+}
+
+section.content-film article.info-film th{
+    border:             0px;
+    white-space:    nowrap;
+    padding-right:  1.5em;
+    vertical-align: top;
+    line-height:    2em;
+    text-align:     left;
+}
+
+section.content-film article.info-film ul{
+    list-style:     none;
+    line-height:    inherit;
+    margin:         0;
+    padding:        5px 0 0 0;
+}
+
+section.content-film article.info-film p.reference{
+	margin-top: 1rem; 
+    font-size: .7rem;
+}
+
+section.content-film article.review-film{
+    width: 71%;
+}
+
+section.film div.comment-user{
+    border:     1px solid beige;
+    padding:    0 1.5rem 1.5rem 1.5rem;
+    margin:     0.5rem;
+}
+
+section.film span.photo-profile{
+    display:        inline-block;
+    position:       relative;
+    top:            2.5rem;
+    background:     beige;
+    border-radius:  50%;
+    width:          60px;
+    height:         60px;
+    border:         2px solid black;
+    overflow:       hidden;   
+}
+
+section.film span.photo-profile.member{
+    border: 3px solid rgb(89, 0, 255);
+}
+
+section.film span.photo-profile.admin{
+    border: 3px solid red;
+}
+
+section.film span.photo-profile img{
+    width:  100%;
+    height: 100%;
+}
+
+section.film h3 {
+    font-size: 1rem;
+    margin-left: 4.5rem;
+}
+
+section.film p.total-comments{
+    margin-left:        2.5rem;
+    font-size:          1.3rem;
+    text-decoration:    underline;
+}
+
+section.film p.comment-content{
+    margin: 2rem 0 0 2.5rem;
+}
+
+section.film p.comment-empty{
+    margin: 2rem 2.5rem;
+}
+
+section.film span.rating-user{
+    float:      right;
+    font-size:  12px;
+}
+
+section.film form{
+    display:    flex;
+    flex-flow:  column wrap;
+    text-align: left;
+}
+
+section.film form label{
+    font-size:          1rem;
+    font-weight:        600;
+    text-decoration:    underline;
+    line-height:        1.5;
+    padding-left:       15px;
+    padding-top:        calc(.375rem + 1px);
+    padding-bottom:     calc(.375rem + 1px);
+    margin-left:        2.5rem;
+}
+
+section.film form small{
+    margin: 0 auto 1.5rem 4.5rem;
+}
+
+section.film form input[type=text], section.film form textarea {
+    border:         2px solid #372c0c;
+    border-radius:  0.5rem;
+    display:        block;
+    width:          90%;
+    margin:         auto;
+    height:         calc(1.5em + .75rem + 2px);
+    padding:        .5rem .8rem;
+    font-size:      1rem;
+    font-weight:    400;
+    line-height:    1.5;
+}
+
+section.film form textarea{
+    height:         20rem;
+    margin-bottom:  2.5rem;
+}
+
+section.film form input:focus, section.film form textarea:focus{
+    border: .15rem solid skyblue;
+}
+
+section.film form div.rating-film label.trash{
+	color: grey;
+}
+
+section.film form div.rating-film label{
+	color: red;
+	text-decoration: none;
+}
+
+section.film form div.rating-film div{
+    margin: -1rem 5rem;
+}
+
+section.film form div.rating-film div:first-child{
+    margin-top: .5rem;
+}
+
+section.film form div.rating-film div:last-child{
+    margin-bottom: 2rem;
+}
+
+section.film form div.rating-film label{
+   margin-left: 0;
+}
+
+section.film form div.rating-film span{
+	font-size: small;
+	padding-left: 15px;
+	opacity: 0;
+}
+
+section.film form div.rating-film input:hover ~ label, section.film form div.rating-film input:checked ~ label{
+color: gold;
+}
+
+section.film form div.rating-film input:hover ~ label span, section.film form div.rating-film input:checked ~ label span{
+	opacity: 1;
+}
+
+section.film form button{
+    display:        inline-block;
+    cursor:         pointer;
+    border:         2px solid beige;
+    background-color: #372c0c;
+    color:          beige;
+    width:          10rem;
+    font-weight:    600;
+    font-size:      1.2rem;
+    margin:         1rem auto;
+    padding:        .4rem .8rem;
+    line-height:    1.5;
+    border-radius:  .25rem;
+    user-select:    none;
+}
+
+section span.spoiler{
+	display: 	inline-block;
+	background: beige;
+}
+
+section span.spoiler.visible{
+	display: 	inline;
+	background: transparent;
+}
+
+section span.spoiler-content{
+	display: 	inline-block;
+	width: 		0;
+	height: 	0;
+	overflow: 	hidden;
+	opacity: 	0;
+	transition: opacity 0.5s;
+}
+
+section span.spoiler-content.visible{
+	display: 	inline;
+	color: 		red;
+	opacity: 	1;
+}
+
+section span.spoiler-header{
+    color: 		black;
+    padding:    .5rem;
+}
+
+/*
+    ****   view/forum.php   ****
+*/
+
+h1.title-forum{
+    text-align:     center;
+    margin:         20px;
+    color:          beige;
+    font-family:    fantasy, sans-serif;
+    font-size:      5.5rem;
+}
+
+p.path-forum{
+    margin: 2rem 2rem;
+    color: beige;
+}
+
+section.forum{
+    border:             1px solid white;
+    border-radius:      0.5rem;
+    background-color:   #251e09;
+    box-shadow:         0px 0px 10px beige;
+    overflow:           hidden;  
+    margin: 		    30px 0;
+    color:              beige;
+}
+
+section.forum h2{
+    margin:             20px 0 15px 40px;
+    text-decoration:    underline;
+    font-size:          1.5rem;
+}
+
+section.forum h2 a{
+    color:              beige;
+}
+
+section.forum h2 a:hover{
+    color:              beige;
+    text-decoration:    underline #dadaa0;
+    color:              #dadaa0;
+}
+
+section.forum div.separate-forum{
+    width: 			    100%;
+    height: 			2px;
+    background-color:   beige;
+    box-shadow:         0px 0px 10px beige;
+}
+
+section.forum.welcome p, ul{
+    margin:         20px 25px;
+    text-align:     justify;
+    line-height:    1.5;
+}
+
+section.forum.welcome p:first-of-type{
+    margin-top: 40px;
+}
+
+section.forum.welcome p:last-of-type{
+    margin-bottom:  40px;
+    font-size:      1.5rem
+}
+
+section.forum.welcome strong{
+    margin-left:        25px;
+    text-decoration:    underline;
+}
+
+section.forum td {
+    border: 1px solid beige;
+}
+
+section.forum table{
+    border:             2.5px solid beige;
+    border-collapse:    collapse;
+    text-align:         center;
+}
+
+section.forum th{
+    background: beige;
+    color:      #251e09;
+    border:     1px solid #251e09;
+}
+
+section.forum.home td:first-of-type{
+    text-align:     left;
+    padding-left:   2.5rem;
+}
+
+section.forum tr{
+    height: 3rem;
+}
+
+section.forum a{
+    color: beige;
+}
+
+section.forum a:hover{
+    text-decoration:    none #dadaa0;
+    color:              #dadaa0;
+}
+
+p.path-forum a{
+    color:          beige;
+    text-decoration: underline;
+}
+
+p.path-forum a:hover{
+    text-decoration:    none #dadaa0;
+    color:              #dadaa0;
+}
+
+/*
+    **** view/forum/category ****
+*/
+
+section.forum.category{
+    margin-top: -2rem;
+}
+
+section.forum.category p{
+    margin:         20px 25px;
+    text-align:     justify;
+    line-height:    1.5;
+}
+
+section.category td:first-of-type{
+    text-align:     left;
+    padding-left:   2.5rem;
+}
+
+/*
+    **** view/forum/subCategory ****
+*/
+
+section.topic td.no-resolved{
+    color: green;
+}
+
+section.topic td.resolved{
+    color: red;
+}
+
+section.topic td.pending{
+    color: yellow;
+}
+
+section.forum.topic td:nth-child(2){
+    text-align:     left;
+    padding-left:   2.5rem;
+}
+
+section.forum.topic p{
+    margin: 1.5rem;
+}
+
+section.forum.topic a.link-add-topic{
+    position:       relative;
+    float:          right;
+    top:            -2.5rem;
+    margin-right:   2rem;
+}
+
+section.forum a.disabled{
+    pointer-events: none;
+    cursor:         auto;
+}
+
+/*
+    **** view/forum/addTopic ****
+*/
+
+section.forum.add-topic form{
+    margin: 3rem auto;
+    width:  1000px;
+}
+
+section.forum.add-topic label {
+    display:      inline-block;
+    width:        210px;
+    text-align:   right;
+    margin:       1.5rem;
+}
+
+section.forum.add-topic label.subject {
+    margin-top: 0;
+ }
+
+section.forum.add-topic input, section.forum.add-topic textarea {
+    font:           1em sans-serif;
+    width:          700px;
+    box-sizing:     border-box;
+    border:         2px solid beige;
+    padding:        .5rem;
+    border-radius:  5px;
+}
+
+section.forum.add-topic option{
+     width: 675px;
+}
+
+section.forum.add-topic input:focus, textarea:focus {
+    border-color: #7aa7bd;
+}
+
+section.forum.add-topic textarea {
+    vertical-align: top;
+}
+
+section.forum.add-topic input[type="submit"]{
+	border:         2px solid #372c0c;
+    color:          #372c0c;
+	background:     beige;
+	padding:        10px;
+	cursor:         pointer;
+    border-radius:  5px;
+    font-weight:    1000;
+    font-size:      1rem;
+    margin:         2rem 16.5rem;
+    width:          20rem;
+    box-shadow:     0px 0px 10px beige;
+}
+
+section.forum.add-topic input[type="submit"]:hover{
+    background-color:#bfbea0;
+}
+
+/*
+    **** view/forum/topic ****
+*/
+
+section.forum.message div.row{
+    border-bottom: 3px solid;
+    
+}
+section.forum.message div.pseudo{
+    width:      15rem;
+    min-height: 15rem;
+    text-align: center;
+    background: rgba( 251, 250, 218, .5);
+    padding:    2rem;
+    border:     1px solid;
+}
+
+section.forum.message div.pseudo img{
+    border-radius:  50%;
+    width:          90px;
+    height:         90px;
+    overflow:       hidden; 
+}
+
+section.forum.message p{
+    padding: 1rem 1rem 0 1rem;
+}
+
+section.forum.message div.subject{
+    background: rgba( 251, 250, 218, .2);
+}
+
+section.forum.message div.content, section.forum.message div.subject{
+   width: 82.5%;
+}
+
+section.forum.message div.content p:first-of-type, section.forum.message div.subject p:first-of-type{
+    font-size:          .9rem;
+    text-decoration:    underline;
+}
+
+h2.title-message-bottom{
+    color:      beige;
+    font-size:  1rem;
+    margin:     1rem 2rem
+}
+
+form{
+    text-align: center;
+}
+
+form label{
+    color:              beige;
+    margin-right:       1rem;
+    text-decoration:    underline;
+}
+
+form textarea{
+    border:         2px solid #372c0c;
+    box-shadow:     0px 0px 10px beige;
+    font:           1em sans-serif;
+    padding:        .5rem;
+    vertical-align: top;
+    border-radius:  5px;
+ }
+
+form.write-message input[type="submit"]{
+	border:         2px solid #372c0c;
+    color:          #372c0c;
+	background:     beige;
+	padding:        10px;
+	cursor:         pointer;
+    border-radius:  5px;
+    font-weight:    1000;
+    font-size:      1rem;
+    margin:         2rem 16.5rem;
+    width:          10rem;
+    box-shadow:     0px 0px 10px beige;
+}
+
+form.write-message input[type="submit"]:hover{
+    background-color:#bfbea0;
+}
+
+
+/*
+    **** view/presentationAdmin ****
+*/
+
+h1.admin-page{
+    text-align:     center;
+    margin:         20px;
+    color:          beige;
+    font-family:    fantasy, sans-serif;
+    font-size:      5.5rem;
+} 
+
+h2.title-admin-page{
+    text-align: center;
+    color:      beige;
+}
+
+div.profile-box{
+    border:             1px solid white;
+    border-radius:      0.5rem;
+    background-color:   #251e09;
+    box-shadow:         0px 0px 10px beige;
+    overflow:           scroll;  
+	padding : 			10px;
+    margin: 		    30px 0;
+    color:              beige;
+    width:              400px;
+    height:             290px;
+    position:           relative;
+    transition:         .5s;
+}
+
+section.modo-row div.profile-box{
+    width:              300px;
+    height:             290px;
+
+}
+
+section.admin-row, section.modo-row{
+    display:            flex;
+    justify-content:    space-between;
+    flex-wrap:          wrap;
+    width:              95%;
+    margin:             auto;
+}
+
+div.profile-box img{
+    width:      100px;
+    position:   absolute;
+    top:        20px;
+    right:      20px;
+    
+}
+
+div.profile-box h4{
+    margin-top:     1em;
+    margin-left:    1em;
+    color:          #2196f3;
+}
+
+section.admin-row div.profile-box h4{
+    color: #2196f3;
+}
+
+div.social-box{
+    background:     beige;
+    margin:         60px auto 20px;
+    text-align:     center;
+    border-radius:  3px;
+    color:          #251e09;
+}
+
+div.social-box .fab{
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+div.profile-box p{
+    text-align: center;
+}
+
+div.profile-box img:hover{
+    width: 350px;
+}
+
+section.modo-row div.profile-box img:hover{
+    width: 260px;
+}
+
+div.profile-box:hover{
+    background: beige;
+}
+
+div.profile-box:hover p{
+    color: #251e09;
+}
+
+.profile-box:hover .social-box{
+    background: #251e09;
+}
+
+.profile-box:hover .social-box .fab{
+    color: beige;
+}
+
+
