@@ -2076,15 +2076,18 @@ form.write-message input[type="submit"]:hover{
 
 h1.admin-page{
     text-align:     center;
-    margin:         20px;
+    margin:         50px;
     color:          beige;
     font-family:    fantasy, sans-serif;
     font-size:      5.5rem;
 } 
 
 h2.title-admin-page{
-    text-align: center;
-    color:      beige;
+    text-align:         center;
+    color:              beige;
+    filter:             drop-shadow(5px 5px 3px #dadaa0);
+    font-size:          2.5em;
+    text-decoration:    underline;
 }
 
 div.profile-box{
