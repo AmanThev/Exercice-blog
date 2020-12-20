@@ -31,6 +31,7 @@ $modos = $administrator->getAdminsPresentationPage('Modo');
     <?php endforeach; ?>
 </section>
 
+<div id="separate-admin"></div>
 
 <h2 class="title-admin-page">Moderator</h2>
 <section class="modo-row">
