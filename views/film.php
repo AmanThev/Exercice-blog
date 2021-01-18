@@ -1,7 +1,5 @@
 <?php
 
-dump(round(251852, -3));
-die;
 use App\URL\ExplodeUrl;
 use App\Manager\Database;
 use App\Manager\FilmDatabase;
@@ -154,14 +152,27 @@ $title = $slug;
         <label for="comment">Your comment :</label>
         <small class="form-info">If you want to write spoilers, please surround them with tags [Spoiler] and [/Spoiler]</small><br>
         <textarea type="text" class="form-control"  name="comment" id="comment" rows="10"></textarea>
-        <label for="ratingFilm">Your rating :</label>
-        <div class="rating-film">
+        <!-- <label for="ratingFilm">Your rating :</label> -->
+        <!-- <div class="rating-film">
             <div><input type="radio" name="ratingFilm" id="ratingFilm0" value="0" checked><label for="ratingFilm0" class="trash"><i class="fas fa-trash"></i><span>(Worst moment of my life!!!)</span></label></div>
             <div><input type="radio" name="ratingFilm" id="ratingFilm1" value="1"><label for="ratingFilm1"><i class="fas fa-star"></i><span>(Forgettable)</span></label></div>
             <div><input type="radio" name="ratingFilm" id="ratingFilm2" value="2"><label for="ratingFilm2"><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(Tolerable)</span></label></div>
             <div><input type="radio" name="ratingFilm" id="ratingFilm3" value="3"><label for="ratingFilm3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(Good!)</span></label></div>
             <div><input type="radio" name="ratingFilm" id="ratingFilm4" value="4"><label for="ratingFilm4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(Great movie!)</span></label></div>
             <div><input type="radio" name="ratingFilm" id="ratingFilm5" value="5"><label for="ratingFilm5" ><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(Excellent!!!)</span></label></div>
+        </div> -->
+        <h3>Your rating :</h3>
+        <div class="rating-film">
+            <input type="radio" name="ratingFilm" id="rating-film-5">
+                <label for="rating-film-5" class="fas fa-star"></label>
+            <input type="radio" name="ratingFilm" id="rating-film-4">
+                <label for="rating-film-4" class="fas fa-star"></label>
+            <input type="radio" name="ratingFilm" id="rating-film-3">
+                <label for="rating-film-3" class="fas fa-star"></label>
+            <input type="radio" name="ratingFilm" id="rating-film-2">
+                <label for="rating-film-2" class="fas fa-star"></label>
+            <input type="radio" name="ratingFilm" id="rating-film-1">
+                <label for="rating-film-1" class="fas fa-star"></label>
         </div>
         <?php // if(!empty($errors)):?>
             <?php //foreach ($errors as $error): ?>
