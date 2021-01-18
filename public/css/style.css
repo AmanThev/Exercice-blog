@@ -266,19 +266,19 @@ section a.latest-read{
     text-decoration:    none;
 }
 
-section a.latest-read:hover {
+section a.latest-read:hover{
 	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
 	text-decoration: 	none;
 	color: 				black;
 }
 
-section a.latest-read.posts {
+section a.latest-read.posts{
     position:   absolute;
     bottom:     4rem;
     left:       1rem;
 }
 
-section a.latest-read.reviews {
+section a.latest-read.reviews{
     position:   absolute;
     bottom:     1rem;
     left:       1rem;
@@ -448,7 +448,7 @@ section div.content-last-post a{
     text-decoration:    none;
 }
 
-section div.content-last-post span:hover {
+section div.content-last-post span:hover{
 	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
 	text-decoration: 	none;
     color: 				black;
@@ -554,7 +554,7 @@ section  div.box-all-post:hover a.read-all-post{
 	visibility: visible;
 }
 
-section a.read-all-post:hover {
+section a.read-all-post:hover{
 	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
 	text-decoration: 	none;
 	color: 				black;
@@ -753,7 +753,7 @@ section div.content-last-reviews a{
     text-decoration:    none;
 }
 
-section div.content-last-reviews span:hover {
+section div.content-last-reviews span:hover{
 	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
 	text-decoration: 	none;
     color: 				black;
@@ -795,7 +795,7 @@ section div.last-reviews figure:nth-child(5){
     animation:sliderfifth 45s linear infinite;
 }
 
-@keyframes sliderfirst {
+@keyframes sliderfirst{
     0%{ 
         left: 0px; 
     }
@@ -832,7 +832,7 @@ section div.last-reviews figure:nth-child(5){
     }
 }
 
-@keyframes slidersecond {
+@keyframes slidersecond{
     0%{ 
         left: 1450px; 
     }
@@ -1045,7 +1045,7 @@ section div.box-all-reviews{
     height:             500px;
     border:             1px solid beige;
     background:         rgb( 78, 77, 67);
-    overflow: hidden;
+    overflow:           hidden;
 }
 
 section div.box-all-reviews div.img-all-reviews{
@@ -1068,7 +1068,7 @@ section div.box-all-reviews div.img-all-reviews img{
 
 section div.box-all-reviews:hover div.img-all-reviews img{
    opacity:	0;
-   width: 0;
+   width:   0;
 }
 
 section div.box-all-reviews div.content-all-reviews{
@@ -1166,9 +1166,9 @@ section div.pagination-all-reviews a:hover{
 }
 
 section div.pagination-all-post li.disabled a{
-    color: #6c757d;
+    color:          #6c757d;
     pointer-events: none;
-    cursor: auto;
+    cursor:         auto;
 }
 
 section.all-reviews form{
@@ -1247,10 +1247,10 @@ aside.date-reviews{
 }
 
 aside.date-reviews h2{
-    color:          beige;
-    text-decoration: underline;
-    margin-bottom: 2rem;
-    font-size: 1.5rem;
+    color:              beige;
+    text-decoration:    underline;
+    margin-bottom:      2rem;
+    font-size:          1.5rem;
 }
 
 aside.date-reviews a.list-item{
@@ -1403,7 +1403,8 @@ section.post form small{
     margin: 0 auto 1.5rem 4.5rem;
 }
 
-section.post form input, section.post form textarea {
+section.post form input, 
+section.post form textarea {
     border:         2px solid #372c0c;
     border-radius:  0.5rem;
     display:        block;
@@ -1420,7 +1421,8 @@ section.post form textarea{
     height: 20rem;
 }
 
-section.post form input:focus, section.post form textarea:focus{
+section.post form input:focus, 
+section.post form textarea:focus{
     border: .15rem solid skyblue;
 }
 
@@ -1477,11 +1479,13 @@ section.post button.vote-btn{
     display:    ruby-text-container;
 }
 
-section.post button.vote-like:hover, section.post .is-liked button.vote-like{
+section.post button.vote-like:hover, 
+section.post .is-liked button.vote-like{
 	color: #63b96b;
 }
 
-section.post button.vote-dislike:hover, section.post .is-disliked button.vote-dislike{
+section.post button.vote-dislike:hover, 
+section.post .is-disliked button.vote-dislike{
 	color: #f2504b;
 }
 
@@ -1500,7 +1504,8 @@ section.film{
     color:              beige;
 }
 
-section.header-film h1, section.header-film p{
+section.header-film h1, 
+section.header-film p{
     text-align: center;
 }
 
@@ -1539,7 +1544,9 @@ section.content-film article.info-film{
     width: 28%;
 }
 
-section.content-film article.info-film table, th, td{
+section.content-film article.info-film table, 
+th, 
+td{
     border-collapse:    separate;
 }
 
@@ -1605,8 +1612,8 @@ section.film span.photo-profile img{
 }
 
 section.film h3 {
-    font-size: 1rem;
-    margin-left: 4.5rem;
+    font-size:      1rem;
+    margin-left:    4.5rem;
 }
 
 section.film p.total-comments{
@@ -1634,7 +1641,8 @@ section.film form{
     text-align: left;
 }
 
-section.film form label{
+section.film form label, 
+section.film form h3{
     font-size:          1rem;
     font-weight:        600;
     text-decoration:    underline;
@@ -1649,7 +1657,8 @@ section.film form small{
     margin: 0 auto 1.5rem 4.5rem;
 }
 
-section.film form input[type=text], section.film form textarea {
+section.film form input[type=text], 
+section.film form textarea {
     border:         2px solid #372c0c;
     border-radius:  0.5rem;
     display:        block;
@@ -1671,6 +1680,37 @@ section.film form input:focus, section.film form textarea:focus{
     border: .15rem solid skyblue;
 }
 
+section.film form div.rating-film{
+    margin-left:    6em;
+    transform:      translate(-85%)rotateY(180deg);
+}
+
+section.film form div.rating-film input{
+    display: none;
+}
+
+section.film form div.rating-film label{
+    text-decoration:    none;
+    margin-left:        0em;
+    padding-left:       0em;
+    font-size:          2em;
+    width:              .7em;
+}
+
+section.film form div.rating-film input:not(:checked) ~ label:hover,
+section.film form div.rating-film input:not(:checked) ~ label:hover ~ label{
+    color: #fd4;
+}
+
+input:checked ~ label{
+    color: #fd4;
+}
+  
+input#ratingFilm5:checked ~ label{
+    color:          #fe7;
+    text-shadow:    10px 0 20px #952, 0 0 30px #952, -10px 0px 20px #952;
+}
+/* 
 section.film form div.rating-film label.trash{
 	color: grey;
 }
@@ -1708,7 +1748,7 @@ color: gold;
 
 section.film form div.rating-film input:hover ~ label span, section.film form div.rating-film input:checked ~ label span{
 	opacity: 1;
-}
+} */
 
 section.film form button{
     display:        inline-block;
@@ -2017,11 +2057,13 @@ section.forum.message div.subject{
     background: rgba( 251, 250, 218, .2);
 }
 
-section.forum.message div.content, section.forum.message div.subject{
+section.forum.message div.content, 
+section.forum.message div.subject{
    width: 82.5%;
 }
 
-section.forum.message div.content p:first-of-type, section.forum.message div.subject p:first-of-type{
+section.forum.message div.content p:first-of-type, 
+section.forum.message div.subject p:first-of-type{
     font-size:          .9rem;
     text-decoration:    underline;
 }
@@ -2111,7 +2153,8 @@ section.modo-row div.profile-box{
 
 }
 
-section.admin-row, section.modo-row{
+section.admin-row, 
+section.modo-row{
     display:            flex;
     justify-content:    space-between;
     flex-wrap:          wrap;
