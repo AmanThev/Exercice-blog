@@ -1680,14 +1680,25 @@ section.film form input:focus, section.film form textarea:focus{
     border: .15rem solid skyblue;
 }
 
+section.film form div:first-of-type{
+    margin-left: 3em;
+}
+
 section.film form div.rating-film{
     margin-left:    6em;
     transform:      translate(-85%)rotateY(180deg);
 }
 
-section.film form div.rating-film input{
+section.film form div.rating-film input,
+section.film form div:first-of-type input{
     display: none;
 }
+
+section.film form div:first-of-type label{
+    text-decoration:    none;
+    font-size:          1.8em;
+    transition:         all 0.2s ease-in;
+ }
 
 section.film form div.rating-film label{
     text-decoration:    none;
@@ -1695,20 +1706,64 @@ section.film form div.rating-film label{
     padding-left:       0em;
     font-size:          2em;
     width:              .7em;
+    transition:         all 0.2s ease-in;
 }
 
 section.film form div.rating-film input:not(:checked) ~ label:hover,
-section.film form div.rating-film input:not(:checked) ~ label:hover ~ label{
-    color: #fd4;
+section.film form div.rating-film input:not(:checked) ~ label:hover ~ label,
+input#rating-film-5:checked ~ label:hover ~ label,
+input#rating-film-5:checked ~ label:hover{
+    color: #49aab0;
 }
 
-input:checked ~ label{
-    color: #fd4;
+section.film form input:checked ~ label{
+    color: #ffdd44;
+}
+
+section.film form input#rating-film-0:checked ~ label{
+    color:          #1ed009 ;
 }
   
-input#ratingFilm5:checked ~ label{
-    color:          #fe7;
+section.film form input#rating-film-5:checked ~ label{
+    color:          #ffee77;
     text-shadow:    10px 0 20px #952, 0 0 30px #952, -10px 0px 20px #952;
+}
+
+section.film form #display-rating-film{
+    position: relative;
+    top: -55px;
+    left: 330px;
+    font-weight: 600;
+    font-size: 1.5em;
+    transition: all 0.2s ease;
+}
+
+section.film form #display-rating-film:after{
+    padding-left: .8em;
+}
+
+section.film form .rate-0::after{
+    content: "Worst moment of my life!!! 🤮";
+}
+
+section.film form .rate-1::after{
+    content: "Forgettable";
+}
+
+section.film form .rate-2:after{
+    content: "Tolerable";
+}
+
+section.film form  .rate-3:after{
+    content: "Good!";
+}
+
+section.film form  .rate-4:after{
+    content: "Great movie!";
+}
+
+section.film form .rate-5:after{
+    content: "Excellent!!! 😍";
 }
 /* 
 section.film form div.rating-film label.trash{

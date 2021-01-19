@@ -140,7 +140,7 @@ $title = $slug;
 
 <section class="film write-comment">
     <h2>Write your Comment</h2>
-    <form action="reviewFilm.php?id=<?php //$film->id ?>" method="post">
+    <form action="reviewFilm.php?id=<?php //$film->id ?>" method="post" id="test1">
         <label for="pseudo">Your pseudo :</label>
         <input type="text" name="pseudo" id="pseudo" value="<?php
             //if(isset($pseudo))
@@ -152,28 +152,24 @@ $title = $slug;
         <label for="comment">Your comment :</label>
         <small class="form-info">If you want to write spoilers, please surround them with tags [Spoiler] and [/Spoiler]</small><br>
         <textarea type="text" class="form-control"  name="comment" id="comment" rows="10"></textarea>
-        <!-- <label for="ratingFilm">Your rating :</label> -->
-        <!-- <div class="rating-film">
-            <div><input type="radio" name="ratingFilm" id="ratingFilm0" value="0" checked><label for="ratingFilm0" class="trash"><i class="fas fa-trash"></i><span>(Worst moment of my life!!!)</span></label></div>
-            <div><input type="radio" name="ratingFilm" id="ratingFilm1" value="1"><label for="ratingFilm1"><i class="fas fa-star"></i><span>(Forgettable)</span></label></div>
-            <div><input type="radio" name="ratingFilm" id="ratingFilm2" value="2"><label for="ratingFilm2"><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(Tolerable)</span></label></div>
-            <div><input type="radio" name="ratingFilm" id="ratingFilm3" value="3"><label for="ratingFilm3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(Good!)</span></label></div>
-            <div><input type="radio" name="ratingFilm" id="ratingFilm4" value="4"><label for="ratingFilm4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(Great movie!)</span></label></div>
-            <div><input type="radio" name="ratingFilm" id="ratingFilm5" value="5"><label for="ratingFilm5" ><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(Excellent!!!)</span></label></div>
-        </div> -->
         <h3>Your rating :</h3>
+        <div>
+            <input type="radio" name="ratingFilm" id="rating-film-0" value="0">
+                <label for="rating-film-0" class="fas fa-trash"></label>
+        </div>
         <div class="rating-film">
-            <input type="radio" name="ratingFilm" id="rating-film-5">
+            <input type="radio" name="ratingFilm" id="rating-film-5" value="5">
                 <label for="rating-film-5" class="fas fa-star"></label>
-            <input type="radio" name="ratingFilm" id="rating-film-4">
+            <input type="radio" name="ratingFilm" id="rating-film-4" value="4">
                 <label for="rating-film-4" class="fas fa-star"></label>
-            <input type="radio" name="ratingFilm" id="rating-film-3">
+            <input type="radio" name="ratingFilm" id="rating-film-3" value="3">
                 <label for="rating-film-3" class="fas fa-star"></label>
-            <input type="radio" name="ratingFilm" id="rating-film-2">
+            <input type="radio" name="ratingFilm" id="rating-film-2" value="2">
                 <label for="rating-film-2" class="fas fa-star"></label>
-            <input type="radio" name="ratingFilm" id="rating-film-1">
+            <input type="radio" name="ratingFilm" id="rating-film-1" value="1">
                 <label for="rating-film-1" class="fas fa-star"></label>
         </div>
+        <div id="display-rating-film"> - </div>
         <?php // if(!empty($errors)):?>
             <?php //foreach ($errors as $error): ?>
                 <!-- <p class="p-3 mb-2 bg-danger text-white"><?php //$error ?></p> -->
@@ -185,3 +181,53 @@ $title = $slug;
 
 <script src="<?= PUBLIC_PATH ?>/js/spoiler.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+        var inputStars = document.getElementsByName('ratingFilm');
+        var commentStar = document.getElementById('display-rating-film');
+        
+        var commentRateLoad = function(element){
+            document.addEventListener('DOMContentLoaded', function() {
+                if(element.checked){
+                    var inputValue = element.value;
+                    commentRate(inputValue);
+                }
+            });
+        }
+
+        var commentRateClick = function(element){
+            document.addEventListener('input', function() {
+                if(element.checked){
+                    var inputValue = element.value;
+                    commentRate(inputValue);
+                }
+            });
+        }
+
+        var commentRate = function(element){
+            switch (element) {
+                case '1':
+                    commentStar.className =  'rate-1';
+                    break;
+                case '2':
+                    commentStar.className =  'rate-2';
+                    break;
+                case '3':
+                    commentStar.className =  'rate-3';
+                    break;
+                case '4':
+                    commentStar.className =  'rate-4';
+                    break;
+                case '5':
+                    commentStar.className =  'rate-5';
+                    break;
+                default:
+                    commentStar.className =  'rate-0';
+            }
+        }
+                     
+        for(var i = 0; i < inputStars.length; i++){
+            commentRateLoad(inputStars[i]);
+            commentRateClick(inputStars[i]);
+        }
+
+</script>
