@@ -229,5 +229,4 @@ $title = $slug;
             commentRateLoad(inputStars[i]);
             commentRateClick(inputStars[i]);
         }
-
 </script>
