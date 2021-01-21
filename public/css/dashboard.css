@@ -50,7 +50,7 @@ div.title-dash a:hover i.fas:last-child{
     }
 }
 
-nav {
+nav{
     background:     #505050;
     width:          200px;
     font-size:      1rem;
@@ -84,7 +84,8 @@ nav i{
     font-size:      1.4rem;
 }
 
-section {
+section, 
+aside{
     margin-left: 13rem;
 }
 
@@ -215,7 +216,8 @@ td a{
     display: block;
 }
 
-form, h3{
+form, 
+h3{
     margin-left: 13rem;
 }
 
@@ -259,7 +261,8 @@ h3.title-page{
 	appearance:         none;    
 }
 
-.custom-dropdown::before, .custom-dropdown::after{
+.custom-dropdown::before, 
+.custom-dropdown::after{
 	content:        "";
 	position:       relative;
     pointer-events: none;
@@ -312,7 +315,7 @@ section.forum ul{
 section.forum ul.list-cat{
     border-top: 1px solid #2980b9;
     padding:    0;
-    margin:     0; /* retirer pour l'effet de glissement révélation subCat */
+    margin:     0; 
 }
 
 section.forum ul.list-cat.active{
@@ -372,7 +375,10 @@ section.forum ul.active a.link-cat:after {
     top:        0;
 }
 
-section span.link-forum-cat a:nth-child(2):before, section span.link-forum-cat a:nth-child(3):before, section span.link-forum a:nth-child(3):before, section span.link-forum a:nth-child(4):before{
+section span.link-forum-cat a:nth-child(2):before, 
+section span.link-forum-cat a:nth-child(3):before, 
+section span.link-forum a:nth-child(3):before, 
+section span.link-forum a:nth-child(4):before{
     content:       "";
     position:      relative;
     background:    white;
@@ -445,7 +451,8 @@ section.forum ul.list-topic a{
     color: black;
 }
 
-section ul.list-topic span.link-forum a:nth-child(3):before, section ul.list-topic span.link-forum a:nth-child(4):before{
+section ul.list-topic span.link-forum a:nth-child(3):before, 
+section ul.list-topic span.link-forum a:nth-child(4):before{
     border: 1px solid black;
 }
 
@@ -468,4 +475,63 @@ section ul.list-topic p.resolved{
 
 section ul.list-topic p.pending{
     color: purple;
+}
+
+/**
+    **** dashboard/users/Admin ****
+**/
+
+
+div.top-profile-admin{
+    margin-top:             20px;
+    display:                grid;
+    grid-template-columns:  auto auto;
+    grid-column-gap:        10px;
+}
+
+aside.photo-admin, 
+section.intro-admin,
+section.data-admin{
+    border:         1px solid #5e8091;
+    background:     white;
+    margin-bottom:  2em; 
+    
+}
+
+aside.photo-admin{
+    padding:    .5rem;
+}
+
+section.intro-admin{
+    margin-left: 0;
+    
+}
+
+section.intro-admin,
+section.data-admin{
+    padding: 1.6em;
+}
+
+
+aside.photo-admin img{
+    width:  300px;
+    height: 300px;
+}
+
+section.data-admin h2,
+section.intro-admin h2{
+    color:          #7aa7bd;
+    text-align:     center;
+    margin:         1rem 2rem;
+    border-bottom:  1px solid;
+    font-weight:    600; 
+}
+
+section.data-admin ul{
+    list-style: none;
+}
+
+section.data-admin li{
+    display:                grid;
+    grid-template-columns:  60% 10% 10% 10%;
 }

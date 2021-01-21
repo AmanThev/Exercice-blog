@@ -154,7 +154,7 @@ $title = $slug;
         <textarea type="text" class="form-control"  name="comment" id="comment" rows="10"></textarea>
         <h3>Your rating :</h3>
         <div>
-            <input type="radio" name="ratingFilm" id="rating-film-0" value="0">
+            <input type="radio" name="ratingFilm" id="rating-film-0" value="0" checked>
                 <label for="rating-film-0" class="fas fa-trash"></label>
         </div>
         <div class="rating-film">

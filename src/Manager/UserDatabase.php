@@ -37,6 +37,18 @@ class UserDatabase extends Database
         return $admin;
     }
 
+    public function getAdminByName(string $name): Admin
+    {
+        $stmt = $this->connect()->prepare("SELECT * FROM admins WHERE name=:name");
+        $stmt->execute(['name' => $name]);
+        if($stmt->rowCount() == 1){
+            $stmt->setFetchMode(PDO::FETCH_CLASS,Admin::class);
+            $admin = $stmt->fetch();
+            return $admin;
+        }
+        throw new NoFoundException("No Admin Name matches this $name");
+    }
+
     public function getAdminsPresentationPage($position): array
     {
         $stmt = $this->connect()->prepare("$this->queryAdmins WHERE position=:position");

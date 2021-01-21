@@ -36,20 +36,6 @@ if($yearSelected){
 <section class="section-last-reviews">
     <h1>Last reviews</h1>
     <div class="last-reviews">
-        <!-- <figure>
-        < ?php foreach($lastReviews as $lastReview): ?>
-            <div class="deck-last-reviews">
-                <div class="img-last-reviews">
-                    <img src="< ?= PUBLIC_PATH ?>/img/posterFilm/< ?= $lastReview->getPoster() ?>" alt="">
-                </div>
-                <div class="content-last-reviews">
-                    <h2>< ?= $lastReview->getTitle() ?></h2>
-                    <p>< ?= $lastReview->getSynopsis() ?></p>
-                    <span><a href="< ?= CreateUrl::url('reviews', ['slug' => $lastReview->getUrlTitle(), 'id' => $lastReview->getId()]); ?>">Read More</a></span>
-                </div>
-            </div>
-        < ?php endforeach; ?>
-        </figure> -->
         <?php foreach($lastReviews as $lastReview): ?>
         <figure>
             <div class="deck-last-reviews">

@@ -20,6 +20,10 @@ class Admin
      * @var string
      */
     private $description;
+    /**
+     * @var string varchar (5)
+     */
+    private $position;
 
     public function getId(): int
     {
@@ -39,6 +43,11 @@ class Admin
     public function getDescription(): string
     {
         return htmlspecialchars($this->description);
+    }
+
+    public function getPosition(): string
+    {
+        return htmlspecialchars($this->position);
     }
 
 }

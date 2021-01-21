@@ -87,7 +87,7 @@ class FilmDatabase extends Database
             $film = $stmt->fetch();
             return $film;
         }
-        throw new Exception('No film matches this id');
+        throw new NoFoundException("No film matches this id = $id");
     }
 
     public function totalVote(int $id): int

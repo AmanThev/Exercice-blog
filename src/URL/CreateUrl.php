@@ -23,7 +23,7 @@ class CreateURL {
     {
         $title = ucwords($title);
         $urlTitle = preg_replace("#[']+#", '_', $title);
-        $urlTitle = preg_replace("#[ :\-']+#", '', $urlTitle);
+        $urlTitle = preg_replace("#[ :&\-']+#", '', $urlTitle);
         return $urlTitle;
     }
 

@@ -46,6 +46,15 @@ class ExplodeUrl {
             return $slug;
         }
 
+        public function getSlugName(): string
+        {
+            $slug = $this->explodePath();
+            $slug = preg_split('/(?=[A-Z])/', $slug[2], -1, PREG_SPLIT_NO_EMPTY);
+            $slug = $this->getCountSlug($slug);
+
+            return $slug;
+        }
+
         public function getSlugSubCat(): string
         {
             $slug = $this->explodePath();

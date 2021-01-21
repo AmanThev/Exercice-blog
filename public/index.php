@@ -48,6 +48,7 @@ $router->get('/dashboard/reviews', VIEWS .'dashboard/review/index');
 $router->get('/dashboard/comments', VIEWS .'dashboard/comment');
 $router->get('/dashboard/users', VIEWS .'dashboard/user/index');
 $router->get('/dashboard/forum', VIEWS .'dashboard/forum');
+$router->get('/dashboard/users/:slug', VIEWS .'dashboard/user/profileAdmin');
 
 
 $router->post('/post/:id', function(){
