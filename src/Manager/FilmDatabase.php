@@ -67,13 +67,6 @@ class FilmDatabase extends Database
         return $lastFilms;
     }
 
-    public function filmPaginationNumber(): ?int
-    {
-        $pagination = new Paginate($this->query);
-        $pagination = $pagination->getPaginationNumber();
-        return $pagination; 
-    }
-
     public function getFilmById(int $id): Film
     {
         $stmt = $this->connect()->prepare("
@@ -88,6 +81,38 @@ class FilmDatabase extends Database
             return $film;
         }
         throw new NoFoundException("No film matches this id = $id");
+    }
+    
+    public function getFilmByCommentId($idFilm)
+    {
+        $stmt = $this->connect()->prepare("
+            $this->query f
+            INNER JOIN comments_film
+            ON f.id = index_id
+            WHERE index_id=:idFilm");
+        $stmt->execute(['idFilm' => $idFilm]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS,Film::class);
+        $film = $stmt->fetch();
+        return $film;
+    }
+
+    public function getFilmByAdminId($idAdmin)
+    {
+        $stmt = $this->connect()->prepare("
+            SELECT * FROM admins a
+            INNER JOIN films
+            ON admin_id = a.id
+            WHERE a.id=:idAdmin");
+        $stmt->execute(['idAdmin' => $idAdmin]);
+        $films = $stmt->fetchAll(PDO::FETCH_CLASS, Film::class);
+        return $films;
+    }
+
+    public function filmPaginationNumber(): ?int
+    {
+        $pagination = new Paginate($this->query);
+        $pagination = $pagination->getPaginationNumber();
+        return $pagination; 
     }
 
     public function totalVote(int $id): int
@@ -108,19 +133,6 @@ class FilmDatabase extends Database
         $resultRating 	= round(($totalVoteUser + $totalVoteAdmin) / $this->totalVote($id), 1);
         
         return $resultRating;
-    }
-
-    public function getFilmByCommentId($idFilm)
-    {
-        $stmt = $this->connect()->prepare("
-            $this->query f
-            INNER JOIN comments_film
-            ON f.id = index_id
-            WHERE index_id=:idFilm");
-        $stmt->execute(['idFilm' => $idFilm]);
-        $stmt->setFetchMode(PDO::FETCH_CLASS,Film::class);
-        $film = $stmt->fetch();
-        return $film;
     }
 
     public function totalFilms()

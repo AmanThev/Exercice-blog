@@ -2,6 +2,8 @@
 
 use App\URL\ExplodeUrl;
 use App\Manager\UserDatabase;
+use App\Manager\FilmDatabase;
+use App\Manager\PostDatabase;
 
 
 $url    = new ExplodeUrl($_GET['url']);
@@ -11,6 +13,12 @@ $title = $slug;
 
 $admin = new UserDatabase();
 $admin = $admin->getAdminByName($slug);
+
+$films = new FilmDatabase();
+$films = $films->getFilmByAdminId($admin->getId());
+
+$posts = new PostDatabase();
+$posts = $posts->getPostByAdminId($admin->getId());
 
 ?>
 
@@ -28,20 +36,25 @@ $admin = $admin->getAdminByName($slug);
 <section class="data-admin">
     <h2>What have you done?</h2>
     <p>You have write 2 posts</p>
+<?php foreach($posts as $post): ?>
 <ul>
-    <li>Title post 
+    <li><?= $post->getTitle() ?> 
         <span><i class="fas fa-comment"></i></span>
         <span><i class="fas fa-thumbs-up"></i></span>
         <span><i class="fas fa-thumbs-down"></i></span>
     </li>
 </ul>
+<?php endforeach; ?>
+
 
 <p>You have write 2 review</p>
+<?php foreach($films as $film): ?>
 <ul>
-    <li>Title film 
+    <li><?= $film->getTitle() ?> 
         <span><i class="fas fa-comment"></i></span>
         <span><i class="fas fa-thumbs-up"></i></span>
         <span><i class="fas fa-thumbs-down"></i></span>
     </li>
 </ul>
+<?php endforeach; ?>
 </section>

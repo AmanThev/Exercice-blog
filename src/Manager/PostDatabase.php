@@ -106,6 +106,18 @@ class PostDatabase extends Database
         return $post;
     }
 
+    public function getPostByAdminId($idAdmin)
+    {
+        $stmt = $this->connect()->prepare("
+            SELECT * FROM admins a
+            INNER JOIN posts
+            ON admin_id = a.id
+            WHERE a.id=:idAdmin");
+        $stmt->execute(['idAdmin' => $idAdmin]);
+        $posts = $stmt->fetchAll(PDO::FETCH_CLASS, Post::class);
+        return $posts;
+    }
+
     public function totalPosts(): int
     {
         return CountSql::totalData($this->queryAllPost);
