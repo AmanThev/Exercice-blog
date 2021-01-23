@@ -3,16 +3,14 @@
 use App\Manager\ForumDatabase;
 use App\URL\CreateUrl;
 
-$title = 'Dashboard/Forum'; 
+$title          = 'Dashboard/Forum'; 
 
-$categories = new ForumDatabase;
-$categories = $categories->getCategories();
-
-$subCats = new ForumDatabase();
-$topics = new ForumDatabase();
-
-$countTopics    = new ForumDatabase();
+$categories     = new ForumDatabase;
+$categories     = $categories->getCategories();
 $countMessages  = new ForumDatabase();
+$countTopics    = new ForumDatabase();
+$subCats        = new ForumDatabase();
+$topics         = new ForumDatabase();
 
 ?>
 

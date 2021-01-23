@@ -5,9 +5,9 @@ use App\Manager\ForumDatabase;
 $categories = new ForumDatabase();
 $categories = $categories->getCategories();
 
-$subCats = new ForumDatabase();
+$subCats    = new ForumDatabase();
 
-$title = "New Topic";
+$title      = "New Topic";
 
 ?>
 

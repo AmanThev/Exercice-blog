@@ -8,18 +8,23 @@ use App\Manager\CommentDatabase;
 use App\SQL\Paginate;
 use App\URL\CreateUrl;
 
-$title = 'Dashboard/Users';
+$title          = 'Dashboard/Users';
 
-$members = new UserDatabase();
-$members = $members->getMembers();
-$memberLike = new VoteDatabase();
-$memberDislike = new VoteDatabase();
-$memberComment = new CommentDatabase();
+$admins         = new UserDatabase();
+$admins         = $admins->getAdmins();
 
-$admins = new UserDatabase();
-$admins = $admins->getAdmins();
-$postWritten = new PostDatabase();
-$reviewWritten = new FilmDatabase();
+$members        = new UserDatabase();
+$members        = $members->getMembers();
+
+$memberComment  = new CommentDatabase();
+
+$memberDislike  = new VoteDatabase();
+
+$memberLike     = new VoteDatabase();
+
+$postWritten    = new PostDatabase();
+
+$reviewWritten  = new FilmDatabase();
 
 ?>
 

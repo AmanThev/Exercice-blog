@@ -5,21 +5,23 @@ use App\Manager\ForumDatabase;
 use App\URL\CreateUrl;
 
 
-$url = new ExplodeUrl($_GET['url']);
-$id = $url->getId();
-$slug = $url->getSlug();
+$url            = new ExplodeUrl($_GET['url']);
+$id             = $url->getId();
+$slug           = $url->getSlug();
 
-$category = new ForumDatabase();
-$category = $category->getCategory($id, $slug);
-
-$subCats = new ForumDatabase();
-$subCats = $subCats->getSubCategories($id);
+$category       = new ForumDatabase();
+$category       = $category->getCategory($id, $slug);
 
 $countTopics    = new ForumDatabase();
 $countMessages  = new ForumDatabase();
+
 $message        = new ForumDatabase();
 
-$title = $slug;
+$subCats        = new ForumDatabase();
+$subCats        = $subCats->getSubCategories($id);
+
+$title          = $slug;
+
 ?>
 
 <h1 class="title-forum"><?= $slug ?></h1>

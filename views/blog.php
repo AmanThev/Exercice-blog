@@ -5,16 +5,17 @@ use App\Manager\UserDatabase;
 use App\SQL\Paginate;
 use App\URL\CreateUrl;
 
-$title = 'Blog';
+$title      = 'Blog';
 
-$posts = new PostDatabase();
-$posts = $posts->getPosts();
-$author = new UserDatabase();
+$author     = new UserDatabase();
+
+$new        = new PostDatabase();
+$new        = $new->getLastPost();
 
 $pagination = new PostDatabase();
 
-$new = new PostDatabase();
-$new = $new->getLastPost();
+$posts      = new PostDatabase();
+$posts      = $posts->getPosts();
 
 ?>
 

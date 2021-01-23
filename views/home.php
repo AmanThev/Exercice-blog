@@ -6,14 +6,15 @@ use App\URL\CreateUrl;
 
 $title = 'HomePage'; 
 
-$posts = new PostDatabase();
-$posts = $posts->getPostsHome();
+$films  = new FilmDatabase();
+$films  = $films->getFilmsHome();
 
-$films = new FilmDatabase();
-$films = $films->getFilmsHome();
+$new    = new PostDatabase();
+$new    = $new->getLastPost();
 
-$new = new PostDatabase();
-$new = $new->getLastPost();
+$posts  = new PostDatabase();
+$posts  = $posts->getPostsHome();
+
 ?> 
 
 <section>

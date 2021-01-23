@@ -6,19 +6,21 @@ use App\Manager\FilmDatabase;
 use App\Manager\PostDatabase;
 
 
-$url    = new ExplodeUrl($_GET['url']);
-$slug   = $url->getSlugName();
+$url            = new ExplodeUrl($_GET['url']);
+$slug           = $url->getSlugName();
 
-$title = $slug;
+$title          = $slug;
 
-$admin = new UserDatabase();
-$admin = $admin->getAdminByName($slug);
+$admin          = new UserDatabase();
+$admin          = $admin->getAdminByName($slug);
 
-$films = new FilmDatabase();
-$films = $films->getFilmByAdminId($admin->getId());
+$films          = new FilmDatabase();
+$films          = $films->getFilmByAdminId($admin->getId());
+$totalReviews   = count($films);
 
-$posts = new PostDatabase();
-$posts = $posts->getPostByAdminId($admin->getId());
+$posts          = new PostDatabase();
+$posts          = $posts->getPostByAdminId($admin->getId());
+$totalPosts     = count($posts);
 
 ?>
 
@@ -35,7 +37,7 @@ $posts = $posts->getPostByAdminId($admin->getId());
 
 <section class="data-admin">
     <h2>What have you done?</h2>
-    <p>You have write 2 posts</p>
+    <p>You have write <?php echo $totalPosts > 1 ? ' '.$totalPosts.' Posts' : ' '.$totalPosts.' Post' ?></p>
 <?php foreach($posts as $post): ?>
 <ul>
     <li><?= $post->getTitle() ?> 
@@ -47,7 +49,7 @@ $posts = $posts->getPostByAdminId($admin->getId());
 <?php endforeach; ?>
 
 
-<p>You have write 2 review</p>
+<p>You have write <?php echo $totalReviews > 1 ? ' '.$totalReviews.' Reviews' : ' '.$totalReviews.' Review' ?></p>
 <?php foreach($films as $film): ?>
 <ul>
     <li><?= $film->getTitle() ?> 

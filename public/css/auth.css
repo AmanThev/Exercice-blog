@@ -5,7 +5,8 @@ body{
     background:         no-repeat top/80% url(../img/layout/ticket.png);
 }
 
-h1.login, h1.signup{
+h1.login, 
+h1.signup{
     color:          beige;
     font-family:    'Kaushan Script', cursive;
     font-size:      5rem;
@@ -92,7 +93,8 @@ section .inputBox label{
 	transition:     .5s;
 }
 
-section .inputBox input:focus ~ label, section .inputBox input:valid ~ label{
+section .inputBox input:focus ~ label, 
+section .inputBox input:valid ~ label{
 	top:        -18px;
 	left:       0;
 	font-size:  12px;

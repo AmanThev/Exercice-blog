@@ -10,67 +10,99 @@ use App\Manager\VoteDatabase;
 /**
  * Section Post
  */
-$lastPost           = new PostDatabase();
-$lastPost           = $lastPost->getLastPost();
-$postCom            = new CommentDatabase();
-$postCom            = $postCom->totalComment('comments_post', $lastPost->getId());
-$lastComPost        = new CommentDatabase();
-$lastComPost        = $lastComPost->getLastComment('comments_post');
-$titleLastCom       = new PostDatabase();
-$titleLastCom       = $titleLastCom->getPostByCommentId($lastComPost->getIndexId());
+
+$bestComNumberPost  = new CommentDatabase();
+
+$bestComPost        = new PostDatabase();
+
 $bestPosts          = new PostDatabase();
 $bestPosts          = $bestPosts->bestVote();
+
+$lastComPost        = new CommentDatabase();
+$lastComPost        = $lastComPost->getLastComment('comments_post');
+
+$lastPost           = new PostDatabase();
+$lastPost           = $lastPost->getLastPost();
+
 $mostComPost        = new CommentDatabase();
 $mostComPost        = $mostComPost->mostComments('comments_post');
-$bestComPost        = new PostDatabase();
-$bestComNumberPost  = new CommentDatabase();
+
+$postCom            = new CommentDatabase();
+$postCom            = $postCom->totalComment('comments_post', $lastPost->getId());
+
+$titleLastCom       = new PostDatabase();
+$titleLastCom       = $titleLastCom->getPostByCommentId($lastComPost->getIndexId());
+
+
+
 
 /**
  * Section Review/Film
  */
-$lastFilm           = new FilmDatabase();
-$lastFilm           = $lastFilm->getLastFilm();
-$totalVote          = new FilmDatabase();
-$totalVote          = $totalVote->totalVote($lastFilm->getId());
-$totalRating        = new FilmDatabase();
-$totalRating        = $totalRating->totalRating($lastFilm->getId());
-$lastComFilm        = new CommentDatabase();
-$lastComFilm        = $lastComFilm->getLastComment('comments_film');
-$titleLastFilm      = new FilmDatabase();
-$titleLastFilm      = $titleLastFilm->getFilmByCommentId($lastComFilm->getIndexId());
-$filmCom            = new CommentDatabase();
-$filmCom            = $filmCom->totalComment('comments_film', $lastFilm->getId());
-$mostComFilm        = new CommentDatabase();
-$mostComFilm        = $mostComFilm->mostComments('comments_film');
+
 $bestComFilm        = new FilmDatabase();
+
 $bestComNumberFilm  = new CommentDatabase();
 $bestRating         = new CommentDatabase();
 $bestRating         = $bestRating->bestRating();
+
 $bestRatFilm        = new FilmDatabase();
+
+$filmCom            = new CommentDatabase();
+$filmCom            = $filmCom->totalComment('comments_film', $lastFilm->getId());
+
+$lastComFilm        = new CommentDatabase();
+$lastComFilm        = $lastComFilm->getLastComment('comments_film');
+
+$lastFilm           = new FilmDatabase();
+$lastFilm           = $lastFilm->getLastFilm();
+
+$mostComFilm        = new CommentDatabase();
+$mostComFilm        = $mostComFilm->mostComments('comments_film');
+
+$titleLastFilm      = new FilmDatabase();
+$titleLastFilm      = $titleLastFilm->getFilmByCommentId($lastComFilm->getIndexId());
+
+$totalRating        = new FilmDatabase();
+$totalRating        = $totalRating->totalRating($lastFilm->getId());
+
+$totalVote          = new FilmDatabase();
+$totalVote          = $totalVote->totalVote($lastFilm->getId());
+
 
 /**
  * Section Statistic
  */
-$totalComPost   = new CommentDatabase();
-$totalComPost   = $totalComPost->totalAllComment('comments_post');
-$totalComFilm   = new CommentDatabase();
-$totalComFilm   = $totalComFilm->totalAllComment('comments_film');
-$totalPost      = new PostDatabase();
-$totalPost      = $totalPost->totalPosts();
-$totalFilm      = new FilmDatabase();
-$totalFilm      = $totalFilm->totalFilms();
-$totalCat       = new ForumDatabase();
-$totalCat       = $totalCat->countAllCategories();
-$totalSubCat    = new ForumDatabase();
-$totalSubCat    = $totalSubCat->countAllSubCategories();
-$totalTopics    = new ForumDatabase();
-$totalTopics    = $totalTopics->countAllTopics();
-$totalMessages  = new ForumDatabase();
-$totalMessages  = $totalMessages->countAllMessages();
-$totalMembers   = new UserDatabase();
-$totalMembers   = $totalMembers->countMembers();
+
 $totalAdmins    = new UserDatabase();
 $totalAdmins    = $totalAdmins->countAdmins();
+
+$totalComFilm   = new CommentDatabase();
+$totalComFilm   = $totalComFilm->totalAllComment('comments_film');
+
+$totalComPost   = new CommentDatabase();
+$totalComPost   = $totalComPost->totalAllComment('comments_post');
+
+$totalCat       = new ForumDatabase();
+$totalCat       = $totalCat->countAllCategories();
+
+$totalFilm      = new FilmDatabase();
+$totalFilm      = $totalFilm->totalFilms();
+
+$totalMembers   = new UserDatabase();
+$totalMembers   = $totalMembers->countMembers();
+
+$totalMessages  = new ForumDatabase();
+$totalMessages  = $totalMessages->countAllMessages();
+
+$totalPost      = new PostDatabase();
+$totalPost      = $totalPost->totalPosts();
+
+$totalSubCat    = new ForumDatabase();
+$totalSubCat    = $totalSubCat->countAllSubCategories();
+
+$totalTopics    = new ForumDatabase();
+$totalTopics    = $totalTopics->countAllTopics();
 
 ?>
 

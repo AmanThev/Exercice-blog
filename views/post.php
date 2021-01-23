@@ -7,23 +7,26 @@ use App\Manager\CommentDatabase;
 use App\Manager\VoteDatabase;
 use App\URL\CreateUrl;
 
-$url    = new ExplodeUrl($_GET['url']);
-$id     = $url->getId();
-$slug   = $url->getSlug();
+$url            = new ExplodeUrl($_GET['url']);
+$id             = $url->getId();
+$slug           = $url->getSlug();
 
-$post = new PostDatabase();
-$post = $post->getPostById($id);
+$adminExist     = new CommentDatabase;
 
 $comments       = new CommentDatabase();
 $comments       = $comments->getCommentById('comments_post', $id);
+
+$memberExist    = new CommentDatabase;
+
+$post           = new PostDatabase();
+$post           = $post->getPostById($id);
+
 $totalComment   = new CommentDatabase;
 $totalComment   = $totalComment->totalComment('comments_post', $id);
-$memberExist    = new CommentDatabase;
-$adminExist     = new CommentDatabase;
 
 // $userId	    = $_SESSION['id'];
-$voteUser = new VoteDatabase();
-$voteUser = $voteUser->voteUser('posts', $id, 2);
+$voteUser       = new VoteDatabase();
+$voteUser       = $voteUser->voteUser('posts', $id, 2);
 
 if(strtolower($post->getTitle()) !== strtolower($slug)){
     $url = CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $id]);

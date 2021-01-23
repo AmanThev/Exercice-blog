@@ -1,16 +1,16 @@
 var spoilers = document.querySelectorAll('.spoiler') 
 
 var displaySpoiler = function (element) {
-	var spanContent = document.createElement('span')
-	var spanHeader = document.createElement('span')
+	var spanContent 		= document.createElement('span')
+	var spanHeader 			= document.createElement('span')
 
-	spanHeader.className = 'spoiler-header'
-	spanHeader.textContent = 'Slide to display the spoiler'
+	spanHeader.className 	= 'spoiler-header'
+	spanHeader.textContent 	= 'Slide to display the spoiler'
 
-	spanContent.className =  'spoiler-content' 
-	spanContent.innerHTML = element.innerHTML
+	spanContent.className 	= 'spoiler-content' 
+	spanContent.innerHTML 	= element.innerHTML
 
-	element.innerHTML = ''
+	element.innerHTML 		= ''
 
 	element.appendChild(spanHeader)
 	element.appendChild(spanContent)

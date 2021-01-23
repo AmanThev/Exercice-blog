@@ -4,19 +4,28 @@ use App\URL\ExplodeUrl;
 use App\Manager\ForumDatabase;
 use App\URL\CreateUrl;
 
-$url = new ExplodeUrl($_GET['url']);
+$url            = new ExplodeUrl($_GET['url']);
+$id             = $url->getIdForTopic();
+$slug           = $url->getSlugTopic();
+$cat            = $url->getCatForPathTopic();
+$subCat         = $url->getSubCatForPathTopic();
 
-$id     = $url->getIdForTopic();
-$slug   = $url->getSlugTopic();
-$cat    = $url->getCatForPathTopic();
-$subCat = $url->getSubCatForPathTopic();
+$catId          = new ForumDatabase();
+$catId          = $catId->getCategoryName($cat);
 
-$catId      = new ForumDatabase();
-$catId      = $catId->getCategoryName($cat);
-$subCatId   = new ForumDatabase();
-$subCatId   = $subCatId->getSubCategoryName($subCat);
-$topic      = new ForumDatabase();
-$topic      = $topic->getTopic($id, $slug);
+$countMessages  = new ForumDatabase();
+
+$countMsg       = new ForumDatabase();
+$countTopic     = new ForumDatabase();
+
+$messages       = new ForumDatabase();
+$messages       = $messages->getMessage($id);
+
+$subCatId       = new ForumDatabase();
+$subCatId       = $subCatId->getSubCategoryName($subCat);
+
+$topic          = new ForumDatabase();
+$topic          = $topic->getTopic($id, $slug);
 
 // if(strtolower($topic->getTitle()) !== strtolower($slug)){
 //     $url = CreateUrl::url('forum/' . $catId->getUrlName() . '/' . $subCatId->getUrlName(), ['slug' => $topic->getUrlTitle(), 'id' => $id]);
@@ -24,14 +33,7 @@ $topic      = $topic->getTopic($id, $slug);
 //     header('Location: ' . $url);
 // }
 
-$messages = new ForumDatabase();
-$messages = $messages->getMessage($id);
-
-$countMessages  = new ForumDatabase();
-$countTopic     = new ForumDatabase();
-$countMsg       = new ForumDatabase();
-
-$title = $slug;
+$title          = $slug;
 ?>
 
 <h1 class="title-forum">Forum</h1>

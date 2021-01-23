@@ -6,9 +6,9 @@ use App\Manager\UserDatabase;
 
 $title = 'Admins';
 
-$administrator = new UserDatabase();
-$admins = $administrator->getAdminsPresentationPage('Admin');
-$modos = $administrator->getAdminsPresentationPage('Modo');
+$administrator  = new UserDatabase();
+$admins         = $administrator->getAdminsPresentationPage('Admin');
+$modos          = $administrator->getAdminsPresentationPage('Modo');
 
 ?>
 

@@ -5,10 +5,10 @@ use App\SQL\Paginate;
 use App\URL\CreateUrl;
 use App\Colors;
 
-$title = 'Dashboard/Reviews';
+$title  = 'Dashboard/Reviews';
 
-$films = new FilmDatabase();
-$films = $films->getAllFilms();
+$films  = new FilmDatabase();
+$films  = $films->getAllFilms();
 
 $colors = [
 	"Horror" => "#fe0800 ",
@@ -18,6 +18,7 @@ $colors = [
     "Comedy" => "#ffbc0a",
     "Biography" => "#cb9a80",
     "Sci-Fi" => "#41ffc8"];
+
 ?>
 
 <h3 class="title-page">Reviews</h3>

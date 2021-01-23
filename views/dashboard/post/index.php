@@ -8,6 +8,7 @@ $title = 'Dashboard/Posts';
 
 $posts = new PostDatabase();
 $posts = $posts->getAllPosts();
+
 ?>
 <h3 class="title-page">Posts</h3>
 

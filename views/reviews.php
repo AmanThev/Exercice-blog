@@ -6,18 +6,17 @@ use App\SQL\Paginate;
 use App\URL\CreateUrl;
 use App\DateReviews;
 
-$title = 'Reviews';
+$title              = 'Reviews';
 
-$reviews = new FilmDatabase();
-$reviews = $reviews->getFilms();
-$pagination = new FilmDatabase();
+$pagination         = new FilmDatabase();
 
-$lastReviews = new FilmDatabase();
-$lastReviews = $lastReviews->getLastFilms(5);
+$lastReviews        = new FilmDatabase();
+$lastReviews        = $lastReviews->getLastFilms(5);
 
-$decadesSelected = empty($_GET['decades']) ? null : (int)$_GET['decades'];
-$yearSelected = empty($_GET['year']) ? null : (int)$_GET['year'];
+$reviews            = new FilmDatabase();
+$reviews            = $reviews->getFilms();
 
+$decadesSelected    = empty($_GET['decades']) ? null : (int)$_GET['decades'];
 if($decadesSelected){
     // htmlspecial sur $_GET['decade']
     //vérifier que c'est bien un int
@@ -25,6 +24,7 @@ if($decadesSelected){
     $reviews = DateReviews::getFilmByDecade($decadesSelected);
 }
 
+$yearSelected       = empty($_GET['year']) ? null : (int)$_GET['year'];
 if($yearSelected){
     $reviews = DateReviews::getFilmByYear($yearSelected);
 }

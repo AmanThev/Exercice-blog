@@ -6,23 +6,25 @@ use App\Manager\FilmDatabase;
 use App\Manager\CommentDatabase;
 use App\URL\CreateUrl;
 
-$url    = new ExplodeUrl($_GET['url']);
-$id     = $url->getId();
-$slug   = $url->getSlug();
+$url            = new ExplodeUrl($_GET['url']);
+$id             = $url->getId();
+$slug           = $url->getSlug();
 
-$film = new FilmDatabase();
-$film = $film->getFilmById($id);
+$film           = new FilmDatabase();
+$film           = $film->getFilmById($id);
 
-$totalVote = new FilmDatabase();
-$totalVote = $totalVote->totalVote($id);
+$totalVote      = new FilmDatabase();
+$totalVote      = $totalVote->totalVote($id);
 
-$totalRating = new FilmDatabase();
-$totalRating = str_replace('.', ',' , $totalRating->totalRating($id));
+$totalRating    = new FilmDatabase();
+$totalRating    = str_replace('.', ',' , $totalRating->totalRating($id));
 
 $comments       = new CommentDatabase();
 $comments       = $comments->getCommentById('comments_film', $id);
+
 $totalComment   = new CommentDatabase;
 $totalComment   = $totalComment->totalComment('comments_film', $id);
+
 $memberExist    = new CommentDatabase;
 $adminExist     = new CommentDatabase;
 

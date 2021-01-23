@@ -4,15 +4,17 @@ use App\Manager\CommentDatabase;
 use App\SQL\Paginate;
 use App\URL\CreateUrl;
 
-$title = 'Dashboard/Comments';
+$title          = 'Dashboard/Comments';
 
-$filmComments = new CommentDatabase();
-$filmComments = $filmComments->getComments('comments_film');
-$titleFilm = new CommentDatabase();
+$filmComments   = new CommentDatabase();
+$filmComments   = $filmComments->getComments('comments_film');
 
-$postComments = new CommentDatabase();
-$postComments = $postComments->getComments('comments_post');
-$titlePost = new CommentDatabase();
+$postComments   = new CommentDatabase();
+$postComments   = $postComments->getComments('comments_post');
+
+$titleFilm      = new CommentDatabase();
+
+$titlePost      = new CommentDatabase();
 
 ?>
 
