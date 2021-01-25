@@ -527,11 +527,59 @@ section.intro-admin h2{
     font-weight:    600; 
 }
 
+section.intro-admin span{
+    float:      right;
+    font-size:  .7em;
+}
+
 section.data-admin ul{
     list-style: none;
+    padding-left: 0em;
 }
 
 section.data-admin li{
     display:                grid;
-    grid-template-columns:  60% 10% 10% 10%;
+    grid-template-columns:  70% 10% 10% 10%;
+    padding:                10px 0 1px 2em;
+}
+
+section.data-admin h3{
+    color:              #7aa7bd;
+    font-size:          1.7em;
+    text-align:         center;
+    margin:             .8em 0 .5em 0em;
+    text-decoration:    underline;
+}
+
+#separate-profile-admin{
+    margin: 	        30px auto auto auto;
+    width: 			    50%;
+    height: 			4px;
+    background-color:   #7aa7bd;
+    border-radius:      50%;
+    filter:             blur(0.5px);  
+}
+
+section.data-admin .admin-empty{
+    font-size:      1.2em;
+    padding-left:   10em;
+}
+
+section.data-admin p.admin-data{
+    font-size:          1.3em;
+    padding:            1em 0 0.5em 3em;
+    font-weight:        500;
+    text-decoration:    underline;
+}
+
+section.data-admin ul p{
+    font-size: 1.1em; 
+}
+
+section.data-admin ul i{
+    padding-right: 1em;
+}
+
+section.data-admin li:nth-child(2n+2){
+    background: #7aa7bd;
 }

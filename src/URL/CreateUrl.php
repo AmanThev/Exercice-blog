@@ -19,6 +19,11 @@ class CreateURL {
         return WWW_ROOT. $name;
     }
 
+    public static function urlSlugOnly(string $name, string $slug)
+    {
+        return WWW_ROOT. '/' . $name . '/' . $slug;
+    }
+
     public static function urlTitle($title)
     {
         $title = ucwords($title);

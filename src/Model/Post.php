@@ -76,6 +76,10 @@ class Post
     {
         return CreateUrl::urlTitle($this->title);
     }
+
+    public function getUrlTitleCheck(){
+        return CreateUrl::urlTitleCheck($this->title);
+    }
     
     public function getPicture()
     {

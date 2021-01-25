@@ -5,30 +5,27 @@ use App\Manager\Database;
 use App\Manager\PostDatabase;
 use App\Manager\CommentDatabase;
 use App\Manager\VoteDatabase;
+use App\Manager\UserDatabase;
 use App\URL\CreateUrl;
 
 $url            = new ExplodeUrl($_GET['url']);
 $id             = $url->getId();
 $slug           = $url->getSlug();
 
-$adminExist     = new CommentDatabase;
+$userDatabase   = new UserDatabase;
 
-$comments       = new CommentDatabase();
-$comments       = $comments->getCommentById('comments_post', $id);
-
-$memberExist    = new CommentDatabase;
+$commentDatabase    = new CommentDatabase();
+$comments           = $commentDatabase->getCommentById('comments_post', $id);
+$totalComment       = $commentDatabase->totalComment('comments_post', $id);
 
 $post           = new PostDatabase();
 $post           = $post->getPostById($id);
-
-$totalComment   = new CommentDatabase;
-$totalComment   = $totalComment->totalComment('comments_post', $id);
 
 // $userId	    = $_SESSION['id'];
 $voteUser       = new VoteDatabase();
 $voteUser       = $voteUser->voteUser('posts', $id, 2);
 
-if(strtolower($post->getTitle()) !== strtolower($slug)){
+if(strtolower($post->getUrlTitleCheck()) !== strtolower($slug)){
     $url = CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $id]);
     http_response_code(301);
     header('Location: ' . $url);
@@ -36,7 +33,6 @@ if(strtolower($post->getTitle()) !== strtolower($slug)){
 
 $title = $slug;
 ?>
-
 
 <section class="post">
 	<h1><?= $post->getTitle() ?></h1>
@@ -82,9 +78,9 @@ $title = $slug;
         <p class="total-comments"><?php echo $totalComment > 1 ? ' '.$totalComment.' Comments' : ' '.$totalComment.' Comment' ?></p>
         <?php foreach ($comments as $comment): ?>
             <div class="comment-user">
-                <span class="photo-profile <?php if($memberExist->isMember($comment->getPseudo()) === 1){ 
+                <span class="photo-profile <?php if($userDatabase->isMember($comment->getPseudo()) === 1){ 
                                                     echo 'member'; 
-                                            }elseif($adminExist->isAdmin($comment->getPseudo()) === 1){ 
+                                            }elseif($userDatabase->isAdmin($comment->getPseudo()) === 1){ 
                                                 echo 'admin';
                                             } ?>"><img src="<?= PUBLIC_PATH ?>/img/photoProfile/default.jpg"></span><h2><?= $comment->getPseudo() ?>:
                     <span class="date-comment">

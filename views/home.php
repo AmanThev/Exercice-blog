@@ -4,7 +4,7 @@ use App\Manager\PostDatabase;
 use App\Manager\FilmDatabase;
 use App\URL\CreateUrl;
 
-$title = 'HomePage'; 
+$title  = 'HomePage'; 
 
 $films  = new FilmDatabase();
 $films  = $films->getFilmsHome();
@@ -46,8 +46,6 @@ $posts  = $posts->getPostsHome();
         <?php endforeach; ?>
     </div>
 </div>
-
-
 
 <div class="latest-card">
 <h1>Latest Reviews</h1>

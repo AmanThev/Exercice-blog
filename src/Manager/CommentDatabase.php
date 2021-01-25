@@ -43,20 +43,6 @@ class CommentDatabase extends Database
         return $lastComment;
     }
 
-    public function isMember(string $pseudo): int
-    {
-        $stmt = $this->connect()->prepare("SELECT name FROM members WHERE name=:pseudo");
-        $stmt->execute(['pseudo' => $pseudo]);
-        return $stmt->rowCount();
-    }
-
-    public function isAdmin(string $pseudo): int
-    {
-        $stmt = $this->connect()->prepare("SELECT name FROM admins WHERE name=:pseudo");
-        $stmt->execute(['pseudo' => $pseudo]);
-        return $stmt->rowCount();
-    }
-
     public function mostComments($table): array
     {
         $stmt = $this->connect()->query("SELECT index_id, count(index_id) AS best FROM $table GROUP BY index_id");

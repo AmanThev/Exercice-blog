@@ -66,4 +66,18 @@ class UserDatabase extends Database
     {
         return CountSql::totalData($this->queryAdmins);
     }
+
+    public function isMember(string $pseudo): int
+    {
+        $stmt = $this->connect()->prepare("SELECT name FROM members WHERE name=:pseudo");
+        $stmt->execute(['pseudo' => $pseudo]);
+        return $stmt->rowCount();
+    }
+
+    public function isAdmin(string $pseudo): int
+    {
+        $stmt = $this->connect()->prepare("SELECT name FROM admins WHERE name=:pseudo");
+        $stmt->execute(['pseudo' => $pseudo]);
+        return $stmt->rowCount();
+    }
 }

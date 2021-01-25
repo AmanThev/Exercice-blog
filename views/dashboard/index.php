@@ -48,14 +48,15 @@ $bestRating         = $bestRating->bestRating();
 
 $bestRatFilm        = new FilmDatabase();
 
-$filmCom            = new CommentDatabase();
-$filmCom            = $filmCom->totalComment('comments_film', $lastFilm->getId());
 
 $lastComFilm        = new CommentDatabase();
 $lastComFilm        = $lastComFilm->getLastComment('comments_film');
 
 $lastFilm           = new FilmDatabase();
 $lastFilm           = $lastFilm->getLastFilm();
+
+$filmCom            = new CommentDatabase();
+$filmCom            = $filmCom->totalComment('comments_film', $lastFilm->getId());
 
 $mostComFilm        = new CommentDatabase();
 $mostComFilm        = $mostComFilm->mostComments('comments_film');

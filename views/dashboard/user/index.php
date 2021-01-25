@@ -58,7 +58,7 @@ $reviewWritten  = new FilmDatabase();
                 <td><?= $admin->getEmail() ?></td>
                 <td><?= $postWritten->postWritten($admin->getId()) ?></td>
                 <td><?= $reviewWritten->reviewWritten($admin->getId())?></td>
-                <td><a href="#"><i class="fas fa-user-circle"></i> View Profile</a></td> 
+                <td><a href="<?= CreateUrl::urlSlugOnly('dashboard/users', $admin->getName()) ?>"><i class="fas fa-user-circle"></i> View Profile</a></td> 
                 <!-- Chaque admin a seulement accès à son compte -->
             </tr>
         <?php endforeach; ?>

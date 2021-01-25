@@ -4,6 +4,7 @@ use App\URL\ExplodeUrl;
 use App\Manager\Database;
 use App\Manager\FilmDatabase;
 use App\Manager\CommentDatabase;
+use App\Manager\UserDatabase;
 use App\URL\CreateUrl;
 
 $url            = new ExplodeUrl($_GET['url']);
@@ -28,8 +29,6 @@ $totalComment   = $totalComment->totalComment('comments_film', $id);
 $memberExist    = new CommentDatabase;
 $adminExist     = new CommentDatabase;
 
-// dump($film->getUrlTitleCheck(), $slug, $film->getTitle());
-// die;
 if(strtolower($film->getUrlTitleCheck()) !== strtolower($slug)){
     $url = CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $id]);
     http_response_code(301);
