@@ -43,7 +43,7 @@ class CommentDatabase extends Database
         return $lastComment;
     }
 
-    public function mostComments($table): array
+    public function mostComments(string $table): array
     {
         $stmt = $this->connect()->query("SELECT index_id, count(index_id) AS best FROM $table GROUP BY index_id");
         $mostCom = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -62,7 +62,7 @@ class CommentDatabase extends Database
     /**
      * count the number of comments
      */
-    public function countCommentByIndexId(int $indexId, $table): Comment
+    public function countCommentByIndexId(int $indexId, string $table): Comment
     {
         $stmt = $this->connect()->prepare("SELECT index_id, count(index_id) AS best FROM $table WHERE index_id=:indexId GROUP BY index_id");
         $stmt->execute(['indexId' => $indexId]);
@@ -96,7 +96,7 @@ class CommentDatabase extends Database
         return CountSql::totalData("SELECT * FROM comments_post WHERE pseudo = ?", $name);
     }
 
-    public function findTitle($idTable, $tableComment, $table): Comment
+    public function findTitle(int $idTable, string $tableComment, string $table): Comment
     {
         $stmt = $this->connect()->prepare("
             SELECT title FROM $tableComment tc

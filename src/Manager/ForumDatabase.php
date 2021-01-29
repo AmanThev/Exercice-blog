@@ -174,7 +174,7 @@ class ForumDatabase extends Database
         return $lastMsg;
     }
 
-    public function getMessage($idTopic): array
+    public function getMessage(int $idTopic): array
     {
         $stmt = $this->connect()->prepare("
             $this->queryMessage

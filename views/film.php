@@ -26,8 +26,7 @@ $comments       = $comments->getCommentById('comments_film', $id);
 $totalComment   = new CommentDatabase;
 $totalComment   = $totalComment->totalComment('comments_film', $id);
 
-$memberExist    = new CommentDatabase;
-$adminExist     = new CommentDatabase;
+$userDatabase    = new UserDatabase;
 
 if(strtolower($film->getUrlTitleCheck()) !== strtolower($slug)){
     $url = CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $id]);
@@ -92,15 +91,15 @@ $title = $slug;
     </article>
 </section>
 
-<section class="film">
+<section class="film comment-film">
     <h2>Review User</h2>
     <?php if($comments != false): ?>
         <p class="total-comments"><?php echo $totalComment > 1 ? ' '.$totalComment.' Comments' : ' '.$totalComment.' Comment' ?></p>
         <?php foreach ($comments as $comment): ?>
             <div class="comment-user">
-                <span class="photo-profile <?php if($memberExist->isMember($comment->getPseudo()) === 1){ 
+                <span class="photo-profile <?php if($userDatabase->isMember($comment->getPseudo()) === 1){ 
                                                     echo 'member'; 
-                                            }elseif($adminExist->isAdmin($comment->getPseudo()) === 1){ 
+                                            }elseif($userDatabase->isAdmin($comment->getPseudo()) === 1){ 
                                                 echo 'admin';
                                             } ?>"><img src="<?= PUBLIC_PATH ?>/img/photoProfile/default.jpg" alt=""></span><h3><?= $comment->getPseudo() ?>,
                     <span class="date-comment">

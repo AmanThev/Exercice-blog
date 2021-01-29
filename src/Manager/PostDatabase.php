@@ -68,7 +68,7 @@ class PostDatabase extends Database
         return $lastpost;
     }
 
-    public function postPaginationNumber($status): ?int
+    public function postPaginationNumber(string $status): ?int
     {
         if($status === 'public'){
             $pagination = new Paginate($this->queryPublic);
@@ -93,7 +93,7 @@ class PostDatabase extends Database
         throw new Exception('No post matches this id');
     }
 
-    public function getPostByCommentId($idPost): Post
+    public function getPostByCommentId(int $idPost): Post
     {
         $stmt = $this->connect()->prepare("
             $this->queryAllPost p
@@ -106,7 +106,7 @@ class PostDatabase extends Database
         return $post;
     }
 
-    public function getPostByAdminId($idAdmin)
+    public function getPostByAdminId(int $idAdmin)
     {
         $stmt = $this->connect()->prepare("
             SELECT * FROM admins a

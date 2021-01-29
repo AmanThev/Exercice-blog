@@ -36,7 +36,11 @@ $totalPosts     = count($posts);
     
     <section class="intro-admin">
         <h2><?= $admin->getName() ?><span><?= $admin->getPosition() ?></span></h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda nobis non tempora dicta labore, ab nesciunt explicabo ratione, iusto ea odio! Eum, laudantium labore consequatur inventore sed reprehenderit enim repudiandae.</p>
+        <?php if($admin->getDescription() != NULL): ?>
+            <p><?= $admin->getDescription() ?></p>
+        <?php else: ?>
+            <p>Please, write a description !!!!</p>
+        <?php endif; ?>
     </section>
 </div>
 
@@ -75,4 +79,34 @@ $totalPosts     = count($posts);
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
+</section>
+
+<section class="setting-admin">
+    <div class="single-icon">
+		<div class="icon">
+            <i class="fas fa-lock" aria-hidden="true"></i>
+        </div>
+		<div class="content-icon">
+			<h3>Password</h3>
+			<p>Change your password</p><a href="#">>> Click here</a>
+		</div>			
+    </div>
+    <div class="single-icon">
+        <div class="icon">
+            <i class="fas fa-file-alt" aria-hidden="true"></i>
+        </div>
+		<div class="content-icon">
+			<h3>Description</h3>
+			<p>Write or change your description</p><a href="#">>> Click here</a>
+		</div>			
+    </div>
+    <div class="single-icon">
+		<div class="icon">
+            <i class="fas fa-user-times" aria-hidden="true"></i>
+        </div>
+		<div class="content-icon">
+			<h3>Unsubscribe</h3>
+			<p>If you want delete your account</p><a href="#">>> Click here</a>
+		</div>			
+	</div>
 </section>

@@ -131,8 +131,8 @@ a#scrolltotop.scrollInvisible{
 }
   
 a#scrolltotop.scrollVisible{
-    bottom: 30px;
-    opacity:1;
+    bottom:     30px;
+    opacity:    1;
 }
 
 /*
@@ -244,9 +244,9 @@ section div.latest:first-child{
 }
 
 section img.latest-img{
-    width:                      100%;
-    max-height:                 195px;
-    min-height:                 195px;
+    width:      100%;
+    max-height: 195px;
+    min-height: 195px;
 }
 
 section div.latest-body{
@@ -333,7 +333,8 @@ aside button.search-home-btn{
     padding:        0.5rem 0.8rem;
 }
 
-aside button.search-home-btn:hover{
+aside button.search-home-btn:hover,
+aside div.poll button:hover{
     color:              black;
     background-color:   beige;
 }
@@ -364,11 +365,6 @@ aside div.poll button{
     padding:        0.5rem 0.8rem;
     color:          beige;
     font-weight:    800;
-}
-
-aside div.poll button:hover{
-    color:              black;
-    background-color:   beige;
 }
 
 /*
@@ -457,7 +453,7 @@ section div.content-last-post span:hover{
 
 div.bottom-blog{
     margin-top: 70px;
-    color: beige;
+    color:      beige;
 }
 
 div.search-blog{
@@ -579,9 +575,10 @@ section div.pagination-all-post ul{
     text-align: center;
 }
 
-section div.pagination-all-post li.active a{
-    color: black;
-    background-color: beige;
+section div.pagination-all-post li.active a,
+section div.pagination-all-post a:hover{
+    color:              black;
+    background-color:   beige;
 }
 
 section div.pagination-all-post a{
@@ -592,11 +589,6 @@ section div.pagination-all-post a{
    border:          1px solid beige;
    margin:          .3rem .1rem;
    padding:         .5rem;
-}
-
-section div.pagination-all-post a:hover{
-    color: black;
-    background-color: beige;
 }
 
 section div.pagination-all-post li.disabled a{
@@ -651,18 +643,14 @@ section.all-post form.search-post-box:hover > input.search-post-text{
     padding:    0 6px;
 }
 
-section.all-post form.search-post-box:hover >  a.search-post-btn{
+section.all-post form.search-post-box:hover >  a.search-post-btn,
+section.all-post form input.search-post-text:focus > a.search-post-btn{
     background: #251e09;
     color:      beige;
 }
 
 section.all-post input.search-post-text:focus{
     width: 240px;
-}
-
-section.all-post form input.search-post-text:focus > a.search-post-btn{
-    background: #251e09;
-    color:      beige;
 }
 
 /*
@@ -686,14 +674,14 @@ h1#title-reviews{
 }
 
 section h1{
-    font-size: 2rem;
-    text-decoration: underline;
-    color: beige;
-    margin: 20px;
+    font-size:          2rem;
+    text-decoration:    underline;
+    color:              beige;
+    margin:             20px;
 }
 
 section div.last-reviews{
-    position: relative;
+    position:       relative;
     overflow:       hidden;
     height:         500px;
     border-top:     2px solid beige;  
@@ -771,28 +759,28 @@ section div.last-reviews figure{
 }
 
 section div.last-reviews figure:nth-child(1){
-    left:0px;
-    animation:sliderfirst 45s linear infinite;
+    left:       0px;
+    animation:  sliderfirst 45s linear infinite;
 }
 
 section div.last-reviews figure:nth-child(2){
-    left:1450px;
-    animation:slidersecond 45s linear infinite;
+    left:       1450px;
+    animation:  slidersecond 45s linear infinite;
 }
 
 section div.last-reviews figure:nth-child(3){
-    left:2900px;
-    animation:sliderthird 45s linear infinite;
+    left:       2900px;
+    animation:  sliderthird 45s linear infinite;
 }
 
 section div.last-reviews figure:nth-child(4){
-    left:4350px;
-    animation:sliderfourth 45s linear infinite;
+    left:       4350px;
+    animation:  sliderfourth 45s linear infinite;
 }
 
 section div.last-reviews figure:nth-child(5){
-    left:-2800px;
-    animation:sliderfifth 45s linear infinite;
+    left:       -2800px;
+    animation:  sliderfifth 45s linear infinite;
 }
 
 @keyframes sliderfirst{
@@ -973,41 +961,7 @@ section div.last-reviews figure:nth-child(5){
     }
 }
 
-/* @keyframes slide{
-    0%{
-        left: 0%;
-    }
-    19%{
-        left: 0%;
-    }
-    21%{
-        left: -100%;
-    }
-    39%{
-        left: -100%;
-    }
-    41%{
-        left: -200%;
-    }
-    59%{
-        left: -200%;
-    }
-    61%{
-        left: -300%;
-    }
-    79%{
-        left: -300%;
-    }
-    81%{
-        left: -400%;
-    }
-    100%{
-        left: -400%;
-    }
-} */
-
 div.bottom-reviews{
-    margin: 20px 0;
     margin: 50px 0;
     color: beige;
 }
@@ -1096,7 +1050,7 @@ section div.box-all-reviews:hover div.content-all-reviews:after{
 
 section div.box-all-reviews div.content-all-reviews h2{
     margin-bottom:  1rem; 
-    text-align: center;
+    text-align:     center;
 }
   
 section div.box-all-reviews div.content-all-reviews h2.short-title{
@@ -1217,18 +1171,14 @@ section.all-reviews form.search-reviews-box:hover > input.search-reviews-text{
     padding:    0 6px;
 }
 
-section.all-reviews form.search-reviews-box:hover >  a.search-reviews-btn{
+section.all-reviews form.search-reviews-box:hover >  a.search-reviews-btn,
+section.all-reviews form input.search-reviews-text:focus > a.search-reviews-btn{
     background: #251e09;
     color:      beige;
 }
 
 section.all-reviews input.search-reviews-text:focus{
     width: 240px;
-}
-
-section.all-reviews form input.search-reviews-text:focus > a.search-reviews-btn{
-    background: #251e09;
-    color:      beige;
 }
 
 aside.date-reviews{
@@ -1427,19 +1377,19 @@ section.post form textarea:focus{
 }
 
 section.post form button{
-    display:        inline-block;
-    cursor:         pointer;
-    border:         2px solid beige;
-    background-color: #372c0c;
-    color:          beige;
-    width:          10rem;
-    font-weight:    600;
-    font-size:      1.2rem;
-    margin:         1rem auto;
-    padding:        .4rem .8rem;
-    line-height:    1.5;
-    border-radius:  .25rem;
-    user-select:    none;
+    display:            inline-block;
+    cursor:             pointer;
+    border:             2px solid beige;
+    background-color:   #372c0c;
+    color:              beige;
+    width:              10rem;
+    font-weight:        600;
+    font-size:          1.2rem;
+    margin:             1rem auto;
+    padding:            .4rem .8rem;
+    line-height:        1.5;
+    border-radius:      .25rem;
+    user-select:        none;
 }
 
 section.post div.vote{
@@ -1493,15 +1443,16 @@ section.post .is-disliked button.vote-dislike{
     ****    view/film.php    ****
 */
 
-section.film{
+section.film,
+section.content-film article{
+	padding : 			20px;
+    margin: 		    30px 0;
+    overflow:           hidden;
+    color:              beige;
     border:             1px solid white;
     border-radius:      0.5rem;
     background-color:   #251e09;
     box-shadow:         0px 0px 10px beige;
-    overflow:           hidden;  
-	padding : 			10px;
-    margin: 		    30px 0;
-    color:              beige;
 }
 
 section.header-film h1, 
@@ -1520,24 +1471,14 @@ section.header-film img{
 }
 
 section.content-film{
-    color:              beige;
     display:            flex;
     vertical-align:     wrap;
     justify-content:    space-between;
 }
 
-section.content-film h2{
+section.content-film h2,
+section.film h2{
     text-decoration: underline;
-}
-
-section.content-film article{
-    border:             1px solid white;
-    border-radius:      0.5rem;
-    background-color:   #251e09;
-    box-shadow:         0px 0px 10px beige;
-    overflow:           hidden;  
-	padding : 			20px;
-    margin: 		    30px 0;
 }
 
 section.content-film article.info-film{
@@ -1550,18 +1491,17 @@ td{
     border-collapse:    separate;
 }
 
-section.content-film article.info-film td{
-    border:             0px;
+section.content-film article.info-film td,
+section.content-film article.info-film th{
+    border:         0px;
     text-align:     left;
 }
 
 section.content-film article.info-film th{
-    border:             0px;
     white-space:    nowrap;
     padding-right:  1.5em;
     vertical-align: top;
     line-height:    2em;
-    text-align:     left;
 }
 
 section.content-film article.info-film ul{
@@ -1676,7 +1616,8 @@ section.film form textarea{
     margin-bottom:  2.5rem;
 }
 
-section.film form input:focus, section.film form textarea:focus{
+section.film form input:focus, 
+section.film form textarea:focus{
     border: .15rem solid skyblue;
 }
 
@@ -1721,7 +1662,7 @@ section.film form input:checked ~ label{
 }
 
 section.film form input#rating-film-0:checked ~ label{
-    color:          #1ed009 ;
+    color: #1ed009 ;
 }
   
 section.film form input#rating-film-5:checked ~ label{
@@ -1730,12 +1671,12 @@ section.film form input#rating-film-5:checked ~ label{
 }
 
 section.film form #display-rating-film{
-    position: relative;
-    top: -55px;
-    left: 330px;
-    font-weight: 600;
-    font-size: 1.5em;
-    transition: all 0.2s ease;
+    position:       relative;
+    top:            -55px;
+    left:           330px;
+    font-weight:    600;
+    font-size:      1.5em;
+    transition:     all 0.2s ease;
 }
 
 section.film form #display-rating-film:after{
@@ -1765,60 +1706,21 @@ section.film form  .rate-4:after{
 section.film form .rate-5:after{
     content: "Excellent!!! 😍";
 }
-/* 
-section.film form div.rating-film label.trash{
-	color: grey;
-}
-
-section.film form div.rating-film label{
-	color: red;
-	text-decoration: none;
-}
-
-section.film form div.rating-film div{
-    margin: -1rem 5rem;
-}
-
-section.film form div.rating-film div:first-child{
-    margin-top: .5rem;
-}
-
-section.film form div.rating-film div:last-child{
-    margin-bottom: 2rem;
-}
-
-section.film form div.rating-film label{
-   margin-left: 0;
-}
-
-section.film form div.rating-film span{
-	font-size: small;
-	padding-left: 15px;
-	opacity: 0;
-}
-
-section.film form div.rating-film input:hover ~ label, section.film form div.rating-film input:checked ~ label{
-color: gold;
-}
-
-section.film form div.rating-film input:hover ~ label span, section.film form div.rating-film input:checked ~ label span{
-	opacity: 1;
-} */
 
 section.film form button{
-    display:        inline-block;
-    cursor:         pointer;
-    border:         2px solid beige;
-    background-color: #372c0c;
-    color:          beige;
-    width:          10rem;
-    font-weight:    600;
-    font-size:      1.2rem;
-    margin:         1rem auto;
-    padding:        .4rem .8rem;
-    line-height:    1.5;
-    border-radius:  .25rem;
-    user-select:    none;
+    display:            inline-block;
+    cursor:             pointer;
+    border:             2px solid beige;
+    background-color:   #372c0c;
+    color:              beige;
+    width:              10rem;
+    font-weight:        600;
+    font-size:          1.2rem;
+    margin:             1rem auto;
+    padding:            .4rem .8rem;
+    line-height:        1.5;
+    border-radius:      .25rem;
+    user-select:        none;
 }
 
 section span.spoiler{
@@ -1855,17 +1757,24 @@ section span.spoiler-header{
     ****   view/forum.php   ****
 */
 
+section.forum h2 a,
+section.forum h2 a:hover,
+section.forum,
+p.path-forum,
+h1.title-forum,
+section.forum a{
+    color:              beige;
+}
+
 h1.title-forum{
     text-align:     center;
     margin:         20px;
-    color:          beige;
     font-family:    fantasy, sans-serif;
     font-size:      5.5rem;
 }
 
 p.path-forum{
     margin: 2rem 2rem;
-    color: beige;
 }
 
 section.forum{
@@ -1875,7 +1784,6 @@ section.forum{
     box-shadow:         0px 0px 10px beige;
     overflow:           hidden;  
     margin: 		    30px 0;
-    color:              beige;
 }
 
 section.forum h2{
@@ -1884,12 +1792,7 @@ section.forum h2{
     font-size:          1.5rem;
 }
 
-section.forum h2 a{
-    color:              beige;
-}
-
 section.forum h2 a:hover{
-    color:              beige;
     text-decoration:    underline #dadaa0;
     color:              #dadaa0;
 }
@@ -1901,7 +1804,8 @@ section.forum div.separate-forum{
     box-shadow:         0px 0px 10px beige;
 }
 
-section.forum.welcome p, ul{
+section.forum.welcome p, 
+ul{
     margin:         20px 25px;
     text-align:     justify;
     line-height:    1.5;
@@ -1946,11 +1850,8 @@ section.forum tr{
     height: 3rem;
 }
 
-section.forum a{
-    color: beige;
-}
-
-section.forum a:hover{
+section.forum a:hover,
+p.path-forum a:hover{
     text-decoration:    none #dadaa0;
     color:              #dadaa0;
 }
@@ -1958,11 +1859,6 @@ section.forum a:hover{
 p.path-forum a{
     color:          beige;
     text-decoration: underline;
-}
-
-p.path-forum a:hover{
-    text-decoration:    none #dadaa0;
-    color:              #dadaa0;
 }
 
 /*

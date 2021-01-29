@@ -83,7 +83,7 @@ class FilmDatabase extends Database
         throw new NoFoundException("No film matches this id = $id");
     }
     
-    public function getFilmByCommentId($idFilm)
+    public function getFilmByCommentId(int $idFilm)
     {
         $stmt = $this->connect()->prepare("
             $this->query f
@@ -96,7 +96,7 @@ class FilmDatabase extends Database
         return $film;
     }
 
-    public function getFilmByAdminId($idAdmin)
+    public function getFilmByAdminId(int $idAdmin)
     {
         $stmt = $this->connect()->prepare("
             SELECT * FROM admins a
@@ -135,7 +135,7 @@ class FilmDatabase extends Database
         return $resultRating;
     }
 
-    public function totalFilms()
+    public function totalFilms(): int
     {
         return CountSql::totalData($this->query);
     }

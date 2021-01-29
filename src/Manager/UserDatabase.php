@@ -28,13 +28,16 @@ class UserDatabase extends Database
         return $admins;
     }
 
-    public function getAdminById($id)
+    public function getAdminById(int $id): Admin
     {
         $stmt = $this->connect()->prepare("SELECT name FROM admins WHERE id=:id");
         $stmt->execute(['id' => $id]);
-        $stmt->setFetchMode(PDO::FETCH_CLASS,Admin::class);
-        $admin = $stmt->fetch();
-        return $admin;
+        if($stmt->rowCount() == 1){
+            $stmt->setFetchMode(PDO::FETCH_CLASS,Admin::class);
+            $admin = $stmt->fetch();
+            return $admin;
+        }
+        throw new NoFoundException("No id matches this id : $id");
     }
 
     public function getAdminByName(string $name): Admin
@@ -46,7 +49,7 @@ class UserDatabase extends Database
             $admin = $stmt->fetch();
             return $admin;
         }
-        throw new NoFoundException("No Admin Name matches this $name");
+        throw new NoFoundException("No Admin Name matches this name : $name");
     }
 
     public function getAdminsPresentationPage($position): array
