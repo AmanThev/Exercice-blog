@@ -5,12 +5,15 @@ use App\Manager\UserDatabase;
 use App\Manager\FilmDatabase;
 use App\Manager\PostDatabase;
 use App\Manager\CommentDatabase;
+use App\HTML\Profile;
 
 
 $url            = new ExplodeUrl($_GET['url']);
 $slug           = $url->getSlugName();
 
 $title          = $slug;
+
+$topProfile     = new Profile('admin');
 
 $admin          = new UserDatabase();
 $admin          = $admin->getAdminByName($slug);
@@ -29,20 +32,7 @@ $totalPosts     = count($posts);
 
 ?>
 
-<div class="top-profile-admin">
-    <aside class="photo-admin">
-        <img src="<?= PUBLIC_PATH ?>/img/photoProfile/default.jpg">
-    </aside>
-    
-    <section class="intro-admin">
-        <h2><?= $admin->getName() ?><span><?= $admin->getPosition() ?></span></h2>
-        <?php if($admin->getDescription() != NULL): ?>
-            <p><?= $admin->getDescription() ?></p>
-        <?php else: ?>
-            <p>Please, write a description !!!!</p>
-        <?php endif; ?>
-    </section>
-</div>
+<?= $topProfile->topProfile($slug); ?>
 
 <section class="data-admin">
     <h2>What have you done?</h2>

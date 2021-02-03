@@ -32,7 +32,7 @@ use App\URL\CreateUrl;
         <div class="separate-header"></div>
     </nav>    
 </div>
-<a class="login" href="<?= CreateUrl::url('user/login') ?>">Login</a>    
+<a class="login" href="<?= CreateUrl::url('authentication/login') ?>">Login</a>    
 </header>
 
 <div class="container-fluid">

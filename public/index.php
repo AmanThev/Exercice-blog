@@ -39,8 +39,10 @@ $router->get('/forum/newTopic', VIEWS . 'forum/addTopic');
 $router->get('/quiz', VIEWS . 'quiz');
 $router->get('/admin', VIEWS . 'presentationAdmin');
 
-$router->get('/user/login', VIEWS . 'user/login');
-$router->get('/user/register', VIEWS . 'user/register');
+$router->get('/authentication/login', VIEWS . 'user/login');
+$router->get('/authentication/register', VIEWS . 'user/register');
+
+$router->get('/user/:slug', VIEWS . 'user/profileMember');
 
 $router->get('/dashboard', VIEWS . 'dashboard/index');
 $router->get('/dashboard/posts', VIEWS . 'dashboard/post/index');

@@ -78,9 +78,9 @@ $title = $slug;
         <p class="total-comments"><?php echo $totalComment > 1 ? ' '.$totalComment.' Comments' : ' '.$totalComment.' Comment' ?></p>
         <?php foreach ($comments as $comment): ?>
             <div class="comment-user">
-                <span class="photo-profile <?php if($userDatabase->isMember($comment->getPseudo()) === 1){ 
-                                                    echo 'member'; 
-                                            }elseif($userDatabase->isAdmin($comment->getPseudo()) === 1){ 
+                <span class="photo-profile <?php if($userDatabase->statutUser($comment->getPseudo(), 'members') === 1){ 
+                                                echo 'member'; 
+                                            }elseif($userDatabase->statutUser($comment->getPseudo(), 'admins') === 1){ 
                                                 echo 'admin';
                                             } ?>"><img src="<?= PUBLIC_PATH ?>/img/photoProfile/default.jpg"></span><h2><?= $comment->getPseudo() ?>:
                     <span class="date-comment">

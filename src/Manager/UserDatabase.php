@@ -42,7 +42,7 @@ class UserDatabase extends Database
 
     public function getAdminByName(string $name): Admin
     {
-        $stmt = $this->connect()->prepare("SELECT * FROM admins WHERE name=:name");
+        $stmt = $this->connect()->prepare("$this->queryAdmins WHERE name=:name");
         $stmt->execute(['name' => $name]);
         if($stmt->rowCount() == 1){
             $stmt->setFetchMode(PDO::FETCH_CLASS,Admin::class);
@@ -50,6 +50,18 @@ class UserDatabase extends Database
             return $admin;
         }
         throw new NoFoundException("No Admin Name matches this name : $name");
+    }
+
+    public function getMemberByName(string $name): Member
+    {
+        $stmt = $this->connect()->prepare("$this->queryMembers WHERE name=:name");
+        $stmt->execute(['name' => $name]);
+        if($stmt->rowCount() == 1){
+            $stmt->setFetchMode(PDO::FETCH_CLASS,Member::class);
+            $member = $stmt->fetch();
+            return $member;
+        }
+        throw new NoFoundException("No Members Name matches this name : $name");
     }
 
     public function getAdminsPresentationPage($position): array
@@ -70,16 +82,9 @@ class UserDatabase extends Database
         return CountSql::totalData($this->queryAdmins);
     }
 
-    public function isMember(string $pseudo): int
+    public function statutUser(string $pseudo, string $tableName): int
     {
-        $stmt = $this->connect()->prepare("SELECT name FROM members WHERE name=:pseudo");
-        $stmt->execute(['pseudo' => $pseudo]);
-        return $stmt->rowCount();
-    }
-
-    public function isAdmin(string $pseudo): int
-    {
-        $stmt = $this->connect()->prepare("SELECT name FROM admins WHERE name=:pseudo");
+        $stmt = $this->connect()->prepare("SELECT name FROM $tableName WHERE name=:pseudo");
         $stmt->execute(['pseudo' => $pseudo]);
         return $stmt->rowCount();
     }

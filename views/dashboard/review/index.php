@@ -18,7 +18,6 @@ $colors = [
     "Comedy" => "#ffbc0a",
     "Biography" => "#cb9a80",
     "Sci-Fi" => "#41ffc8"];
-
 ?>
 
 <h3 class="title-page">Reviews</h3>

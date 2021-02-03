@@ -64,11 +64,18 @@ class Route{
                 require VIEWS . 'layouts/dashboard.php';
                 return $this;
                 break;
-            case 'user':
+            case 'authentication':
                 ob_start();
                 require $view . '.php';
                 $content = ob_get_clean();
                 require VIEWS . 'layouts/auth.php';
+                return $this;
+                break;
+            case 'user':
+                ob_start();
+                require $view . '.php';
+                $content = ob_get_clean();
+                require VIEWS . 'layouts/profile.php';
                 return $this;
                 break;
             default:

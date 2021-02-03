@@ -19,5 +19,5 @@ $title = "Login"
         </div>
           <input type="submit" name="login" value="Login">
       </form>
-      <p>New around here? <a href="<?= CreateUrl::url('user/register') ?>" class="">Sign up</a></p>
+      <p>New around here? <a href="<?= CreateUrl::url('authentication/register') ?>" class="">Sign up</a></p>
 </section>

@@ -33,9 +33,9 @@ class FilmDatabase extends Database
     public function getAllFilms(): array
     {
         $stmt = $this->connect()->query("
-            $this->query 
-            LEFT JOIN admins a
-            ON admin_id = a.id
+            SELECT * FROM admins a 
+            RIGHT JOIN films
+            ON a.id = admin_id
             ORDER BY date DESC");
         $films = $stmt->fetchAll(PDO::FETCH_CLASS, Film::class);
         return $films;

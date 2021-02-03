@@ -41,9 +41,9 @@ class PostDatabase extends Database
     public function getAllPosts(): array
     {
         $stmt = $this->connect()->query("
-            $this->queryAllPost p
-            LEFT JOIN admins a
-            ON admin_id = a.id
+            SELECT * FROM admins a
+            RIGHT JOIN posts
+            ON a.id = admin_id 
             ORDER BY date DESC");
         $posts = $stmt->fetchAll(PDO::FETCH_CLASS, Post::class);
         return $posts;
