@@ -1,3 +1,21 @@
+#member-profile-page{
+    background-color: beige !important;
+}
+
+#member-profile-page div.title-dash,
+#member-profile-page nav h2{
+    background-color: #372c0c;
+}
+
+#member-profile-page nav{
+    background-color: #554f3b;
+}
+
+#member-profile-page nav a:hover{
+    background-color: #b4a87f;
+}
+
+
 /**
     **** dashboard/users/Admin 
                 AND
@@ -16,7 +34,7 @@ div.top-profile{
 aside.photo-profile, 
 section.intro-profile,
 section.data-admin,
-section.setting-admin{
+section.setting-profile{
     border:         1px solid #5e8091;
     background:     white;
     margin-bottom:  2em; 
@@ -25,6 +43,7 @@ section.setting-admin{
 
 aside.photo-profile{
     padding:    .5rem;
+    max-height:     320px;
 }
 
 section.intro-profile{
@@ -34,7 +53,7 @@ section.intro-profile{
 
 section.intro-profile,
 section.data-admin,
-section.setting-admin{
+section.setting-profile{
     padding: 1.6em;
 }
 
@@ -110,14 +129,14 @@ section.data-admin li:nth-child(2n+2){
     background: #7aa7bd;
 }
 
-section.setting-admin{
+section.setting-profile{
     display:                grid;
     grid-template-columns:  auto auto auto;
     grid-gap:               10px;
 }
 
 
-section.setting-admin div.single-icon{
+section.setting-profile div.single-icon{
 	position:       relative;
     height:         180px;
     background:     #7aa7bd;
@@ -127,7 +146,7 @@ section.setting-admin div.single-icon{
     border-radius:  10px;
 }
 
-section.setting-admin div.icon{
+section.setting-profile div.icon{
 	position:   absolute;
     top:        0;
     left:       0;
@@ -138,7 +157,7 @@ section.setting-admin div.icon{
     z-index:    1;
 }
 
-section.setting-admin div.single-icon:hover div.icon{
+section.setting-profile div.single-icon:hover div.icon{
     top:            10px;
     left:           calc(50% - 17px);
     width:          40px;
@@ -146,7 +165,7 @@ section.setting-admin div.single-icon:hover div.icon{
     border-radius:  50%;
 }
 
-section.setting-admin div.icon i{
+section.setting-profile div.icon i{
     position:   absolute;
     top:        50%;
     left:       50%;
@@ -156,11 +175,11 @@ section.setting-admin div.icon i{
     color:      #7aa7bd;
 }
 
-section.setting-admin div.single-icon:hover div.icon i{
+section.setting-profile div.single-icon:hover div.icon i{
     font-size: 10px;
 }
 
-section.setting-admin div.content-icon{
+section.setting-profile div.content-icon{
     position:   absolute;
     top:        100%;
 	width:      375px;
@@ -170,24 +189,24 @@ section.setting-admin div.content-icon{
     opacity:    0;
 }
 
-section.setting-admin div.single-icon:hover div.content-icon{
+section.setting-profile div.single-icon:hover div.content-icon{
     top:        65px;
     opacity:    1;
 }
 
-section.setting-admin div.content-icon p,
-section.setting-admin div.content-icon h3,
-section.setting-admin div.content-icon a{
+section.setting-profile div.content-icon p,
+section.setting-profile div.content-icon h3,
+section.setting-profile div.content-icon a{
     color: white;
 }
 
-section.setting-admin div.content-icon h3{
+section.setting-profile div.content-icon h3{
     font-size:      24px;
     margin-left:    0;
 }
 
-section.setting-admin div.content-icon p, 
-section.setting-admin div.content-icon a{
+section.setting-profile div.content-icon p, 
+section.setting-profile div.content-icon a{
     margin:     0;
     padding:    0;
 } 

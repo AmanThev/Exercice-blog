@@ -34,6 +34,41 @@ class Profile
             </div>
 HTML;
     }
+
+    public function bottomProfile(): string
+    {
+        return <<<HTML
+            <section class="setting-profile">
+                <div class="single-icon">
+                    <div class="icon">
+                        <i class="fas fa-lock" aria-hidden="true"></i>
+                    </div>
+                    <div class="content-icon">
+                        <h3>Password</h3>
+                        <p>Change your password</p><a href="#">>> Click here</a>
+                    </div>			
+                </div>
+                <div class="single-icon">
+                    <div class="icon">
+                        <i class="fas fa-file-alt" aria-hidden="true"></i>
+                    </div>
+                    <div class="content-icon">
+                        <h3>Description</h3>
+                        <p>Write or change your description</p><a href="#">>> Click here</a>
+                    </div>			
+                </div>
+                <div class="single-icon">
+                    <div class="icon">
+                        <i class="fas fa-user-times" aria-hidden="true"></i>
+                    </div>
+                    <div class="content-icon">
+                        <h3>Unsubscribe</h3>
+                        <p>If you want delete your account</p><a href="#">>> Click here</a>
+                    </div>			
+                </div>
+            </section>
+HTML;
+    }
     
     /**
      * get data for Admin or the Member
@@ -53,8 +88,15 @@ HTML;
             throw new Exception("Invalid Users");
         }
     }
-
-    private function isAdmin(string $admin, $user)
+    
+    /**
+     * Verify if is Admin and ADD the position
+     *
+     * @param  string $admin
+     * @param  object $user
+     * @return void|html
+     */
+    private function isAdmin(string $admin, object $user) 
     {
         if($admin === 'admin'){
             return <<<HTML
@@ -62,8 +104,14 @@ HTML;
 HTML;
         }
     } 
-
-    private function getDescription(string $description, $user)
+    
+    /**
+     *
+     * @param  string $description
+     * @param  object $user
+     * @return html
+     */
+    private function getDescription(string $description, object $user)
     {
         if($description != NULL){
             return <<<HTML
@@ -73,3 +121,4 @@ HTML;
         return '<p>Please, write a description !!!!</p>';
     }
 }
+

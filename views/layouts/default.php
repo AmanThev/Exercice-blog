@@ -38,23 +38,17 @@ use App\URL\CreateUrl;
 <div class="container-fluid">
     <?= $content ?>
 
-    <footer class="bg-light py-4 footer">
-        <div class="container">
-            <?php if (defined('DEBUG_TIME')): ?>
-            Page générée en <?= round(1000 * (microtime(true) - DEBUG_TIME)) ?> ms
-            <?php endif ?>
-        </div>
-    </footer>
+    <?php require_once('debugTime.php'); ?>
 </div>
 
 <div><a id="scrolltotop" class="scrollInvisible" href="#top"></a></div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  window.onscroll = function(ev) {
-    document.getElementById("scrolltotop").className = (window.pageYOffset > 100) ? "scrollVisible" : "scrollInvisible";
-  };
-});
+    document.addEventListener('DOMContentLoaded', function() {
+    window.onscroll = function(ev) {
+        document.getElementById("scrolltotop").className = (window.pageYOffset > 100) ? "scrollVisible" : "scrollInvisible";
+    };
+    });
 </script>
 </body>
 </html>

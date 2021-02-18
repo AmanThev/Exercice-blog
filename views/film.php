@@ -180,7 +180,7 @@ $title = $slug;
 </section>
 
 <script src="<?= PUBLIC_PATH ?>/js/spoiler.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script> -->
 <script>
         var inputStars = document.getElementsByName('ratingFilm');
         var commentStar = document.getElementById('display-rating-film');
