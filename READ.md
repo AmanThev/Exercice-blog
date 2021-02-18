@@ -1,5 +1,5 @@
 ## About the project
-Code a blog using the OOP, and starting to work with JavaScript
+Code a blog using the OOP and starting to work with JavaScript
 
 ## What I learned
     * PHP 
@@ -7,7 +7,7 @@ Code a blog using the OOP, and starting to work with JavaScript
         * OOP
         * Namespace
         * Use different native function never used before (strpos, substr, …)
-    *CSS3
+    * CSS3
         * @keyframes
         * Grid 
         * Create a slider
