@@ -31,6 +31,7 @@ $title          = $slug;
 <h1 class="title-forum">Forum</h1>
 
 <p class="path-forum"><i class="fas fa-home"></i><a href="<?= CreateUrl::url('forum') ?>"> Home</a> > <a href="<?= CreateUrl::url('forum', ['slug' => $catId->getUrlName(), 'id' => $catId->getId()]) ?>"><?= $cat ?></a> > <?= $slug ?></p>
+
 <section class="forum topic">
     <h2><?= $slug ?></h2><a class="link-add-topic" href="<?= CreateUrl::url('forum/newTopic') ?>" ><i class="fas fa-plus-square"></i> Add Topic</a>
     <div class="separate-forum"></div>

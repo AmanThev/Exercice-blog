@@ -44,7 +44,7 @@ $titlePost      = new CommentDatabase();
         <?php foreach($filmComments as $filmComment): ?>
             <tr>
                 <td><?= $filmComment->getPseudo() ?></td>
-                <td><?= $filmComment->getComment() ?></td>
+                <td><?= $filmComment->getCommentFilm() ?></td>
                 <td><?= $filmComment->getDate()->format('d F Y') ?></td>
                 <td><?= $filmComment->getRatingFilm() ?></td>
                 <td class="title-table"><?= $titleFilm->findTitle($filmComment->getIndexId(), 'comments_film', 'films')->getTitle(); ?></td>
@@ -69,4 +69,5 @@ $titlePost      = new CommentDatabase();
         <?php endforeach; ?>
     </table>
 <?php endif; ?>
+
 

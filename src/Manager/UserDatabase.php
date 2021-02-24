@@ -6,6 +6,7 @@ use App\Model\Admin;
 use App\SQL\CountSql;
 use \PDO;
 use \Exception;
+use App\Manager\Exception\NotFoundException;
 
 
 class UserDatabase extends Database
@@ -37,7 +38,7 @@ class UserDatabase extends Database
             $admin = $stmt->fetch();
             return $admin;
         }
-        throw new NoFoundException("No id matches this id : $id");
+        throw new NotFoundException('Admin', $id);
     }
 
     public function getAdminByName(string $name): Admin
@@ -49,7 +50,7 @@ class UserDatabase extends Database
             $admin = $stmt->fetch();
             return $admin;
         }
-        throw new NoFoundException("No Admin Name matches this name : $name");
+        throw new NotFoundException('Admin', $name);
     }
 
     public function getMemberByName(string $name): Member
@@ -61,7 +62,7 @@ class UserDatabase extends Database
             $member = $stmt->fetch();
             return $member;
         }
-        throw new NoFoundException("No Members Name matches this name : $name");
+        throw new NotFoundException('Member', $name);
     }
 
     public function getAdminsPresentationPage($position): array

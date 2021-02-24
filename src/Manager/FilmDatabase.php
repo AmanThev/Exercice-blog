@@ -6,6 +6,7 @@ use App\Model\Film;
 use App\SQL\CountSql;
 use App\SQL\Paginate;
 use \PDO;
+use App\Manager\Exception\NotFoundException;
 
 class FilmDatabase extends Database
 {
@@ -80,7 +81,7 @@ class FilmDatabase extends Database
             $film = $stmt->fetch();
             return $film;
         }
-        throw new NoFoundException("No film matches this id = $id");
+        throw new NotFoundException('Film', $id);
     }
     
     public function getFilmByCommentId(int $idFilm)

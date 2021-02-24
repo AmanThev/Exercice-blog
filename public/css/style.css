@@ -1865,10 +1865,6 @@ p.path-forum a{
     **** view/forum/category ****
 */
 
-section.forum.category{
-    margin-top: -2rem;
-}
-
 section.forum.category p{
     margin:         20px 25px;
     text-align:     justify;
@@ -1982,8 +1978,18 @@ section.forum.add-topic input[type="submit"]:hover{
 
 section.forum.message div.row{
     border-bottom: 3px solid;
-    
 }
+
+section.forum.message div.title-topic{
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+}
+
+section.forum.message a.close-topic{
+    margin: 20px 40px 0 0;
+}
+
 section.forum.message div.pseudo{
     width:      15rem;
     min-height: 15rem;

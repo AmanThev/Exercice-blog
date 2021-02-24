@@ -26,7 +26,8 @@ $title          = $slug;
 
 <h1 class="title-forum"><?= $slug ?></h1>
 
-<p class="path-forum"><i class="fas fa-home"></i><a href="<?= CreateUrl::url('forum') ?>"> Home</a> > <?= $slug ?></p>‡
+<p class="path-forum"><i class="fas fa-home"></i><a href="<?= CreateUrl::url('forum') ?>"> Home</a> > <?= $slug ?></p>
+
 <section class="forum category">
     <h2>Introduction </h2>
     <div class="separate-forum"></div>

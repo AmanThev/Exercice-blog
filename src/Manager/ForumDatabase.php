@@ -7,7 +7,7 @@ use App\Model\Forum\Topic;
 use App\Model\Forum\Message;
 use App\SQL\CountSql;
 use \PDO;
-use \Exception;
+use App\Manager\Exception\NotFoundException;
 
 
 class ForumDatabase extends Database
@@ -46,7 +46,7 @@ class ForumDatabase extends Database
             $cat = $stmt->fetch();
             return $cat;
         }
-        throw new NoFoundException("No category matches with this Id: $id or this name: $name");
+        throw new \Exception("No category matches with this Id: $id or this name: $name");
     }
     
     public function getCategoryName(string $name): Category
@@ -58,7 +58,7 @@ class ForumDatabase extends Database
             $cat = $stmt->fetch();
             return $cat;
         }
-        throw new NoFoundException("No category matches with this name : $name");
+        throw new NotFoundException('Category', $id);
     }
 
     public function getSubCategories(int $idCat): array
@@ -78,7 +78,7 @@ class ForumDatabase extends Database
             $subCat = $stmt->fetch();
             return $subCat;
         }
-        throw new NoFoundException("No sub-category matches with this id : $id or this name : $name");
+        throw new \Exception("No sub-category matches with this id : $id or this name : $name");
     }
 
     public function getSubCategoryName(string $name): SubCategory
@@ -90,7 +90,7 @@ class ForumDatabase extends Database
             $subCat = $stmt->fetch();
             return $subCat;
         }
-        throw new NoFoundException("No sub-category matches with this name : $name");
+        throw new NotFoundException('SubCategory', $name);
     }
     
     /**
@@ -117,20 +117,6 @@ class ForumDatabase extends Database
 
     public function getTopic(int $id, string $title): Topic
     {
-        // $stmt = $this->connect()->prepare("
-        //     $this->queryTopic t
-        //     LEFT JOIN members m
-        //     ON id_members = m.id
-        //     WHERE t.id=:id AND t.title=:title
-        //     ORDER BY date_time_creation DESC");
-        // $stmt->execute(['id' => $id, 'title' => $title]);
-        // if($stmt->rowCount() == 1){
-        //     $stmt->setFetchMode(PDO::FETCH_CLASS,Topic::class);
-        //     $topic = $stmt->fetch();
-        //     return $topic;
-        // }
-        // throw new NoFoundException("No topic matches with this id = $id or this title : $title");
-
         $stmt = $this->connect()->prepare("
             $this->queryTopic t
             LEFT JOIN members m
@@ -143,7 +129,7 @@ class ForumDatabase extends Database
             $topic = $stmt->fetch();
             return $topic;
         }
-        throw new NoFoundException("No topic matches with this id = $id");
+        throw new NotFoundException('Topic', $id);
     }
 
     public function getLastMessageIndex(int $idSubCat): Message
@@ -197,6 +183,12 @@ class ForumDatabase extends Database
         return CountSql::totalData($this->querySubCat);        
     }
 
+    /**
+     * count all the Topics of the sub-Cat
+     *
+     * @param  int $idSubCat
+     * @return int
+     */
     public function countTopics(int $idSubCat): int
     {
         return CountSql::totalData("$this->queryTopic WHERE id_sub_categories = ?", $idSubCat);        
@@ -205,6 +197,17 @@ class ForumDatabase extends Database
     public function countAllTopics(): int
     {
         return CountSql::totalData($this->queryTopic);        
+    }
+    
+    /**
+     * Count Topic non resolved
+     *
+     * @return int
+     */
+    public function countOpenTopics(): int
+    {
+        return CountSql::totalData("$this->queryTopic WHERE resolved is NULL");
+        
     }
 
     public function countMessages(int $idTopic): int

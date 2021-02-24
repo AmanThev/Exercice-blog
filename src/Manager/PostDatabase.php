@@ -6,8 +6,7 @@ use App\SQL\CountSql;
 use App\SQL\Paginate;
 use App\URL\CreateUrl;
 use \PDO;
-use \Exception;
-
+use App\Manager\Exception\NotFoundException;
 
 class PostDatabase extends Database
 {    
@@ -90,7 +89,7 @@ class PostDatabase extends Database
             $post = $stmt->fetch();
             return $post;
         }
-        throw new Exception('No post matches this id');
+        throw new NotFoundException('Post', $id);
     }
 
     public function getPostByCommentId(int $idPost): Post

@@ -12,34 +12,34 @@ class ExplodeUrl {
             $this->path = $path;
         }
 
-        public function explodePath(): array
+        public static function explodePath($path): array
         {
-            $rePath = str_replace('/', '-', $this->path);
+            $rePath = str_replace('/', '-', $path);
             $exPath = explode('-', $rePath);
             return $exPath;
         }
 
         public function getId(): int
         {
-            $id = $this->explodePath();
+            $id = SELF::explodePath($this->path);
             return $id[2];
         }
 
         public function getIdForSubCat(): int
         {
-            $id = $this->explodePath();
+            $id = SELF::explodePath($this->path);
             return $id[3];
         }
 
         public function getIdForTopic(): int
         {
-            $id = $this->explodePath();
+            $id = SELF::explodePath($this->path);
             return $id[4];
         }
 
         public function getSlug(): string
         {
-            $slug = $this->explodePath();
+            $slug = SELF::explodePath($this->path);
             $slug = preg_split('/(?=[A-Z])/', $slug[1], -1, PREG_SPLIT_NO_EMPTY);
             $slug = $this->replaceApostrophe($slug);
             $slug = $this->getCountSlug($slug);
@@ -48,7 +48,7 @@ class ExplodeUrl {
 
         public function getSlugName(): string
         {
-            $slug = $this->explodePath();
+            $slug = SELF::explodePath($this->path);
             $slug = preg_split('/(?=[A-Z])/', $slug[2], -1, PREG_SPLIT_NO_EMPTY);
             $slug = $this->getCountSlug($slug);
 
@@ -57,7 +57,7 @@ class ExplodeUrl {
 
         public function getSlugSubCat(): string
         {
-            $slug = $this->explodePath();
+            $slug = SELF::explodePath($this->path);
             $slug = preg_split('/(?=[A-Z])/', $slug[2], -1, PREG_SPLIT_NO_EMPTY);
             $slug = $this->replaceApostrophe($slug);
             $slug = $this->getCountSlug($slug);
@@ -66,7 +66,7 @@ class ExplodeUrl {
         
         public function getSlugTopic(): string
         {
-            $slug = $this->explodePath();
+            $slug = SELF::explodePath($this->path);
             $slug = preg_split('/(?=[A-Z0-9])/', $slug[3], -1, PREG_SPLIT_NO_EMPTY);
             $slug = $this->replaceApostrophe($slug);
             $slug = $this->getCountSlug($slug);
@@ -75,7 +75,7 @@ class ExplodeUrl {
         
         public function getCatForPathTopic(): string
         {
-            $slug = $this->explodePath();
+            $slug = SELF::explodePath($this->path);
             $slug = preg_split('/(?=[A-Z])/', $slug[1], -1, PREG_SPLIT_NO_EMPTY);
             $slug = $this->getCountSlug($slug);
             return $slug;
@@ -83,7 +83,7 @@ class ExplodeUrl {
 
         public function getSubCatForPathTopic(): string
         {
-            $slug = $this->explodePath();
+            $slug = SELF::explodePath($this->path);
             $slug = preg_split('/(?=[A-Z])/', $slug[2], -1, PREG_SPLIT_NO_EMPTY);
             $slug = $this->getCountSlug($slug);
             return $slug;

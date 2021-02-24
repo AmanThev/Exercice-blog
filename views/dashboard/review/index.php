@@ -46,3 +46,5 @@ $colors = [
         </tr>
     <?php endforeach; ?>
 </table>
+
+

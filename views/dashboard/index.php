@@ -105,6 +105,9 @@ $totalSubCat    = $totalSubCat->countAllSubCategories();
 $totalTopics    = new ForumDatabase();
 $totalTopics    = $totalTopics->countAllTopics();
 
+$topicNonResolved   = new ForumDatabase();
+$topicNonResolved   = $topicNonResolved->countOpenTopics()
+
 ?>
 
 <section class="dash-home">
@@ -139,7 +142,8 @@ $totalTopics    = $totalTopics->countAllTopics();
     <div class="separate"></div>
     <h3><i class="fab fa-forumbee"></i> Forum:</h3>
     <p><span><i class="fas fa-folder"></i> <?= $totalCat ?> Categories</span><span><i class="fas fa-file"></i> <?= $totalSubCat ?> Sub-Categories</span></p>
-    <p><span><i class="fas fa-paper-plane"></i> <?= $totalTopics ?> Topics</span><span><i class="fas fa-comments"></i> <?= $totalMessages ?> messages</span></p>
+    <p><span><i class="fas fa-paper-plane"></i> <?= $totalTopics ?> Topics</span><span><i class="fas fa-paper-plane"></i> <?= $topicNonResolved ?> Topics non resolved</span></p>
+    <p><span><i class="fas fa-comments"></i> <?= $totalMessages ?> messages</span></p>
     <div class="separate"></div>
     <h3><i class="fas fa-users"></i> Users:</h3>
     <!-- <p>Nombre de visite</p> -->

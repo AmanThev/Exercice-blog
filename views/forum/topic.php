@@ -40,7 +40,7 @@ $title          = $slug;
 <!-- pagination -->
 <p class="path-forum"><i class="fas fa-home"></i><a href="<?= CreateUrl::url('forum') ?>"> Home</a> > <a href="<?= CreateUrl::url('forum/', ['slug' => $catId->getUrlName(), 'id' => $catId->getId()]) ?>"><?= $cat ?></a> > <a href="<?= CreateUrl::url('forum/' . $cat, ['slug' => $subCatId->getUrlName() , 'id' => $subCatId->getId() ]) ?>"><?= $subCat ?> </a> > <?= $topic->getTitle() ?></p>
 <section class="forum message">
-    <h2><?= $topic->getTitle() ?></h2>
+    <div class="title-topic"><h2><?= $topic->getTitle() ?></h2><a class="close-topic" href="#">Done with this topic? Click here to close it</a></div>
     <div class="separate-forum"></div>
     <div class="row">
     <div class="pseudo"><p><?= $topic->getName() ?></p>
