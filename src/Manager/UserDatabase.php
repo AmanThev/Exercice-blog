@@ -1,11 +1,10 @@
 <?php
 namespace App\Manager;
 
+use \PDO;
 use App\Model\Member;
 use App\Model\Admin;
 use App\SQL\CountSql;
-use \PDO;
-use \Exception;
 use App\Manager\Exception\NotFoundException;
 
 

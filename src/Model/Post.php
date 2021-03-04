@@ -77,7 +77,8 @@ class Post
         return CreateUrl::urlTitle($this->title);
     }
 
-    public function getUrlTitleCheck(){
+    public function getUrlTitleCheck()
+    {
         return CreateUrl::urlTitleCheck($this->title);
     }
     

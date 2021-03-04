@@ -12,7 +12,7 @@ $posts = $posts->getAllPosts();
 ?>
 <h3 class="title-page">Posts</h3>
 
-<button class="create-button">Create New Post</button>
+<a class="create-button" href="<?= CreateUrl::url('dashboard/posts/newPost'); ?>">Create New Post</a>
 
 <table style="width:86%">
     <tr>
@@ -30,8 +30,10 @@ $posts = $posts->getAllPosts();
             <td><?= $post->getDate()->format('d F Y') ?></td>
             <td>
                 <a href="<?= CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $post->getId()]); ?>"><i class="fas fa-eye"></i> Preview</a>
-                <a href=""><i class="fas fa-pen"></i> Edit</a>
-                <a href=""><i class="fas fa-times"></i> Delete</a>
+                <a href="<?= CreateUrl::urlDashboardAction('dashboard/posts', $post->getId()); ?>"><i class="fas fa-pen"></i> Edit</a>
+                <form action="<?= CreateUrl::urlDashboardAction('dashboard/posts', $post->getId(), 'delete'); ?>" method="post" onsubmit="return confirm('Are you sure you want to delete this post?')">
+                    <button><i class="fas fa-times-circle"></i> Delete</button>
+                </form>
             </td>
         </tr>
     <?php endforeach; ?>

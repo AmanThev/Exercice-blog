@@ -19,6 +19,17 @@ class CreateURL {
         return WWW_ROOT. $name;
     }
 
+    public static function urlDashboardAction(string $name, int $id, ?string $action = NULL)
+    {
+        if($action){
+            return WWW_ROOT. '/' . $name . '/' . $id . '/' . $action;
+        }
+
+       return WWW_ROOT. '/' . $name . '/' . $id;
+
+
+    }
+
     public static function urlSlugOnly(string $name, string $slug)
     {
         return WWW_ROOT. '/' . $name . '/' . $slug;

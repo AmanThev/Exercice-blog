@@ -30,7 +30,7 @@ $reviewWritten  = new FilmDatabase();
 
 <h3 class="title-page">Users</h3>
 
-<form method="get">
+<form class="choose-button" method="get">
     <label for="users">Choose:</label>
     <span class="custom-dropdown custom-dropdown-red custom-dropdown-small">
         <select class="custom-dropdown_select custom-dropdown_select-red" id="users" name="users">

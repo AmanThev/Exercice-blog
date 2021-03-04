@@ -20,7 +20,7 @@ $titlePost      = new CommentDatabase();
 
 <h3 class="title-page">Comments</h3>
 
-<form method="get">
+<form class="choose-button" method="get">
     <label for="table">Choose:</label>
     <span class="custom-dropdown custom-dropdown-red custom-dropdown-small">
         <select class="custom-dropdown_select custom-dropdown_select-red" id="table" name="table">

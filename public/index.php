@@ -46,15 +46,17 @@ $router->get('/user/:slug', VIEWS . 'user/profileMember');
 
 $router->get('/dashboard', VIEWS . 'dashboard/index');
 $router->get('/dashboard/posts', VIEWS . 'dashboard/post/index');
+$router->get('/dashboard/posts/newPost', VIEWS . 'dashboard/post/new', 'new_post');
+$router->get('/dashboard/posts/:id', VIEWS . 'dashboard/post/edit', 'post_edit');
 $router->get('/dashboard/reviews', VIEWS .'dashboard/review/index');
 $router->get('/dashboard/comments', VIEWS .'dashboard/comment');
 $router->get('/dashboard/users', VIEWS .'dashboard/user/index');
 $router->get('/dashboard/forum', VIEWS .'dashboard/forum');
 $router->get('/dashboard/users/:slug', VIEWS .'dashboard/user/profileAdmin');
 
-
+$router->post('/dashboard/posts/:id/delete', VIEWS . 'dashboard/post/delete', 'post_delete');
 $router->post('/post/:id', function(){
-    echo 'Add post n°' .$id;
+  echo 'Add post n°' .$id;
 });
 
 $router->run();

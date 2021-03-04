@@ -1,11 +1,9 @@
 <?php
 namespace App\Manager;
 
+use \PDO;
 use App\Model\Comment;
 use App\SQL\CountSql;
-use \PDO;
-use \Exception;
-
 
 class CommentDatabase extends Database
 {
@@ -47,7 +45,6 @@ class CommentDatabase extends Database
     {
         $stmt = $this->connect()->query("SELECT index_id, count(index_id) AS best FROM $table GROUP BY index_id");
         $mostCom = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // $mostCom =  max(array_column($mostCom, 'best'));
         $max = 0;
         $result = [];
         foreach( $mostCom as $k => $v ){
@@ -72,11 +69,11 @@ class CommentDatabase extends Database
     }
     
     /**
-     * return the best rating
+     * Get the total of the vote for each film & Sum all the vote for each film
      */
     public function bestRating(): array
     {
-        //Get the total of the vote for each film & Sum all the vote for each film
+        //
         $stmt = $this->connect()->query("SELECT index_id, round(SUM(rating_film)/ COUNT(rating_film), 2) AS rating FROM comments_film GROUP BY index_id");
         $bestRating = $stmt->fetchAll(PDO::FETCH_ASSOC);
         

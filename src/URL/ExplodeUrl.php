@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Url;
-
 
 class ExplodeUrl {
 
@@ -51,7 +49,6 @@ class ExplodeUrl {
             $slug = SELF::explodePath($this->path);
             $slug = preg_split('/(?=[A-Z])/', $slug[2], -1, PREG_SPLIT_NO_EMPTY);
             $slug = $this->getCountSlug($slug);
-
             return $slug;
         }
 

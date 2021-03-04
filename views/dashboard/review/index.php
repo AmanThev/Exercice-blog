@@ -22,7 +22,7 @@ $colors = [
 
 <h3 class="title-page">Reviews</h3>
 
-<button class="create-button">Create New Review</button>
+<a class="create-button" href="<?= CreateUrl::url('dashboard/review/new'); ?>">Create New Review</a>
 
 <table style="width:86%">
     <tr>
@@ -41,7 +41,9 @@ $colors = [
             <td>
                 <a href="<?= CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $film->getId()]); ?>"><i class="fas fa-eye"></i> Preview</a>
                 <a href=""><i class="fas fa-pen"></i> Edit</a>
-                <a href=""><i class="fas fa-times"></i> Delete</a>
+                <form action="<?= CreateUrl::urlDashboardAction('dashboard/films', $film->getId(), 'delete'); ?>" method="post">
+                    <button><i class="fas fa-times-circle"></i> Delete</button>
+                </form>
             </td>
         </tr>
     <?php endforeach; ?>

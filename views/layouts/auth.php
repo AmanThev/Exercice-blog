@@ -13,6 +13,7 @@ use App\URL\CreateUrl;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?? 'Website Cinema'; ?></title>
     <link rel="stylesheet" type="text/css" href="<?= URLPublic::publicPath('css/auth.css'); ?>">
+    <link rel="icon" type="image/x-icon" href="<?= URLPublic::publicPath('img/layout/favicon.ico'); ?>">
     <script src="https://kit.fontawesome.com/2c5e081666.js"></script>
 </head>
 <body>
