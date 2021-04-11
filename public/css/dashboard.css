@@ -320,6 +320,10 @@ section.forum ul{
     list-style: none;
 }
 
+section.forum span{
+    margin: .5rem;
+}
+
 section.forum ul.list-cat{
     border-top: 1px solid #2980b9;
     padding:    0;
@@ -505,157 +509,242 @@ form.new div{
 form.new div.input label,
 form.new div.textarea label,
 form.new div.picture label{
-    background: #7aa7bd;
-    padding: .5rem;
-    width: 7rem;
-    text-align: center;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    background:                 #7aa7bd;
+    padding:                    .5rem;
+    width:                      7.5rem;
+    text-align:                 center;
+    border-top-left-radius:     10px;
+    border-bottom-left-radius:  10px;
+    border:                     1.5px outset #2980b9;
+    font-weight:                700;
+    position:                   relative;
+    z-index:                    2;
 }
 
 form.new div.textarea label{
+    width:          100%;
+    border-radius:  10px;
+    font-weight:    800;
+    font-size:      2rem;
+}
+
+form.new div.textarea textarea{
     width: 100%;
-    border-radius: 10px;
 }
 
 form.new div.input input{
-    margin-left: -4px;
-    height: 2.5rem;
-    width: 60rem;
+    margin-left:    -4.4px;
+    height:         2.69rem;
+    width:          85%;
+    border-style:   outset outset outset none;
+    border-width:   1.5px;
+    border-color:   #2980b9;
+    text-indent:    7px;
 }
 
-
-label.switch{
-    position: relative;
-    display: block;
-    width: 100px;
-    height: 30px;
-    padding: 3px;
-    margin: 0 10px 10px 0;
-    background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
-    border-radius: 18px;
-    box-shadow: inset 0 -1px white, 
-                inset 0 1px 1px rgba(0,0,0,0.05);
-    cursor: pointer;
-    overflow: hidden;
-    box-sizing: content-box;    
+form.new input#picture{
+    margin-left:    -6.9rem;
+    padding-top:    .5rem;
+    border-style:   outset outset outset none;
+    border-width:   1.5px;
+    border-color:   #2980b9;
+    height:         2.69rem;
+    width:          95%;
 }
 
-.switch-input{
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
+form.new div.input input:focus{
+    outline:        none;
+    border-color:   #80bdff;
+    box-shadow:     0 0 0 .1rem rgba(0,123,255,.25);
+    background:     #e8f3fd;
+}
+
+form.new label.switch{
+    position:       relative;
+    display:        block;
+    width:          100px;
+    height:         30px;
+    padding:        3px;
+    margin:         0 10px 10px 0;
+    background:     linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
+    border-radius:  18px;
+    box-shadow:     inset 0 -1px white, 
+                    inset 0 1px 1px rgba(0,0,0,0.05);
+    cursor:         pointer;
+    overflow:       hidden;
+    box-sizing:     content-box;    
+}
+
+form.new input.switch-input{
+    position:   absolute;
+    top:        0;
+    left:       0;
+    opacity:    0;
     box-sizing: content-box;
 }
 
-.switch-label{
-    position: relative;
-    display: block;
-    height: inherit;
-    font-size: 10px;
+form.new span.switch-label{
+    position:       relative;
+    display:        block;
+    height:         inherit;
+    font-size:      10px;
     text-transform: uppercase;
-    background: #eceeef;
-    border-radius: inherit;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.12),
-                inset 0 0 2px rgba(0,0,0,0.15);
-    box-sizing: content-box;
+    background:     #eceeef;
+    border-radius:  inherit;
+    box-shadow:     inset 0 1px 2px rgba(0,0,0,0.12),
+                    inset 0 0 2px rgba(0,0,0,0.15);
+    box-sizing:     content-box;
 }
 
-.switch-label:before,
-.switch-label:after{
-    position: absolute;
-    top: 50%;
-    margin-top: -.5em;
-    line-height: 1;
-    transition: inherit;
-    box-sizing: content-box;
-    width: 20px;
-    height: 20px;
-    top: 4px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 11px 0 0 0;
-    text-indent: -30px;
-    border-radius: 20px;
-    box-shadow: inset 0 1px 4px rgba(0,0,0,0.2),
-                inset 0 0 3px rgba(0,0,0,0.1); 
+form.new span.switch-label:before,
+form.new span.switch-label:after{
+    position:       absolute;
+    top:            50%;
+    margin-top:     -.5em;
+    line-height:    1;
+    transition:     inherit;
+    box-sizing:     content-box;
+    width:          20px;
+    height:         20px;
+    top:            4px;
+    left:           0;
+    right:          0;
+    bottom:         0;
+    padding:        11px 0 0 0;
+    text-indent:    -30px;
+    border-radius:  20px;
+    box-shadow:     inset 0 1px 4px rgba(0,0,0,0.2),
+                    inset 0 0 3px rgba(0,0,0,0.1); 
 }
 
-.switch-label:before{
-    content: attr(data-private);
-    right: 11px;
-    color: #2980b9;
-    text-shadow: 0 1px rgba(255,255,255,0.5);
-    background: #eceeef;
-    text-align: left;
-    padding-left: 80px;
-    opacity: 1;
+form.new span.switch-label:before{
+    content:        attr(data-private);
+    right:          11px;
+    color:          #2980b9;
+    text-shadow:    0 1px rgba(255,255,255,0.5);
+    background:     #eceeef;
+    text-align:     left;
+    padding-left:   80px;
+    opacity:        1;
 }
 
-.switch-label:after{
-    content: attr(data-public);
-    right: 11px;
-    color: #FFFFFF;
-    text-align: left;
-    text-indent: 9px;
-    background: #2980b9;
-    left: -105px;
-    opacity: 0;
-    width: 100%;
+form.new span.switch-label:after{
+    content:        attr(data-public);
+    right:          11px;
+    color:          #FFFFFF;
+    text-align:     left;
+    text-indent:    9px;
+    background:     #2980b9;
+    left:           -105px;
+    opacity:        0;
+    width:          100%;
 }
 
-.switch-input:checked ~ .switch-label{
+form.new input.switch-input:checked ~ span.switch-label{
     background: #E1B42B;
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.15),
                 inset 0 0 3px rgba(0,0,0,0.2);
 }
 
-.switch-input:checked ~ .switch-label:before{
-    opacity: 0;
-    left: 105px;
+form.new input.switch-input:checked ~ span.switch-label:before{
+    opacity:    0;
+    left:       105px;
 }
 
-.switch-input:checked ~ .switch-label:after{
-    opacity: 1;
-    left: 0;
+form.new input.switch-input:checked ~ span.switch-label:after{
+    opacity:    1;
+    left:       0;
 }
 
-.switch-input:checked ~.switch-label{
+form.new input.switch-input:checked ~ span.switch-label{
     background: inherit;
 }
 
-.switch-handle{
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 28px;
-    height: 28px;
-    background: linear-gradient(to bottom, #FFFFFF 40%, #F0F0F0);
-    border-radius: 100%;
-    box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+form.new span.switch-handle{
+    position:       absolute;
+    top:            4px;
+    left:           4px;
+    width:          28px;
+    height:         28px;
+    background:     linear-gradient(to bottom, #FFFFFF 40%, #F0F0F0);
+    border-radius:  100%;
+    box-shadow:     1px 1px 5px rgba(0,0,0,0.2);
 }
 
-.switch-handle:before{
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -6px 0 0 -6px;
-    width: 12px;
-    height: 12px;
-    background: content-box radial-gradient(#fff, #2980b9);
-    border-radius: 6px;
-    box-shadow: inset 0 1px rgba(0,0,0,0.02);
+form.new span.switch-handle:before{
+    content:        '';
+    position:       absolute;
+    top:            50%;
+    left:           50%;
+    margin:         -6px 0 0 -6px;
+    width:          12px;
+    height:         12px;
+    background:     content-box radial-gradient(#fff, #2980b9);
+    border-radius:  6px;
+    box-shadow:     inset 0 1px rgba(0,0,0,0.02);
 }
 
-.switch-input:checked ~.switch-handle{
-    left: 74px;
+form.new input.switch-input:checked ~.switch-handle{
+    left:       74px;
     box-shadow: inset 0 1px rgba(0,0,0,0.2);
 }
 
-.switch-label,
-.switch-handle{
+form.new span.switch-label,
+form.new span.switch-handle{
     transition: All 0.3s ease;
+}
+
+form.new button{
+    height:         40px;
+    text-align:     center;
+    width:          130px;
+    border-radius:  40px;
+    background:     #7aa7bd;
+    border:         2px solid #2980b9;
+    letter-spacing: 1px;
+    font-weight:    700;
+    cursor:         pointer;
+    transition:     all 0.25s ease;
+}
+  
+form.new button:hover{
+    background: #2980b9;
+}
+
+.onclic {
+    width: 40px;
+    border-color: #bbbbbb;
+    border-width: 3px;
+    font-size: 0;
+    border-left-color: #1ECD97;
+    animation: rotating 2s 0.25s linear infinite;
+}
+
+@keyframes rotating {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+}
+
+.onclic:after {
+    content: "";
+}
+  
+.onclic:hover {
+    color: #1ECD97;
+    background: white;
+}
+  
+.validate {
+    font-size: 13px;
+    color: white;
+    background: #1ECD97;
+}
+
+.validate:after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f00c";
 }

@@ -1,16 +1,14 @@
+<?php
+
+$title = "New Post";
+
+?>
+
 <h3 class="title-page">New Post</h3>
 
 <form class="new" action="" method="post" enctype="multipart/form-data">
-    <!-- 
-    title
-    author / idadmin
-    content
-    date
-    ?image
-    public
-     -->
     <div class="input">
-        <label for="author">Your name</label>
+        <label for="author">Your Name</label>
         <input type="text" name="author" id="author" value="" aria-describedby="authorInfo" placeholder="Write your name">
         <small id="authorInfo">Your name must not exceed 20 characters</small>
     </div>
@@ -21,8 +19,8 @@
     </div>
 
     <div class="textarea">
-        <label for="content">Your post :</label>
-        <textarea type="text"name="content" id="content" rows="10"></textarea>
+        <label for="content">Your Post</label>
+        <textarea type="text"name="content" id="content" rows="20"></textarea>
     </div>
 
     <div class="picture">
@@ -32,11 +30,6 @@
         <small>Choose a picture to illustrate your post</small>
     </div>
 
-    <!-- <div>
-        <input type="checkbox" id="public" name="public">
-        <label for="public">Public</label>
-    </div> -->
-
     <div>
         <label class="switch">
             <input class="switch-input" type="checkbox">
@@ -44,7 +37,29 @@
             <span class="switch-handle"></span> 
         </label>
     </div>
-        
-    <button type="submit" name="submit">Submit</button>
+    
+    <div class="button">
+        <button id="button" type="submit" name="submit">Submit</button>
+    </div>
 
 </form>
+
+<script>
+    $(function () {
+        $("#button").click(function () {
+            $("#button").addClass("onclic", 250, validate);
+        });
+        
+        function validate() {
+            setTimeout(function () {
+                $("#button").removeClass("onclic");
+                $("#button").addClass("validate", 450, callback);
+            }, 2250);
+        }
+        function callback() {
+            setTimeout(function () {
+                $("#button").removeClass("validate");
+            }, 1250);
+        }
+    });
+</script>

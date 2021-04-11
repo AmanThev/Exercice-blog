@@ -62,6 +62,9 @@ class Router {
         $route = new Route($path, $target);
         $this->routes[$method][]= $route;
         if($name){
+            if (isset($this->namedRoutes[$name])) {
+                throw new \Exception("Can not redeclare route '{$name}'");
+            }
             $this->namedRoutes[$name] = $route;
         }
         return $route;

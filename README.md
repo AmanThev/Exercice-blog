@@ -25,3 +25,4 @@ Code a blog using the OOP and starting to work with JavaScript
   * PhpAdmin
   * Inner Join, Right Join and Left Join
   * PDO
+* Favicon
