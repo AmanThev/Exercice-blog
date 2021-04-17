@@ -32,34 +32,81 @@ $title = "New Post";
 
     <div>
         <label class="switch">
-            <input class="switch-input" type="checkbox">
+            <input class="switch-input" type="checkbox" id="checkbox">
             <span class="switch-label" data-public="public" data-private="private"></span> 
             <span class="switch-handle"></span> 
         </label>
+    </div> 
+
+    <div>
+        <p style="color: red;" id="error"></p>
     </div>
-    
+
     <div class="button">
         <button id="button" type="submit" name="submit">Submit</button>
     </div>
 
 </form>
+<div id="messages"></div>
 
 <script>
-    $(function () {
-        $("#button").click(function () {
-            $("#button").addClass("onclic", 250, validate);
-        });
-        
-        function validate() {
-            setTimeout(function () {
-                $("#button").removeClass("onclic");
-                $("#button").addClass("validate", 450, callback);
-            }, 2250);
+var url="ajaxUpload";
+
+$(function(){
+    $("form").submit(function(e){
+        e.preventDefault();
+        var error; 
+
+		if (!$('input:text').val()) {
+			error = "Please complete all fields!";
+			document.getElementById("error").innerHTML = error;
+            return false;
         }
-        function callback() {
-            setTimeout(function () {
-                $("#button").removeClass("validate");
-            }, 1250);
-        }
+
+        var formData = new FormData(); 
+        var author = $("#author").val();
+            formData.append('author', author);
+        var titlePost = $("#titlePost").val();
+            formData.append('titlePost', titlePost);
+        var content = $("#content").val();
+            formData.append('content', content);
+        // var picture = $('#picture').prop('files')[0];
+        //     formData.append('picture', picture);
+        // var checkbox = $("#checkbox").is(':checked');
+        //     formData.append('public', checkbox);
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data:  formData,
+            contentType: false,
+            cache: false,
+            processData:false,
+            success     : function(data){
+                alert("ok");              
+            }
+         });
+        return false;
     });
+ });
+
+ 
+
+    // $(function () {
+    //     $("#button").click(function () {
+    //         $("#button").addClass("onclic", 250, validate);
+    //     });
+        
+    //     function validate() {
+    //         setTimeout(function () {
+    //             $("#button").removeClass("onclic");
+    //             $("#button").addClass("validate", 450, callback);
+    //         }, 2250);
+    //     }
+    //     function callback() {
+    //         setTimeout(function () {
+    //             $("#button").removeClass("validate");
+    //         }, 1250);
+    //     }
+    // });
 </script>

@@ -54,8 +54,9 @@ $router->get('/dashboard/users', VIEWS .'dashboard/user/index');
 $router->get('/dashboard/forum', VIEWS .'dashboard/forum');
 $router->get('/dashboard/users/:slug', VIEWS .'dashboard/user/profileAdmin');
 
-$router->post('/dashboard/posts/:id/delete', VIEWS . 'dashboard/post/delete', 'post_delete');
+$router->post('/dashboard/posts/ajaxUpload', VIEWS . 'dashboard/post/ajaxUpload');
 $router->post('/dashboard/posts/newPost', VIEWS . 'dashboard/post/new', 'new_post_added');
+$router->post('/dashboard/posts/:id/delete', VIEWS . 'dashboard/post/delete', 'post_delete');
 $router->post('/post/:id', function(){
   echo 'Add post n°' .$id;
 });
