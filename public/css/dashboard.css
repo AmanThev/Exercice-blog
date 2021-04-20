@@ -704,20 +704,16 @@ form.new button{
     letter-spacing: 1px;
     font-weight:    700;
     cursor:         pointer;
-    transition:     all 0.25s ease;
+    color:          black;
 }
   
 form.new button:hover{
     background: #2980b9;
 }
 
-.onclic {
-    width: 40px;
-    border-color: #bbbbbb;
-    border-width: 3px;
-    font-size: 0;
-    border-left-color: #1ECD97;
-    animation: rotating 2s 0.25s linear infinite;
+form.new button.submit i{
+    color:      #2980b9;
+    animation:  rotating 2s linear infinite;
 }
 
 @keyframes rotating {
@@ -728,23 +724,14 @@ form.new button:hover{
       transform: rotate(360deg);
     }
 }
-
-.onclic:after {
-    content: "";
-}
   
-.onclic:hover {
-    color: #1ECD97;
-    background: white;
-}
-  
-.validate {
-    font-size: 13px;
-    color: white;
-    background: #1ECD97;
+form.new button.submit:hover {
+    background: #7aa7bd;
 }
 
-.validate:after {
-    font-family: "Font Awesome 5 Free";
-    content: "\f00c";
+form.new #error.active{
+    background:     #e11800;
+    color:          white;
+    padding:        1rem;
+    border-radius:  20px;
 }

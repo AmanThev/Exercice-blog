@@ -39,27 +39,40 @@ $title = "New Post";
     </div> 
 
     <div>
-        <p style="color: red;" id="error"></p>
+        <p id="error"></p>
     </div>
 
     <div class="button">
-        <button id="button" type="submit" name="submit">Submit</button>
+        <button id="button" type="submit" name="submit"><span>Submit</span></button>
     </div>
-
 </form>
-<div id="messages"></div>
 
 <script>
 var url="ajaxUpload";
+
 
 $(function(){
     $("form").submit(function(e){
         e.preventDefault();
         var error; 
+        var button = $("#button span");
 
-		if (!$('input:text').val()) {
-			error = "Please complete all fields!";
-			document.getElementById("error").innerHTML = error;
+        $("#button").addClass("submit");
+        button.fadeOut("slow", function(){
+            button.empty().html('<i class="fas fa-spinner"></i>').fadeIn("slow");
+        });
+		if (!$("input:text").val()) {
+			error = "Please write your name and a title!";
+            setTimeout(function() {
+			    document.getElementById("error").innerHTML = error;
+                $("#error").addClass("active");
+            }, 2000);
+            setTimeout(function() {
+                button.fadeOut(function(){
+                    button.empty().append("Submit").fadeIn();
+                    $("#button").removeClass("submit");
+                });
+            }, 2800);
             return false;
         }
 
@@ -70,10 +83,10 @@ $(function(){
             formData.append('titlePost', titlePost);
         var content = $("#content").val();
             formData.append('content', content);
-        // var picture = $('#picture').prop('files')[0];
-        //     formData.append('picture', picture);
-        // var checkbox = $("#checkbox").is(':checked');
-        //     formData.append('public', checkbox);
+        var picture = $('#picture').prop('files')[0];
+            formData.append('picture', picture);
+        var checkbox = $("#checkbox").is(':checked');
+            formData.append('public', checkbox);
 
         $.ajax({
             url: url,
@@ -83,30 +96,15 @@ $(function(){
             cache: false,
             processData:false,
             success     : function(data){
-                alert("ok");              
+                setTimeout(function() {
+                    button.fadeOut(function(){
+                        $("#button").removeClass("submit");
+                        button.empty().html('<i class="fas fa-check"></i>').fadeIn("slow");
+                    });
+                }, 2800);         
             }
          });
         return false;
     });
  });
-
- 
-
-    // $(function () {
-    //     $("#button").click(function () {
-    //         $("#button").addClass("onclic", 250, validate);
-    //     });
-        
-    //     function validate() {
-    //         setTimeout(function () {
-    //             $("#button").removeClass("onclic");
-    //             $("#button").addClass("validate", 450, callback);
-    //         }, 2250);
-    //     }
-    //     function callback() {
-    //         setTimeout(function () {
-    //             $("#button").removeClass("validate");
-    //         }, 1250);
-    //     }
-    // });
 </script>
