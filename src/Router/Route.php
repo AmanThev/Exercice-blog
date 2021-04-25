@@ -78,6 +78,10 @@ class Route{
                 require VIEWS . 'layouts/profile.php';
                 return $this;
                 break;
+            case 'ajax':
+                require $view . '.php';
+                return $this;
+                break;
             default:
                 ob_start();
                 require $view . '.php';

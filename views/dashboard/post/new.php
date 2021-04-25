@@ -1,12 +1,13 @@
 <?php
 
-$title = "New Post";
+use App\URL\CreateUrl;
 
+$title = "New Post";
 ?>
 
 <h3 class="title-page">New Post</h3>
 
-<form class="new" action="" method="post" enctype="multipart/form-data">
+<form class="new" action="<?= CreateUrl::url('ajax/addPostAjax'); ?>" method="post" enctype="multipart/form-data">
     <div class="input">
         <label for="author">Your Name</label>
         <input type="text" name="author" id="author" value="" aria-describedby="authorInfo" placeholder="Write your name">
@@ -39,7 +40,7 @@ $title = "New Post";
     </div> 
 
     <div>
-        <p id="error"></p>
+        <p id="message"></p>
     </div>
 
     <div class="button">
@@ -48,14 +49,14 @@ $title = "New Post";
 </form>
 
 <script>
-var url="ajaxUpload";
-
+//var url="ajaxUpload";
 
 $(function(){
     $("form").submit(function(e){
         e.preventDefault();
+        var url     = $("form").attr("action");
+        var button  = $("#button span");
         var error; 
-        var button = $("#button span");
 
         $("#button").addClass("submit");
         button.fadeOut("slow", function(){
@@ -64,8 +65,8 @@ $(function(){
 		if (!$("input:text").val()) {
 			error = "Please write your name and a title!";
             setTimeout(function() {
-			    document.getElementById("error").innerHTML = error;
-                $("#error").addClass("active");
+			    $("#message").html(error);
+                $("#message").addClass("error");
             }, 2000);
             setTimeout(function() {
                 button.fadeOut(function(){
@@ -89,21 +90,39 @@ $(function(){
             formData.append('public', checkbox);
 
         $.ajax({
-            url: url,
             type: "POST",
-            data:  formData,
+            url: url,
+            data: formData,
             contentType: false,
             cache: false,
-            processData:false,
-            success     : function(data){
-                setTimeout(function() {
-                    button.fadeOut(function(){
-                        $("#button").removeClass("submit");
-                        button.empty().html('<i class="fas fa-check"></i>').fadeIn("slow");
-                    });
-                }, 2800);         
+            processData: false,
+            success:function(data){
+                data = JSON.parse(data)
+                if(data.status === 'ok'){
+                    setTimeout(function() {
+                        $("#message").addClass("valid");
+                        $('#message').text(data.result);
+                    }, 2000);
+                    setTimeout(function() {
+                        button.fadeOut(function(){
+                            $("#button").removeClass("submit");
+                            button.empty().html('<i class="fas fa-check"></i>').fadeIn("slow");
+                        });
+                    }, 2800);  
+                }else{
+                    setTimeout(function() {
+                        $("#message").text(data.error);
+                        $("#message").addClass("error");
+                    }, 2000);
+                    setTimeout(function() {
+                        button.fadeOut(function(){
+                            button.empty().append("Submit").fadeIn();
+                            $("#button").removeClass("submit");
+                        });
+                }, 2800);
+                } 
             }
-         });
+         })
         return false;
     });
  });

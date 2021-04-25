@@ -5,6 +5,7 @@ require '../vendor/autoload.php';
 use App\Router\Router;
 
 define('VIEWS', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'views/');
+define('AJAX', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'ajax/');
 define('DEBUG_TIME', microtime(true));
 $rootEnd = strpos($_SERVER['SCRIPT_NAME'], '/cinema') + 7;
 $www_root = substr($_SERVER['SCRIPT_NAME'], 0, $rootEnd);
@@ -27,16 +28,21 @@ $whoops->register();
 $router = new Router($_GET['url']);
 $router->get('/',  VIEWS . 'home');
 $router->get('/home', VIEWS . 'home');
+
 $router->get('/blog', VIEWS . 'blog');
 $router->get('/blog/:slug-:id', VIEWS . 'post', 'post');
+
 $router->get('/reviews', VIEWS . 'reviews');
 $router->get('/reviews/:slug-:id', VIEWS . 'film', 'film');
+
 $router->get('/forum', VIEWS . 'forum/index');
 $router->get('/forum/:slug-:id', VIEWS . 'forum/category');
 $router->get('/forum/:slugCat/:slug-:id', VIEWS . 'forum/subCategory');
 $router->get('/forum/:slugCat/:slugSubCat/:slug-:id', VIEWS . 'forum/topic');
 $router->get('/forum/newTopic', VIEWS . 'forum/addTopic');
+
 $router->get('/quiz', VIEWS . 'quiz');
+
 $router->get('/admin', VIEWS . 'presentationAdmin');
 
 $router->get('/authentication/login', VIEWS . 'user/login');
@@ -44,21 +50,35 @@ $router->get('/authentication/register', VIEWS . 'user/register');
 
 $router->get('/user/:slug', VIEWS . 'user/profileMember');
 
+/**
+ * Dashboard
+ */
 $router->get('/dashboard', VIEWS . 'dashboard/index');
+
 $router->get('/dashboard/posts', VIEWS . 'dashboard/post/index');
 $router->get('/dashboard/posts/newPost', VIEWS . 'dashboard/post/new', 'new_post');
+
 $router->get('/dashboard/posts/:id', VIEWS . 'dashboard/post/edit', 'post_edit');
 $router->get('/dashboard/reviews', VIEWS .'dashboard/review/index');
+
 $router->get('/dashboard/comments', VIEWS .'dashboard/comment');
+
 $router->get('/dashboard/users', VIEWS .'dashboard/user/index');
+
 $router->get('/dashboard/forum', VIEWS .'dashboard/forum');
+
 $router->get('/dashboard/users/:slug', VIEWS .'dashboard/user/profileAdmin');
 
-$router->post('/dashboard/posts/ajaxUpload', VIEWS . 'dashboard/post/ajaxUpload');
 $router->post('/dashboard/posts/newPost', VIEWS . 'dashboard/post/new', 'new_post_added');
 $router->post('/dashboard/posts/:id/delete', VIEWS . 'dashboard/post/delete', 'post_delete');
-$router->post('/post/:id', function(){
-  echo 'Add post n°' .$id;
-});
+
+/**
+ * Ajax
+ */
+$router->post('/ajax/addPostAjax', AJAX . 'addPostAjax');
+
+// $router->post('/post/:id', function(){
+//   echo 'Add post n°' .$id;
+// });
 
 $router->run();

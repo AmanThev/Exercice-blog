@@ -542,6 +542,10 @@ form.new div.input input{
     text-indent:    7px;
 }
 
+form.new div.picture label{
+    cursor: pointer;
+}
+
 form.new input#picture{
     margin-left:    -6.9rem;
     padding-top:    .5rem;
@@ -729,8 +733,15 @@ form.new button.submit:hover {
     background: #7aa7bd;
 }
 
-form.new #error.active{
+form.new #message.error{
     background:     #e11800;
+    color:          white;
+    padding:        1rem;
+    border-radius:  20px;
+}
+
+form.new #message.valid{
+    background:     #008d18;
     color:          white;
     padding:        1rem;
     border-radius:  20px;
