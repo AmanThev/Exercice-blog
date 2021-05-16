@@ -11,18 +11,18 @@ $films  = new FilmDatabase();
 $films  = $films->getAllFilms();
 
 $colors = [
-	"Horror" => "#fe0800 ",
-	"Thriller" => "#dc81fb",
-    "Action" => "#86fa93",
-    "Drama" => "#bfbfbf",
-    "Comedy" => "#ffbc0a",
-    "Biography" => "#cb9a80",
-    "Sci-Fi" => "#41ffc8"];
+	"Horror"    => "#82ccdd ",
+	"Thriller"  => "#f0d1fa",
+    "Action"    => "#55efc4",
+    "Drama"     => "#c8d6e5",
+    "Comedy"    => "#fab1a0",
+    "Biography" => "#f7f1e3",
+    "Sci-Fi"    => "#ffeaa7"];
 ?>
 
 <h3 class="title-page">Reviews</h3>
 
-<a class="create-button" href="<?= CreateUrl::url('dashboard/review/new'); ?>">Create New Review</a>
+<a class="create-button" href="<?= CreateUrl::url('dashboard/reviews/newReview'); ?>">Create New Review</a>
 
 <table style="width:86%">
     <tr>
@@ -40,8 +40,8 @@ $colors = [
             <td><?= $film->getDate() ?></td>
             <td>
                 <a href="<?= CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $film->getId()]); ?>"><i class="fas fa-eye"></i> Preview</a>
-                <a href=""><i class="fas fa-pen"></i> Edit</a>
-                <form action="<?= CreateUrl::urlDashboardAction('dashboard/films', $film->getId(), 'delete'); ?>" method="post">
+                <a href="<?= CreateUrl::urlDashboardAction('dashboard/reviews', $film->getId()); ?>"><i class="fas fa-pen"></i> Edit</a>
+                <form action="<?= CreateUrl::urlDashboardAction('dashboard/films', $film->getId(), 'delete'); ?>" method="post" onsubmit="return confirm('Are you sure you want to delete this review?')">
                     <button><i class="fas fa-times-circle"></i> Delete</button>
                 </form>
             </td>

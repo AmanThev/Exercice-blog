@@ -53,8 +53,12 @@ $title = $slug;
                 <td><?= $film->getDirector() ?></td>
             </tr>
             <tr>
-                <th scope="row">Producer</th>
-                <td><?= $film->getProducer() ?></td>
+                <th scope="row">Production</th>
+                <td><?= $film->getProduction() ?></td>
+            </tr>
+            <tr>
+                <th scope="row">Writer</th>
+                <td><?= $film->getWriter() ?></td>
             </tr>
             <tr>
                 <th scope="row">Starring</th>

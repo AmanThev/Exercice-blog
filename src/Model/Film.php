@@ -34,7 +34,7 @@ class Film
     /**
      * @var string varchar(250)
      */
-    private $producer;    
+    private $production;    
     /**
      * @var string varchar(250)
      */
@@ -112,9 +112,9 @@ class Film
         return htmlspecialchars($this->director);
     }
 
-    public function getProducer(): string
+    public function getProduction(): string
     {
-        return htmlspecialchars($this->producer);
+        return htmlspecialchars($this->production);
     }
 
     public function getWriter(): string

@@ -373,8 +373,8 @@ section.forum ul.active a.link-cat:before{
 section.forum a.link-cat:after {
     content:            "\f00d";
     font-family:        "Font Awesome 5 Free";
-     position:          relative;
-     top:               -5px;
+    position:          relative;
+    top:               -5px;
     font-weight:        bold;
     cursor:             pointer;
     padding-left:       .5em;
@@ -497,6 +497,11 @@ form.new{
     margin-top: 2rem;
 }
 
+form.new h4{
+    text-decoration: underline;
+    font-weight:     700;
+}
+
 form.new small,
 form.new div.textarea label{
     display: block;
@@ -532,7 +537,8 @@ form.new div.textarea textarea{
     width: 100%;
 }
 
-form.new div.input input{
+form.new div.input input,
+form.new div.input select{
     margin-left:    -4.4px;
     height:         2.69rem;
     width:          85%;
@@ -540,6 +546,33 @@ form.new div.input input{
     border-width:   1.5px;
     border-color:   #2980b9;
     text-indent:    7px;
+}
+
+form.new div.input select{
+    width:      9%;
+    appearance: none;
+    cursor:     pointer;
+}
+
+form.new div.input .choose-year:before{
+    content:            "\f0dd";
+    font-family:        "Font Awesome 5 Free";
+    position:           absolute;
+    top:                0;
+    right:              -98px;
+    width:              25%;
+    height:             100%;
+    font-size:          17px;
+    line-height:        33px;
+    color:              black;
+    background-color:   #7aa7bd;
+    pointer-events:     none;
+  }
+
+form.new div.textarea textarea{
+    border-style:  outset;
+    border-width:  1.5px;
+    border-color: #2980b9;
 }
 
 form.new div.picture label{
@@ -556,7 +589,8 @@ form.new input#picture{
     width:          95%;
 }
 
-form.new div.input input:focus{
+form.new div.input input:focus,
+form.new div.textarea textarea:focus{
     outline:        none;
     border-color:   #80bdff;
     box-shadow:     0 0 0 .1rem rgba(0,123,255,.25);

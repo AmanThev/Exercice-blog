@@ -57,9 +57,11 @@ $router->get('/dashboard', VIEWS . 'dashboard/index');
 
 $router->get('/dashboard/posts', VIEWS . 'dashboard/post/index');
 $router->get('/dashboard/posts/newPost', VIEWS . 'dashboard/post/new', 'new_post');
-
 $router->get('/dashboard/posts/:id', VIEWS . 'dashboard/post/edit', 'post_edit');
+
 $router->get('/dashboard/reviews', VIEWS .'dashboard/review/index');
+$router->get('/dashboard/reviews/newReview', VIEWS . 'dashboard/review/new', 'new_review');
+$router->get('/dashboard/reviews/:id', VIEWS . 'dashboard/review/edit', 'review_edit');
 
 $router->get('/dashboard/comments', VIEWS .'dashboard/comment');
 
