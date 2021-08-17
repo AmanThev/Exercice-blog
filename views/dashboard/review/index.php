@@ -11,7 +11,7 @@ $films  = new FilmDatabase();
 $films  = $films->getAllFilms();
 
 $colors = [
-	"Horror"    => "#82ccdd ",
+	"Horror"    => "#82ccdd",
 	"Thriller"  => "#f0d1fa",
     "Action"    => "#55efc4",
     "Drama"     => "#c8d6e5",

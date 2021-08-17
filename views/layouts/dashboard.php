@@ -40,7 +40,6 @@ use App\URL\CreateUrl;
         <a href="<?= CreateUrl::url('quiz') ?>"><i class="fas fa-question-circle"></i>Quiz</a>
         <a href="<?= CreateUrl::url('dashboard/users') ?>"><i class="fas fa-user"></i>Users</a>
     </nav>    
-</div>
 </header>
 
 <div class="container-fluid">

@@ -90,13 +90,13 @@ form.choose-button{
 }
 
 h3.title-page{
-    margin-top: 2rem;
-    margin-left: 15rem;
-    font-family: Copperplate;
-    font-size: 4.3rem;
-    text-decoration: underline #7aa7bd;
-    color: #33454e;
-    text-shadow: 1px 1px 5px #d53a22, 1em 0 6em #7aa7bd, 0 0 0.2em blue;
+    margin-top:         2rem;
+    margin-left:        15rem;
+    font-family:        Copperplate;
+    font-size:          4.3rem;
+    text-decoration:    underline #7aa7bd;
+    color:              #33454e;
+    text-shadow:        1px 1px 5px #d53a22, 1em 0 6em #7aa7bd, 0 0 0.2em blue;
 }
 
 a.create-button{
@@ -373,8 +373,8 @@ section.forum ul.active a.link-cat:before{
 section.forum a.link-cat:after {
     content:            "\f00d";
     font-family:        "Font Awesome 5 Free";
-    position:          relative;
-    top:               -5px;
+    position:           relative;
+    top:                -5px;
     font-weight:        bold;
     cursor:             pointer;
     padding-left:       .5em;
@@ -513,7 +513,8 @@ form.new div{
 
 form.new div.input label,
 form.new div.textarea label,
-form.new div.picture label{
+form.new div.picture label,
+form.new div.range-score label{
     background:                 #7aa7bd;
     padding:                    .5rem;
     width:                      7.5rem;
@@ -524,6 +525,11 @@ form.new div.picture label{
     font-weight:                700;
     position:                   relative;
     z-index:                    2;
+}
+
+form.new div.range-score label{
+    border-top-right-radius:     10px;
+    border-bottom-right-radius:  10px;
 }
 
 form.new div.textarea label{
@@ -539,8 +545,8 @@ form.new div.textarea textarea{
 
 form.new div.input input,
 form.new div.input select{
-    margin-left:    -4.4px;
-    height:         2.69rem;
+    margin-left:    -5.4px;
+    height:         2.65rem;
     width:          85%;
     border-style:   outset outset outset none;
     border-width:   1.5px;
@@ -549,7 +555,7 @@ form.new div.input select{
 }
 
 form.new div.input select{
-    width:      9%;
+    width:      8%;
     appearance: none;
     cursor:     pointer;
 }
@@ -580,13 +586,13 @@ form.new div.picture label{
 }
 
 form.new input#picture{
-    margin-left:    -6.9rem;
-    padding-top:    .5rem;
+    margin-left:    -5.87rem;
+    padding-top:    .45rem;
     border-style:   outset outset outset none;
     border-width:   1.5px;
     border-color:   #2980b9;
-    height:         2.69rem;
-    width:          95%;
+    height:         2.6rem;
+    width:          92.5%;
 }
 
 form.new div.input input:focus,
@@ -780,3 +786,69 @@ form.new #message.valid{
     padding:        1rem;
     border-radius:  20px;
 }
+
+form.new input#score{
+    appearance:     none;
+    width:          400px;
+    height:         1rem;
+    background:     linear-gradient(to bottom,#2980b9 10%,#7aa7bd);
+    cursor:         pointer;
+    border-radius:  1.5rem;
+    margin-left:    2rem;
+}
+
+.score-content{
+    display:            flex;
+    flex-direction:     column;
+}
+
+.container-value{
+    position:           relative;
+    top:                -1.7rem;
+    left:               -1rem;
+}
+
+#score-value{
+    color:              black;
+    display:            flex;
+    align-items:        center;
+    font-weight:        500;
+    justify-content:    center;
+    position:           relative;
+    left:               0px;
+    width:              50px;
+    height:             50px;
+    font-size:          1.3rem;
+    transition:         .3s ease-in-out;    
+    background-color:   #7aa7bd;
+    border-radius:      50% 50% 50% 50%;
+}
+
+#score-value:after{
+    content:        "\f005";
+    font-family:    "Font Awesome 5 Free";
+    font-size:      0.7em;
+    padding-left:   2px;
+    font-weight:    900;
+}
+
+.score-option{
+    position:       relative;
+    left:           0px;
+    z-index:        1;
+    font-weight:    900;
+}
+
+.score-option:before{
+        content:    '';
+        width:      55px;
+        height:     55px;
+        display:    block;
+        position:   absolute;
+        background: #7aa7bd;
+        top:        -17px;
+        left:       -22px;
+        clip-path:  polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        z-index:    -10;
+}
+

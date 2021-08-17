@@ -55,9 +55,6 @@ score
             </script>
         </select>
     </div>
-    <!--
-        date à choisir, année
-    -->
 
     <div class="input">
         <label for="director">Director</label>
@@ -70,23 +67,55 @@ score
     </div>
 
     <div class="input">
-        <label for="titlePost">Production</label>
+        <label for="actor">Starring</label>
+        <input type="text" name="actor" id="actor" value="" aria-describedby="productionInfo">
+    </div>
+
+    <div class="input">
+        <label for="production">Production</label>
         <input type="text" name="production" id="production" value="" aria-describedby="productionInfo">
+    </div>
+    
+    <div class="input">
+        <label for="genre">Genre</label>
+        <input type="text" name="genre" id="genre" value="" aria-describedby="genreInfo">
     </div>
 
     <div class="textarea">
         <label for="content">Synopsis</label>
-        <textarea type="text"name="content" id="content" rows="20"></textarea>
+        <textarea type="text" name="content" id="content" rows="20"></textarea>
     </div>
+
 
 
     <h4>Your opinion</h4>
 
     <div class="textarea">
         <label for="content">Your review</label>
-        <textarea type="text"name="content" id="content" rows="20"></textarea>
+        <textarea type="text" name="content" id="content" rows="20"></textarea>
     </div>
 
+    <div class="range-score">
+        <label for="score">Your score</label>
+        <div class="score-content">
+            <div id="list-score-option">
+                <?php
+                    for ($i = 0; $i <= 5; $i++){
+                        echo "<span class='score-option'>$i</span>";
+                    }
+                ?>
+            <!-- <script>
+                for(var j = 0; j <= 5; j++){
+                    document.write('<span class="score-option">'+j+'</span>');
+                }
+            </script> -->
+            </div>
+            <input type="range" id="score" name="score" min="0" max="5" value="0">
+            <div class="container-value">
+                <output id="score-value"></output>
+            </div>
+        </div>
+    </div> 
 
     <div>
         <p id="message"></p>
@@ -97,3 +126,23 @@ score
     </div>
 </form>
 
+<script>
+    var slider = document.getElementById("score");
+    var score = document.getElementById("score-value");
+    slider.addEventListener("input", showSliderValue, false);
+
+    function showSliderValue(){
+        score.innerHTML = slider.value;
+        var scorePosition = (slider.value / slider.max);
+        score.style.left = (scorePosition * 382) + "px";
+    }
+
+    var scoreOption = document.querySelectorAll('.score-option');
+    for (var i=0; i<scoreOption.length; i++) {
+        var valueOption = scoreOption[i].innerHTML;
+        var lastScoreOption = document.getElementById('list-score-option').lastElementChild.innerHTML;
+        var scoreOptionPosition = (valueOption / lastScoreOption);
+        scoreOption[i].style.left = (scoreOptionPosition * 335) + "px";
+    }
+
+</script>
