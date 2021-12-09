@@ -49,8 +49,6 @@ $title = "New Post";
 </form>
 
 <script>
-//var url="ajaxUpload";
-
 $(function(){
     $("form").submit(function(e){
         e.preventDefault();
@@ -62,20 +60,21 @@ $(function(){
         button.fadeOut("slow", function(){
             button.empty().html('<i class="fas fa-spinner"></i>').fadeIn("slow");
         });
-		if (!$("input:text").val()) {
-			error = "Please write your name and a title!";
-            setTimeout(function() {
-			    $("#message").html(error);
-                $("#message").addClass("error");
-            }, 2000);
-            setTimeout(function() {
-                button.fadeOut(function(){
-                    button.empty().append("Submit").fadeIn();
-                    $("#button").removeClass("submit");
-                });
-            }, 2800);
-            return false;
-        }
+
+		// if (!$("input:text").val()) {
+		// 	error = "Please write your name and a title!";
+        //     setTimeout(function() {
+		// 	    $("#message").html(error);
+        //         $("#message").addClass("error");
+        //     }, 2000);
+        //     setTimeout(function() {
+        //         button.fadeOut(function(){
+        //             button.empty().append("Submit").fadeIn();
+        //             $("#button").removeClass("submit");
+        //         });
+        //     }, 2800);
+        //     return false;
+        // }
 
         var formData = new FormData(); 
         var author = $("#author").val();

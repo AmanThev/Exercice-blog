@@ -6,20 +6,6 @@ $title = "New Review";
 
 ?>
 
-<!--
-title
-poster
-date
-director
-production
-writer
-actor
-genre
-synopsis
-review
-score
-    -->
-
 <h3 class="title-page">New Review</h3>
 
 <form class="new" action="<?= CreateUrl::url('ajax/addFilmAjax'); ?>" method="post" enctype="multipart/form-data">
@@ -82,8 +68,8 @@ score
     </div>
 
     <div class="textarea">
-        <label for="content">Synopsis</label>
-        <textarea type="text" name="content" id="content" rows="20"></textarea>
+        <label for="synopsis">Synopsis</label>
+        <textarea type="text" name="synopsis" id="synopsis" rows="20"></textarea>
     </div>
 
 
@@ -91,8 +77,8 @@ score
     <h4>Your opinion</h4>
 
     <div class="textarea">
-        <label for="content">Your review</label>
-        <textarea type="text" name="content" id="content" rows="20"></textarea>
+        <label for="review">Your review</label>
+        <textarea type="text" name="review" id="review" rows="20"></textarea>
     </div>
 
     <div class="range-score">
@@ -104,11 +90,6 @@ score
                         echo "<span class='score-option'>$i</span>";
                     }
                 ?>
-            <!-- <script>
-                for(var j = 0; j <= 5; j++){
-                    document.write('<span class="score-option">'+j+'</span>');
-                }
-            </script> -->
             </div>
             <input type="range" id="score" name="score" min="0" max="5" value="0">
             <div class="container-value">
@@ -120,15 +101,16 @@ score
     <div>
         <p id="message"></p>
     </div>
-
+    
     <div class="button">
         <button id="button" type="submit" name="submit"><span>Submit</span></button>
     </div>
 </form>
 
 <script>
-    var slider = document.getElementById("score");
-    var score = document.getElementById("score-value");
+
+    var slider  = document.getElementById("score");
+    var score   = document.getElementById("score-value");
     slider.addEventListener("input", showSliderValue, false);
 
     function showSliderValue(){
@@ -144,5 +126,91 @@ score
         var scoreOptionPosition = (valueOption / lastScoreOption);
         scoreOption[i].style.left = (scoreOptionPosition * 335) + "px";
     }
+
+    var form        = document.querySelector('form');
+    var url         = form.action;
+    var message     = document.getElementById('message');
+    var button      = document.getElementById('button');
+    var error;
+
+    form.addEventListener('submit', function (e){
+        e.preventDefault();
+
+        var data        = new FormData(form);
+        var httpRequest = new XMLHttpRequest();
+        
+        button.className = 'submit';
+        fadeOut(button.firstChild, replaceBySpinner);
+        
+        var inputs = this.querySelectorAll("input");
+        for(var i = 0; i < inputs.length; i++){
+            if (!inputs[i].value){
+                error = "Please please fill in all fields";
+                setTimeout(function() {
+                    message.innerHTML = error;
+                    message.className = 'error';
+                }, 2000);
+                setTimeout(function() {
+                    fadeOut(button.firstChild, replaceBySubmit);
+                }, 2800);
+                break;
+            }
+        }
+
+        function fadeOut(element, callback){
+            if(element.style.opacity == ""){
+                element.style.opacity = 1;
+            }
+            
+            var intervalFadeOut = setInterval(function(){
+                if (element.style.opacity > 0){
+                    element.style.opacity -= 0.01;
+                }else{
+                    clearInterval(intervalFadeOut);
+                    callback(element);
+                }
+            }, 10)
+        }
+
+        function replaceBySpinner(element){
+            var newSpanButton = document.createElement('i');
+                newSpanButton.classList.add("fas");
+                newSpanButton.classList.add("fa-spinner");
+                newSpanButton.style.opacity = 0;
+                button.replaceChild(newSpanButton, element);
+                fadeIn(newSpanButton);
+        }
+
+       function replaceBySubmit(element){
+            var newSpanButton = document.createElement('span');
+                submit = document.createTextNode('submit');
+                newSpanButton.appendChild(submit);
+                newSpanButton.style.opacity = 0;
+                button.replaceChild(newSpanButton, element);
+                button.classList.remove('submit');
+                fadeIn(newSpanButton);
+        }
+
+        function fadeIn(element){
+            opacity = Number(window.getComputedStyle(element).getPropertyValue("opacity"));
+
+            var intervalFadeIn = setInterval(function(){
+                if (opacity <  1){
+                    opacity = opacity + 0.1;
+                    element.style.opacity = opacity;
+                }else{
+                    clearInterval(intervalFadeIn);
+                }
+            }, 100)
+        }
+                
+        httpRequest.onreadystatechange = function(){
+            if(httpRequest.readyState === 4 && httpRequest.status === 200){
+                message.innerHTML = httpRequest.responseText;
+            }
+        }
+        httpRequest.open('POST', url, true);
+        httpRequest.send(data);
+    })
 
 </script>

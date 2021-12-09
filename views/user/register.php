@@ -27,5 +27,5 @@ $title = "Register"
         </div>
           <input type="submit" name="signup" value="Sign up">
       </form>
-      <p>Already have an account, <a href="<?= CreateUrl::url('user/login') ?>" class=""> login</a></p>
+      <p>Already have an account, <a href="<?= CreateUrl::url('authentication/login') ?>" class=""> login</a></p>
 </section>

@@ -96,7 +96,6 @@ class Comment
     /**
      * Number of the best Comment
      *
-     * @return void
      */
     public function getBest(): int
     {
