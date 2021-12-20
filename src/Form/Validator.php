@@ -15,7 +15,10 @@ class Validator
     /**
      * @var array
      */
-    private $ruleData = array();
+    private $ruleData = array();    
+    /**
+     * @var array
+     */
     private $errors;
     /**
      * @var array
@@ -57,11 +60,21 @@ class Validator
     
     public function validateForm()
     {
-        foreach ($this->ruleData as $v){
-            foreach ($v['fields'] as $field){
-                $this->error($field, $v['message'], $v['params']);
+        foreach($this->ruleData as $v){
+            foreach($v['fields'] as $field){
+                $callback = array($this, $v['rule']);
+                $values = $this->getValue($this->data, $field);
+                
+                foreach($values as $value){
+                    $result = call_user_func($callback, $field, $value, $v['params']);
+                    if($result === false){
+                        $this->error($field, $v['message'], $v['params']);
+                    }
+                }
+                
             }
         }
+        return count($this->getErrors()) === 0;
     }
     
     private function getMessage(string $rule): string
@@ -71,21 +84,44 @@ class Validator
         return $message;
     }
 
+    private function getValue($data, $field){
+        return array($data[$field]);
+    }
+
     private function error(string $field, string $message, ?array $params = array()){
         $message = $this->setMessage($field, $message, $params);
         $this->errors[$field][] = vsprintf($message, $params);
     }
-
+    
     private function setMessage($field, $message, $params){
         $message = str_replace('{field}', ucwords($field), $message) ?: str_replace('{field} ', '', $message);
 
         return $message;
     }
 
+    public function getErrors(){
+        return $this->errors;
+    }
+    
+    private function required(string $field, string $value){
+        if (!isset($value) || is_null($value) || empty($value)) {
+            return false;
+        }
 
+        return true;
+    }
 
+    private function lengthBetween(string $field, string $data, $params){
+        $length = $this->stringLength($data);
+        return ($length !== false) && $length >= $params[0] && $length <= $params[1];
+    }
+    
 
+    private function stringLength($data){
+        if(is_string($data)){
+            return mb_strlen($data);
+        }
 
-
-
+        return false;
+    }
 }

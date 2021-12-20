@@ -7,11 +7,12 @@ $result = [];
 
 $data = new Validator($_POST);
 
+$data->check('required', ['author', 'titlePost']);
 $data->check('lengthBetween', 'author', 2, 20);
-$data->check('required', ['author', 'title']);
-$data->check('exist', 'title');
-$data->check('extensionPicture', 'picture');
+//$data->check('exist', 'title');
+//$data->check('extensionPicture', 'picture');
 $data->validateForm();
+dump($data->getErrors());
 /*
 	Error :
 		pseudo exceed 20 caracters
