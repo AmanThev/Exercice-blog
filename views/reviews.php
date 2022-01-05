@@ -1,6 +1,6 @@
 <?php
 
-use App\Manager\Database;
+use App\Manager\Connection;
 use App\Manager\FilmDatabase;
 use App\SQL\Paginate;
 use App\URL\CreateUrl;

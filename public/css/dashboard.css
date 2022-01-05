@@ -587,12 +587,29 @@ form.new div.picture label{
 
 form.new input#picture{
     margin-left:    -5.87rem;
-    padding-top:    .45rem;
+    padding-top:    .47rem;
     border-style:   outset outset outset none;
     border-width:   1.5px;
     border-color:   #2980b9;
     height:         2.69rem;
     width:          92.5%;
+}
+
+form.new button.delete-file{
+    position:                   relative;
+    height:                     44px;
+    width:                      44px;
+    background-color:           #e74c3c;
+    left:                       -5.5px;
+    cursor:                     pointer;
+    border-style:               outset outset outset none;
+    border-color:               #7c1708;
+    border-top-right-radius:    13px;
+    border-bottom-right-radius: 13px;
+}
+
+form.new button.delete-file:hover{
+    background-color: #cb200e;
 }
 
 form.new div.input input:focus,
@@ -738,7 +755,7 @@ form.new span.switch-handle{
     transition: All 0.3s ease;
 }
 
-form.new button{
+form.new button#validateForm{
     height:         40px;
     text-align:     center;
     width:          130px;
@@ -751,7 +768,7 @@ form.new button{
     color:          black;
 }
   
-form.new button:hover{
+form.new button#validateForm:hover{
     background: #2980b9;
 }
 

@@ -26,6 +26,7 @@ $title = "New Review";
         <label for="picture">Upload</label>
         <input type="hidden" name="MAX_FILE_SIZE" value="250000">
         <input type="file" id="picture" name="picture">
+        <button type="button"  class="delete-file" onclick="document.getElementById('picture').value=''"><i class="fas fa-times-circle"></i></button>
         <small>Add the poster of the film</small>
     </div>
 
@@ -103,7 +104,7 @@ $title = "New Review";
     </div>
     
     <div class="button">
-        <button id="button" type="submit" name="submit"><span>Submit</span></button>
+        <button id="validateForm" type="submit" name="submit"><span>Submit</span></button>
     </div>
 </form>
 
@@ -130,7 +131,7 @@ $title = "New Review";
     var form        = document.querySelector('form');
     var url         = form.action;
     var message     = document.getElementById('message');
-    var button      = document.getElementById('button');
+    var button      = document.getElementById('validateForm');
     var error;
 
     form.addEventListener('submit', function (e){

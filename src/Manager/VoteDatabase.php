@@ -1,9 +1,9 @@
 <?php
 namespace App\Manager;
 
-use App\SQL\CountSql;
-use App\Model\Vote;
 use \PDO;
+use App\Model\Vote;
+use App\SQL\CountSql;
 use \Exception;
 
 class VoteDatabase extends Database

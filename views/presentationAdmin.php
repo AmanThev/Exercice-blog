@@ -1,6 +1,6 @@
 <?php
 
-use App\Manager\Database;
+use App\Manager\Connection;
 use App\Manager\UserDatabase;
 
 

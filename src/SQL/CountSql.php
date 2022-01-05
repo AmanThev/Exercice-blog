@@ -2,7 +2,7 @@
 
 namespace App\SQL;
 
-use App\Manager\Database;
+use App\Manager\Connection;
 use \PDO;
 
 class CountSql {
@@ -16,7 +16,7 @@ class CountSql {
      */
     public static function totalData(string $sql, $param = null): int 
     {
-        $pdo = new Database();
+        $pdo = new Connection();
         if($param != null ){
             $countSql = $pdo->connect()->prepare($sql);
             $countSql->execute([$param]);
@@ -38,7 +38,7 @@ class CountSql {
      */
     public static function totalColumn(string $sql, $param): int
     {
-        $pdo = new Database();
+        $pdo = new Connection();
         $stmt = $pdo->connect()->prepare($sql);
         $stmt->execute([$param]);
         $total = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);

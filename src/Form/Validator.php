@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Manager\Database;
 
 class Validator
 {
@@ -19,7 +20,7 @@ class Validator
     /**
      * @var array
      */
-    private $errors;
+    private $errors = array();
     /**
      * @var array
      */
@@ -39,22 +40,21 @@ class Validator
     }
     
     /**
-     * @param  mixed $field
-     * @param  mixed $params
+     * @param  string|array $field
+     * @param  string|array $params
      */
     public function check(string $rule, $field, $params = NULL): self
     {    
-        $checkMessage = $this->getMessage($rule);
-        $message = '{field} ' . $checkMessage;
+        $message = $this->getMessage($rule);
         $params = array_slice(func_get_args(), 2);
-
+        
         $this->ruleData[] = array(
             'rule' => $rule,
             'fields' => (array)$field,
             'params' => (array)$params,
             'message' => $message
         );
-        
+
         return $this;
     }
     
@@ -64,7 +64,6 @@ class Validator
             foreach($v['fields'] as $field){
                 $callback = array($this, $v['rule']);
                 $values = $this->getValue($this->data, $field);
-                
                 foreach($values as $value){
                     $result = call_user_func($callback, $field, $value, $v['params']);
                     if($result === false){
@@ -80,48 +79,148 @@ class Validator
     private function getMessage(string $rule): string
     {
         $ruleMessage = static::$messages;
-        $message = isset($ruleMessage[$rule]) ? $ruleMessage[$rule] : self::ERROR_DEFAULT;
-        return $message;
+        $checkMessage = isset($ruleMessage[$rule]) ? $ruleMessage[$rule] : self::ERROR_DEFAULT;
+        if(preg_match('/[A-Z]/', $checkMessage)){
+            return $checkMessage;
+        }
+        return '{field} ' . $checkMessage;
     }
 
-    private function getValue($data, $field){
+    private function getValue(array $data, $field)
+    {
+        if(!empty($_FILES['picture'])){
+            $data['picture'] = $_FILES['picture']['name'];
+            return array($data[$field]);
+        }
         return array($data[$field]);
     }
 
-    private function error(string $field, string $message, ?array $params = array()){
-        $message = $this->setMessage($field, $message, $params);
+    private function error(string $field, string $message, ?array $params = array())
+    {
+        $message = $this->setMessage($field, $message);
         $this->errors[$field][] = vsprintf($message, $params);
     }
     
-    private function setMessage($field, $message, $params){
+    private function setMessage(string $field, string $message)
+    {
         $message = str_replace('{field}', ucwords($field), $message) ?: str_replace('{field} ', '', $message);
-
         return $message;
     }
 
-    public function getErrors(){
+    public function getErrors() :array
+    {
         return $this->errors;
     }
     
-    private function required(string $field, string $value){
+    private function required(string $field, string $value) :bool
+    {
         if (!isset($value) || is_null($value) || empty($value)) {
             return false;
         }
-
         return true;
     }
 
-    private function lengthBetween(string $field, string $data, $params){
-        $length = $this->stringLength($data);
-        return ($length !== false) && $length >= $params[0] && $length <= $params[1];
+    private function email(string $field, string $value)
+    {
+        return filter_var($value, \FILTER_VALIDATE_EMAIL);
+    }
+
+    private function year(string $field, $value) :bool
+    {
+        if(preg_match("#^[1-2][0-9]{3}$#", $value) && $this->numeric($field, $value)){
+            return true;
+        }
+        return false;
     }
     
+    private function lengthBetween(string $field, string $value, array $params) :bool
+    {
+        $length = $this->stringLength($value);
+        return ($length !== false) && $length >= $params[0] && $length <= $params[1];
+    }
 
-    private function stringLength($data){
+    private function lengthMax(string $field, string $value, array $params) :bool
+    {
+        $length = $this->stringLength($value);
+        return ($length !== false) && $length <= $params[0];
+    }
+
+    private function lengthMin(string $field, string $value, array $params) :bool
+    {
+        $length = $this->stringLength($value);
+        return ($length !== false) && $length >= $params[0];
+    }
+
+    private function stringLength(string $data)
+    {
         if(is_string($data)){
             return mb_strlen($data);
         }
-
         return false;
+    }
+    
+    /**
+     * $params --> only a second field
+     */
+    private function equals(string $field, $value, array $params) :bool
+    {
+        $value2 = $this->getValue($this->data, $params[0]);
+        $value2 = implode('', $value2);
+        return $value === $value2;
+    }
+
+    private function different(string $field, $value, array $params) :bool
+    {
+        $value2 = $this->getValue($this->data, $params[0]);
+        $value2 = implode('', $value2);
+        return $value != $value2;
+    }
+
+    private function exist(string $field, string $value, $params) :bool
+    {   
+        $film = new Database();
+        return $film->exist($value, $params[0]);
+    }
+
+    private function numeric($field, $value) :bool
+    {
+        return is_numeric($value);
+    }
+
+    private function numberBetween(string $field, $value, $params) :bool
+    {
+        if(!is_numeric($value)){
+            return false;
+        }
+        return $params[0] <= $value && $params[1] >= $value;
+    }
+
+    private function numberMin(string $field, $value, $params) :bool
+    {
+        if(!is_numeric($value)){
+            return false;
+        }
+        return $params[0] < $value;
+    }
+
+    private function numberMax(string $field, $value, $params) :bool
+    {
+        if(!is_numeric($value)){
+            return false;
+        }
+        return $params[0] > $value;
+    }
+
+    private function extensionPicture(string $field, $value, $params)
+    {
+
+        $file       = $params[0]['name'];
+        $extensions = ['.png', '.jpg', '.jpeg', '.gif', ".PNG", ".JPG", ".JPEG", ".GIF"];
+        $extension  = strrchr($file, '.');
+
+        if(!in_array($extension, $extensions)){
+            return false;
+        }
+        return true;
     }
 }

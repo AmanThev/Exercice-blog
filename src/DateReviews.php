@@ -3,7 +3,7 @@
 namespace App;
 
 use App\SQL\Paginate;
-use App\Manager\Database;
+use App\Manager\Connection;
 use App\Model\Film;
 use App\SQL\CountSql;
 use \Exception;
@@ -123,7 +123,7 @@ class DateReviews
     public static function getFilmByDecade($decades)
     {
         [$startDecade, $endDecade] = self::endsDecade($decades);
-        $pdo = new Database();
+        $pdo = new Connection();
         $sql = "SELECT * FROM films WHERE date BETWEEN {$startDecade} AND {$endDecade}";
         $pagination = new Paginate($sql, 6);
         $pagination = $pagination->getPagination();
@@ -136,7 +136,7 @@ class DateReviews
 
     public static function getFilmByYear($year)
     {
-        $pdo = new Database();
+        $pdo = new Connection();
         $sql = "SELECT * FROM films WHERE date = $year";
         $filmExist = CountSql::totalData($sql);
         if($filmExist){

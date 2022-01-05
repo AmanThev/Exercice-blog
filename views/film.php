@@ -1,7 +1,7 @@
 <?php
 
 use App\URL\ExplodeUrl;
-use App\Manager\Database;
+use App\Manager\Connection;
 use App\Manager\FilmDatabase;
 use App\Manager\CommentDatabase;
 use App\Manager\UserDatabase;

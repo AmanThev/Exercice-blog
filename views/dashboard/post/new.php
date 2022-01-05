@@ -21,13 +21,13 @@ $title = "New Post";
 
     <div class="textarea">
         <label for="content">Your Post</label>
-        <textarea type="text"name="content" id="content" rows="20"></textarea>
+        <textarea type="text" name="content" id="content" rows="20"></textarea>
     </div>
 
     <div class="picture">
         <label for="picture">Upload</label>
-        <input type="hidden" name="MAX_FILE_SIZE" value="250000">
-        <input type="file" id="picture" name="picture">
+        <input type="file" name="picture" id="picture">
+        <button type="button" onclick="document.getElementById('picture').value=''" class="delete-file"><i class="fas fa-times-circle"></i></button>
         <small>Choose a picture to illustrate your post</small>
     </div>
 
@@ -44,7 +44,7 @@ $title = "New Post";
     </div>
 
     <div class="button">
-        <button id="button" type="submit" name="submit"><span>Submit</span></button>
+        <button id="validateForm" type="submit" name="submit"><span>Submit</span></button>
     </div>
 </form>
 
@@ -53,10 +53,10 @@ $(function(){
     $("form").submit(function(e){
         e.preventDefault();
         var url     = $("form").attr("action");
-        var button  = $("#button span");
+        var button  = $("#validateForm span");
         var error; 
 
-        $("#button").addClass("submit");
+        $("#validateForm").addClass("submit");
         button.fadeOut("slow", function(){
             button.empty().html('<i class="fas fa-spinner"></i>').fadeIn("slow");
         });
@@ -100,11 +100,11 @@ $(function(){
                 if(data.status === 'ok'){
                     setTimeout(function() {
                         $("#message").addClass("valid");
-                        $('#message').text(data.result);
+                        $('#message').text(data.good);
                     }, 2000);
                     setTimeout(function() {
                         button.fadeOut(function(){
-                            $("#button").removeClass("submit");
+                            $("#validateForm").removeClass("submit");
                             button.empty().html('<i class="fas fa-check"></i>').fadeIn("slow");
                         });
                     }, 2800);  
@@ -116,7 +116,7 @@ $(function(){
                     setTimeout(function() {
                         button.fadeOut(function(){
                             button.empty().append("Submit").fadeIn();
-                            $("#button").removeClass("submit");
+                            $("#validateForm").removeClass("submit");
                         });
                 }, 2800);
                 } 

@@ -1,12 +1,12 @@
 <?php
 namespace App\Manager;
 
+use \PDO;
 use App\Model\Forum\Category;
 use App\Model\Forum\SubCategory;
 use App\Model\Forum\Topic;
 use App\Model\Forum\Message;
 use App\SQL\CountSql;
-use \PDO;
 use App\Manager\Exception\NotFoundException;
 
 

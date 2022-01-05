@@ -4,7 +4,7 @@ namespace App\SQL;
 
 use \PDO;
 use \Exception;
-use App\Database;
+use App\Connection;
 use App\Url\NumericUrl;
 use App\SQL\CountSql;
 use App\Url\ExplodeUrl;

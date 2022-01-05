@@ -7,7 +7,7 @@ composer.lock
 composer.phar
 
 # Ignoring files with full path.
-src/manager/database.php
+src/manager/Connection.php
 
 # Ignoring directories
 # Both the directory itself and its contents will be ignored.

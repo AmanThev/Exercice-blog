@@ -1,41 +1,47 @@
 <?php
 
 use App\Form\Validator;
+use App\Helpers\File;
 
+$maxSize = File::maxUpload();
 
-$result = [];
+if($_SERVER['CONTENT_LENGTH'] >= $maxSize){
+	throw new Exception("The file is too big!!!");
+};
 
 $data = new Validator($_POST);
-
 $data->check('required', ['author', 'titlePost']);
 $data->check('lengthBetween', 'author', 2, 20);
-//$data->check('exist', 'title');
-//$data->check('extensionPicture', 'picture');
+$data->check('exist', 'titlePost', 'posts');
+$data->check('lengthMin', 'content', 20);
+if(!empty($_FILES['picture'])){
+	$data->check('extensionPicture', 'picture', $_FILES['picture']);
+}
 $data->validateForm();
-dump($data->getErrors());
-/*
-	Error :
-		pseudo exceed 20 caracters
-		extension picture
-		title already exist
-		empty author and title and content
-*/
 
+$result = [];
+$errors = $data->getErrors();
 
-
-
-// $data = [];
-// $author = $_POST['author'];
+if($data->validateForm()){
+	$result["status"] = "ok";
+	$result["good"] = "Your post has been posted"; 
+}else{
+	$result["status"] = "error";
+	foreach($errors as $error => $key){
+		$result["error"] = $key;
+	}
+}
+echo json_encode($result);
 
 // if(strlen($author) > 20){
 // 	$data["status"]  = "error";
 // 	$data["error"] = "Your pseudo exceed 20 characters";
 // }else{
-// 	$data['status'] = "ok";
-// 	$data['result'] = "Your post has been posted";
+// $data['status'] = "ok";
+// $data['result'] = "Your post has been posted";
 // }
 
-// echo json_encode($data);
+//echo json_encode($data);
 
 
 //  $public    = $_POST['public'] === 'true' ? "1" : "0";;

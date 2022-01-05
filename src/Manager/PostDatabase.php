@@ -1,11 +1,11 @@
 <?php
 namespace App\Manager;
 
+use \PDO;
 use App\Model\Post;
 use App\SQL\CountSql;
 use App\SQL\Paginate;
 use App\URL\CreateUrl;
-use \PDO;
 use App\Manager\Exception\NotFoundException;
 
 class PostDatabase extends Database
