@@ -70,7 +70,6 @@ class Validator
                         $this->error($field, $v['message'], $v['params']);
                     }
                 }
-                
             }
         }
         return count($this->getErrors()) === 0;
@@ -211,8 +210,11 @@ class Validator
         return $params[0] > $value;
     }
 
-    private function extensionPicture(string $field, $value, $params)
+    private function extensionPicture(string $field, $value, $params) :bool
     {
+        if($params[0]['error'] > 0 ){
+            throw new \Exception("Error: " . $params[0]['error']);
+        }
 
         $file       = $params[0]['name'];
         $extensions = ['.png', '.jpg', '.jpeg', '.gif', ".PNG", ".JPG", ".JPEG", ".GIF"];

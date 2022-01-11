@@ -790,7 +790,10 @@ form.new button.submit:hover {
     background: #7aa7bd;
 }
 
-form.new #message.error{
+form.new #message.error,
+form.new div.input p.error,
+form.new div.textarea p.error,
+form.new div.picture p.error{
     background:     #e11800;
     color:          white;
     padding:        1rem;

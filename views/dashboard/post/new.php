@@ -8,7 +8,7 @@ $title = "New Post";
 <h3 class="title-page">New Post</h3>
 
 <form class="new" action="<?= CreateUrl::url('ajax/addPostAjax'); ?>" method="post" enctype="multipart/form-data">
-    <div class="input">
+    <div class="input inputAuthor">
         <label for="author">Your Name</label>
         <input type="text" name="author" id="author" value="" aria-describedby="authorInfo" placeholder="Write your name">
         <small id="authorInfo">Your name must not exceed 20 characters</small>
@@ -17,11 +17,13 @@ $title = "New Post";
     <div class="input">
         <label for="titlePost">Post's Title</label>
         <input type="text" name="titlePost" id="titlePost" value="" aria-describedby="titleInfo" placeholder="Write your title">
+        <p id="title-error"></p>
     </div>
 
     <div class="textarea">
         <label for="content">Your Post</label>
         <textarea type="text" name="content" id="content" rows="20"></textarea>
+        <p id="content-error"></p>
     </div>
 
     <div class="picture">
@@ -29,6 +31,7 @@ $title = "New Post";
         <input type="file" name="picture" id="picture">
         <button type="button" onclick="document.getElementById('picture').value=''" class="delete-file"><i class="fas fa-times-circle"></i></button>
         <small>Choose a picture to illustrate your post</small>
+        <p id="picture-error"></p>
     </div>
 
     <div>
@@ -61,20 +64,24 @@ $(function(){
             button.empty().html('<i class="fas fa-spinner"></i>').fadeIn("slow");
         });
 
-		// if (!$("input:text").val()) {
-		// 	error = "Please write your name and a title!";
-        //     setTimeout(function() {
-		// 	    $("#message").html(error);
-        //         $("#message").addClass("error");
-        //     }, 2000);
-        //     setTimeout(function() {
-        //         button.fadeOut(function(){
-        //             button.empty().append("Submit").fadeIn();
-        //             $("#button").removeClass("submit");
-        //         });
-        //     }, 2800);
-        //     return false;
-        // }
+        $(".inputAuthor p").remove();
+        $(".error").empty().removeClass("error");
+
+
+		if (!$("input:text").val()) {
+			error = "Please write your name and a title!";
+            setTimeout(function() {
+			    $("#message").html(error);
+                $("#message").addClass("error");
+            }, 2000);
+            setTimeout(function() {
+                button.fadeOut(function(){
+                    button.empty().append("Submit").fadeIn();
+                    $("#button").removeClass("submit");
+                });
+            }, 2800);
+            return false;
+        }
 
         var formData = new FormData(); 
         var author = $("#author").val();
@@ -110,8 +117,38 @@ $(function(){
                     }, 2800);  
                 }else{
                     setTimeout(function() {
-                        $("#message").text(data.error);
-                        $("#message").addClass("error");
+                            if(data.error.author){
+                                $.each(data.error.author, function (key, value){
+                                    $(".inputAuthor").append("<p class='error'>" + value + "</p>");
+                                })
+                            }
+                            if(data.error.titlePost){
+                                var titleError = "";
+                                $.each(data.error.titlePost, function (key, value){
+                                    titleError += value;
+                                    $("#title-error").text(titleError);
+                                    $("#title-error").addClass("error");
+                                })
+                            }
+                            if(data.error.content){
+                                var contentError = "";
+                                $.each(data.error.content, function (key, value){
+                                    contentError += value;
+                                    $("#content-error").text(contentError);
+                                    $("#content-error").addClass("error");
+                                })
+                            }
+                            if(data.error.picture){
+                                var pictureError = "";
+                                $.each(data.error.picture, function (key, value){
+                                    pictureError += value;
+                                    $("#picture-error").text(pictureError);
+                                    $("#picture-error").addClass("error");
+                                })
+                            }
+                            $("#message").text("Please, correct your error(s)");
+                            $("#message").addClass("error");
+                        // });
                     }, 2000);
                     setTimeout(function() {
                         button.fadeOut(function(){
