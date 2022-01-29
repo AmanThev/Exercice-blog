@@ -44,7 +44,7 @@ class Film
      * 
      * @var string varchar(250)
      */
-    private $actor;    
+    private $cast;    
     /**
      * @var string varchar(250)
      */
@@ -122,9 +122,9 @@ class Film
         return htmlspecialchars($this->writer);
     }
 
-    public function getActor(): array
+    public function getCast(): array
     {
-        $actors 		= htmlspecialchars($this->actor);
+        $actors 		= htmlspecialchars($this->cast);
         $array_actors 	= explode(',', $actors);
         return $array_actors;
     }

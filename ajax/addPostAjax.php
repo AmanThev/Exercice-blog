@@ -29,6 +29,9 @@ if($data->validateForm()){
 	$result["status"] 	= "error";
 	$result["error"] 	= $errors;
 }
+
+
+
 echo json_encode($result);
 
 

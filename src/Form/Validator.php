@@ -87,8 +87,8 @@ class Validator
 
     private function getValue(array $data, $field)
     {
-        if(!empty($_FILES['picture'])){
-            $data['picture'] = $_FILES['picture']['name'];
+        if(!empty($_FILES[$field])){
+            $data[$field] = $_FILES[$field]['name'];
             return array($data[$field]);
         }
         return array($data[$field]);
@@ -212,13 +212,13 @@ class Validator
 
     private function extensionPicture(string $field, $value, $params) :bool
     {
-        if($params[0]['error'] > 0 ){
+        if($params[0]['error'] > 0){
             throw new \Exception("Error: " . $params[0]['error']);
         }
 
         $file       = $params[0]['name'];
-        $extensions = ['.png', '.jpg', '.jpeg', '.gif', ".PNG", ".JPG", ".JPEG", ".GIF"];
-        $extension  = strrchr($file, '.');
+        $extensions = ['.png', '.jpg', '.jpeg', '.gif'];
+        $extension  = strtolower(strrchr($file, '.'));
 
         if(!in_array($extension, $extensions)){
             return false;

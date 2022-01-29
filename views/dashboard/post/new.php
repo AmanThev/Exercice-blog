@@ -28,6 +28,7 @@ $title = "New Post";
 
     <div class="picture">
         <label for="picture">Upload</label>
+        <input type="hidden" name="MAX_FILE_SIZE" value="250000">
         <input type="file" name="picture" id="picture">
         <button type="button" onclick="document.getElementById('picture').value=''" class="delete-file"><i class="fas fa-times-circle"></i></button>
         <small>Choose a picture to illustrate your post</small>
@@ -68,20 +69,20 @@ $(function(){
         $(".error").empty().removeClass("error");
 
 
-		if (!$("input:text").val()) {
-			error = "Please write your name and a title!";
-            setTimeout(function() {
-			    $("#message").html(error);
-                $("#message").addClass("error");
-            }, 2000);
-            setTimeout(function() {
-                button.fadeOut(function(){
-                    button.empty().append("Submit").fadeIn();
-                    $("#button").removeClass("submit");
-                });
-            }, 2800);
-            return false;
-        }
+		// if (!$("input:text").val()) {
+		// 	error = "Please write your name and a title!";
+        //     setTimeout(function() {
+		// 	    $("#message").html(error);
+        //         $("#message").addClass("error");
+        //     }, 2000);
+        //     setTimeout(function() {
+        //         button.fadeOut(function(){
+        //             button.empty().append("Submit").fadeIn();
+        //             $("#button").removeClass("submit");
+        //         });
+        //     }, 2800);
+        //     return false;
+        // }
 
         var formData = new FormData(); 
         var author = $("#author").val();

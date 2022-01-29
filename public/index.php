@@ -20,7 +20,6 @@ define("PUBLIC_PATH", $public_root);
   dump($path);
   return $path;
 }*/
-
 $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
@@ -78,6 +77,7 @@ $router->post('/dashboard/posts/:id/delete', VIEWS . 'dashboard/post/delete', 'p
  * Ajax
  */
 $router->post('/ajax/addPostAjax', AJAX . 'addPostAjax');
+$router->post('/ajax/addFilmAjax', AJAX . 'addFilmAjax');
 
 // $router->post('/post/:id', function(){
 //   echo 'Add post n°' .$id;

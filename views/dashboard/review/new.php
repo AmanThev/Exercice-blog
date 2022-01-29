@@ -18,17 +18,24 @@ $title = "New Review";
     <h4>Film's Information</h4>
 
     <div class="input">
-        <label for="titlePost">Title</label>
+        <label for="reviewTitle">Title</label>
         <input type="text" name="reviewTitle" id="reviewTitle" value="" aria-describedby="titleInfo" placeholder="Write your title">
     </div>
 
-    <div class="picture">
-        <label for="picture">Upload</label>
-        <input type="hidden" name="MAX_FILE_SIZE" value="250000">
-        <input type="file" id="picture" name="picture">
-        <button type="button"  class="delete-file" onclick="document.getElementById('picture').value=''"><i class="fas fa-times-circle"></i></button>
-        <small>Add the poster of the film</small>
+    <div class="picture poster">
+        <div class="poster-input">
+            <label for="poster">Upload</label>
+            <input type="hidden" name="MAX_FILE_SIZE" value="250000">
+            <input type="file" name="poster" id="poster">
+            <button type="button" onclick="document.getElementById('poster').value=''; document.querySelector('.poster-preview-image').style.display = null; document.querySelector('.poster-preview-text').style.display = null;" class="delete-file"><i class="fas fa-times-circle"></i></button>
+            <small>Add the poster of the film</small>
+        </div>
+        <div class="poster-preview">
+            <img src="" alt="Poster Preview" class="poster-preview-image">
+            <span class="poster-preview-text">Poster Preview</span>
+        </div>
     </div>
+
 
     <div class="input">
         <label for="year" class="choose-year">Year</label>
@@ -54,8 +61,8 @@ $title = "New Review";
     </div>
 
     <div class="input">
-        <label for="actor">Starring</label>
-        <input type="text" name="actor" id="actor" value="" aria-describedby="productionInfo">
+        <label for="cast">Starring</label>
+        <input type="text" name="cast" id="cast" value="" aria-describedby="productionInfo">
     </div>
 
     <div class="input">
@@ -109,22 +116,48 @@ $title = "New Review";
 </form>
 
 <script>
+    var inputPoster      = document.getElementById("poster");
+    var previewImage     = document.querySelector(".poster-preview-image");
+    var previewText      = document.querySelector(".poster-preview-text");
 
+    window.addEventListener("load", function(){
+        inputPoster.value='';
+        showSliderValue();
+    })
+    inputPoster.addEventListener("change", function(){
+        var file = this.files[0];
+
+        if(file){
+            var fileReader = new FileReader();
+
+            previewText.style.display   = "none";
+            previewImage.style.display  = "block";
+
+            fileReader.addEventListener("load", function(){
+                previewImage.setAttribute("src", this.result);
+            });
+            fileReader.readAsDataURL(file);
+        }else{
+            previewText.style.display   = null;
+            previewImage.style.display  = null;
+        }
+    })
+    
     var slider  = document.getElementById("score");
     var score   = document.getElementById("score-value");
     slider.addEventListener("input", showSliderValue, false);
 
     function showSliderValue(){
-        score.innerHTML = slider.value;
+        score.innerHTML   = slider.value;
         var scorePosition = (slider.value / slider.max);
-        score.style.left = (scorePosition * 382) + "px";
+        score.style.left  = (scorePosition * 382) + "px";
     }
 
     var scoreOption = document.querySelectorAll('.score-option');
     for (var i=0; i<scoreOption.length; i++) {
-        var valueOption = scoreOption[i].innerHTML;
-        var lastScoreOption = document.getElementById('list-score-option').lastElementChild.innerHTML;
-        var scoreOptionPosition = (valueOption / lastScoreOption);
+        var valueOption           = scoreOption[i].innerHTML;
+        var lastScoreOption       = document.getElementById('list-score-option').lastElementChild.innerHTML;
+        var scoreOptionPosition   = (valueOption / lastScoreOption);
         scoreOption[i].style.left = (scoreOptionPosition * 335) + "px";
     }
 

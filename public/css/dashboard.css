@@ -507,7 +507,8 @@ form.new div.textarea label{
     display: block;
 }
 
-form.new div{
+form.new > div,
+div.score-content > div{
     margin : 2rem 2rem;
 }
 
@@ -573,7 +574,7 @@ form.new div.input .choose-year:before{
     color:              black;
     background-color:   #7aa7bd;
     pointer-events:     none;
-  }
+}
 
 form.new div.textarea textarea{
     border-style:  outset;
@@ -585,26 +586,61 @@ form.new div.picture label{
     cursor: pointer;
 }
 
-form.new input#picture{
+form.new input#picture,
+form.new input#poster{
     margin-left:    -5.87rem;
     padding-top:    .47rem;
     border-style:   outset outset outset none;
     border-width:   1.5px;
     border-color:   #2980b9;
     height:         2.69rem;
+}
+
+form.new input#picture{
     width:          92.5%;
 }
 
+div.poster{
+    display  : flex;
+    flex-wrap: nowrap;
+}
+
+form.new input#poster{
+    width: 85%;
+}
+
+div.poster-input{
+    flex-grow: 2;
+    align-self: center;
+}
+
+div.poster-preview{
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    font-weight    : bold;
+    background     : #ccc;
+    width          : 150px;
+    min-height     : 200px;
+    border         : 2px solid #2980b9;
+    color          : #7aa7bd;
+}
+
+div.poster-preview img{
+    display: none;
+    width  : 100%;
+}
+
 form.new button.delete-file{
-    position:                   relative;
-    height:                     44px;
-    width:                      44px;
-    background-color:           #e74c3c;
-    left:                       -5.5px;
-    cursor:                     pointer;
-    border-style:               outset outset outset none;
-    border-color:               #7c1708;
-    border-top-right-radius:    13px;
+    position                  : relative;
+    height                    : 44px;
+    width                     : 44px;
+    background-color          : #e74c3c;
+    left                      : -5.5px;
+    cursor                    : pointer;
+    border-style              : outset outset outset none;
+    border-color              : #7c1708;
+    border-top-right-radius   : 13px;
     border-bottom-right-radius: 13px;
 }
 
@@ -752,7 +788,7 @@ form.new input.switch-input:checked ~.switch-handle{
 
 form.new span.switch-label,
 form.new span.switch-handle{
-    transition: All 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 form.new button#validateForm{
@@ -769,7 +805,7 @@ form.new button#validateForm{
 }
   
 form.new button#validateForm:hover{
-    background: #2980b9;
+    background: #010202;
 }
 
 form.new button.submit i{

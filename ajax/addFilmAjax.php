@@ -12,14 +12,13 @@ if($_SERVER['CONTENT_LENGTH'] >= $maxSize){
 };
 
 $data = new Validator($_POST);
-
-$data->check('required', ['author', 'title', 'year', 'director', 'writer', 'starring', 'production', 'genre', 'synopsis', 'review']);
+$data->check('required', ['author', 'reviewTitle', 'year', 'director', 'writer', 'cast', 'production', 'genre', 'synopsis', 'review']);
 $data->check('lengthBetween', 'author', 2, 20);
-$data->check('exist', 'reviewTitle', 'film');
+$data->check('exist', 'reviewTitle', 'films');
 $data->check('lengthMax', 'synopsis', 250);
 $data->check('numberBetween', 'score', 0, 5);
-$data->check('year', 'date');
-if(!empty($_FILES['poster'])){
+$data->check('year', 'year');
+if(is_uploaded_file($_FILES['poster']['tmp_name'])){
 	$data->check('extensionPicture', 'poster', $_FILES['poster']);
 }
 $data->validateForm();
