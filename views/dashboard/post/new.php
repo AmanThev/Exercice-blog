@@ -68,7 +68,6 @@ $title = "New Post";
         $(".inputAuthor p").remove();
         $(".error").empty().removeClass("error");
 
-
 		if (!$("input:text").val()) {
 			error = "Please write your name and a title!";
             setTimeout(function() {
