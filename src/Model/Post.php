@@ -56,20 +56,40 @@ class Post
      */
     private $name;
     
-    
+        
+    /**
+     * Id post
+     *
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getIdAdmin(): int
     {
         return $this->admin_id;
     }
+
+    public function setIdAdmin(int $idAdmin): void
+    {
+        $this->admin_id = $idAdmin;
+    }
     
     public function getTitle(): string
     {
-        return htmlspecialchars($this->title);
+        return $this->title;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = htmlentities($title);
     }
     
     public function getUrlTitle(): string
@@ -84,12 +104,17 @@ class Post
     
     public function getPicture()
     {
-        return htmlspecialchars($this->picture);
+        return htmlentities($this->picture);
+    }
+
+    public function setPicture($picture): void
+    {
+        $this->picture = $picture;
     }
     
     public function getExcerptContent(): string
     {
-        return nl2br(htmlspecialchars(Text::excerpt($this->content, 150)));
+        return nl2br(htmlspecialchars(trim(Text::excerpt($this->content, 150))));
     }
         
     /**
@@ -99,12 +124,17 @@ class Post
      */
     public function getExcerptLastContent(): string
     {
-        return nl2br(htmlspecialchars(Text::excerpt($this->content, 550)));
+        return nl2br(htmlspecialchars(trim(Text::excerpt($this->content, 550))));
     }
     
     public function getContent(): string
     {
-        return nl2br(htmlspecialchars($this->content));
+        return $this->content;
+    }
+
+    public function setContent(string $content): void
+    {
+        $this->content = htmlspecialchars(trim($content));
     }
     
     public function getDate()
@@ -115,6 +145,14 @@ class Post
     public function getPublic(): int
     {
         return $this->public;
+    }
+
+    public function setPublic(int $public): void
+    {
+        if($public === 1 || $public === 0){
+            $this->public = $public;
+        }
+
     }
     
     public function getLike(): int
@@ -139,7 +177,12 @@ class Post
 
     public function getAuthor(): string
     {
-        return htmlspecialchars($this->name);
+        return $this->name;
+    }
+
+    public function setAuthor($author): void
+    {
+        $this->name = htmlentities($author);
     }
     
 }

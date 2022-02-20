@@ -133,4 +133,19 @@ class PostDatabase extends Database
     {
         return CountSql::totalData("$this->queryAllPost WHERE admin_id= ?", $idName);
     }
+
+    public function createPost(Post $post): void
+    {
+        $stmt = $this->connect()->prepare("INSERT INTO posts SET title = :title, admin_id = :admin_id, content = :content, public = :public, date = NOW()");
+        $addPost = $stmt->execute([
+            'title'     => $post->getTitle(),
+            'admin_id'  => $post->getIdAdmin(),
+            'content'   => $post->getContent(),
+            'public'    => $post->getPublic()
+        ]);
+        if($addPost === false){
+            throw new \Exception("Error, impossible to add the post");
+        }
+        $post->setId($this->pdo->lastInsertId());
+    }
 }

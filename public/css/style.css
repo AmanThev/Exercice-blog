@@ -504,7 +504,7 @@ section div.img-all-post img{
     width:      100%;
     filter:     invert(35%);
     transition: .5s;
-    max-height: 228px;
+    height: 228px;
 }
 
 section div.box-all-post:hover div.img-all-post img{

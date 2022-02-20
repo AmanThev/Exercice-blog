@@ -642,9 +642,15 @@ form.new button.delete-file{
     border-color              : #7c1708;
     border-top-right-radius   : 13px;
     border-bottom-right-radius: 13px;
+    display                   : none;
 }
 
-form.new button.delete-file:hover{
+form.new button.deleteImagePost{
+    display : inline;
+}
+
+form.new button.delete-file:hover,
+form.new button.deleteImagePost:hover{
     background-color: #cb200e;
 }
 
@@ -805,7 +811,7 @@ form.new button#validateForm{
 }
   
 form.new button#validateForm:hover{
-    background: #010202;
+    background: #2980b9;
 }
 
 form.new button.submit i{
@@ -907,4 +913,3 @@ form.new input#score{
         clip-path:  polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
         z-index:    -10;
 }
-

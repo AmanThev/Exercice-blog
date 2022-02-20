@@ -28,11 +28,13 @@ $result = [];
 $errors = $data->getErrors();
 
 if($data->validateForm()){
-	$result["status"] 	= "ok";
-	$result["good"] 	= "Your film has been added"; 
+	$result["status"] = "ok";
+	$result["good"]   = "Your film has been added"; 
 }else{
-	$result["status"] 	= "error";
-	$result["error"] 	= $errors;
+	$result["status"] = "error";
+	$result["error"]  = $errors;
 }
+
+// upload file
 echo json_encode($result);
 

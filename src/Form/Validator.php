@@ -175,10 +175,27 @@ class Validator
         return $value != $value2;
     }
 
-    private function exist(string $field, string $value, $params) :bool
+    private function used(string $field, string $value, array $params) :bool
     {   
-        $film = new Database();
-        return $film->exist($value, $params[0]);
+        $valueExist = new Database();
+        return $valueExist->exist($field, $value, $params[0]);
+    }
+    
+    /**
+     * if field tabName != field form -> $params[1] === field tabName
+     *
+     * @param  string $field
+     * @param  string $value
+     * @param  array $params
+     * @return bool
+     */
+    private function exist(string $field, string $value, array $params) :bool
+    {   
+        $valueExist = new Database();
+        if(count($params) > 1){
+            return !$valueExist->exist($params[1], $value, $params[0]);
+        }
+        return !$valueExist->exist($field, $value, $params[0], $params[1]);
     }
 
     private function numeric($field, $value) :bool

@@ -15,8 +15,8 @@ $title = "New Post";
     </div>
 
     <div class="input">
-        <label for="titlePost">Post's Title</label>
-        <input type="text" name="titlePost" id="titlePost" value="" aria-describedby="titleInfo" placeholder="Write your title">
+        <label for="title">Post's Title</label>
+        <input type="text" name="title" id="title" value="" aria-describedby="titleInfo" placeholder="Write your title">
         <p id="title-error"></p>
     </div>
 
@@ -30,7 +30,7 @@ $title = "New Post";
         <label for="picture">Upload</label>
         <input type="hidden" name="MAX_FILE_SIZE" value="250000">
         <input type="file" name="picture" id="picture">
-        <button type="button" onclick="document.getElementById('picture').value=''" class="delete-file"><i class="fas fa-times-circle"></i></button>
+        <button type="button" onclick="document.getElementById('picture').value=''" class="delete-file deleteImagePost"><i class="fas fa-times-circle"></i></button>
         <small>Choose a picture to illustrate your post</small>
         <p id="picture-error"></p>
     </div>
@@ -53,7 +53,7 @@ $title = "New Post";
 </form>
 
 <script>
-$(function(){
+    $(function(){
     $("form").submit(function(e){
         e.preventDefault();
         var url     = $("form").attr("action");
@@ -69,30 +69,32 @@ $(function(){
         $(".error").empty().removeClass("error");
 
 
-		// if (!$("input:text").val()) {
-		// 	error = "Please write your name and a title!";
-        //     setTimeout(function() {
-		// 	    $("#message").html(error);
-        //         $("#message").addClass("error");
-        //     }, 2000);
-        //     setTimeout(function() {
-        //         button.fadeOut(function(){
-        //             button.empty().append("Submit").fadeIn();
-        //             $("#button").removeClass("submit");
-        //         });
-        //     }, 2800);
-        //     return false;
-        // }
+		if (!$("input:text").val()) {
+			error = "Please write your name and a title!";
+            setTimeout(function() {
+			    $("#message").html(error);
+                $("#message").addClass("error");
+            }, 2000);
+            setTimeout(function() {
+                button.fadeOut(function(){
+                    button.empty().append("Submit").fadeIn();
+                    $("#button").removeClass("submit");
+                });
+            }, 2800);
+            return false;
+        }
 
         var formData = new FormData(); 
         var author = $("#author").val();
             formData.append('author', author);
-        var titlePost = $("#titlePost").val();
-            formData.append('titlePost', titlePost);
+        var title = $("#title").val();
+            formData.append('title', title);
         var content = $("#content").val();
             formData.append('content', content);
-        var picture = $('#picture').prop('files')[0];
-            formData.append('picture', picture);
+        if ($('#picture').val() != ''){
+            var picture = $('#picture').prop('files')[0];
+                formData.append('picture', picture);
+        }
         var checkbox = $("#checkbox").is(':checked');
             formData.append('public', checkbox);
 
@@ -109,10 +111,11 @@ $(function(){
                     setTimeout(function() {
                         $("#message").addClass("valid");
                         $('#message').text(data.good);
+                        $("form")[0].reset();
                     }, 2000);
                     setTimeout(function() {
                         button.fadeOut(function(){
-                            $("#validateForm").removeClass("submit");
+                            $("#validateForm").removeClass("submit").prop('disabled', true);
                             button.empty().html('<i class="fas fa-check"></i>').fadeIn("slow");
                         });
                     }, 2800);  
@@ -125,7 +128,7 @@ $(function(){
                             }
                             if(data.error.titlePost){
                                 var titleError = "";
-                                $.each(data.error.titlePost, function (key, value){
+                                $.each(data.error.title, function (key, value){
                                     titleError += value;
                                     $("#title-error").text(titleError);
                                     $("#title-error").addClass("error");

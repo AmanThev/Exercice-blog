@@ -10,7 +10,7 @@ class File
      * @param  string $value
      * @return int
      */
-    private function returnBytes(string $value) :int
+    private static function returnBytes(string $value) :int
     {
         $value = trim($value);
         $letter = strtolower($value[strlen($value)-1]);
@@ -33,7 +33,7 @@ class File
      *
      * @return void
      */
-    public function maxUpload(){
+    public static function maxUpload(){
         $max_upload     = self::returnBytes(ini_get('upload_max_filesize'));
         $max_post       = self::returnBytes(ini_get('post_max_size'));
         $memory_limit   = self::returnBytes(ini_get('memory_limit'));

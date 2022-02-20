@@ -27,7 +27,7 @@ $title = "New Review";
             <label for="poster">Upload</label>
             <input type="hidden" name="MAX_FILE_SIZE" value="250000">
             <input type="file" name="poster" id="poster">
-            <button type="button" onclick="document.getElementById('poster').value=''; document.querySelector('.poster-preview-image').style.display = null; document.querySelector('.poster-preview-text').style.display = null;" class="delete-file"><i class="fas fa-times-circle"></i></button>
+            <button type="button"  class="delete-file" ><i class="fas fa-times-circle"></i></button>
             <small>Add the poster of the film</small>
         </div>
         <div class="poster-preview">
@@ -119,11 +119,13 @@ $title = "New Review";
     var inputPoster      = document.getElementById("poster");
     var previewImage     = document.querySelector(".poster-preview-image");
     var previewText      = document.querySelector(".poster-preview-text");
+    var buttonDeleteFile = document.querySelector(".delete-file");
 
     window.addEventListener("load", function(){
         inputPoster.value='';
         showSliderValue();
     })
+
     inputPoster.addEventListener("change", function(){
         var file = this.files[0];
 
@@ -132,6 +134,7 @@ $title = "New Review";
 
             previewText.style.display   = "none";
             previewImage.style.display  = "block";
+            buttonDeleteFile.style.display= "inline";
 
             fileReader.addEventListener("load", function(){
                 previewImage.setAttribute("src", this.result);
@@ -140,7 +143,15 @@ $title = "New Review";
         }else{
             previewText.style.display   = null;
             previewImage.style.display  = null;
+            button.style.display= null;
         }
+    })
+
+    buttonDeleteFile.addEventListener("click", function(){
+        inputPoster.value=''; 
+        previewImage.style.display = null; 
+        previewText.style.display = null;
+        buttonDeleteFile.style.display= "none";
     })
     
     var slider  = document.getElementById("score");

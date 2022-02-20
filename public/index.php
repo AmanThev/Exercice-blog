@@ -6,6 +6,7 @@ use App\Router\Router;
 
 define('VIEWS', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'views/');
 define('AJAX', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'ajax/');
+define('IMAGE', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'img/');
 define('DEBUG_TIME', microtime(true));
 $rootEnd = strpos($_SERVER['SCRIPT_NAME'], '/cinema') + 7;
 $www_root = substr($_SERVER['SCRIPT_NAME'], 0, $rootEnd);
