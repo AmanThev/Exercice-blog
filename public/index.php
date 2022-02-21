@@ -15,12 +15,6 @@ $publicEnd = strpos($_SERVER['SCRIPT_NAME'], '/public') + 7;
 $public_root = substr($_SERVER['SCRIPT_NAME'], 0, $publicEnd);
 define("PUBLIC_PATH", $public_root);
 
-/*function explodeUrl($path){
-  $path = str_replace('/', '-', $path);
-  $path = explode('-', $path);
-  dump($path);
-  return $path;
-}*/
 $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
@@ -79,9 +73,5 @@ $router->post('/dashboard/posts/:id/delete', VIEWS . 'dashboard/post/delete', 'p
  */
 $router->post('/ajax/addPostAjax', AJAX . 'addPostAjax');
 $router->post('/ajax/addFilmAjax', AJAX . 'addFilmAjax');
-
-// $router->post('/post/:id', function(){
-//   echo 'Add post n°' .$id;
-// });
 
 $router->run();

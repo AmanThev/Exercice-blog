@@ -78,14 +78,29 @@ class Film
         return $this->id;
     }
 
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getIdAdmin(): int
     {
         return $this->admin_id;
     }
 
+    public function setIdAdmin(int $idAdmin): void
+    {
+        $this->admin_id = $idAdmin;
+    }
+
     public function getTitle(): string
     {
-        return trim(htmlspecialchars($this->title));
+        return $this->title;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = htmlentities(trim($title));
     }
 
     public function getUrlTitle()
@@ -102,36 +117,71 @@ class Film
         return htmlspecialchars($this->poster);
     }
 
-    public function getDate()
+    public function setPoster($poster): void
+    {
+        $this->poster = $poster;
+    }
+
+    public function getDate(): int
     {
         return $this->date;
     }
-    
+
+    public function setDate(int $date): void
+    {
+        $this->date = trim($date); 
+    }    
+
     public function getDirector(): string
     {
-        return htmlspecialchars($this->director);
+        return $this->director;
+    }
+
+    public function setDirector(string $director): void
+    {
+        $this->director = htmlspecialchars(trim($director));
     }
 
     public function getProduction(): string
     {
-        return htmlspecialchars($this->production);
+        return $this->production;
+    }
+
+    public function setProduction(string $production): void
+    {
+        $this->production = htmlspecialchars(trim($production));
     }
 
     public function getWriter(): string
     {
-        return htmlspecialchars($this->writer);
+        return $this->writer;
+    }
+
+    public function setWriter(string $writer): void
+    {
+        $this->writer = htmlspecialchars(trim($writer));
     }
 
     public function getCast(): array
     {
-        $actors 		= htmlspecialchars($this->cast);
+        $actors 		= $this->cast;
         $array_actors 	= explode(',', $actors);
         return $array_actors;
     }
 
+    public function setCast(string $cast): void
+    {
+        $this->cast = htmlspecialchars(trim($cast));
+    }
+
     public function getGenre(): string
     {
-        return htmlspecialchars($this->genre);
+        return $this->genre;
+    }
+
+    public function setGenre(string $genre): void
+    {
+        $this->genre = htmlspecialchars(trim($genre));
     }
 
     public function getExcerptContent(): string
@@ -146,20 +196,45 @@ class Film
 
     public function getSynopsis(): string
     {
-        return nl2br(htmlspecialchars($this->synopsis));
+        return $this->synopsis;
+    }
+
+    public function setSynopsis(string $synopsis): void
+    {
+        $this->synopsis = htmlspecialchars(trim($synopsis));
     }
     
     public function getReview(): string 
     {
-        $review         = htmlspecialchars($this->review);
+        $review         = $this->review;
         $spoilerMarker 	= array('[Spoiler]', '[/Spoiler]');
         $replaceSpoiler = array('<span class="spoiler">', '</span>');
         $review 		= str_ireplace($spoilerMarker, $replaceSpoiler, $review);
         return $review;
+    }
+    
+    public function setReview(string $review): void
+    {
+        $this->review = htmlspecialchars(trim($review));
+    }
+
+    public function getScore(): int
+    {
+        return $this->score;
+    }
+
+    public function setScore(int $score): void
+    {
+        $this->score = $score;
     }
 
     public function getAuthor(): string
     {
         return htmlspecialchars($this->name);
     }
+
+    public function setAuthor(string $author): void
+    {
+        $this->author = $author;
+    } 
 }

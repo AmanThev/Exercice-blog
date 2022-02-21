@@ -23,11 +23,26 @@ if(is_uploaded_file($_FILES['poster']['tmp_name'])){
 }
 $data->validateForm();
 
-
 $result = [];
 $errors = $data->getErrors();
 
 if($data->validateForm()){
+	// $user = new UserDatabase();
+	// $user = $user->getAdminByName($_POST['author']);
+
+	// $_POST['IdAdmin'] = $user->getId();
+	// $_FILES['poster']['title'] = $_POST['title'];
+
+	// $film = new Film();
+	// Database::hydrate($film, $_POST);
+	
+	// $newFilm = new FilmDatabase();
+	// $newFilm->createFilm($film);
+	// if(!empty($_FILES['poster']['tmp_name'])){
+	// 	Database::hydrateFile($film, $_FILES);
+	// 	$newFilm->uploadFile('films', $_FILES, 'posterFilm');
+	// }
+
 	$result["status"] = "ok";
 	$result["good"]   = "Your film has been added"; 
 }else{
@@ -35,6 +50,5 @@ if($data->validateForm()){
 	$result["error"]  = $errors;
 }
 
-// upload file
 echo json_encode($result);
 

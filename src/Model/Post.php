@@ -89,7 +89,7 @@ class Post
 
     public function setTitle(string $title): void
     {
-        $this->title = htmlentities($title);
+        $this->title = htmlentities(trim($title));
     }
     
     public function getUrlTitle(): string

@@ -80,8 +80,6 @@ $title = "New Review";
         <textarea type="text" name="synopsis" id="synopsis" rows="20"></textarea>
     </div>
 
-
-
     <h4>Your opinion</h4>
 
     <div class="textarea">
@@ -257,5 +255,4 @@ $title = "New Review";
         httpRequest.open('POST', url, true);
         httpRequest.send(data);
     })
-
 </script>
