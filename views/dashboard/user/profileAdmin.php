@@ -7,7 +7,6 @@ use App\Manager\PostDatabase;
 use App\Manager\CommentDatabase;
 use App\HTML\Profile;
 
-
 $url            = new ExplodeUrl($_GET['url']);
 $slug           = $url->getSlugName();
 
@@ -23,13 +22,10 @@ $films          = $filmsDatabase->getFilmByAdminId($admin->getId());
 $totalComFilms  = new CommentDatabase();
 $totalReviews   = count($films);
 
-
 $postsDatabase  = new PostDatabase();
 $posts          = $postsDatabase->getPostByAdminId($admin->getId());
 $totalComPosts  = new CommentDatabase();
 $totalPosts     = count($posts);
-
-
 ?>
 
 <?= $profile->topProfile($slug); ?>

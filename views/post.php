@@ -71,7 +71,6 @@ $title = $slug;
     </div>
 </section>
 
-
 <section class="post comment-post">
     <h1>Comment Users</h1>
     <?php if($comments != false): ?>

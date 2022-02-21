@@ -21,7 +21,6 @@ $subCats        = new ForumDatabase();
 $subCats        = $subCats->getSubCategories($id);
 
 $title          = $slug;
-
 ?>
 
 <h1 class="title-forum"><?= $slug ?></h1>

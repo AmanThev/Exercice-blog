@@ -28,7 +28,6 @@ $yearSelected       = empty($_GET['year']) ? null : (int)$_GET['year'];
 if($yearSelected){
     $reviews = DateReviews::getFilmByYear($yearSelected);
 }
-
 ?>
 
 <h1 id="title-reviews">Reviews</h1>

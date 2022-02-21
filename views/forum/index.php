@@ -15,7 +15,6 @@ $countTopics    = new ForumDatabase();
 $message        = new ForumDatabase();
 
 $subCats        = new ForumDatabase;
-
 ?>
 
 <h1 class="title-forum">Forum</h1>

@@ -8,7 +8,6 @@ $categories = $categories->getCategories();
 $subCats    = new ForumDatabase();
 
 $title      = "New Topic";
-
 ?>
 
 <h1 class="title-forum">New Topic</h1>

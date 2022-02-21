@@ -15,7 +15,6 @@ $postComments   = $postComments->getComments('comments_post');
 $titleFilm      = new CommentDatabase();
 
 $titlePost      = new CommentDatabase();
-
 ?>
 
 <h3 class="title-page">Comments</h3>

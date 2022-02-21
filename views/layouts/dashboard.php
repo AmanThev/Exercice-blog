@@ -1,9 +1,6 @@
 <?php
-
 use App\URL\UrlPublic;
 use App\URL\CreateUrl;
-
-
 ?>
 
 <!DOCTYPE html>

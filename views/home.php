@@ -1,5 +1,4 @@
 <?php 
-
 use App\Manager\PostDatabase;
 use App\Manager\FilmDatabase;
 use App\URL\CreateUrl;
@@ -14,7 +13,6 @@ $new    = $new->getLastPost();
 
 $posts  = new PostDatabase();
 $posts  = $posts->getPostsHome();
-
 ?> 
 
 <section>

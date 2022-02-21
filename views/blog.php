@@ -16,7 +16,6 @@ $pagination = new PostDatabase();
 
 $posts      = new PostDatabase();
 $posts      = $posts->getPosts();
-
 ?>
 
 <h1 id="title-blog">Blog</h1>

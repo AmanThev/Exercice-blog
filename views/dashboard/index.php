@@ -10,7 +10,6 @@ use App\Manager\VoteDatabase;
 /**
  * Section Post
  */
-
 $bestComNumberPost  = new CommentDatabase();
 
 $bestComPost        = new PostDatabase();
@@ -33,13 +32,9 @@ $postCom            = $postCom->totalComment('comments_post', $lastPost->getId()
 $titleLastCom       = new PostDatabase();
 $titleLastCom       = $titleLastCom->getPostByCommentId($lastComPost->getIndexId());
 
-
-
-
 /**
  * Section Review/Film
  */
-
 $bestComFilm        = new FilmDatabase();
 
 $bestComNumberFilm  = new CommentDatabase();
@@ -74,7 +69,6 @@ $totalVote          = $totalVote->totalVote($lastFilm->getId());
 /**
  * Section Statistic
  */
-
 $totalAdmins    = new UserDatabase();
 $totalAdmins    = $totalAdmins->countAdmins();
 
@@ -107,7 +101,6 @@ $totalTopics    = $totalTopics->countAllTopics();
 
 $topicNonResolved   = new ForumDatabase();
 $topicNonResolved   = $topicNonResolved->countOpenTopics()
-
 ?>
 
 <section class="dash-home">

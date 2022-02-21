@@ -25,7 +25,6 @@ $topics         = new ForumDatabase();
 $topics         = $topics->getTopics($id);
 
 $title          = $slug;
-
 ?>
 
 <h1 class="title-forum">Forum</h1>

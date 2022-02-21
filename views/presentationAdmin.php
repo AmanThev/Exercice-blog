@@ -3,13 +3,11 @@
 use App\Manager\Connection;
 use App\Manager\UserDatabase;
 
-
 $title = 'Admins';
 
 $administrator  = new UserDatabase();
 $admins         = $administrator->getAdminsPresentationPage('Admin');
 $modos          = $administrator->getAdminsPresentationPage('Modo');
-
 ?>
 
 <h1 class="admin-page">Our team</h1>

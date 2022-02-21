@@ -11,7 +11,6 @@ $countMessages  = new ForumDatabase();
 $countTopics    = new ForumDatabase();
 $subCats        = new ForumDatabase();
 $topics         = new ForumDatabase();
-
 ?>
 
 
