@@ -195,7 +195,7 @@ class Validator
         if(count($params) > 1){
             return !$valueExist->exist($params[1], $value, $params[0]);
         }
-        return !$valueExist->exist($field, $value, $params[0], $params[1]);
+        return !$valueExist->exist($field, $value, $params[0]);
     }
 
     private function numeric($field, $value) :bool

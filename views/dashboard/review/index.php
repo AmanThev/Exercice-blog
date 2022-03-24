@@ -26,10 +26,30 @@ $colors = [
 
 <table style="width:86%">
     <tr>
-        <th style="width:40%">Title</th>
-        <th style="width:15%">Author</th>
-        <th style="width:15%">Genre</th>
-        <th style="width:15%">Date</th>
+        <th style="width:40%">
+            <div>
+                <span>Title</span>
+                <span class="sort-table"><i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i></span>
+            </div>
+        </th>
+        <th style="width:15%">
+            <div>
+                <span>Author</span>
+                <span class="sort-table"><i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i></span>
+            </div>
+        </th>
+        <th style="width:15%">
+            <div>
+                <span>Genre</span>
+                <span class="sort-table"><i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i></span>
+            </div>
+        </th>
+        <th style="width:15%">
+            <div>
+                <span>Date</span>
+                <span class="sort-table"><i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i></span>
+            </div>
+        </th>
         <th style="width:15%">Action</th>
     </tr>
     <?php foreach($films as $film): ?>

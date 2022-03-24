@@ -3,7 +3,7 @@
 use App\Form\Validator;
 use App\Helpers\File;
 
-//header("Content-Type:application/json; charset=UTF-8");
+// header("Content-Type:application/json; charset=UTF-8");
 
 $maxSize = File::maxUpload();
 
@@ -12,9 +12,10 @@ if($_SERVER['CONTENT_LENGTH'] >= $maxSize){
 };
 
 $data = new Validator($_POST);
-$data->check('required', ['author', 'reviewTitle', 'year', 'director', 'writer', 'cast', 'production', 'genre', 'synopsis', 'review']);
+$data->check('required', ['author', 'title', 'year', 'director', 'writer', 'cast', 'production', 'genre', 'synopsis', 'review']);
+$data->check('exist', 'author', 'admins', 'name');
 $data->check('lengthBetween', 'author', 2, 20);
-$data->check('exist', 'reviewTitle', 'films');
+$data->check('used', 'title', 'films');
 $data->check('lengthMax', 'synopsis', 250);
 $data->check('numberBetween', 'score', 0, 5);
 $data->check('year', 'year');

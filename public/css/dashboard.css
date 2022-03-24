@@ -206,6 +206,21 @@ th{
     background: #7aa7bd;
 }
 
+th div{
+    display: flex;
+    justify-content: center;
+}
+
+th div span:nth-child(1){
+    display: block;
+    flex-grow: 1;
+}
+
+span.sort-table i{
+    cursor: pointer;
+    margin-left: .25em;
+}
+
 tr{
     background: white;
 }

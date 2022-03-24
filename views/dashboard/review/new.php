@@ -1,9 +1,7 @@
 <?php
-
 use App\URL\CreateUrl;
 
 $title = "New Review";
-
 ?>
 
 <h3 class="title-page">New Review</h3>
@@ -18,8 +16,8 @@ $title = "New Review";
     <h4>Film's Information</h4>
 
     <div class="input">
-        <label for="reviewTitle">Title</label>
-        <input type="text" name="reviewTitle" id="reviewTitle" value="" aria-describedby="titleInfo" placeholder="Write your title">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" value="" aria-describedby="titleInfo" placeholder="Write your title">
     </div>
 
     <div class="picture poster">
@@ -35,7 +33,6 @@ $title = "New Review";
             <span class="poster-preview-text">Poster Preview</span>
         </div>
     </div>
-
 
     <div class="input">
         <label for="year" class="choose-year">Year</label>
@@ -185,20 +182,20 @@ $title = "New Review";
         button.className = 'submit';
         fadeOut(button.firstChild, replaceBySpinner);
         
-        var inputs = this.querySelectorAll("input");
-        for(var i = 0; i < inputs.length; i++){
-            if (!inputs[i].value){
-                error = "Please please fill in all fields";
-                setTimeout(function() {
-                    message.innerHTML = error;
-                    message.className = 'error';
-                }, 2000);
-                setTimeout(function() {
-                    fadeOut(button.firstChild, replaceBySubmit);
-                }, 2800);
-                break;
-            }
-        }
+        // var inputs = this.querySelectorAll("input");
+        // for(var i = 0; i < inputs.length; i++){
+        //     if (!inputs[i].value){
+        //         error = "Please please fill in all fields";
+        //         setTimeout(function() {
+        //             message.innerHTML = error;
+        //             message.className = 'error';
+        //         }, 2000);
+        //         setTimeout(function() {
+        //             fadeOut(button.firstChild, replaceBySubmit);
+        //         }, 2800);
+        //         break;
+        //     }
+        // }
 
         function fadeOut(element, callback){
             if(element.style.opacity == ""){
@@ -246,10 +243,20 @@ $title = "New Review";
                 }
             }, 100)
         }
+
+        function displayError(dataError){  // trouver un champ
+            Object.entries(dataError['error']).forEach(function(value, index, array){
+                value.forEach(function(errors,i, a){
+                    var idField = document.getElementById(value[0]);
+                    console.log(idField);
+                })
+            })
+        }
                 
         httpRequest.onreadystatechange = function(){
             if(httpRequest.readyState === 4 && httpRequest.status === 200){
-                message.innerHTML = httpRequest.responseText;
+                var dataError = JSON.parse(httpRequest.responseText);
+                displayError(dataError);
             }
         }
         httpRequest.open('POST', url, true);
