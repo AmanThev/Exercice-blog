@@ -14,12 +14,44 @@ $posts = $posts->getAllPosts();
 
 <a class="create-button" href="<?= CreateUrl::url('dashboard/posts/newPost'); ?>">Create New Post</a>
 
-<table style="width:86%">
+<form class="choose-button" method="get">
+    <label for="users">Choose:</label>
+    <span class="custom-dropdown custom-dropdown-red custom-dropdown-small">
+        <select class="custom-dropdown_select custom-dropdown_select-red" id="select-status" name="select-status">
+            <option value="members" <?php if (isset($users) && $users === "members") echo "selected"?>>Public</option>
+            <option value="admins" <?php if (isset($users) && $users === "admins") echo "selected"?>>Private</option>
+            <option value="All" <?php if (isset($users) && $users === "admins") echo "selected"?>>All Posts</option>
+        </select>
+    </span>
+    <button class="submit" type="submit">Submit</button>
+</form>
+
+<table class="tritable" style="width:86%">
     <tr>
-        <th style="width:40%">Title</th>
-        <th style="width:15%">Author</th>
-        <th style="width:10%">Status</th>
-        <th style="width:20%">Date</th>
+        <th style="width:40%">
+            <div>
+                <span>Title</span>
+                <span class="sort-table"><i class="fas fa-sort"></i></span>
+            </div>
+        </th>
+        <th style="width:15%">
+            <div>
+                <span>Author</span>
+                <span class="sort-table"><i class="fas fa-sort"></i></i></span>
+            </div>
+        </th>
+        <th style="width:10%">
+            <div>
+                <span>Status</span>
+                <span class="sort-table"><i class="fas fa-sort"></i></i></span>
+            </div>
+        </th>
+        <th style="width:20%">
+            <div>
+                <span>Date</span>
+                <span class="sort-table"><i class="fas fa-sort"></i></i></span>
+            </div>
+        </th>
         <th style="width:15%">Action</th>
     </tr>
     <?php foreach($posts as $post): ?>
@@ -38,3 +70,5 @@ $posts = $posts->getAllPosts();
         </tr>
     <?php endforeach; ?>
 </table>
+
+<script src="<?= PUBLIC_PATH ?>/js/sortTable.js"></script>

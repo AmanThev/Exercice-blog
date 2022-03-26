@@ -207,19 +207,24 @@ th{
 }
 
 th div{
-    display: flex;
-    justify-content: center;
+    display:            flex;
+    justify-content:    center;
 }
 
 th div span:nth-child(1){
-    display: block;
-    flex-grow: 1;
+    display:    block;
+    flex-grow:  1;
 }
 
 span.sort-table i{
-    cursor: pointer;
-    margin-left: .25em;
+    cursor:         pointer;
+    margin-left:    .25em;
 }
+
+span.sort-table i.light {  
+    color: #6d6d6d;
+}
+
 
 tr{
     background: white;

@@ -25,7 +25,6 @@ $memberLike     = new VoteDatabase();
 $postWritten    = new PostDatabase();
 
 $reviewWritten  = new FilmDatabase();
-
 ?>
 
 <h3 class="title-page">Users</h3>
@@ -83,4 +82,3 @@ $reviewWritten  = new FilmDatabase();
         <?php endforeach; ?>
     </table>
 <?php endif; ?>
-

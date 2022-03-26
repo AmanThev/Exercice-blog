@@ -29,25 +29,25 @@ $colors = [
         <th style="width:40%">
             <div>
                 <span>Title</span>
-                <span class="sort-table"><i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i></span>
+                <span class="sort-table"><i class="fas fa-sort"></i></span>
             </div>
         </th>
         <th style="width:15%">
             <div>
                 <span>Author</span>
-                <span class="sort-table"><i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i></span>
+                <span class="sort-table"><i class="fas fa-sort"></i></span>
             </div>
         </th>
         <th style="width:15%">
             <div>
                 <span>Genre</span>
-                <span class="sort-table"><i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i></span>
+                <span class="sort-table"><i class="fas fa-sort"></i></span>
             </div>
         </th>
         <th style="width:15%">
             <div>
                 <span>Date</span>
-                <span class="sort-table"><i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i></span>
+                <span class="sort-table"><i class="fas fa-sort"></i></span>
             </div>
         </th>
         <th style="width:15%">Action</th>
@@ -69,4 +69,4 @@ $colors = [
     <?php endforeach; ?>
 </table>
 
-
+<script src="<?= PUBLIC_PATH ?>/js/sortTable.js"></script>
