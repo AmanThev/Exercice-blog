@@ -85,7 +85,7 @@ nav i{
 section, 
 aside,
 form.new,
-form.choose-button{
+form.choose-button.only-choose{
     margin-left: 13rem;
 }
 
@@ -99,14 +99,96 @@ h3.title-page{
     text-shadow:        1px 1px 5px #d53a22, 1em 0 6em #7aa7bd, 0 0 0.2em blue;
 }
 
-a.create-button{
-    margin:         .5rem 0 2rem 16rem;
-    padding:        1rem;
-    border-radius:  7%;
+div.button-new{
+    display:            flex;
+    flex-direction:     row;
+    justify-content:    space-between;
+    align-items:        center;
+    margin:             2rem 3em 0 15em;
+}
+
+a.create-button, 
+.choose-button label,
+button.submit{
+    margin-bottom:  1rem;
     background:     #7aa7bd;
-    border:         1px solid #5e8091;
-    color:          #33454e;
+    font-weight:    700;
+    border:         1.5px outset #2980b9;
+    text-align:     center;
+}
+
+a.create-button{
+    padding:        1rem;
+    border-radius:  10px;
+    margin-bottom:  1rem;
+    color:          black;
     display:        inline-block;
+}
+
+a.create-button:hover,
+.choose-button button:hover{
+    background:         #2980b9;
+    color:              black;
+    text-decoration:    none;
+}
+
+.choose-button label,
+button.submit{
+    display:    inline-block;
+    padding:    .65rem;
+    position:   relative;
+}
+
+.choose-button label{
+    border-top-left-radius:     10px;
+    border-bottom-left-radius:  10px;
+    border-right:               0px;
+    background:                 #d1e3eb;
+}
+
+.choose-button button{
+    border-top-right-radius:        10px;
+    border-bottom-right-radius:     10px;
+    width:                          7.5rem;
+    margin-left:                    -1rem;
+}
+
+.custom-dropdown-select{
+	background-color:   #d1e3eb;
+    font-weight:        550;
+    font-size:          inherit; 
+	padding:            .5rem;
+	margin:             .8rem 0 1rem -.4rem; 
+    padding-right:      2rem; 			
+	-webkit-appearance: none;
+	-moz-appearance:    none;
+	appearance:         none; 
+    height:             3.35em;
+    border-top:         1.5px outset #2980b9;
+    border-bottom:      1.5px outset #2980b9;;
+}
+
+.custom-dropdown{
+	display:        inline-block;
+	vertical-align: middle;
+    font-size:      .9rem;
+}
+
+.custom-dropdown::before, 
+.custom-dropdown::after{
+	content:        "";
+	position:       relative;
+    pointer-events: none;
+}
+
+.custom-dropdown::after{
+    content:        "\25BC";
+    height:         1rem;
+    font-size:      .625em;
+    line-height:    1;
+    right:          2em;
+    top:            -0.11rem; 
+    margin-top:     -0.5em;
 }
 
 section.dash-home{
@@ -225,7 +307,6 @@ span.sort-table i.light {
     color: #6d6d6d;
 }
 
-
 tr{
     background: white;
 }
@@ -257,68 +338,6 @@ td button{
 
 td button:hover{
     text-decoration: underline;
-}
-
-.custom-dropdown-small{
-	font-size: .9rem;
-}
-
-.custom-dropdown_select{
-	font-size:  inherit; 
-	padding:    .5rem;
-	margin:     1rem 0; 
-}
-
-.custom-dropdown_select-red{
-	background-color:   #d53a22;
-	color:              #fff;
-}
-
-.custom-dropdown{
-	display:        inline-block;
-	vertical-align: middle;
-}
-
-
-.custom-dropdown_select{
-	padding-right:      2rem; 			
-	border:             0;
-	border-radius:      3px;
-	-webkit-appearance: none;
-	-moz-appearance:    none;
-	appearance:         none;    
-}
-
-.custom-dropdown::before, 
-.custom-dropdown::after{
-	content:        "";
-	position:       relative;
-    pointer-events: none;
-}
-
-.custom-dropdown::after{
-        content:        "\25BC";
-        height:         1rem;
-        font-size:      .625em;
-        line-height:    1;
-        right:          2em;
-        top:            -0.11rem; 
-        margin-top:     -0.5em;
-}
-
-.custom-dropdown-red::after{
-	color: rgba(0,0,0,.4);
-}
-
-button.submit{
-    border-radius:      7%;
-    background-color:   #fff;
-	color:              #d53a22;
-    border:             1px solid #d53a22;
-}
-
-button.submit:hover{
-    background-color: #dfdddd ;
 }
 
 /**

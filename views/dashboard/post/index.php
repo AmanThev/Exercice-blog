@@ -9,23 +9,30 @@ $title = 'Dashboard/Posts';
 $posts = new PostDatabase();
 $posts = $posts->getAllPosts();
 
+
+if(!empty($_GET['status'])){
+    $status = $_GET['status'];
+}
+
+
 ?>
 <h3 class="title-page">Posts</h3>
 
-<a class="create-button" href="<?= CreateUrl::url('dashboard/posts/newPost'); ?>">Create New Post</a>
-
-<form class="choose-button" method="get">
-    <label for="users">Choose:</label>
-    <span class="custom-dropdown custom-dropdown-red custom-dropdown-small">
-        <select class="custom-dropdown_select custom-dropdown_select-red" id="select-status" name="select-status">
-            <option value="members" <?php if (isset($users) && $users === "members") echo "selected"?>>Public</option>
-            <option value="admins" <?php if (isset($users) && $users === "admins") echo "selected"?>>Private</option>
-            <option value="All" <?php if (isset($users) && $users === "admins") echo "selected"?>>All Posts</option>
-        </select>
-    </span>
-    <button class="submit" type="submit">Submit</button>
-</form>
-
+<div class="button-new">
+    <form class="choose-button" method="get">
+        <label for="status">Choose the status :</label>
+        <span class="custom-dropdown">
+            <select class="custom-dropdown-select" id="status" name="status">
+                <option value="all" <?php if (isset($status) && $status === "all") echo "selected"?>>All Posts</option>
+                <option value="public" <?php if (isset($status) && $status === "public") echo "selected"?>>Public</option>
+                <option value="private" <?php if (isset($status) && $status === "private") echo "selected"?>>Private</option>
+            </select>
+        </span>
+        <button class="submit" type="submit">Submit</button>
+    </form>
+    <a class="create-button" href="<?= CreateUrl::url('dashboard/posts/newPost'); ?>">Create New Post</a>
+</div>
+    
 <table class="tritable" style="width:86%">
     <tr>
         <th style="width:40%">

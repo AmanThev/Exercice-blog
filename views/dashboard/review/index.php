@@ -22,7 +22,9 @@ $colors = [
 
 <h3 class="title-page">Reviews</h3>
 
-<a class="create-button" href="<?= CreateUrl::url('dashboard/reviews/newReview'); ?>">Create New Review</a>
+<div class="button-new">
+    <a class="create-button" href="<?= CreateUrl::url('dashboard/reviews/newReview'); ?>">Create New Review</a>
+</div>
 
 <table style="width:86%">
     <tr>

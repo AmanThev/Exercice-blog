@@ -25,14 +25,18 @@ $memberLike     = new VoteDatabase();
 $postWritten    = new PostDatabase();
 
 $reviewWritten  = new FilmDatabase();
+
+if(!empty($_GET['users'])){
+    $users = $_GET['users'];
+}
 ?>
 
 <h3 class="title-page">Users</h3>
 
-<form class="choose-button" method="get">
-    <label for="users">Choose:</label>
-    <span class="custom-dropdown custom-dropdown-red custom-dropdown-small">
-        <select class="custom-dropdown_select custom-dropdown_select-red" id="users" name="users">
+<form class="choose-button only-choose" method="get">
+    <label for="status">Choose users :</label>
+    <span class="custom-dropdown">
+        <select class="custom-dropdown-select" id="users" name="users">
             <option value="members" <?php if (isset($users) && $users === "members") echo "selected"?>>Members</option>
             <option value="admins" <?php if (isset($users) && $users === "admins") echo "selected"?>>Admins</option>
         </select>

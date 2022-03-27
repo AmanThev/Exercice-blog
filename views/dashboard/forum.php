@@ -15,9 +15,10 @@ $topics         = new ForumDatabase();
 
 
 <h3 class="title-page">Forum</h3>
-
-<a class="create-button" href="#">Create New Categorie</a>
-<a class="create-button" href="#">Create New Sub-Categorie</a>
+<div class="button-new">
+    <a class="create-button" href="#">Create New Categorie</a>
+    <a class="create-button" href="#">Create New Sub-Categorie</a>
+</div>
 
 <section class="forum">
     <?php foreach($categories as $category): ?>

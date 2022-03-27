@@ -19,10 +19,10 @@ $titlePost      = new CommentDatabase();
 
 <h3 class="title-page">Comments</h3>
 
-<form class="choose-button" method="get">
-    <label for="table">Choose:</label>
-    <span class="custom-dropdown custom-dropdown-red custom-dropdown-small">
-        <select class="custom-dropdown_select custom-dropdown_select-red" id="table" name="table">
+<form class="choose-button only-choose" method="get">
+    <label for="table">Choose the table :</label>
+    <span class="custom-dropdown">
+        <select class="custom-dropdown-select" id="table" name="table">
             <option value="posts" <?php if (isset($table) && $table === "posts") echo "selected"?>>Posts</option>
             <option value="reviews" <?php if (isset($table) && $table === "reviews") echo "selected"?>>Reviews</option>
         </select>
