@@ -19,14 +19,36 @@ class PostDatabase extends Database
      * @var string
      */
     private $queryAllPost = "SELECT * FROM posts";
+    
+    /**
+     * @var array
+     */
+    private $status = [
+        "public"    => '1',
+        "private"   => '0',
+        "all"       => "'0' OR '1'"
+    ];
 
+
+    public function getPosts($display)
+    {
+        $status =$this->status[$display];
+        $stmt = $this->connect()->query("
+            SELECT * FROM admins a
+            RIGHT JOIN posts 
+            ON a.id = admin_id 
+            WHERE public=$status 
+            ORDER BY date DESC");
+        $posts = $stmt->fetchAll(PDO::FETCH_CLASS, Post::class);
+        return $posts;
+    }
 
     /**
      * get all the public posts with limit from the table post
      *
      * @return array
      */
-    public function getPosts(): array
+    public function getPostsPublic(): array
     {
         $sql = $this->queryPublic;
         $pagination = new Paginate($sql);

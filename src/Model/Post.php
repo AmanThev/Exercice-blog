@@ -152,7 +152,6 @@ class Post
         if($public === 1 || $public === 0){
             $this->public = $public;
         }
-
     }
     
     public function getLike(): int

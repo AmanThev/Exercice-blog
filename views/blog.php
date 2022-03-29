@@ -15,7 +15,7 @@ $new        = $new->getLastPost();
 $pagination = new PostDatabase();
 
 $posts      = new PostDatabase();
-$posts      = $posts->getPosts();
+$posts      = $posts->getPostsPublic();
 ?>
 
 <h1 id="title-blog">Blog</h1>

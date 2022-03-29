@@ -16,15 +16,15 @@ class Validator
     /**
      * @var array
      */
-    private $ruleData = array();    
+    private $ruleData = [];    
     /**
      * @var array
      */
-    private $errors = array();
+    private $errors =[];
     /**
      * @var array
      */
-    private static $messages = array();
+    private static $messages = [];
 
     
     public function __construct(array $data)

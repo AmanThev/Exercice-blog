@@ -7,14 +7,9 @@ use App\URL\CreateUrl;
 $title = 'Dashboard/Posts';
 
 $posts = new PostDatabase();
-$posts = $posts->getAllPosts();
 
-
-if(!empty($_GET['status'])){
-    $status = $_GET['status'];
-}
-
-
+$posts = !empty($_GET['status']) ? $posts->getPosts($_GET['status']) : $posts->getAllPosts();
+$status = $_GET['status'] ?? 'all';
 ?>
 <h3 class="title-page">Posts</h3>
 
@@ -23,9 +18,9 @@ if(!empty($_GET['status'])){
         <label for="status">Choose the status :</label>
         <span class="custom-dropdown">
             <select class="custom-dropdown-select" id="status" name="status">
-                <option value="all" <?php if (isset($status) && $status === "all") echo "selected"?>>All Posts</option>
-                <option value="public" <?php if (isset($status) && $status === "public") echo "selected"?>>Public</option>
-                <option value="private" <?php if (isset($status) && $status === "private") echo "selected"?>>Private</option>
+                <option value="all" <?php if(isset($status) && $status === "all") echo "selected"?>>All Posts</option>
+                <option value="public" <?php if(isset($status) && $status === "public") echo "selected"?>>Public</option>
+                <option value="private" <?php if(isset($status) && $status === "private") echo "selected"?>>Private</option>
             </select>
         </span>
         <button class="submit" type="submit">Submit</button>
