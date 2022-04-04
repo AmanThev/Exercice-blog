@@ -17,6 +17,7 @@ Code a blog using the OOP and starting to work with JavaScript
   * Scroll to Top : display a button when the user scroll to the bottom of the page.   And the user click on the button the come back to the top
   * Rate with Stars : color the element checked when the page is loading or when the user click on the element and display a comment. The comment is different for each element
   * Display poster when user select a file (FileReader())
+  * SortTable : Function that sorts column in alphabetical order and vice versa
 * JQuery
   * Dashboard/Forum : display list
   * Ajax : add a Post/Film, display the error or the valid message, change the button submit to a loading button or a check(valid) button

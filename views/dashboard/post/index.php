@@ -11,6 +11,7 @@ $posts = new PostDatabase();
 $posts = !empty($_GET['status']) ? $posts->getPosts($_GET['status']) : $posts->getAllPosts();
 $status = $_GET['status'] ?? 'all';
 ?>
+
 <h3 class="title-page">Posts</h3>
 
 <div class="button-new">
