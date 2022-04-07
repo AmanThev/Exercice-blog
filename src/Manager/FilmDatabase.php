@@ -147,18 +147,31 @@ class FilmDatabase extends Database
 
     public function createFilm(Film $film): void
     {
-        $stmt = $this->connect()->prepare("INSERT INTO films SET title = :title, admin_id = :admin_id, date = :date, director = :director, production = :production, writer = :writer, cast = :cast, genre = :genre, synopsis = :synopsis, review = :review, score = :score");
+        $stmt = $this->connect()->prepare("INSERT INTO films SET 
+            title = :title, 
+            admin_id = :admin_id, 
+            date = :date, 
+            director = :director, 
+            writer = :writer, 
+            cast = :cast, 
+            production = :production, 
+            genre = :genre, 
+            synopsis = :synopsis, 
+            review = :review, 
+            score = :score"
+        );
         $addFilm = $stmt->execute([
-            'title' => $film->getTitle(),
-            'admin_id' => $film->getIdAdmin(),
-            'date' => $film->getDate(),
-            'director' => $film->getDirector(),
-            'production' => $film->getProduction(),
-            'cast' => $film->getCast(),
-            'genre' => $film->getGenre(),
-            'synopsis' => $film->getSynopsis(),
-            'review' => $film->getReview(),
-            'score' => $film->getScore()
+            'title'         => $film->getTitle(),
+            'admin_id'      => $film->getIdAdmin(),
+            'date'          => $film->getDate(),
+            'director'      => $film->getDirector(),
+            'writer'        => $film->getWriter(),
+            'cast'          => $film->getCast(),
+            'production'    => $film->getProduction(),
+            'genre'         => $film->getGenre(),
+            'synopsis'      => $film->getSynopsis(),
+            'review'        => $film->getReview(),
+            'score'         => $film->getScore()
         ]);
         if($addFilm === false){
             throw new \Exception("Error, impossible to add the film");

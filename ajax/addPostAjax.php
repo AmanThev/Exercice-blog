@@ -27,7 +27,6 @@ $data->validateForm();
 $result = [];
 $errors = $data->getErrors();
 
-
 if($data->validateForm()){
 	$user = new UserDatabase();
 	$user = $user->getAdminByName($_POST['author']);

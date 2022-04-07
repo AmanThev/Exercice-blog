@@ -23,7 +23,6 @@ $title = "New Review";
     <div class="picture poster">
         <div class="poster-input">
             <label for="poster">Upload</label>
-            <input type="hidden" name="MAX_FILE_SIZE" value="250000">
             <input type="file" name="poster" id="poster">
             <button type="button"  class="delete-file" ><i class="fas fa-times-circle"></i></button>
             <small>Add the poster of the film</small>
@@ -35,8 +34,8 @@ $title = "New Review";
     </div>
 
     <div class="input">
-        <label for="year" class="choose-year">Year</label>
-        <select id="year" name="year">
+        <label for="date" class="choose-year">Year</label>
+        <select id="date" name="date">
             <script>
                 var movieDate = new Date();
                 var year = movieDate.getFullYear();
@@ -201,7 +200,6 @@ $title = "New Review";
             if(element.style.opacity == ""){
                 element.style.opacity = 1;
             }
-            
             var intervalFadeOut = setInterval(function(){
                 if (element.style.opacity > 0){
                     element.style.opacity -= 0.01;
@@ -231,6 +229,16 @@ $title = "New Review";
                 fadeIn(newSpanButton);
         }
 
+        function replaceByValid(element){
+            var newSpanButton = document.createElement('i');
+                newSpanButton.classList.add("fas");
+                newSpanButton.classList.add("fa-check");
+                newSpanButton.style.opacity = 0;
+                button.replaceChild(newSpanButton, element);
+                button.classList.remove('submit');
+                fadeIn(newSpanButton);
+        }
+
         function fadeIn(element){
             opacity = Number(window.getComputedStyle(element).getPropertyValue("opacity"));
 
@@ -244,19 +252,45 @@ $title = "New Review";
             }, 100)
         }
 
-        function displayError(dataError){  // trouver un champ
-            Object.entries(dataError['error']).forEach(function(value, index, array){
-                value.forEach(function(errors,i, a){
-                    var idField = document.getElementById(value[0]);
-                    console.log(idField);
-                })
+        function displayPosted(dataPosted){
+            setTimeout(function() {
+                message.innerHTML = dataPosted.good;
+                message.className = 'valid';
+            }, 2000);
+            setTimeout(function() {
+                fadeOut(button.firstChild, replaceByValid);
+            }, 2800);
+        }
+
+        function displayError(dataError){  
+            setTimeout(function() {
+                for(let field in dataError.error){
+                    createElementError(field, dataError.error[field]);
+                }
+            }, 2000);
+            setTimeout(function() {
+                fadeOut(button.firstChild, replaceBySubmit);
+            }, 2800);    
+        }
+
+        function createElementError(nameField, errorField){
+            errorField.forEach(function(value){
+                var errorElement = document.createElement('p');
+                errorElement.textContent = value;
+                errorElement.className = "error";
+                var idField = document.getElementById(nameField).parentElement;
+                idField.appendChild(errorElement);
             })
         }
                 
         httpRequest.onreadystatechange = function(){
             if(httpRequest.readyState === 4 && httpRequest.status === 200){
-                var dataError = JSON.parse(httpRequest.responseText);
-                displayError(dataError);
+                var dataResult = JSON.parse(httpRequest.responseText);
+                if(dataResult.status === 'error'){
+                    displayError(dataResult);
+                }else{
+                    displayPosted(dataResult);
+                }
             }
         }
         httpRequest.open('POST', url, true);

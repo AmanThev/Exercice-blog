@@ -133,7 +133,7 @@ a.create-button:hover,
 }
 
 .choose-button label,
-button.submit{
+.choose-button button.submit{
     display:    inline-block;
     padding:    .65rem;
     position:   relative;
@@ -858,6 +858,10 @@ form.new button.submit i{
     animation:  rotating 2s linear infinite;
 }
 
+form.new button.submit:hover i{
+    color: #7aa7bd;
+}
+
 @keyframes rotating {
     from {
       transform: rotate(0deg);
@@ -874,11 +878,13 @@ form.new button.submit:hover {
 form.new #message.error,
 form.new div.input p.error,
 form.new div.textarea p.error,
-form.new div.picture p.error{
+form.new div.picture p.error,
+form.new div.score-content p.error{
     background:     #e11800;
     color:          white;
     padding:        1rem;
     border-radius:  20px;
+    width:          65%;
 }
 
 form.new #message.valid{

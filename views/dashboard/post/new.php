@@ -125,7 +125,7 @@ $title = "New Post";
                                     $(".inputAuthor").append("<p class='error'>" + value + "</p>");
                                 })
                             }
-                            if(data.error.titlePost){
+                            if(data.error.title){
                                 var titleError = "";
                                 $.each(data.error.title, function (key, value){
                                     titleError += value;

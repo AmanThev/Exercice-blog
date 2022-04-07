@@ -43,17 +43,16 @@ class Database extends Connection
         }
     }
 
-    public function uploadFile(string $tabName, array $data, string $folder): void
+    public function uploadFile(string $tabName, array $data, string $folder, string $columnName = 'picture'): void
     {
         foreach($data as $key => $value){
             $name = basename($data[$key]['name']);
             $title = $data[$key]['title'];
             $upload_dir = IMAGE .$folder. DIRECTORY_SEPARATOR .$name;
             $tmp_name = $_FILES[$key]['tmp_name'];
-
-            $stmt = $this->connect()->prepare("UPDATE $tabName SET picture = :picture WHERE title = :title");
+            $stmt = $this->connect()->prepare("UPDATE $tabName SET $columnName = :pictureName WHERE title = :title");
             $uploadFile = $stmt->execute([
-                'picture' => $name,
+                'pictureName' => $name,
                 'title' => $title
             ]);
             if($uploadFile === false){

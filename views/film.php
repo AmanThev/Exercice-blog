@@ -64,7 +64,7 @@ $title = $slug;
                 <th scope="row">Starring</th>
                 <td>
                     <ul>
-                        <?php foreach($film->getCast() as $actor): ?>
+                        <?php foreach($film->getListCast() as $actor): ?>
                             <li><?= $actor ?></li>
                         <?php endforeach; ?>
                     </ul>

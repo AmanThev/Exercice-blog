@@ -162,7 +162,12 @@ class Film
         $this->writer = htmlspecialchars(trim($writer));
     }
 
-    public function getCast(): array
+    public function getCast(): string
+    {
+        return $this->cast;
+    }
+
+    public function getListCast(): array
     {
         $actors 		= $this->cast;
         $array_actors 	= explode(',', $actors);
