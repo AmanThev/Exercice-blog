@@ -111,7 +111,7 @@ class DateReviews
      * @param  int $params
      * @return array
      */
-    private function endsDecade($params): array
+    private static function endsDecade($params): array
     {
         $listYears = self::listYears($params);
         $startDecade = $listYears[9];

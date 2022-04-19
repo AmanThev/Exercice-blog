@@ -20,7 +20,7 @@ class Validator
     /**
      * @var array
      */
-    private $errors =[];
+    private $errors = [];
     /**
      * @var array
      */
@@ -49,10 +49,10 @@ class Validator
         $params = array_slice(func_get_args(), 2);
         
         $this->ruleData[] = array(
-            'rule' => $rule,
-            'fields' => (array)$field,
-            'params' => (array)$params,
-            'message' => $message
+            'rule'      => $rule,
+            'fields'    => (array)$field,
+            'params'    => (array)$params,
+            'message'   => $message
         );
 
         return $this;
@@ -174,7 +174,15 @@ class Validator
         $value2 = implode('', $value2);
         return $value != $value2;
     }
-
+    
+    /**
+     * If tabName value can't have duplicate (Post's title)
+     *
+     * @param  string $field
+     * @param  string $value
+     * @param  array $params
+     * @return bool
+     */
     private function used(string $field, string $value, array $params) :bool
     {   
         $valueExist = new Database();
@@ -182,6 +190,7 @@ class Validator
     }
     
     /**
+     * If value have to exist on the tabName (ex : admin = author)
      * if field tabName != field form -> $params[1] === field tabName
      *
      * @param  string $field

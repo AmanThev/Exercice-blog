@@ -58,6 +58,18 @@ class ForumDatabase extends Database
             $cat = $stmt->fetch();
             return $cat;
         }
+        throw new NotFoundException('Category', $name);
+    }
+
+    public function getCategoryById(int $id): Category
+    {
+        $stmt = $this->connect()->prepare("$this->queryCat WHERE id=:id");
+        $stmt->execute(['id' => $id]);
+        if($stmt->rowCount() == 1){
+            $stmt->setFetchMode(PDO::FETCH_CLASS,Category::class);
+            $cat = $stmt->fetch();
+            return $cat;
+        }
         throw new NotFoundException('Category', $id);
     }
 
@@ -226,5 +238,14 @@ class ForumDatabase extends Database
     public function countMessagesWithSubCat(int $idSubCat): int
     {
         return CountSql::totalData("$this->queryMessage WHERE id_sub_categories = ?", $idSubCat);
+    }
+
+    public function closeTopic(int $idTopic): void
+    {
+        $stmt = $this->connect()->prepare("UPDATE f_topics SET resolved = '1' WHERE id = :id");
+        $updated = $stmt->execute(['id' => $idTopic]);
+        if($updated === false){
+            throw new \Exception("Impossible to update the table f_topics");
+        }
     }
 }

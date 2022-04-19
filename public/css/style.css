@@ -1627,7 +1627,7 @@ section.film form div:first-of-type{
 
 section.film form div.rating-film{
     margin-left:    6em;
-    transform:      translate(-85%)rotateY(180deg);
+    transform:      translate(-85%) rotateY(180deg);
 }
 
 section.film form div.rating-film input,
@@ -1933,7 +1933,8 @@ section.forum.add-topic label.subject {
     margin-top: 0;
  }
 
-section.forum.add-topic input, section.forum.add-topic textarea {
+section.forum.add-topic input, 
+section.forum.add-topic textarea {
     font:           1em sans-serif;
     width:          700px;
     box-sizing:     border-box;
@@ -1946,15 +1947,23 @@ section.forum.add-topic option{
      width: 675px;
 }
 
-section.forum.add-topic input:focus, textarea:focus {
+section.forum.add-topic input:focus, 
+textarea:focus {
     border-color: #7aa7bd;
 }
 
 section.forum.add-topic textarea {
     vertical-align: top;
+    margin-bottom: 1rem;
 }
 
-section.forum.add-topic input[type="submit"]{
+section.forum.add-topic div.success-button{
+    display: flex;
+    justify-content: center;
+}
+
+section.forum.add-topic input[type="submit"],
+section.forum.add-topic div.success-button input{
 	border:         2px solid #372c0c;
     color:          #372c0c;
 	background:     beige;
@@ -1963,14 +1972,30 @@ section.forum.add-topic input[type="submit"]{
     border-radius:  5px;
     font-weight:    1000;
     font-size:      1rem;
-    margin:         2rem 16.5rem;
     width:          20rem;
     box-shadow:     0px 0px 10px beige;
 }
 
-section.forum.add-topic input[type="submit"]:hover{
+section.forum.add-topic input[type="submit"]{
+    margin: 2rem 16.5rem;
+}
+
+section.forum.add-topic div.success-button input{
+    margin: 2rem;
+}
+
+section.forum.add-topic input[type="submit"]:hover,
+section.forum.add-topic div.success-button input:hover{
     background-color:#bfbea0;
 }
+
+section.forum.add-topic p.error{
+    text-align: left;
+    position:   relative;
+    left:       19rem;
+}
+
+
 
 /*
     **** view/forum/topic ****
@@ -1981,9 +2006,9 @@ section.forum.message div.row{
 }
 
 section.forum.message div.title-topic{
-    display: flex;
-    justify-content: space-between;
-    justify-items: center;
+    display:            flex;
+    justify-content:    space-between;
+    justify-items:      center;
 }
 
 section.forum.message a.close-topic{

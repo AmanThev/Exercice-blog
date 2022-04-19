@@ -12,8 +12,6 @@ class Topic
      */
     private $id;    
     /**
-     * id_sub_categories on the table f_sub_categories
-     *
      * @var int
      */
     private $id_sub_categories;
@@ -50,10 +48,30 @@ class Topic
     {
         return $this->id;
     }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
     
     public function getIdSubCat(): ?int
     {
         return $this->id_sub_categories;
+    }
+
+    public function setIdSubCat(int $id): void
+    {
+        $this->id_sub_categories = $id;
+    }
+
+    public function getIdMember(): ?int
+    {
+        return $this->id_members;
+    }
+
+    public function setIdMember(int $id): void
+    {
+        $this->id_members = $id;
     }
 
     /**
@@ -62,6 +80,11 @@ class Topic
     public function getTitle(): ?string
     {
         return htmlspecialchars($this->title);
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
     }
     
     public function getUrlTitle(): string
@@ -77,18 +100,38 @@ class Topic
         return htmlspecialchars($this->subject);
     }
 
+    public function setSubject(string $subject): void
+    {
+        $this->subject = $subject;
+    }
+
     public function getDateTimeCreation()
     {
-        return new DateTime($this->date_time_creation);
+        return new Datetime($this->date_time_creation);
     }
-    
+
+    public function setDateTimeCreation(string $date): void
+    {
+        $this->date_time_creation = $date;
+    }   
+
     public function getResolved(): ?int
     {
         return $this->resolved;
     }
 
+    public function setResolved(int $resolved): void
+    {
+        $this->resolved = $resolved;
+    }
+
     public function getName(): string
     {
         return htmlspecialchars($this->name);
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 }

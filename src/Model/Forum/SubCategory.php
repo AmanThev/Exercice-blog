@@ -12,9 +12,14 @@ class SubCategory
      */
     private $id;
     /**
+     * title of the subCat
      * @var string varchar(100)
      */
-    private $name;
+    private $name;    
+    /**
+     * @var int
+     */
+    private $id_categories;
 
     
     /**
@@ -25,12 +30,29 @@ class SubCategory
         return $this->id;
     }
     
-    /**
-     * @return string
-     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getName(): string
     {
         return htmlspecialchars($this->name);
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = htmlentities(trim($name));
+    }
+
+    public function getIdCategory(): int
+    {
+        return $this->id_categories;
+    }
+
+    public function setIdCategory(int $idCat): void
+    {
+        $this->id_categories = $idCat;
     }
 
     public function getUrlName(): string

@@ -181,20 +181,20 @@ $title = "New Review";
         button.className = 'submit';
         fadeOut(button.firstChild, replaceBySpinner);
         
-        // var inputs = this.querySelectorAll("input");
-        // for(var i = 0; i < inputs.length; i++){
-        //     if (!inputs[i].value){
-        //         error = "Please please fill in all fields";
-        //         setTimeout(function() {
-        //             message.innerHTML = error;
-        //             message.className = 'error';
-        //         }, 2000);
-        //         setTimeout(function() {
-        //             fadeOut(button.firstChild, replaceBySubmit);
-        //         }, 2800);
-        //         break;
-        //     }
-        // }
+        var inputs = this.querySelectorAll("input");
+        for(var i = 0; i < inputs.length; i++){
+            if (!inputs[i].value){
+                error = "Please please fill in all fields";
+                setTimeout(function() {
+                    message.innerHTML = error;
+                    message.className = 'error';
+                }, 2000);
+                setTimeout(function() {
+                    fadeOut(button.firstChild, replaceBySubmit);
+                }, 2800);
+                break;
+            }
+        }
 
         function fadeOut(element, callback){
             if(element.style.opacity == ""){

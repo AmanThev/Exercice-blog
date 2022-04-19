@@ -16,5 +16,4 @@ return array(
     'email'             => "is not a valid email address",
     'numeric'           => "must be numeric",
     'exist'             => "doesn't exist"
-
 );

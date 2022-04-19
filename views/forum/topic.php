@@ -24,8 +24,8 @@ $messages       = $messages->getMessage($id);
 $subCatId       = new ForumDatabase();
 $subCatId       = $subCatId->getSubCategoryName($subCat);
 
-$topic          = new ForumDatabase();
-$topic          = $topic->getTopic($id, $slug);
+$topics         = new ForumDatabase();
+$topic          = $topics->getTopic($id, $slug);
 
 // if(strtolower($topic->getTitle()) !== strtolower($slug)){
 //     $url = CreateUrl::url('forum/' . $catId->getUrlName() . '/' . $subCatId->getUrlName(), ['slug' => $topic->getUrlTitle(), 'id' => $id]);
@@ -33,14 +33,20 @@ $topic          = $topic->getTopic($id, $slug);
 //     header('Location: ' . $url);
 // }
 
-$title          = $slug;
+$title = $slug;
 ?>
 
 <h1 class="title-forum">Forum</h1>
-<!-- pagination -->
+
 <p class="path-forum"><i class="fas fa-home"></i><a href="<?= CreateUrl::url('forum') ?>"> Home</a> > <a href="<?= CreateUrl::url('forum/', ['slug' => $catId->getUrlName(), 'id' => $catId->getId()]) ?>"><?= $cat ?></a> > <a href="<?= CreateUrl::url('forum/' . $cat, ['slug' => $subCatId->getUrlName() , 'id' => $subCatId->getId() ]) ?>"><?= $subCat ?> </a> > <?= $topic->getTitle() ?></p>
+
 <section class="forum message">
-    <div class="title-topic"><h2><?= $topic->getTitle() ?></h2><a class="close-topic" href="#">Done with this topic? Click here to close it</a></div>
+    <div class="title-topic">
+        <h2><?= $topic->getTitle() ?></h2>
+        <?php if($topic->getResolved() ==! 1): ?>
+            <a class="close-topic" href="<?php $topics->closeTopic($id); ?>">Done with this topic? Click here to close it</a>
+        <?php endif; ?>
+    </div>
     <div class="separate-forum"></div>
     <div class="row">
     <div class="pseudo"><p><?= $topic->getName() ?></p>
@@ -54,7 +60,8 @@ $title          = $slug;
         <div class="content"><p><?= $message->getDateTimeMessage()->format('M d, Y h:i a') ?></p><p><?= $message->getMessage() ?></p></div>
         </div>
     <?php endforeach; ?>
-    <p><?php echo $countMsg->countMessages($id) > 1 ? ' '.$countMsg->countMessages($id).' Messages' : ' '.$countMsg->countMessages($id).' Message' ?></p><!--Ex 10 msg 20 + Pagination -->
+    <p><?php echo $countMsg->countMessages($id) > 1 ? ' '.$countMsg->countMessages($id).' Messages' : ' '.$countMsg->countMessages($id).' Message' ?></p>
+    <!--Ex 10 msg 20 + Pagination -->
 </section>
 
 <h2 class="title-message-bottom"><?= $topic->getTitle() ?></h2>
