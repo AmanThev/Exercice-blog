@@ -9,13 +9,15 @@ class AddMessage extends AddData
 {
 
     private $message;
-    
+
     public function validateMessage(): self
     {
         $data = new Validator($this->data);
         $data->check('required', 'message');
-        $this->resultValidator = $data->validateForm();
-        $this->errors = $data->getErrors();
+
+        $this->resultValidator  = $data->validateForm();
+        $this->errors           = $data->getErrors();
+        
         return $this;
     }
 
@@ -35,7 +37,6 @@ class AddMessage extends AddData
 
         $message->setId($id);
         $this->message = $message;
-
     }
 
     private function arrayDataMessage(array $data): array

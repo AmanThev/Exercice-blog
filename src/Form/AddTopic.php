@@ -23,8 +23,10 @@ class AddTopic extends AddData
         $data->check('used', 'title', 'f_topics');
         $data->check('exist', 'name', 'members');
         $data->check('lengthBetween', ['name', 'title'], 2, 20);
-        $this->resultValidator = $data->validateForm();
-        $this->errors = $data->getErrors();
+
+        $this->resultValidator  = $data->validateForm();
+        $this->errors           = $data->getErrors();
+        
         return $this;
     }
 

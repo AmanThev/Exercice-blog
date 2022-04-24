@@ -3,6 +3,7 @@
 use App\URL\ExplodeUrl;
 use App\Manager\ForumDatabase;
 use App\URL\CreateUrl;
+use App\Form\AddMessage;
 
 $url            = new ExplodeUrl($_GET['url']);
 $id             = $url->getIdForTopic();
@@ -33,7 +34,22 @@ $topic          = $topics->getTopic($id, $slug);
 //     header('Location: ' . $url);
 // }
 
+if(isset($_GET['run']) AND $_GET['run'] === 'resolved'){
+   $topics->closeTopic($id);
+}
+
+if(!empty($_POST)){
+    $data = new AddMessage($_POST);
+    if($data->validateMessage()->resultValidator()){
+        
+    }else{
+        $errors = $data->returnErrors();
+    }
+}
+
 $title = $slug;
+
+//'/forum/topic/id/closeTopic'
 ?>
 
 <h1 class="title-forum">Forum</h1>
@@ -44,7 +60,7 @@ $title = $slug;
     <div class="title-topic">
         <h2><?= $topic->getTitle() ?></h2>
         <?php if($topic->getResolved() ==! 1): ?>
-            <a class="close-topic" href="<?php $topics->closeTopic($id); ?>">Done with this topic? Click here to close it</a>
+            <a class="close-topic" href="<?= CreateURL::urlDashboardAction('forum/topic', $id, 'closeTopic'); ?>">Done with this topic? Click here to close it</a>
         <?php endif; ?>
     </div>
     <div class="separate-forum"></div>

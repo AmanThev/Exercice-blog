@@ -33,8 +33,10 @@ $router->get('/forum', VIEWS . 'forum/index');
 $router->get('/forum/:slug-:id', VIEWS . 'forum/category');
 $router->get('/forum/:slugCat/:slug-:id', VIEWS . 'forum/subCategory');
 $router->get('/forum/:slugCat/:slugSubCat/:slug-:id', VIEWS . 'forum/topic');
+$router->post('/forum/:slugCat/:slugSubCat/:slug-:id', VIEWS . 'forum/topic');
 $router->get('/forum/newTopic', VIEWS . 'forum/addTopic');
 $router->post('/forum/newTopic', VIEWS . 'forum/addTopic');
+$router->get('/forum/topic/:id/closeTopic', VIEWS . 'forum/closeTopic');
 
 $router->get('/quiz', VIEWS . 'quiz');
 
