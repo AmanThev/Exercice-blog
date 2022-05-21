@@ -89,25 +89,5 @@ class Route{
                 require VIEWS . 'layouts/default.php';
                 return $this;
         }
-
-        // if($newPath[0] === 'dashboard'){
-        //     ob_start();
-        //     require $view . '.php';
-        //     $content = ob_get_clean();
-        //     require VIEWS . 'layouts/dashboard.php';
-        //     return $this;
-        // }
-        // if($newPath[0] === 'login'){
-        //     ob_start();
-        //     require $view . '.php';
-        //     $content = ob_get_clean();
-        //     require VIEWS . 'layouts/auth.php';
-        //     return $this;
-        // }
-        // ob_start();
-        // require $view . '.php';
-        // $content = ob_get_clean();
-        // require VIEWS . 'layouts/default.php';
-        // return $this;
     }
 }

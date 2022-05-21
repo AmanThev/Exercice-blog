@@ -44,6 +44,7 @@ class AddData
         foreach($data as $key => $value){
             $keyFields[] = "$key = :$key";
         }
+
         $sqlFields = implode(', ', $keyFields);
         $stmt = new Connection();
         $sql = $stmt->connect()->prepare("INSERT INTO $tabName SET " . $sqlFields);

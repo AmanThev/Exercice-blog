@@ -10,7 +10,7 @@ class CreateURL {
         if($name[0] != '/') {
             $name = "/" . $name;
         }
-
+        
         if($params){
             $slug = $params['slug'];
             $id = $params['id'];
@@ -26,8 +26,6 @@ class CreateURL {
         }
 
        return WWW_ROOT. '/' . $name . '/' . $id;
-
-
     }
 
     public static function urlSlugOnly(string $name, string $slug)

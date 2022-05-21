@@ -34,22 +34,24 @@ $topic          = $topics->getTopic($id, $slug);
 //     header('Location: ' . $url);
 // }
 
-if(isset($_GET['run']) AND $_GET['run'] === 'resolved'){
-   $topics->closeTopic($id);
-}
-
+// get Members
 if(!empty($_POST)){
     $data = new AddMessage($_POST);
     if($data->validateMessage()->resultValidator()){
-        
+        $dataTopic = [  "idTopic"  => $id, 
+                        "idSubCat" => $subCatId->getId(), 
+                        "idMember" => 6];
+        $data->createMessage($dataTopic);
+        $data->redirectForm($cat, $subCat, $slug, $id, $success = true);
     }else{
         $errors = $data->returnErrors();
+        if(isset($_GET['success'])){
+            $data->redirectForm($cat, $subCat, $slug, $id);
+        }
     }
 }
 
 $title = $slug;
-
-//'/forum/topic/id/closeTopic'
 ?>
 
 <h1 class="title-forum">Forum</h1>
@@ -84,8 +86,13 @@ $title = $slug;
 
 <?php if($topic->getResolved() ==! 1): ?>
     <form class="write-message" action="" method="post">
+        <?php if(!empty($errors)): ?>
+            <?= $data->arrayKeyExist('message', $errors) ?>
+        <?php elseif(isset($_GET['success'])): ?>
+            <p class="success">Congrats !!!! Your message has been posted</p>
+        <?php endif; ?>
         <label for="message">Write your message:</label>
-        <textarea name="message" id="messafe" cols="110" rows="15"></textarea>
+        <textarea name="message" id="message" cols="110" rows="15"></textarea>
         <input type="submit" name="login" value="Submit">
     </form>    
 <?php endif; ?>

@@ -3,8 +3,8 @@ use App\Manager\ForumDatabase;
 use App\URL\ExplodeUrl;
 
 
-$test = new ExplodeUrl($_GET['url']);
-$id = $test->getId();
+$url = new ExplodeUrl($_GET['url']);
+$id = $url->getId();
 
 $topics = new ForumDatabase();
 $topics->closeTopic($id);
