@@ -176,7 +176,6 @@ class FilmDatabase extends Database
         if($addFilm === false){
             throw new \Exception("Error, impossible to add the film");
         }
-        dd($this);
         $film->setId($this->pdo->lastInsertId());
     }
 }

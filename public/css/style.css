@@ -1439,6 +1439,18 @@ section.post .is-disliked button.vote-dislike{
 	color: #f2504b;
 }
 
+section.post.write-comment p.error{
+    color:          #372c0c;
+    background:     beige;
+    padding:        1rem;
+    border-radius:  40px;
+    font-weight:    600;
+}
+
+section.post.write-comment textarea + p.error{
+    margin-top : 1.5rem;
+}
+
 /*
     ****    view/film.php    ****
 */

@@ -50,9 +50,19 @@ class Comment
         return $this->id;
     }
 
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getIndexId(): int
     {
         return $this->index_id;
+    }
+
+    public function setIndexId(int $idIndex): void 
+    {
+        $this->index_id = $idIndex;
     }
 
     public function getPseudo(): string
@@ -60,9 +70,19 @@ class Comment
         return htmlspecialchars($this->pseudo);
     }
 
+    public function setPseudo(string $pseudo): void
+    {
+        $this->pseudo = $pseudo;
+    }
+
     public function getComment(): string
     {
         return nl2br(htmlspecialchars($this->comment));
+    }
+
+    public function setComment(string $comment): void
+    {
+        $this->comment = $comment;
     }
 
     public function getCommentFilm(): string
@@ -77,15 +97,30 @@ class Comment
     {
         return new DateTime($this->comment_date);
     }
-    
+
+    public function setDate(string $date): void
+    {
+        $this->comment_date = $date;
+    }   
+
     public function getEdit(): ?int
     {
         return $this->edit;
     }
 
+    public function setEdit(int $edit): void
+    {
+        $this->edit = $edit;
+    }
+
     public function getRatingFilm(): int
     {
         return $this->rating_film;
+    }
+
+    public function setRatingFilm(int $score): void
+    {
+        $this->rating_film = $score;
     }
 
     public function getTitle(): string

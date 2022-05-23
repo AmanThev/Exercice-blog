@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 use App\URL\ExplodeUrl;
 use App\Manager\Connection;
@@ -7,6 +8,7 @@ use App\Manager\CommentDatabase;
 use App\Manager\VoteDatabase;
 use App\Manager\UserDatabase;
 use App\URL\CreateUrl;
+use App\Form\AddComment;
 
 $url            = new ExplodeUrl($_GET['url']);
 $id             = $url->getId();
@@ -29,6 +31,20 @@ if(strtolower($post->getUrlTitleCheck()) !== strtolower($slug)){
     $url = CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $id]);
     http_response_code(301);
     header('Location: ' . $url);
+}
+
+if(!empty($_POST)){
+    $data = new AddComment($_POST);
+    //if($member or admin is connnect){
+        //if($data->validateComment('admin' or 'member')->resultValidator())
+            //$data->createComment();
+    //}
+    if($data->validateComment()->resultValidator()){
+        $data->createComment($id);
+        $_SESSION["success"] = "Your comment has been added";
+    }else{
+        $errors = $data->returnErrors();
+    }
 }
 
 $title = $slug;
@@ -81,12 +97,15 @@ $title = $slug;
                                                 echo 'member'; 
                                             }elseif($userDatabase->statutUser($comment->getPseudo(), 'admins') === 1){ 
                                                 echo 'admin';
-                                            } ?>"><img src="<?= PUBLIC_PATH ?>/img/photoProfile/default.jpg"></span><h2><?= $comment->getPseudo() ?>:
+                                            } ?>">
+                    <img src="<?= PUBLIC_PATH ?>/img/photoProfile/default.jpg">
+                </span>
+                <h2><?= $comment->getPseudo() ?>:
                     <span class="date-comment">
                         <?php if($comment->getEdit() != NULL): ?>
-                            <?= $comment->getDate()->format('d F Y') ?> (Edited) 
+                                <?= $comment->getDate()->format('d F Y') ?> (Edited) 
                         <?php else: ?>
-                            <?= $comment->getDate()->format('d F Y') ?>
+                                <?= $comment->getDate()->format('d F Y') ?>
                         <?php endif; ?>
                     </span>
                 </h2>
@@ -113,21 +132,20 @@ $title = $slug;
             À rajouter dans value pseudo
             -->
 
-
-
 <section class="post write-comment">
     <h1>Write your Comment</h1>
-	<form action="post.php?id=<//?= $post->id ?>" method="post">
+	<form action="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>" method="post">
         <label for="pseudo">Your pseudo :</label>
         <input type="text" name="pseudo" id="pseudo" value="" aria-describedby="pseudoInfo" placeholder="Write your pseudo">
         <small>Your pseudo must not exceed 20 characters</small>
+            <?php if(!empty($errors)): ?>
+                <?= $data->arrayKeyExist('pseudo', $errors) ?>
+            <?php endif; ?>
         <label for="comment">Your comment :</label>
         <textarea type="text" name="comment" id="comment" rows="10"></textarea>
-                <!-- // < ?php if(!empty($errors)): ?>
-                //     <  ?php foreach ($errors as $error): ?>
-                //         <p class="p-3 mb-2 bg-danger text-white">< ?= $error ?></p>
-                //      < ?php endforeach; ?>
-                // < ?php endif; ?>	 -->
+            <?php if(!empty($errors)): ?>
+                <?= $data->arrayKeyExist('comment', $errors) ?>
+            <?php endif; ?>
         <button type="submit" name="submit">Submit</button>
     </form>
 </section>

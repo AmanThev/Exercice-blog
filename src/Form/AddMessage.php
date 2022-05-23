@@ -46,23 +46,6 @@ class AddMessage extends AddData
         $this->message = $message;
     }
 
-    private function arrayDataMessage(array $dataTopic): array
-    {
-        $idSubCat   = $dataTopic['idSubCat'];
-        $idTopic    = $dataTopic['idTopic'];
-        $idMember   = $dataTopic['idMember'];
-        $date       = date('Y-m-d H:i:s');
-    
-        $dataMessage = [
-            'idSubCat'          => $idSubCat,
-            'idTopic'           => $idTopic,
-            'idMember'          => $idMember,
-            'message'           => $data['message'],
-            'dateTimeMessage'   => $date
-        ];
-        return $dataMessage;
-    }
-
     public function redirectForm(string $cat, string $subCat, string $topic, int $idTropic, bool $success = false)
     {   
         $catUrl = CreateUrl::urlTitle($cat);

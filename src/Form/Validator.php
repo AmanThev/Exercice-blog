@@ -177,7 +177,9 @@ class Validator
     
     /**
      * If tabName value can't have duplicate (Post's title)
-     *
+     *if field tabName != field form : 
+     *         $params[1] === field tabName
+     * 
      * @param  string $field
      * @param  string $value
      * @param  array $params
@@ -186,12 +188,16 @@ class Validator
     private function used(string $field, string $value, array $params) :bool
     {   
         $valueExist = new Database();
+        if(count($params) > 1){
+            return $valueExist->exist($params[1], $value, $params[0]);
+        }
         return $valueExist->exist($field, $value, $params[0]);
     }
     
     /**
      * If value have to exist on the tabName (ex : admin = author)
-     * if field tabName != field form -> $params[1] === field tabName
+     * if field tabName != field form : 
+     *         $params[1] === field tabName
      *
      * @param  string $field
      * @param  string $value

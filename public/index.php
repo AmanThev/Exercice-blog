@@ -25,9 +25,11 @@ $router->get('/home', VIEWS . 'home');
 
 $router->get('/blog', VIEWS . 'blog');
 $router->get('/blog/:slug-:id', VIEWS . 'post', 'post');
+$router->post('/blog/:slug-:id', VIEWS . 'post');
 
 $router->get('/reviews', VIEWS . 'reviews');
 $router->get('/reviews/:slug-:id', VIEWS . 'film', 'film');
+$router->post('/reviews/:slug-:id', VIEWS . 'film', 'addCommentReview');
 
 $router->get('/forum', VIEWS . 'forum/index');
 $router->get('/forum/:slug-:id', VIEWS . 'forum/category');

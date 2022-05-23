@@ -106,7 +106,7 @@ class ExplodeUrl {
          */
         private function replaceApostrophe($slug)
         {
-        $slug = preg_replace("#[_]+#", '\'', $slug);
-        return $slug;
+            $slug = preg_replace("#[_]+#", '\'', $slug);
+            return $slug;
         }
 }
