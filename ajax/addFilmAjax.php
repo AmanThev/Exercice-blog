@@ -17,7 +17,9 @@ if($_SERVER['CONTENT_LENGTH'] >= $maxSize){
 
 $data = new Validator($_POST);
 $data->check('required', ['author', 'title', 'date', 'director', 'writer', 'cast', 'production', 'genre', 'synopsis', 'review']);
-$data->check('exist', 'author', 'admins', 'name');
+if($_POST['author']){
+	$data->check('exist', 'author', 'admins', 'name');
+}
 $data->check('lengthBetween', 'author', 2, 20);
 $data->check('used', 'title', 'films');
 $data->check('lengthMax', 'synopsis', 250);

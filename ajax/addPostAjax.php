@@ -18,7 +18,9 @@ $data->check('required', ['author', 'title']);
 $data->check('lengthBetween', 'author', 2, 20);
 $data->check('used', 'title', 'posts');
 $data->check('lengthMin', 'content', 20);
-$data->check('exist', 'author', 'admins', 'name');
+if($_POST['author']){
+	$data->check('exist', 'author', 'admins', 'name');
+}
 if(!empty($_FILES['picture']['tmp_name'])){
 	$data->check('extensionPicture', 'picture', $_FILES['picture']);
 }
