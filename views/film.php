@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 use App\URL\ExplodeUrl;
 use App\Manager\Connection;
@@ -6,6 +7,8 @@ use App\Manager\FilmDatabase;
 use App\Manager\CommentDatabase;
 use App\Manager\UserDatabase;
 use App\URL\CreateUrl;
+use App\Form\AddComment;
+use App\HTML\Form;
 
 $url            = new ExplodeUrl($_GET['url']);
 $id             = $url->getId();
@@ -26,12 +29,30 @@ $comments       = $comments->getCommentById('comments_film', $id);
 $totalComment   = new CommentDatabase;
 $totalComment   = $totalComment->totalComment('comments_film', $id);
 
-$userDatabase    = new UserDatabase;
+$userDatabase   = new UserDatabase;
+
+$commentForm    = new Form('film');
 
 if(strtolower($film->getUrlTitleCheck()) !== strtolower($slug)){
     $url = CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $id]);
     http_response_code(301);
     header('Location: ' . $url);
+}
+
+if(!empty($_POST)){
+    $data = new AddComment($_POST);
+    //if($member or admin is connnect){
+        //if($data->validateComment('admins' or 'members')->resultValidator())
+            //$data->createComment();
+    //}
+    if($data->validateComment()->validateRating()->resultValidator()){
+        $data->createCommentFilm($id);
+        $_SESSION["success"] = "Your comment has been added";
+        header('Location: ' . CreateUrl::url('reviews', ['slug' => $slug, 'id' => $id]));
+        exit();
+    }else{
+        $errors = $data->returnErrors();
+    }
 }
 
 $title = $slug;
@@ -144,48 +165,36 @@ $title = $slug;
 
 <section class="film write-comment">
     <h2>Write your Comment</h2>
-    <form action="reviewFilm.php?id=<?php //$film->id ?>" method="post" id="test1">
-        <label for="pseudo">Your pseudo :</label>
-        <input type="text" name="pseudo" id="pseudo" value="<?php
-            //if(isset($pseudo))
+    <form action="" method="post">
+        <?= $commentForm->inputText('pseudo', 'size', '20'); ?>
+            <?php if(!empty($errors)): ?>
+                <?= $data->arrayKeyExist('pseudo', $errors) ?>
+            <?php endif; ?>
+            <!-- //if(isset($pseudo))
             //{ echo $pseudo;
             //}elseif (is_connect())
             //{ echo ($_SESSION['connect']);
-            //} ?>" aria-describedby="pseudoInfo" placeholder="Write your pseudo">
-        <small class="form-info" class="form-text text-muted">Your pseudo must not exceed 20 characters</small>
-        <label for="comment">Your comment :</label>
-        <small class="form-info">If you want to write spoilers, please surround them with tags [Spoiler] and [/Spoiler]</small><br>
-        <textarea type="text" class="form-control"  name="comment" id="comment" rows="10"></textarea>
-        <h3>Your rating :</h3>
-        <div>
-            <input type="radio" name="ratingFilm" id="rating-film-0" value="0" checked>
-                <label for="rating-film-0" class="fas fa-trash"></label>
-        </div>
-        <div class="rating-film">
-            <input type="radio" name="ratingFilm" id="rating-film-5" value="5">
-                <label for="rating-film-5" class="fas fa-star"></label>
-            <input type="radio" name="ratingFilm" id="rating-film-4" value="4">
-                <label for="rating-film-4" class="fas fa-star"></label>
-            <input type="radio" name="ratingFilm" id="rating-film-3" value="3">
-                <label for="rating-film-3" class="fas fa-star"></label>
-            <input type="radio" name="ratingFilm" id="rating-film-2" value="2">
-                <label for="rating-film-2" class="fas fa-star"></label>
-            <input type="radio" name="ratingFilm" id="rating-film-1" value="1">
-                <label for="rating-film-1" class="fas fa-star"></label>
-        </div>
+            //} ?>" -->
+        <?= $commentForm->textArea('comment', '10', 'spoilers'); ?>
+            <?php if(!empty($errors)): ?>
+                <?= $data->arrayKeyExist('comment', $errors) ?>
+            <?php endif; ?>
+        <?= $commentForm->ratingRadioStar('rating-film', 5); ?>
         <div id="display-rating-film"> - </div>
-        <?php // if(!empty($errors)):?>
-            <?php //foreach ($errors as $error): ?>
-                <!-- <p class="p-3 mb-2 bg-danger text-white"><?php //$error ?></p> -->
-            <?php //endforeach; ?>
-        <?php //endif; ?>
-        <button type="submit" name="submit">Submit</button>
+        <?php if(!empty($errors)): ?>
+                <?= $data->arrayKeyExist('rating-film', $errors) ?>
+            <?php endif; ?>
+        <?php if(isset($_SESSION["success"])): ?>
+            <p class="success"><?= $_SESSION["success"] ?></p>
+            <?php unset($_SESSION["success"]); ?>
+        <?php endif; ?>
+        <?= $commentForm->button('Submit'); ?>
     </form>
 </section>
 
 <script src="<?= PUBLIC_PATH ?>/js/spoiler.js"></script>
 <script>
-        var inputStars = document.getElementsByName('ratingFilm');
+        var inputStars = document.getElementsByName('rating-film');
         var commentStar = document.getElementById('display-rating-film');
         
         var commentRateLoad = function(element){

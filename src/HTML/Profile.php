@@ -1,7 +1,6 @@
 <?php
 namespace App\HTML;
 
-
 use App\Manager\UserDatabase;
 
 class Profile

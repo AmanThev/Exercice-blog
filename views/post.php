@@ -9,6 +9,7 @@ use App\Manager\VoteDatabase;
 use App\Manager\UserDatabase;
 use App\URL\CreateUrl;
 use App\Form\AddComment;
+use App\HTML\Form;
 
 $url            = new ExplodeUrl($_GET['url']);
 $id             = $url->getId();
@@ -27,6 +28,8 @@ $post           = $post->getPostById($id);
 $voteUser       = new VoteDatabase();
 $voteUser       = $voteUser->voteUser('posts', $id, 2);
 
+$commentForm = new Form('post');
+
 if(strtolower($post->getUrlTitleCheck()) !== strtolower($slug)){
     $url = CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $id]);
     http_response_code(301);
@@ -36,12 +39,14 @@ if(strtolower($post->getUrlTitleCheck()) !== strtolower($slug)){
 if(!empty($_POST)){
     $data = new AddComment($_POST);
     //if($member or admin is connnect){
-        //if($data->validateComment('admin' or 'member')->resultValidator())
+        //if($data->validateComment('admins' or 'members')->resultValidator())
             //$data->createComment();
     //}
     if($data->validateComment()->resultValidator()){
-        $data->createComment($id);
+        $data->createCommentPost($id);
         $_SESSION["success"] = "Your comment has been added";
+        header('Location: ' . CreateUrl::url('blog', ['slug' => $slug, 'id' => $id]));
+        exit();
     }else{
         $errors = $data->returnErrors();
     }
@@ -51,7 +56,7 @@ $title = $slug;
 ?>
 
 <section class="post">
-	<h1><?= $post->getTitle() ?></h1>
+	<h2><?= $post->getTitle() ?></h2>
 	<p><?= $post->getContent() ?></p>
 	<p class="blog-meta">By <?= $post->getAuthor() ?>,
 		<span class="date-post">
@@ -69,38 +74,38 @@ $title = $slug;
                                     echo "is-disliked";
                                 }
                             } ?>">
-         <div class="vote-bar">
+        <div class="vote-bar">
             <div class="vote-progress" style="width:<?= ($post->getLike() + $post->getDislike()) == 0 ? 100 : round(100 * ($post->getLike() / ($post->getLike() + $post->getDislike()))); ?>%;"></div>
         </div>
         <div class="vote-btns">
             <form class="vote-form" action="vote.php?ref=posts&refId=<?= $id ?>&vote=1" method="POST">
-                  <div class="vote-form">
-                     <button type="submit" class="vote-btn vote-like"><i class="fas fa-thumbs-up"></i> <?= $post->getLike() ?></button>
-                 </div>
-               </form>
+                 <div class="vote-form">
+                    <button type="submit" class="vote-btn vote-like"><i class="fas fa-thumbs-up"></i> <?= $post->getLike() ?></button>
+                </div>
+            </form>
              <form class="vote-form" action="vote.php?ref=posts&refId=<?= $id ?>&vote=-1" method="POST">
-                   <div class="vote-form">
-                       <button type="submit" class="vote-btn vote-dislike"><i class="fas fa-thumbs-down"></i> <?= $post->getDislike() ?></button>
-                   </div>
-               </form>
+                <div class="vote-form">
+                    <button type="submit" class="vote-btn vote-dislike"><i class="fas fa-thumbs-down"></i> <?= $post->getDislike() ?></button>
+                </div>
+            </form>
         </div>
     </div>
 </section>
 
 <section class="post comment-post">
-    <h1>Comment Users</h1>
+    <h2>Comment Users</h2>
     <?php if($comments != false): ?>
         <p class="total-comments"><?php echo $totalComment > 1 ? ' '.$totalComment.' Comments' : ' '.$totalComment.' Comment' ?></p>
         <?php foreach ($comments as $comment): ?>
             <div class="comment-user">
                 <span class="photo-profile <?php if($userDatabase->statutUser($comment->getPseudo(), 'members') === 1){ 
-                                                echo 'member'; 
-                                            }elseif($userDatabase->statutUser($comment->getPseudo(), 'admins') === 1){ 
-                                                echo 'admin';
-                                            } ?>">
+                                    echo 'member'; 
+                                }elseif($userDatabase->statutUser($comment->getPseudo(), 'admins') === 1){ 
+                                    echo 'admin';
+                                } ?>">
                     <img src="<?= PUBLIC_PATH ?>/img/photoProfile/default.jpg">
                 </span>
-                <h2><?= $comment->getPseudo() ?>:
+                <h3><?= $comment->getPseudo() ?> :
                     <span class="date-comment">
                         <?php if($comment->getEdit() != NULL): ?>
                                 <?= $comment->getDate()->format('d F Y') ?> (Edited) 
@@ -108,7 +113,7 @@ $title = $slug;
                                 <?= $comment->getDate()->format('d F Y') ?>
                         <?php endif; ?>
                     </span>
-                </h2>
+                </h3>
                 <p class="comment-content"><?= $comment->getComment() ?></p>
                 <span>
                     <?php //if (is_connect() && $_SESSION['connect'] == $comment->pseudo): ?> 
@@ -130,22 +135,23 @@ $title = $slug;
                 //} ?//>"
             
             À rajouter dans value pseudo
-            -->
+-->
 
 <section class="post write-comment">
-    <h1>Write your Comment</h1>
-	<form action="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>" method="post">
-        <label for="pseudo">Your pseudo :</label>
-        <input type="text" name="pseudo" id="pseudo" value="" aria-describedby="pseudoInfo" placeholder="Write your pseudo">
-        <small>Your pseudo must not exceed 20 characters</small>
+    <h2>Write your Comment</h2>
+    <form action="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>" method="post">
+        <?= $commentForm->inputText('pseudo', 'size', '20'); ?>
             <?php if(!empty($errors)): ?>
                 <?= $data->arrayKeyExist('pseudo', $errors) ?>
             <?php endif; ?>
-        <label for="comment">Your comment :</label>
-        <textarea type="text" name="comment" id="comment" rows="10"></textarea>
+        <?= $commentForm->textArea('comment', '10'); ?>
             <?php if(!empty($errors)): ?>
                 <?= $data->arrayKeyExist('comment', $errors) ?>
             <?php endif; ?>
-        <button type="submit" name="submit">Submit</button>
+            <?php if(isset($_SESSION["success"])): ?>
+                <p class="success"><?= $_SESSION["success"] ?></p>
+                <?php unset($_SESSION["success"]); ?>
+            <?php endif; ?>
+        <?= $commentForm->button('Submit'); ?>
     </form>
 </section>
