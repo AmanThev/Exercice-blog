@@ -5,6 +5,7 @@ use App\Helpers\Text;
 use App\URL\CreateUrl;
 use DateTime;
 
+#[\AllowDynamicProperties]
 class Film
 {    
     /**
@@ -81,16 +82,6 @@ class Film
     public function setId(int $id): void
     {
         $this->id = $id;
-    }
-
-    public function getIdAdmin(): int
-    {
-        return $this->admin_id;
-    }
-
-    public function setIdAdmin(int $idAdmin): void
-    {
-        $this->admin_id = $idAdmin;
     }
 
     public function getTitle(): string

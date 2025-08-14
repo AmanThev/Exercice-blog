@@ -32,7 +32,7 @@ $titlePost      = new CommentDatabase();
 
 <?php if(isset($_GET['table']) && $_GET['table'] == 'reviews'): ?>
     
-    <table style="width:86%">
+    <table style="width:75%">
         <tr>
             <th style="width:10%">Pseudo</th>
             <th style="width:50%">Comment</th>

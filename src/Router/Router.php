@@ -2,6 +2,7 @@
 
 namespace App\Router;
 
+#[\AllowDynamicProperties]
 class Router {
     
     /**

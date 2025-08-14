@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 use App\URL\ExplodeUrl;
 use App\Manager\Connection;
@@ -9,6 +8,8 @@ use App\Manager\UserDatabase;
 use App\URL\CreateUrl;
 use App\Form\AddComment;
 use App\HTML\Form;
+
+
 
 $url            = new ExplodeUrl($_GET['url']);
 $id             = $url->getId();
@@ -31,7 +32,7 @@ $totalComment   = $totalComment->totalComment('comments_film', $id);
 
 $userDatabase   = new UserDatabase;
 
-$commentForm    = new Form('film');
+$commentForm    = new Form($_POST);
 
 if(strtolower($film->getUrlTitleCheck()) !== strtolower($slug)){
     $url = CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $id]);
@@ -60,7 +61,7 @@ $title = $slug;
 
 <section class="film header-film">
     <img src="<?= PUBLIC_PATH ?>/img/posterFilm/<?= $film->getPoster() ?>" alt="$film->title">
-    <h1><?= $film->getTitle() ?></h1>
+    <h2><?= $film->getTitle() ?></h2>
     <p>Directed by <?= $film->getDirector() ?></p>
 </section>
 
@@ -101,7 +102,18 @@ $title = $slug;
             </tr>
             <tr>
                 <th scope="row">Score<sup>*</sup></th>
-                <td><!--<span class="averageScore">☆☆☆☆☆</span>--><?= $totalRating ?><span id="totalVote"><?= ' ('.$totalVote.' votes)' ?></span></td>
+                <td>
+                    <span class="averageScore">   
+                        <i class="fas fa-star" style="color:<?= $totalRating >= 1 ? 'yellow' : 'grey'; ?>;"></i>
+                        <i class="fas fa-star" style="color:<?= $totalRating >= 2 ? 'yellow' : 'grey'; ?>;"></i>
+                        <i class="fas fa-star" style="color:<?= $totalRating >= 3 ? 'yellow' : 'grey'; ?>;"></i>
+                        <i class="fas fa-star" style="color:<?= $totalRating >= 4 ? 'yellow' : 'grey'; ?>;"></i>
+                        <i class="fas fa-star" style="color:<?= $totalRating >= 5 ? 'yellow' : 'grey'; ?>;"></i>
+                    </span>
+
+                    <?= $totalRating ?>
+                    <span id="totalVote"><?= ' ('.$totalVote.' votes)' ?></span>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -118,7 +130,7 @@ $title = $slug;
 
 <section class="film comment-film">
     <h2>Review User</h2>
-    <?php if($comments != false): ?>
+    <?php if($comments): ?>
         <p class="total-comments"><?php echo $totalComment > 1 ? ' '.$totalComment.' Comments' : ' '.$totalComment.' Comment' ?></p>
         <?php foreach ($comments as $comment): ?>
             <div class="comment-user">
@@ -166,7 +178,7 @@ $title = $slug;
 <section class="film write-comment">
     <h2>Write your Comment</h2>
     <form action="" method="post">
-        <?= $commentForm->inputText('pseudo', 'size', '20'); ?>
+        <?= $commentForm->inputText('pseudo', 'Your name', 'size', '20'); ?>
             <?php if(!empty($errors)): ?>
                 <?= $data->arrayKeyExist('pseudo', $errors) ?>
             <?php endif; ?>
@@ -175,7 +187,7 @@ $title = $slug;
             //}elseif (is_connect())
             //{ echo ($_SESSION['connect']);
             //} ?>" -->
-        <?= $commentForm->textArea('comment', '10', 'spoilers'); ?>
+        <?= $commentForm->textArea('comment', 'Your comment', 10, 'spoilers'); ?>
             <?php if(!empty($errors)): ?>
                 <?= $data->arrayKeyExist('comment', $errors) ?>
             <?php endif; ?>
@@ -236,7 +248,7 @@ $title = $slug;
                     commentStar.className =  'rate-0';
             }
         }
-                     
+
         for(var i = 0; i < inputStars.length; i++){
             commentRateLoad(inputStars[i]);
             commentRateClick(inputStars[i]);

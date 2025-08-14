@@ -15,7 +15,11 @@ class Admin
     /**
      * @var string varchar(250)
      */
-    private $email;    
+    private $email;   
+    /**
+     * @var string 
+     */
+    private $password; 
     /**
      * @var string
      */
@@ -24,6 +28,15 @@ class Admin
      * @var string varchar (5)
      */
     private $position;
+    /**
+     * @var varchar
+     */
+    private $token;
+
+    /**
+     * @var date
+     */
+    private $reset_at; 
 
     public function getId(): int
     {
@@ -40,6 +53,16 @@ class Admin
         return $this->email;
     }
 
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = password_hash($password, PASSWORD_ARGON2ID);
+    }
+
     public function getDescription(): string
     {
         return htmlspecialchars($this->description);
@@ -48,6 +71,16 @@ class Admin
     public function getPosition(): string
     {
         return htmlspecialchars($this->position);
+    }
+
+    public function getToken(): varchar
+    {
+        return $this->token;
+    }
+
+    public function getDate()
+    {
+        return new DateTime($this->reset_at);
     }
 
 }

@@ -32,9 +32,7 @@ class ForumDatabase extends Database
 
     public function getCategories(): array
     {
-        $stmt = $this->connect()->query($this->queryCat);
-        $cat = $stmt->fetchAll(PDO::FETCH_CLASS, Category::class);
-        return $cat;
+        return $this->getAllData($this->queryCat, "Category", "Forum");
     }
     
     public function getCategory(int $id, string $name): Category
@@ -51,34 +49,17 @@ class ForumDatabase extends Database
     
     public function getCategoryName(string $name): Category
     {
-        $stmt = $this->connect()->prepare("$this->queryCat WHERE name=:name");
-        $stmt->execute(['name' => $name]);
-        if($stmt->rowCount() == 1){
-            $stmt->setFetchMode(PDO::FETCH_CLASS,Category::class);
-            $cat = $stmt->fetch();
-            return $cat;
-        }
-        throw new NotFoundException('Category', $name);
+        return $this->getDataByField($this->queryCat, 'name', $name, 'Category', 'Forum');
     }
 
     public function getCategoryById(int $id): Category
     {
-        $stmt = $this->connect()->prepare("$this->queryCat WHERE id=:id");
-        $stmt->execute(['id' => $id]);
-        if($stmt->rowCount() == 1){
-            $stmt->setFetchMode(PDO::FETCH_CLASS,Category::class);
-            $cat = $stmt->fetch();
-            return $cat;
-        }
-        throw new NotFoundException('Category', $id);
+        return $this->getDataByField($this->queryCat, 'id', $id, "Category", "Forum");
     }
 
     public function getSubCategories(int $idCat): array
     {
-        $stmt = $this->connect()->prepare("$this->querySubCat WHERE id_categories=:idCat");
-        $stmt->execute(['idCat' => $idCat]);
-        $subCat = $stmt->fetchAll(PDO::FETCH_CLASS, SubCategory::class);
-        return $subCat;
+        return $this->getAllDataByField($this->querySubCat, 'id_categories', $idCat, 'SubCategory', 'Forum');
     }
 
     public function getSubCategory(int $id, string $name): SubCategory
@@ -95,14 +76,7 @@ class ForumDatabase extends Database
 
     public function getSubCategoryName(string $name): SubCategory
     {
-        $stmt = $this->connect()->prepare("$this->querySubCat WHERE name=:name");
-        $stmt->execute(['name' => $name]);
-        if($stmt->rowCount() == 1){
-            $stmt->setFetchMode(PDO::FETCH_CLASS,SubCategory::class);
-            $subCat = $stmt->fetch();
-            return $subCat;
-        }
-        throw new NotFoundException('SubCategory', $name);
+        return $this->getDataByField($this->querySubCat, 'name', $name, 'SubCategory', 'Forum');
     }
     
     /**

@@ -5,6 +5,7 @@ use App\Helpers\Text;
 use App\URL\CreateUrl;
 use DateTime;
 
+#[\AllowDynamicProperties]
 class Post
 {    
     /**

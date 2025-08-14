@@ -7,7 +7,7 @@ use App\Manager\UserDatabase;
 use App\Model\Forum\Topic;
 use DateTime;
 
-class AddTopic extends AddData
+class AddTopic extends FormHandler
 {        
     private $category;
     private $subCat;    
@@ -59,7 +59,7 @@ class AddTopic extends AddData
     {   
         $catName    = $this->category->getName();
         $subCatName = $this->subCat->getUrlName();
-        $topic      = $this->topic->getTitle().'-'.$this->topic->getId();
+        $topic      = $this->topic->getUrlTitle().'-'.$this->topic->getId();
 
         return $catName.'/'.$subCatName.'/'.$topic;
     }

@@ -43,7 +43,6 @@ $bestRating         = $bestRating->bestRating();
 
 $bestRatFilm        = new FilmDatabase();
 
-
 $lastComFilm        = new CommentDatabase();
 $lastComFilm        = $lastComFilm->getLastComment('comments_film');
 

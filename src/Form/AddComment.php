@@ -7,7 +7,7 @@ use App\Model\Comment;
 use App\URL\CreateUrl;
 use DateTime;
 
-class AddComment extends AddData
+class AddComment extends FormHandler
 {    
     /**
      * @param  string|NULL $user === admins || members
@@ -71,11 +71,11 @@ class AddComment extends AddData
     public function createCommentFilm(int $idFilm): void
     {
         $arrayComment = [
-            'indexId'   => $idFilm,
-            'pseudo'    => $this->data['pseudo'],
-            'comment'   => $this->data['comment'],
-            'date'      => date('Y-m-d'),
-            'ratingFilm'    =>$this->data['rating-film']
+            'indexId'       => $idFilm,
+            'pseudo'        => $this->data['pseudo'],
+            'comment'       => $this->data['comment'],
+            'date'          => date('Y-m-d'),
+            'ratingFilm'    => $this->data['rating-film']
         ];
 
         $comment = new Comment();

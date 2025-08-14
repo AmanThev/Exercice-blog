@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require '../vendor/autoload.php';
 
@@ -40,12 +41,19 @@ $router->get('/forum/newTopic', VIEWS . 'forum/addTopic');
 $router->post('/forum/newTopic', VIEWS . 'forum/addTopic');
 $router->get('/forum/topic/:id/closeTopic', VIEWS . 'forum/closeTopic');
 
-$router->get('/quiz', VIEWS . 'quiz');
+$router->get('/search', VIEWS . 'search');
+$router->post('/search', VIEWS . 'search');
 
 $router->get('/admin', VIEWS . 'presentationAdmin');
 
 $router->get('/authentication/login', VIEWS . 'user/login');
+$router->post('/authentication/login', VIEWS . 'user/login');
 $router->get('/authentication/register', VIEWS . 'user/register');
+$router->post('/authentication/register', VIEWS . 'user/register');
+$router->get('/authentication/success', VIEWS . 'user/success');
+$router->get('/authentication/logout', VIEWS . 'user/logout');
+$router->get('/authentication/forget', VIEWS . 'user/forget');
+$router->post('/authentication/forget', VIEWS . 'user/forget');
 
 $router->get('/user/:slug', VIEWS . 'user/profileMember');
 

@@ -7,6 +7,7 @@ use App\SQL\CountSql;
 use App\SQL\Paginate;
 use App\Manager\Exception\NotFoundException;
 
+#[\AllowDynamicProperties]
 class FilmDatabase extends Database
 {
 
@@ -24,21 +25,16 @@ class FilmDatabase extends Database
         $pagination = new Paginate($sql);
         $pagination = $pagination->getPagination();
         $sql .= "ORDER BY date DESC $pagination";
-        $stmt = $this->connect()->query($sql);
-        $films = $stmt->fetchAll(PDO::FETCH_CLASS, Film::class);
-        
-        return $films;
+        return $this->getAllData($sql, "Film");
     }
 
     public function getAllFilms(): array
     {
-        $stmt = $this->connect()->query("
-            SELECT * FROM admins a 
+        $sql = "SELECT * FROM admins a 
             RIGHT JOIN films
             ON a.id = admin_id
-            ORDER BY date DESC");
-        $films = $stmt->fetchAll(PDO::FETCH_CLASS, Film::class);
-        return $films;
+            ORDER BY date DESC";
+        return $this->getAllData($sql, "Film");
     }
 
     public function getFilmsHome(): array
@@ -54,33 +50,23 @@ class FilmDatabase extends Database
 
     public function getLastFilm(): Film
     {
-        $stmt = $this->connect()->query("$this->query ORDER BY id DESC Limit 1");
-        $stmt->setFetchMode(PDO::FETCH_CLASS,Film::class);
-        $lastFilm = $stmt->fetch();
-        return $lastFilm;
+        $sql = $this->query;
+        $sql .= " ORDER BY id DESC Limit 1";
+        return $this->getData($sql, "Film");
     }
 
     public function getLastFilms(): array
     {
-        $stmt = $this->connect()->query("$this->query ORDER BY id DESC Limit 5");
-        $lastFilms = $stmt->fetchAll(PDO::FETCH_CLASS, Film::class);
-        return $lastFilms;
+        $sql = $this->query;
+        $sql .= " ORDER BY id DESC Limit 5";
+        return $this->getAllData($sql,"Film");
     }
 
     public function getFilmById(int $id): Film
     {
-        $stmt = $this->connect()->prepare("
-            $this->query f
-            LEFT JOIN admins a
-            ON admin_id = a.id
-            WHERE f.id=:id");
-        $stmt->execute(['id' => $id]);
-        if($stmt->rowCount() == 1){
-            $stmt->setFetchMode(PDO::FETCH_CLASS,Film::class);
-            $film = $stmt->fetch();
-            return $film;
-        }
-        throw new NotFoundException('Film', $id);
+        $sql = $this->query;
+        $sql .= " f LEFT JOIN admins a ON admin_id = a.id";
+        return $this->getDataByField($sql, 'f.id', $id, "Film");
     }
     
     public function getFilmByCommentId(int $idFilm)
@@ -98,14 +84,8 @@ class FilmDatabase extends Database
 
     public function getFilmByAdminId(int $idAdmin)
     {
-        $stmt = $this->connect()->prepare("
-            SELECT * FROM admins a
-            INNER JOIN films
-            ON admin_id = a.id
-            WHERE a.id=:idAdmin");
-        $stmt->execute(['idAdmin' => $idAdmin]);
-        $films = $stmt->fetchAll(PDO::FETCH_CLASS, Film::class);
-        return $films;
+        $sql = "SELECT * FROM admins a INNER JOIN films ON admin_id = a.id";
+        return $this->getAllDataByField($sql, 'a.id', $idAdmin, "Film");
     }
 
     public function filmPaginationNumber(): ?int
@@ -177,5 +157,15 @@ class FilmDatabase extends Database
             throw new \Exception("Error, impossible to add the film");
         }
         $film->setId($this->pdo->lastInsertId());
+    }
+
+    public function findFilm(string $keyword): array
+    {
+        $sql = $this->query;
+        $sql .= " WHERE MATCH(title, director, production, writer, cast, synopsis, genre, review)
+                AGAINST (:keyword IN NATURAL LANGUAGE MODE)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute(['keyword' => $keyword]);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, FILM::class);
     }
 }

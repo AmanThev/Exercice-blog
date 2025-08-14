@@ -7,7 +7,7 @@ $title = "New Post";
 
 <h3 class="title-page">New Post</h3>
 
-<form class="new" action="<?= CreateUrl::url('ajax/addPostAjax'); ?>" method="post" enctype="multipart/form-data">
+<form class="dashboard-form" action="<?= CreateUrl::url('ajax/addPostAjax'); ?>" method="post" enctype="multipart/form-data">
     <div class="input inputAuthor">
         <label for="author">Your Name</label>
         <input type="text" name="author" id="author" value="" aria-describedby="authorInfo" placeholder="Write your name">
@@ -30,7 +30,9 @@ $title = "New Post";
         <label for="picture">Upload</label>
         <input type="hidden" name="MAX_FILE_SIZE" value="250000">
         <input type="file" name="picture" id="picture">
-        <button type="button" onclick="document.getElementById('picture').value=''" class="delete-file deleteImagePost"><i class="fas fa-times-circle"></i></button>
+        <button type="button" onclick="document.getElementById('picture').value=''" class="delete-file deleteImage">
+            <i class="fas fa-times-circle"></i>
+        </button>
         <small>Choose a picture to illustrate your post</small>
         <p id="picture-error"></p>
     </div>
@@ -161,8 +163,8 @@ $title = "New Post";
                 }, 2800);
                 } 
             }
-         })
+        })
         return false;
     });
- });
+});
 </script>

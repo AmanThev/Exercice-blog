@@ -7,7 +7,7 @@ use App\Model\Forum\Message;
 use App\URL\CreateUrl;
 use DateTime;
 
-class AddMessage extends AddData
+class AddMessage extends FormHandler
 {
     private $message;
 

@@ -4,6 +4,7 @@ use App\Manager\PostDatabase;
 use App\Manager\UserDatabase;
 use App\SQL\Paginate;
 use App\URL\CreateUrl;
+use App\HTML\Form;
 
 $title      = 'Blog';
 
@@ -16,6 +17,8 @@ $pagination = new PostDatabase();
 
 $posts      = new PostDatabase();
 $posts      = $posts->getPostsPublic();
+
+$searchForm = new Form($_POST);
 
 ?>
 
@@ -38,9 +41,8 @@ $posts      = $posts->getPostsPublic();
 <div class="bottom-blog">
     <section class="all-post">
         <h2 id="title-for-all-post">All posts</h2>
-        <form class="search-post-box">
-            <input class="search-post-text" type="text" name="" placeholder="search">
-            <a href="#" class="search-post-btn"><i class="fas fa-search"></i></a>
+        <form class="search-box" method="post" action="<?= CreateUrl::url('search') ?>">
+            <?= $searchForm->searchBox('search', 'post'); ?>
         </form>
         <div class="deck-all-post">
             <?php foreach($posts as $post): ?>

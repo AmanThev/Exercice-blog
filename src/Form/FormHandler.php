@@ -6,14 +6,14 @@ use App\Manager\Connection;
 use DateTime;
 
 
-class AddData
+class FormHandler
 {
-    protected $data;
+    protected array $data;
     protected $errors;    
     /**
      * @var bool
      */
-    protected $resultValidator;
+    protected bool $resultValidator;
     
     public function __construct(array $data)
     {
@@ -25,12 +25,12 @@ class AddData
         return $this->errors;
     }
 
-    public function resultValidator()
+    public function resultValidator(): bool
     {
         return $this->resultValidator;
     }
 
-    public function arrayKeyExist($key, array $valueError)
+    public function arrayKeyExist($key, array $valueError): void
     {
         if(array_key_exists($key, $valueError)){
             foreach($valueError[$key] as $error){
@@ -39,7 +39,12 @@ class AddData
         }
     }
 
-    Public function create(array $data, $tabName): int
+    public function getField(string $key, mixed $default = ''): mixed
+    {
+        return $this->data[$key] ?? $default;
+    }
+
+    public function create(array $data, $tabName): int
     {
         foreach($data as $key => $value){
             $keyFields[] = "$key = :$key";

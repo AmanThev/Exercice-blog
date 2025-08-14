@@ -9,10 +9,8 @@ class CommentDatabase extends Database
 {
     public function getCommentById(string $tabName, int $id): array
     {
-        $stmt = $this->connect()->prepare("SELECT * FROM $tabName WHERE index_id=:id");
-        $stmt->execute(['id' => $id]);
-        $comment = $stmt->fetchAll(PDO::FETCH_CLASS, Comment::class);
-        return $comment;
+        $sql = "SElECT * FROM $tabName";
+        return $this->getAllDataByField($sql, 'index_id', $id, "Comment");
     }
 
     public function totalComment(string $tabNameComment, int $id): int
@@ -28,17 +26,14 @@ class CommentDatabase extends Database
 
     public function getComments(string $tabName): array
     {
-        $stmt = $this->connect()->query("SELECT * FROM $tabName");
-        $comment = $stmt->fetchAll(PDO::FETCH_CLASS, Comment::class);
-        return $comment;
+        $sql = "SELECT * FROM $tabName";
+        return $this->getAllData($sql, "Comment");
     }
 
     public function getLastComment(string $tabName): Comment
     {
-        $stmt = $this->connect()->query("SELECT * FROM $tabName ORDER BY comment_date DESC Limit 1");
-        $stmt->setFetchMode(PDO::FETCH_CLASS,Comment::class);
-        $lastComment = $stmt->fetch();
-        return $lastComment;
+        $sql = "SELECT * FROM $tabName ORDER BY comment_date DESC Limit 1";
+        return $this->getData($sql, "Comment");
     }
 
     public function mostComments(string $table): array
@@ -73,7 +68,6 @@ class CommentDatabase extends Database
      */
     public function bestRating(): array
     {
-        //
         $stmt = $this->connect()->query("SELECT index_id, round(SUM(rating_film)/ COUNT(rating_film), 2) AS rating FROM comments_film GROUP BY index_id");
         $bestRating = $stmt->fetchAll(PDO::FETCH_ASSOC);
         

@@ -29,7 +29,7 @@ $status = $_GET['status'] ?? 'all';
     <a class="create-button" href="<?= CreateUrl::url('dashboard/posts/newPost'); ?>">Create New Post</a>
 </div>
     
-<table class="tritable" style="width:86%">
+<table class="tritable" style="width:85%">
     <tr>
         <th style="width:40%">
             <div>

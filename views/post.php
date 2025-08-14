@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 use App\URL\ExplodeUrl;
 use App\Manager\Connection;
@@ -28,7 +27,7 @@ $post           = $post->getPostById($id);
 $voteUser       = new VoteDatabase();
 $voteUser       = $voteUser->voteUser('posts', $id, 2);
 
-$commentForm = new Form('post');
+$commentForm = new Form($_POST);
 
 if(strtolower($post->getUrlTitleCheck()) !== strtolower($slug)){
     $url = CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $id]);
@@ -79,11 +78,11 @@ $title = $slug;
         </div>
         <div class="vote-btns">
             <form class="vote-form" action="vote.php?ref=posts&refId=<?= $id ?>&vote=1" method="POST">
-                 <div class="vote-form">
+                <div class="vote-form">
                     <button type="submit" class="vote-btn vote-like"><i class="fas fa-thumbs-up"></i> <?= $post->getLike() ?></button>
                 </div>
             </form>
-             <form class="vote-form" action="vote.php?ref=posts&refId=<?= $id ?>&vote=-1" method="POST">
+            <form class="vote-form" action="vote.php?ref=posts&refId=<?= $id ?>&vote=-1" method="POST">
                 <div class="vote-form">
                     <button type="submit" class="vote-btn vote-dislike"><i class="fas fa-thumbs-down"></i> <?= $post->getDislike() ?></button>
                 </div>
@@ -140,11 +139,11 @@ $title = $slug;
 <section class="post write-comment">
     <h2>Write your Comment</h2>
     <form action="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>" method="post">
-        <?= $commentForm->inputText('pseudo', 'size', '20'); ?>
+        <?= $commentForm->inputText('pseudo', 'Your name', 'size', '20'); ?>
             <?php if(!empty($errors)): ?>
                 <?= $data->arrayKeyExist('pseudo', $errors) ?>
             <?php endif; ?>
-        <?= $commentForm->textArea('comment', '10'); ?>
+        <?= $commentForm->textArea('comment', 'Your comment', '10'); ?>
             <?php if(!empty($errors)): ?>
                 <?= $data->arrayKeyExist('comment', $errors) ?>
             <?php endif; ?>

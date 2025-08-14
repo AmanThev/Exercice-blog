@@ -55,8 +55,3 @@ if($data->validateForm()){
 }
 
 echo json_encode($result);
-
-
-
-
-

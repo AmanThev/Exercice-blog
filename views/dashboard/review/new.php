@@ -6,7 +6,7 @@ $title = "New Review";
 
 <h3 class="title-page">New Review</h3>
 
-<form class="new" action="<?= CreateUrl::url('ajax/addFilmAjax'); ?>" method="post" enctype="multipart/form-data">
+<form class="dashboard-form" action="<?= CreateUrl::url('ajax/addFilmAjax'); ?>" method="post" enctype="multipart/form-data">
     <div class="input">
         <label for="author">Your Name</label>
         <input type="text" name="author" id="author" value="" aria-describedby="authorInfo" placeholder="Write your name">
@@ -75,7 +75,7 @@ $title = "New Review";
         <label for="synopsis">Synopsis</label>
         <textarea type="text" name="synopsis" id="synopsis" rows="20"></textarea>
     </div>
-
+    
     <h4>Your opinion</h4>
 
     <div class="textarea">
@@ -126,9 +126,9 @@ $title = "New Review";
         if(file){
             var fileReader = new FileReader();
 
-            previewText.style.display   = "none";
-            previewImage.style.display  = "block";
-            buttonDeleteFile.style.display= "inline";
+            previewText.style.display       = "none";
+            previewImage.style.display      = "block";
+            buttonDeleteFile.style.display  = "inline";
 
             fileReader.addEventListener("load", function(){
                 previewImage.setAttribute("src", this.result);
@@ -137,15 +137,15 @@ $title = "New Review";
         }else{
             previewText.style.display   = null;
             previewImage.style.display  = null;
-            button.style.display= null;
+            button.style.display        = null;
         }
     })
 
     buttonDeleteFile.addEventListener("click", function(){
-        inputPoster.value=''; 
-        previewImage.style.display = null; 
-        previewText.style.display = null;
-        buttonDeleteFile.style.display= "none";
+        inputPoster.value               =''; 
+        previewImage.style.display      = null; 
+        previewText.style.display       = null;
+        buttonDeleteFile.style.display  = "none";
     })
     
     var slider  = document.getElementById("score");
@@ -177,6 +177,8 @@ $title = "New Review";
 
         var data        = new FormData(form);
         var httpRequest = new XMLHttpRequest();
+
+        document.querySelectorAll(".error").forEach(element => element.remove());
         
         button.className = 'submit';
         fadeOut(button.firstChild, replaceBySpinner);
@@ -184,7 +186,7 @@ $title = "New Review";
         var inputs = this.querySelectorAll("input");
         for(var i = 0; i < inputs.length; i++){
             if (!inputs[i].value){
-                error = "Please please fill in all fields";
+                error = "Please please fill all fields";
                 setTimeout(function() {
                     message.innerHTML = error;
                     message.className = 'error';
@@ -275,17 +277,17 @@ $title = "New Review";
 
         function createElementError(nameField, errorField){
             errorField.forEach(function(value){
-                var errorElement = document.createElement('p');
+                let errorElement = document.createElement('p');
                 errorElement.textContent = value;
                 errorElement.className = "error";
-                var idField = document.getElementById(nameField).parentElement;
+                let idField = document.getElementById(nameField).parentElement;
                 idField.appendChild(errorElement);
             })
         }
                 
         httpRequest.onreadystatechange = function(){
             if(httpRequest.readyState === 4 && httpRequest.status === 200){
-                var dataResult = JSON.parse(httpRequest.responseText);
+                let dataResult = JSON.parse(httpRequest.responseText);
                 if(dataResult.status === 'error'){
                     displayError(dataResult);
                 }else{

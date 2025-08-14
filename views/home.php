@@ -2,6 +2,7 @@
 use App\Manager\PostDatabase;
 use App\Manager\FilmDatabase;
 use App\URL\CreateUrl;
+use App\HTML\Form;
 
 $title  = 'HomePage'; 
 
@@ -13,34 +14,36 @@ $new    = $new->getLastPost();
 
 $posts  = new PostDatabase();
 $posts  = $posts->getPostsHome();
+
+$searchForm = new Form($_POST);
 ?> 
 
 <section>
 <div class="spotlight">
-  <img src="<?= PUBLIC_PATH ?>/img/postPicture/<?= $new->getPicture() ?>" class="spotlight-img" alt="...">
-  <div class="spotlight-img-overlay">
-    <h1 class="spotlight-title"><?= $new->getTitle() ?></h1>
-    <p class="spotlight-text"><?= $new->getExcerptContent() ?></p>
-    <p><a href="<?= CreateUrl::url('blog', ['slug' => $new->getUrlTitle(), 'id' => $new->getId()]); ?>" class="spotlight-read">Read more</a></p>
-    <p class="spotlight-text"><?= $new->getDate()->format('d F Y') ?></p>
-  </div>
+    <img src="<?= PUBLIC_PATH ?>/img/postPicture/<?= $new->getPicture() ?>" class="spotlight-img" alt="...">
+    <div class="spotlight-img-overlay">
+        <h1 class="spotlight-title"><?= $new->getTitle() ?></h1>
+        <p class="spotlight-text"><?= $new->getExcerptContent() ?></p>
+        <p><a href="<?= CreateUrl::url('blog', ['slug' => $new->getUrlTitle(), 'id' => $new->getId()]); ?>" class="spotlight-read">Read more</a></p>
+        <p class="spotlight-text"><?= $new->getDate()->format('d F Y') ?></p>
+    </div>
 </div>
 
 <div class="latest-card">
 <h1>Latest Posts</h1>
     <div class="latest-deck">
-    <?php foreach($posts as $post): ?>
-        <div class="latest">
-            <img src="<?= PUBLIC_PATH ?>/img/postPicture/<?= $post->getPicture() ?>" class="latest-img" alt="...">
-            <div class="latest-body">
-                <h5 class="latest-title"><?= $post->getTitle() ?></h5>
-                <p class="card-text"><?= $post->getExcerptContent() ?></p>
-                <p><a href="<?= CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $post->getId()]); ?>" class="latest-read posts">Read more</a></p>
+        <?php foreach($posts as $post): ?>
+            <div class="latest">
+                <img src="<?= PUBLIC_PATH ?>/img/postPicture/<?= $post->getPicture() ?>" class="latest-img" alt="...">
+                <div class="latest-body">
+                    <h5 class="latest-title"><?= $post->getTitle() ?></h5>
+                    <p class="card-text"><?= $post->getExcerptContent() ?></p>
+                    <p><a href="<?= CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $post->getId()]); ?>" class="latest-read posts">Read more</a></p>
+                </div>
+                <div class="latest-footer">
+                    <small class="text-muted"><?= $post->getDate()->format('d F Y') ?></small>
+                </div>
             </div>
-            <div class="latest-footer">
-                <small class="text-muted"><?= $post->getDate()->format('d F Y') ?></small>
-            </div>
-        </div>
         <?php endforeach; ?>
     </div>
 </div>
@@ -48,25 +51,24 @@ $posts  = $posts->getPostsHome();
 <div class="latest-card">
 <h1>Latest Reviews</h1>
     <div class="latest-deck">
-    <?php foreach($films as $film): ?>
-        <div class="latest">
-            <img src="<?= PUBLIC_PATH ?>/img/posterFilm/<?= $film->getPoster() ?>" class="latest-reviews-img" alt="...">
-            <div class="latest-body">
-                <h5 class="latest-title"><?= $film->getTitle() ?></h5>
-                <p class="card-text"><?= $film->getExcerptContent() ?></p>
-                <p><a href="<?= CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $film->getId()]); ?>" class="latest-read reviews">Read more</a></p>
+        <?php foreach($films as $film): ?>
+            <div class="latest">
+                <img src="<?= PUBLIC_PATH ?>/img/posterFilm/<?= $film->getPoster() ?>" class="latest-reviews-img" alt="...">
+                <div class="latest-body">
+                    <h5 class="latest-title"><?= $film->getTitle() ?></h5>
+                    <p class="card-text"><?= $film->getExcerptContent() ?></p>
+                    <p><a href="<?= CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $film->getId()]); ?>" class="latest-read reviews">Read more</a></p>
+                </div>
             </div>
-        </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
     </div>
 </div>
 </section>
 
 <aside>
 <div class="search-home">
-    <form class="search-home-box" method="post" action="...">
-        <input class="search-home-text" type = "search" name="search" placeholder="Search">
-        <button class="search-home-btn" name="submit"><i class="fas fa-search"></i></button>
+    <form class="search-box" method="post" action="<?= CreateUrl::url('search') ?>">
+        <?= $searchForm->searchBox('search', 'all'); ?>
     </form>
 </div>
 <div class="poll">
@@ -89,8 +91,8 @@ $posts  = $posts->getPostsHome();
             <button type="submit">Submit</button>
         </div>
     </form>
- </div>
- <div>
+</div>
+<div>
     <h1>Fil Twitter</h1>
 </div>
 </aside>

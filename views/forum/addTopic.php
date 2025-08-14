@@ -75,7 +75,7 @@ if(!empty($_POST)){
                 <a href="<?= CreateUrl::url('forum/'. $urlSubCat) ?>">
                     <input type="button" value="Go to : <?= $_POST['subCat'] ?>">
                 </a>
-                <a href="<?= CreateUrl::url('forum/'. $urlTopic) ?>">
+                <a href="<?= CreateUrl::url('forum/'.$urlTopic) ?>">
                     <input type="button" value="See your Topic">
                 </a>
             </div>

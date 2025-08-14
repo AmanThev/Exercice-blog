@@ -59,6 +59,3 @@ Check out all the important topics & great discussions so far. Hope you all cont
     </table> 
 </section>
 <?php endforeach; ?>
-
-
-         

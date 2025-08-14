@@ -5,8 +5,7 @@ body{
     background:         no-repeat top/80% url(../img/layout/ticket.png);
 }
 
-h1.login, 
-h1.signup{
+h1.auth{
     color:          beige;
     font-family:    'Kaushan Script', cursive;
     font-size:      5rem;
@@ -36,7 +35,7 @@ a.homepage:hover i.fas:last-child{
 
 @keyframes slide{
     0%{
-       padding-right: .4rem;
+		padding-right: .4rem;
     }
     100%{
         padding-right: 1rem;
@@ -52,10 +51,11 @@ section{
 	box-sizing:     border-box;
 	box-shadow:     0 15px 25px rgba(0, 0, 0,.9);
     border-radius:  10px;
-    top:            15.5rem;
+    top:            13.5rem;
 }
 
-section.login{
+section.login,
+section.forget{
 	padding:    50px;
 	
 }
@@ -128,4 +128,34 @@ section a{
 section a:hover{
     text-decoration: underline;
     color:          beige;
+}
+
+section.auth p.error{
+    color: 			#372c0c;
+	background: 	beige;
+	padding: 		1rem;
+	border-radius: 	5px;
+	margin: 		-1rem 0 1rem 0;
+}
+
+section.success{
+	top: 		24rem;
+	padding : 	30px;
+}
+
+section.success p{
+	text-align: center;
+	font-size: 	2rem;
+}
+
+section.login .inputBox small{
+    color: beige;
+}
+
+section.login small a{
+	text-decoration: underline;
+}
+
+section.login .inputBox:nth-child(2){
+	margin-bottom: 30px;
 }

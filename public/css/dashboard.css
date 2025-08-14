@@ -84,7 +84,7 @@ nav i{
 
 section, 
 aside,
-form.new,
+form.dashboard-form,
 form.choose-button.only-choose{
     margin-left: 13rem;
 }
@@ -158,7 +158,7 @@ a.create-button:hover,
     font-weight:        550;
     font-size:          inherit; 
 	padding:            .5rem;
-	margin:             .8rem 0 1rem -.4rem; 
+	margin:             .8rem -.3rem 1.15rem -.4rem; 
     padding-right:      2rem; 			
 	-webkit-appearance: none;
 	-moz-appearance:    none;
@@ -197,7 +197,7 @@ section.dash-home{
 }
    
 section.dash-home article,
-form.new{
+form.dashboard-form{
     border:     1px solid #5e8091;
     background: white;
     overflow:   hidden;
@@ -206,7 +206,7 @@ form.new{
 
 section.dash-home article{
     margin: 2rem .5rem;
-    width:  570px;
+    width:  460px;
 }
 
 section.dash-home h2{
@@ -532,29 +532,29 @@ section ul.list-topic p.pending{
     **** dashboard/Post|Rewiew/New ****
 **/
 
-form.new{
+form.dashboard-form{
     margin-top: 2rem;
 }
 
-form.new h4{
+form.dashboard-form h4{
     text-decoration: underline;
     font-weight:     700;
 }
 
-form.new small,
-form.new div.textarea label{
+form.dashboard-form small,
+form.dashboard-form div.textarea label{
     display: block;
 }
 
-form.new > div,
+form.dashboard-form > div,
 div.score-content > div{
     margin : 2rem 2rem;
 }
 
-form.new div.input label,
-form.new div.textarea label,
-form.new div.picture label,
-form.new div.range-score label{
+form.dashboard-form div.input label,
+form.dashboard-form div.textarea label,
+form.dashboard-form div.picture label,
+form.dashboard-form div.range-score label{
     background:                 #7aa7bd;
     padding:                    .5rem;
     width:                      7.5rem;
@@ -567,24 +567,24 @@ form.new div.range-score label{
     z-index:                    2;
 }
 
-form.new div.range-score label{
+form.dashboard-form div.range-score label{
     border-top-right-radius:     10px;
     border-bottom-right-radius:  10px;
 }
 
-form.new div.textarea label{
+form.dashboard-form div.textarea label{
     width:          100%;
     border-radius:  10px;
     font-weight:    800;
     font-size:      2rem;
 }
 
-form.new div.textarea textarea{
+form.dashboard-form div.textarea textarea{
     width: 100%;
 }
 
-form.new div.input input,
-form.new div.input select{
+form.dashboard-form div.input input,
+form.dashboard-form div.input select{
     margin-left:    -5.4px;
     height:         2.69rem;
     width:          85%;
@@ -594,13 +594,13 @@ form.new div.input select{
     text-indent:    7px;
 }
 
-form.new div.input select{
-    width:      9.1%;
+form.dashboard-form div.input select{
+    width:      10.7%;
     appearance: none;
     cursor:     pointer;
 }
 
-form.new div.input .choose-year:before{
+form.dashboard-form div.input .choose-year:before{
     content:            "\f0dd";
     font-family:        "Font Awesome 5 Free";
     position:           absolute;
@@ -615,27 +615,27 @@ form.new div.input .choose-year:before{
     pointer-events:     none;
 }
 
-form.new div.textarea textarea{
+form.dashboard-form div.textarea textarea{
     border-style:  outset;
     border-width:  1.5px;
     border-color: #2980b9;
 }
 
-form.new div.picture label{
+form.dashboard-form div.picture label{
     cursor: pointer;
 }
 
-form.new input#picture,
-form.new input#poster{
-    margin-left:    -5.87rem;
+form.dashboard-form input#picture,
+form.dashboard-form input#poster{
+    margin-left:    -5.65rem;
     padding-top:    .47rem;
     border-style:   outset outset outset none;
     border-width:   1.5px;
     border-color:   #2980b9;
-    height:         2.69rem;
+    height:         2.67rem;
 }
 
-form.new input#picture{
+form.dashboard-form input#picture{
     width:          92.5%;
 }
 
@@ -644,7 +644,7 @@ div.poster{
     flex-wrap: nowrap;
 }
 
-form.new input#poster{
+form.dashboard-form input#poster{
     width: 85%;
 }
 
@@ -670,7 +670,7 @@ div.poster-preview img{
     width  : 100%;
 }
 
-form.new button.delete-file{
+form.dashboard-form button.delete-file{
     position                  : relative;
     height                    : 44px;
     width                     : 44px;
@@ -684,24 +684,24 @@ form.new button.delete-file{
     display                   : none;
 }
 
-form.new button.deleteImagePost{
+form.dashboard-form button.deleteImage{
     display : inline;
 }
 
-form.new button.delete-file:hover,
-form.new button.deleteImagePost:hover{
+form.dashboard-form button.delete-file:hover,
+form.dashboard-form button.deleteImage:hover{
     background-color: #cb200e;
 }
 
-form.new div.input input:focus,
-form.new div.textarea textarea:focus{
+form.dashboard-form div.input input:focus,
+form.dashboard-form div.textarea textarea:focus{
     outline:        none;
     border-color:   #80bdff;
     box-shadow:     0 0 0 .1rem rgba(0,123,255,.25);
     background:     #e8f3fd;
 }
 
-form.new label.switch{
+form.dashboard-form label.switch{
     position:       relative;
     display:        block;
     width:          100px;
@@ -717,7 +717,7 @@ form.new label.switch{
     box-sizing:     content-box;    
 }
 
-form.new input.switch-input{
+form.dashboard-form input.switch-input{
     position:   absolute;
     top:        0;
     left:       0;
@@ -725,7 +725,7 @@ form.new input.switch-input{
     box-sizing: content-box;
 }
 
-form.new span.switch-label{
+form.dashboard-form span.switch-label{
     position:       relative;
     display:        block;
     height:         inherit;
@@ -738,8 +738,8 @@ form.new span.switch-label{
     box-sizing:     content-box;
 }
 
-form.new span.switch-label:before,
-form.new span.switch-label:after{
+form.dashboard-form span.switch-label:before,
+form.dashboard-form span.switch-label:after{
     position:       absolute;
     top:            50%;
     margin-top:     -.5em;
@@ -759,7 +759,7 @@ form.new span.switch-label:after{
                     inset 0 0 3px rgba(0,0,0,0.1); 
 }
 
-form.new span.switch-label:before{
+form.dashboard-form span.switch-label:before{
     content:        attr(data-private);
     right:          11px;
     color:          #2980b9;
@@ -770,7 +770,7 @@ form.new span.switch-label:before{
     opacity:        1;
 }
 
-form.new span.switch-label:after{
+form.dashboard-form span.switch-label:after{
     content:        attr(data-public);
     right:          11px;
     color:          #FFFFFF;
@@ -782,27 +782,27 @@ form.new span.switch-label:after{
     width:          100%;
 }
 
-form.new input.switch-input:checked ~ span.switch-label{
+form.dashboard-form input.switch-input:checked ~ span.switch-label{
     background: #E1B42B;
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.15),
                 inset 0 0 3px rgba(0,0,0,0.2);
 }
 
-form.new input.switch-input:checked ~ span.switch-label:before{
+form.dashboard-form input.switch-input:checked ~ span.switch-label:before{
     opacity:    0;
     left:       105px;
 }
 
-form.new input.switch-input:checked ~ span.switch-label:after{
+form.dashboard-form input.switch-input:checked ~ span.switch-label:after{
     opacity:    1;
     left:       0;
 }
 
-form.new input.switch-input:checked ~ span.switch-label{
+form.dashboard-form input.switch-input:checked ~ span.switch-label{
     background: inherit;
 }
 
-form.new span.switch-handle{
+form.dashboard-form span.switch-handle{
     position:       absolute;
     top:            4px;
     left:           4px;
@@ -813,7 +813,7 @@ form.new span.switch-handle{
     box-shadow:     1px 1px 5px rgba(0,0,0,0.2);
 }
 
-form.new span.switch-handle:before{
+form.dashboard-form span.switch-handle:before{
     content:        '';
     position:       absolute;
     top:            50%;
@@ -826,17 +826,17 @@ form.new span.switch-handle:before{
     box-shadow:     inset 0 1px rgba(0,0,0,0.02);
 }
 
-form.new input.switch-input:checked ~.switch-handle{
+form.dashboard-form input.switch-input:checked ~.switch-handle{
     left:       74px;
     box-shadow: inset 0 1px rgba(0,0,0,0.2);
 }
 
-form.new span.switch-label,
-form.new span.switch-handle{
+form.dashboard-form span.switch-label,
+form.dashboard-form span.switch-handle{
     transition: all 0.3s ease;
 }
 
-form.new button#validateForm{
+form.dashboard-form div.button button{
     height:         40px;
     text-align:     center;
     width:          130px;
@@ -849,16 +849,16 @@ form.new button#validateForm{
     color:          black;
 }
   
-form.new button#validateForm:hover{
+form.dashboard-form div.button button:hover{
     background: #2980b9;
 }
 
-form.new button.submit i{
+form.dashboard-form button.submit i{
     color:      #2980b9;
     animation:  rotating 2s linear infinite;
 }
 
-form.new button.submit:hover i{
+form.dashboard-form button.submit:hover i{
     color: #7aa7bd;
 }
 
@@ -871,15 +871,15 @@ form.new button.submit:hover i{
     }
 }
   
-form.new button.submit:hover {
+form.dashboard-form button.submit:hover {
     background: #7aa7bd;
 }
 
-form.new #message.error,
-form.new div.input p.error,
-form.new div.textarea p.error,
-form.new div.picture p.error,
-form.new div.score-content p.error{
+form.dashboard-form #message.error,
+form.dashboard-form div.input p.error,
+form.dashboard-form div.textarea p.error,
+form.dashboard-form div.picture p.error,
+form.dashboard-form div.score-content p.error{
     background:     #e11800;
     color:          white;
     padding:        1rem;
@@ -887,14 +887,14 @@ form.new div.score-content p.error{
     width:          65%;
 }
 
-form.new #message.valid{
+form.dashboard-form #message.valid{
     background:     #008d18;
     color:          white;
     padding:        1rem;
     border-radius:  20px;
 }
 
-form.new input#score{
+form.dashboard-form input#score{
     appearance:     none;
     width:          400px;
     height:         1rem;
@@ -947,14 +947,67 @@ form.new input#score{
 }
 
 .score-option:before{
-        content:    '';
-        width:      55px;
-        height:     55px;
-        display:    block;
-        position:   absolute;
-        background: #7aa7bd;
-        top:        -17px;
-        left:       -22px;
-        clip-path:  polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-        z-index:    -10;
+    content:    '';
+    width:      55px;
+    height:     55px;
+    display:    block;
+    position:   absolute;
+    background: #7aa7bd;
+    top:        -17px;
+    left:       -22px;
+    clip-path:  polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    z-index:    -10;
+}
+
+.image-preview{
+    max-width: 150px;
+}
+    
+.image-preview img{
+    width:  100%;
+    border: 2px solid #2980b9;
+}
+
+.block-image{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4rem;
+}
+
+.picture{
+    display: none;
+    opacity: 1;
+}
+.picture.show-label-picture{
+    display: block;
+    animation: animate 1s linear;
+}
+
+@keyframes animate{
+    0%{
+        transform: translateY(-25px);
+        opacity: 0;
+    }
+    50%{
+        opacity: .5;
+    }
+    100%{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+.reveal-text{
+    border:         2px solid #2980b9;
+    padding:        1rem;
+    font-weight:    700;
+    color:          #2980b9;
+    border-radius:  40px;
+    cursor:         pointer;
+}
+
+.reveal-text:hover{
+    background: #7aa7bd;
+    color:      black;
 }

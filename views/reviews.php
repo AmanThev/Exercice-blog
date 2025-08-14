@@ -1,10 +1,11 @@
 <?php
 
-use App\Manager\Connection;
 use App\Manager\FilmDatabase;
+use App\Manager\Connection;
 use App\SQL\Paginate;
 use App\URL\CreateUrl;
 use App\DateReviews;
+use App\HTML\Form;
 
 $title              = 'Reviews';
 
@@ -15,8 +16,10 @@ $lastReviews        = $lastReviews->getLastFilms(5);
 
 $reviews            = new FilmDatabase();
 $reviews            = $reviews->getFilms();
-
 $decadesSelected    = empty($_GET['decades']) ? null : (int)$_GET['decades'];
+
+$searchForm = new Form($_POST);
+
 if($decadesSelected){
     // htmlspecial sur $_GET['decade']
     //vérifier que c'est bien un int
@@ -24,7 +27,7 @@ if($decadesSelected){
     $reviews = DateReviews::getFilmByDecade($decadesSelected);
 }
 
-$yearSelected       = empty($_GET['year']) ? null : (int)$_GET['year'];
+$yearSelected = empty($_GET['year']) ? null : (int)$_GET['year'];
 if($yearSelected){
     $reviews = DateReviews::getFilmByYear($yearSelected);
 }
@@ -53,13 +56,9 @@ if($yearSelected){
 </section>
 
 <div class="bottom-reviews">
-    <?php //if(!empty($messages)): ?>
-            <?php //foreach ($messages as $message): ?>
-                <p class=""><?php // $message ?></p>
-            <?php //endforeach; ?>
-    <?php //endif; ?>
     <aside class="date-reviews">
         <h2>Choose a decade or a year :</h2>
+        <a id="display-all-movies" class="<?= empty($decadesSelected) == TRUE ? 'disabled' : '' ?>" href="<?= CreateUrl::url('reviews') ?>">All movies</a>
         <?php foreach (DateReviews::listDecades() as $num => $decade): ?>
             <a class="list-item decades <?= $num == $decadesSelected ? 'active' : ''; ?>" href="?decades=<?= $num ?>"><?= $decade ?></a>
                 <?php if($num == $decadesSelected): ?>
@@ -72,9 +71,8 @@ if($yearSelected){
     </aside>
     <section class="all-reviews">
         <h1>All reviews</h1>
-        <form class="search-reviews-box">
-            <input class="search-reviews-text" type="text" name="" placeholder="search">
-            <a href="#" class="search-reviews-btn"><i class="fas fa-search"></i></a>
+        <form class="search-box" method="post" action="<?= CreateUrl::url('search') ?>">
+            <?= $searchForm->searchBox('search', 'film'); ?>
         </form>
         <div class="deck-all-reviews">
             <?php foreach($reviews as $review): ?>

@@ -77,12 +77,12 @@ class Comment
 
     public function getComment(): string
     {
-        return nl2br(htmlspecialchars($this->comment));
+        return $this->comment;
     }
 
     public function setComment(string $comment): void
     {
-        $this->comment = $comment;
+        $this->comment = htmlspecialchars(trim($comment));
     }
 
     public function getCommentFilm(): string

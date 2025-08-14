@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Manager\Database;
+use App\Manager\UserDatabase;
 
 class Validator
 {
@@ -94,13 +95,13 @@ class Validator
         return array($data[$field]);
     }
 
-    private function error(string $field, string $message, ?array $params = array())
+    private function error(string $field, string $message, ?array $params = array()): void
     {
         $message = $this->setMessage($field, $message);
         $this->errors[$field][] = vsprintf($message, $params);
     }
     
-    private function setMessage(string $field, string $message)
+    private function setMessage(string $field, string $message): array|string
     {
         $message = str_replace('{field}', ucwords($field), $message) ?: str_replace('{field} ', '', $message);
         return $message;
@@ -113,13 +114,13 @@ class Validator
     
     private function required(string $field, string $value) :bool
     {
-        if (!isset($value) || is_null($value) || empty($value)) {
+        if (!isset($value) || empty($value)) {
             return false;
         }
         return true;
     }
 
-    private function email(string $field, string $value)
+    private function email(string $field, string $value): bool
     {
         return filter_var($value, \FILTER_VALIDATE_EMAIL);
     }
@@ -150,7 +151,7 @@ class Validator
         return ($length !== false) && $length >= $params[0];
     }
 
-    private function stringLength(string $data)
+    private function stringLength(string $data): bool|int
     {
         if(is_string($data)){
             return mb_strlen($data);
@@ -159,7 +160,7 @@ class Validator
     }
     
     /**
-     * $params --> only a second field
+     * $params --> will be the second field
      */
     private function equals(string $field, $value, array $params) :bool
     {
@@ -177,13 +178,8 @@ class Validator
     
     /**
      * If tabName value can't have duplicate (Post's title)
-     *if field tabName != field form : 
-     *         $params[1] === field tabName
-     * 
-     * @param  string $field
-     * @param  string $value
-     * @param  array $params
-     * @return bool
+     * if field tabName != field form : 
+     *          $params[1] === field tabName
      */
     private function used(string $field, string $value, array $params) :bool
     {   
@@ -240,6 +236,16 @@ class Validator
             return false;
         }
         return $params[0] > $value;
+    }
+
+    /**
+     * $params --> 1st the name/id --- 2nd $tabName
+     */
+    private function password(string $pwd, string $valuePwd, $params) :bool
+    {
+        $name = new UserDatabase();
+        $dataUser = $name->getMemberByName($params[0]);
+        return  password_verify($valuePwd, $dataUser->getPassword());
     }
 
     private function extensionPicture(string $field, $value, $params) :bool

@@ -15,5 +15,6 @@ return array(
     'different'         => "must be different than %s",
     'email'             => "is not a valid email address",
     'numeric'           => "must be numeric",
-    'exist'             => "doesn't exist"
+    'exist'             => "doesn't exist",
+    'password'          => "Your password is incorrect"
 );

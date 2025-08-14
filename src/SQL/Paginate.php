@@ -98,7 +98,7 @@ class Paginate {
             if($i == $currentPage){
                 echo "<li class='active'><a href='?page=$i$linkDecade'>$i</a></li>";
             }else{
-                 echo "<li><a href='?page=$i$linkDecade'>$i</a></li>";
+                echo "<li><a href='?page=$i$linkDecade'>$i</a></li>";
             }
         }
         if($currentPage == $totalPages){
@@ -128,7 +128,7 @@ class Paginate {
             if($i == $currentPage){
                 echo "<li class='active'><a href='?page=$i$linkYear'>$i</a></li>";
             }else{
-                 echo "<li><a href='?page=$i$linkYear'>$i</a></li>";
+                echo "<li><a href='?page=$i$linkYear'>$i</a></li>";
             }
         }
         if($currentPage == $totalPages){

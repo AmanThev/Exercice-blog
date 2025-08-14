@@ -16,9 +16,9 @@ use App\URL\CreateUrl;
     <script src="https://kit.fontawesome.com/2c5e081666.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script
-			  src="https://code.jquery.com/jquery-3.6.0.js"
-			  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-			  crossorigin="anonymous">
+			src="https://code.jquery.com/jquery-3.6.0.js"
+			integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+			crossorigin="anonymous">
     </script>
 </head>
 <body>
@@ -34,7 +34,6 @@ use App\URL\CreateUrl;
         <a href="<?= CreateUrl::url('dashboard/reviews') ?>"><i class="fas fa-film"></i>Reviews</a>
         <a href="<?= CreateUrl::url('dashboard/comments') ?>"><i class="fas fa-comment"></i>Comments</a>
         <a href="<?= CreateUrl::url('dashboard/forum') ?>"><i class="fab fa-forumbee"></i>Forum</a>
-        <a href="<?= CreateUrl::url('quiz') ?>"><i class="fas fa-question-circle"></i>Quiz</a>
         <a href="<?= CreateUrl::url('dashboard/users') ?>"><i class="fas fa-user"></i>Users</a>
     </nav>    
 </header>

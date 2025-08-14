@@ -1,6 +1,7 @@
 <?php
 use App\URL\UrlPublic;
 use App\URL\CreateUrl;
+
 ?>
 
 <!DOCTYPE html>
@@ -19,18 +20,23 @@ use App\URL\CreateUrl;
 <header id="top">
 <div class="lighting">
     <h1>Cinema</h1>
-    <p>Welcome, ...</p> <!-- Nom de l'user -->
+    <?php if(isset($_SESSION['name'])): ?>
+        <p>Hi <?= $_SESSION['name']  ?></p> 
+    <?php endif; ?>
     <nav>
         <div class="separate-header"></div>
             <a href="<?= CreateUrl::url('home') ?>">Home</a>
             <a href="<?= CreateUrl::url('blog') ?>">Blog</a>
             <a href="<?= CreateUrl::url('reviews') ?>">Reviews</a>
             <a href="<?= CreateUrl::url('forum') ?>">Forum</a>
-            <a href="<?= CreateUrl::url('quiz') ?>">Quiz</a>
         <div class="separate-header"></div>
     </nav>    
 </div>
-<a class="login" href="<?= CreateUrl::url('authentication/login') ?>">Login</a>    
+<?php if(isset($_SESSION['name'])): ?>
+    <a class="login" href="<?= CreateUrl::url('authentication/logout') ?>">Logout</a>
+<?php else: ?>    
+    <a class="login" href="<?= CreateUrl::url('authentication/login') ?>">Login</a>    
+<?php endif ?>
 </header>
 
 <div class="container-fluid">

@@ -30,14 +30,7 @@ class UserDatabase extends Database
 
     public function getAdminById(int $id): Admin
     {
-        $stmt = $this->connect()->prepare("SELECT name FROM admins WHERE id=:id");
-        $stmt->execute(['id' => $id]);
-        if($stmt->rowCount() == 1){
-            $stmt->setFetchMode(PDO::FETCH_CLASS,Admin::class);
-            $admin = $stmt->fetch();
-            return $admin;
-        }
-        throw new NotFoundException('Admin', $id);
+        return $this->getDataByField($this->queryAdmins, 'id', $id, "Admin");
     }
 
     public function getAdminByName(string $name): Admin
@@ -54,14 +47,8 @@ class UserDatabase extends Database
 
     public function getMemberByName(string $name): Member
     {
-        $stmt = $this->connect()->prepare("$this->queryMembers WHERE name=:name");
-        $stmt->execute(['name' => $name]);
-        if($stmt->rowCount() == 1){
-            $stmt->setFetchMode(PDO::FETCH_CLASS,Member::class);
-            $member = $stmt->fetch();
-            return $member;
-        }
-        throw new NotFoundException('Member', $name);
+        return $this->getDataByField(
+            $this->queryMembers, 'name', $name, 'Member');
     }
 
     public function getAdminsPresentationPage($position): array
@@ -88,4 +75,5 @@ class UserDatabase extends Database
         $stmt->execute(['pseudo' => $pseudo]);
         return $stmt->rowCount();
     }
+
 }
