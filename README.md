@@ -30,4 +30,3 @@ Code a blog using the OOP and starting to work with JavaScript
   * Inner Join, Right Join and Left Join
   * PDO
 * Favicon
-
