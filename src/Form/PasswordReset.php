@@ -15,3 +15,13 @@ class PasswordReset extends Authentication
         
     }
 }
+
+
+// function sendResetLink($email, $token) {
+//     $subject = "Password Reset";
+//     $resetLink = "https://votresite.com/reset-password.php?token=" . urlencode($token);
+//     $message = "Cliquez sur ce lien pour réinitialiser votre mot de passe : $resetLink";
+//     $headers = "From: support@votresite.com\r\n";
+
+//     return mail($email, $subject, $message, $headers);
+// }

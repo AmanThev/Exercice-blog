@@ -21,13 +21,13 @@ if(!empty($_POST)){
 <h1 id="title-blog">Result search</h1>
 
 <section class="section-error">
-    <h2>We have find <?php echo $totalResults > 1 ? ' '.$totalResults.' results' : ' '.$totalResults.' result' ?> matching your seach : <?= $_POST['search']; ?> </h2>
+    <h2>We have found <?php echo $totalResults > 1 ? ' '.$totalResults.' results' : ' '.$totalResults.' result' ?> matching your search : <?= htmlspecialchars($_POST['search']); ?> </h2>
     <?php if(!empty($errors)): ?>
         <?php foreach ($errors['search'] as $error): ?>
             <p id="p-error">Your <?= $error; ?></p>
         <?php endforeach; ?>
     <?php else: ?>
-        <?php switch($type): ?><?php case 'post': ?>
+        <?php switch($type): case 'post': ?>
             <?php foreach ($results as $result): ?>
                 <a href="<?= CreateUrl::url('blog', ['slug' => $result->getUrlTitle(), 'id' => $result->getId()]); ?>">
                     <div class="result-search">
@@ -57,8 +57,8 @@ if(!empty($_POST)){
                 <?php foreach($results['posts'] as $post): ?>
                     <a href="<?= CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $post->getId()]); ?>">
                         <div class="result-search">
-                            <h3><?= $post->getTitle() ?></h3>
-                            <p><?= $post->getExcerptContent() ?></p>
+                                <h3><?= $post->getTitle() ?></h3>
+                                <p><?= $post->getExcerptContent() ?></p>
                         </div>
                     </a>
                 <?php endforeach; ?>
@@ -68,7 +68,6 @@ if(!empty($_POST)){
                     <a href="<?= CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $film->getId()]); ?>">
                         <div class="result-search">
                             <h3><?= $film->getTitle() ?></h3>
-                            <p>Directed by <?= $film->getDirector() ?></p>
                             <p>Writer : <?= $film->getWriter() ?></p>
                             <p>Casting : <?= $film->getCast() ?></p>
                             <p>Production : <?= $film->getProduction() ?></p>
@@ -79,8 +78,8 @@ if(!empty($_POST)){
                 <?php endforeach; ?>
             <?php endif; ?>
         <?php break; ?>
-        <?php default: ?>
-            <p>Nothing</p>
+            <?php default: ?>
+                <p>Nothing</p>
         <?php endswitch; ?>
     <?php endif; ?>
 </section>
