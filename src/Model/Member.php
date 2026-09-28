@@ -37,12 +37,12 @@ class Member
     private $nbr_comment;
 
     /**
-     * @var varchar
+     * @var string
      */
     private $token;
 
     /**
-     * @var date
+     * @var string
      */
     private $reset_at; 
 
@@ -101,13 +101,13 @@ class Member
         return $this->nbr_comment;
     }
 
-    public function getToken(): varchar
+    public function getToken(): string
     {
         return $this->token;
     }
 
-    public function getDate()
+    public function getDate(): \DateTime
     {
-        return new DateTime($this->reset_at);
+        return new \DateTime($this->reset_at);
     }
 }

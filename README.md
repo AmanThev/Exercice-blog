@@ -1,32 +1,49 @@
 ## About the project
-Code a blog using the OOP and starting to work with JavaScript
+This project is a blog developed with PHP using Object-Oriented Programming (OOP) and the MVC architecture.
+
+The main goal of this project was to learn how to buiid a PHP application without using a framework and to start working with JavaScript and AJAX
+
+
+## Features
+* Display a list a movie
+* Forum
+* User registration
+* User Authentification
+* Search for Movies
 
 ## What I learned
 * PHP 
-  * Create a simple router
-  * OOP
-  * Namespace
-  * Use different native function never used before (strpos, substr, …)
-  * Upload file
+      * Creating a simple router
+      * Object-Oriented Programming (OOP)
+      * Namespace
+      * File Uploads
+      * Autoloading with Composer
+
 * CSS
-  * @keyframes
-  * Grid 
-  * Create a slider
+      * @keyframes
+      * CSS Grid 
+      * Creating a slider
+
 * JavaScript
-  * Spoiler : function to hide an element but reveal the element when we slide on it
-  * Scroll to Top : display a button when the user scroll to the bottom of the page.   And the user click on the button the come back to the top
-  * Rate with Stars : color the element checked when the page is loading or when the user click on the element and display a comment. The comment is different for each element
-  * Display poster when user select a file (FileReader())
-  * SortTable : Function that sorts column in alphabetical order and vice versa
+      * Spoiler : hide an element and reveal it when sliding over it
+      * Scroll to Top : display a button when the user reaches the bottom of the page. Scoll back to the top when clicking the button
+      * Rating with Stars : Display the selected rating, display a different comment depending on the selected rating
+      * Display an image preview when selecting a file : 'FileReader()'
+      * SortTable : sort columns alphabetically, sort columns in reverse alphabetical order
+
 * JQuery
-  * Dashboard/Forum : display list
-  * Ajax : add a Post/Film, display the error or the valid message, change the button submit to a loading button or a check(valid) button
-* Use Autoloader with Composer
+      * Dashboard/Forum : display list dynamically
+      * Ajax : add a Post/Film, display success and error message, change the submit button into a loading button,display a success icon after submission
 * Library 
-  * var_dumper (help to display the function errors)
-  * whoops (help to display the errors)
+      * var_dumper (help to display the function errors)
+      * whoops (help to display the errors)
 * MySQL 
-  * PhpAdmin
-  * Inner Join, Right Join and Left Join
-  * PDO
+      * PhpAdmin
+      * Inner Join, Right Join and Left Join
+      * PDO
+* Git / GitHub
+      * Branches
+      * Commits
+      * Push / Pull
+      * GitHub repository management
 * Favicon

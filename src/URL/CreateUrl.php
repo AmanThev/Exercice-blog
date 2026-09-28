@@ -10,13 +10,14 @@ class CreateURL {
         if($name[0] != '/') {
             $name = "/" . $name;
         }
-        
+
         if($params){
-            $slug = $params['slug'];
-            $id = $params['id'];
-            return WWW_ROOT. $name . '/' . $slug . '-' . $id;
+            if(isset($params['slug'], $params['id'])){
+                return WWW_ROOT . $name . '/' . $params['slug'] . '-' . $params['id'];
+            }
+            return WWW_ROOT . $name . '?' . http_build_query($params);
         }
-        return WWW_ROOT. $name;
+        return WWW_ROOT . $name;
     }
 
     public static function urlDashboardAction(string $name, int $id, ?string $action = NULL)
@@ -57,5 +58,17 @@ class CreateURL {
         $urlTitle = preg_split('/(?=[A-Z])/', $urlTitle, -1, PREG_SPLIT_NO_EMPTY);
         $urlTitle = implode(' ', $urlTitle);
         return $urlTitle;
+    }
+
+    public static function baseUrl(): string
+    {
+        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $host   = $_SERVER['HTTP_HOST'];
+        return $scheme . '://' . $host;
+    }
+
+    public static function absoluteUrl(string $name, ?array $params = []): string
+    {
+        return self::baseUrl() . self::url($name, $params);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Manager\Database;
 use App\Manager\UserDatabase;
+use App\Manager\Exception\NotFoundException;
 
 class Validator
 {
@@ -185,9 +186,9 @@ class Validator
     {   
         $valueExist = new Database();
         if(count($params) > 1){
-            return $valueExist->exist($params[1], $value, $params[0]);
+            return $valueExist->existCaseInsensitive($params[1], $value, $params[0]);
         }
-        return $valueExist->exist($field, $value, $params[0]);
+        return $valueExist->existCaseInsensitive($field, $value, $params[0]);
     }
     
     /**
@@ -263,4 +264,9 @@ class Validator
         }
         return true;
     }
+
+    private function token(string $field, string $value): bool
+{
+    return PasswordReset::tokenIsValid($value);
+}
 }

@@ -37,4 +37,12 @@ class Authentication extends FormHandler
 
         return $this;
     }
+
+    private function checkToken(): self
+    {
+        $stmt = new Validator($token);
+        $req  = $stmt->connect()->prepare("SELECT * FROM members WHERE token = :token");
+        $req->execute(['token' => $hashedToken]);
+        return $req->fetch();
+    }
 }

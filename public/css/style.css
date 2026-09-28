@@ -1,107 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=Inter:wght@400;500;600&display=swap');
 
-/*
-    ****    views/layout.php    ****
-*/
+:root{
+    --maroon:       #2b0f0f;
+    --maroon-deep:  #1a0808;
+    --brass:        #c9973f;
+    --brass-bright: #e0b45c;
+    --cream:        #f1e6c8;
+    --cream-dim:    #cbb98f;
+    --line:         #6b3a2e;
+}
+
+*{
+    box-sizing: border-box;
+}
 
 body{
     margin:             0;
     padding:            0;
-    background-color:   #372c0c !important;
-}
-
-header{
-	margin:             0;
-	padding-top:        60px;
-	background:         url(../img/layout/background.jpg);
-	background-size:    cover;
-    background-repeat:  no-repeat;
-    height:             500px;
-    text-align:         center;
-}
-
-
-/*header div.lighting{
-    animation: lighting 2s linear;
-}
-
-@keyframes lighting{
-	0%{
-		opacity: 0;
-	}
-	100%{
-		opacity: 1;
-	}
-}*/
-
-header h1{
-    color:          #dadaa0;
-    font-family:    'Kaushan Script', cursive;
-    font-size:      200px;
-}
-
-header p{
-    color:  beige;
-    margin: 35px 0;
-}
-
-header a{
-    text-decoration:    none;
-    font-weight:        500;
-    font-size:          1.5rem;
-}
-
-header a:hover{
-    text-decoration:    none;
-    color:              #dadaa0;
-}
-
-header a.login{
-    position:           absolute;
-    top:                2rem;
-    right:              2rem;
-    box-sizing:         border-box;
-    display:            inline-block;
-    font-weight:        700;
-    user-select:        none;
-    background-color:   transparent;
-    border:             1px solid transparent;
-    padding:            .3rem 1.5rem;
-    font-size:          1rem;
-    line-height:         1.5;
-    border-radius:      .25rem;
-    transition:         color .15s ease-in-out,background-color .15s ease-in-out;
-    color:              beige;
-    cursor:             pointer;
-}
-
-header a.login:hover{
-    color:              black;
-    background-color:   beige;
-}
-
-header nav a{
-    margin: 0 30px;
-    color:  #bfbea0;
-}
-
-header div.separate-header{
-    margin: 			15px auto;
-    width: 			    50%;
-    height: 			2px;
-    background-color:   beige;
+    background-color:   var(--maroon-deep) !important;
+    color:              var(--cream);
+    font-family:        'Inter', sans-serif;
 }
 
 a#scrolltotop{
-    border-radius:                  50%;
+    border-radius:                  0;
     padding:                        3px;
     font-size:                      15px;
     text-align:                     center;
-    color:                          #111;
+    color:                          var(--maroon-deep);
     width:                          40px;
     height:                         40px;
-    background:                     #fff;
+    background:                     var(--brass);
     position:                       fixed;
+    bottom:                         30px;
     right:                          35px;
     opacity:                        1;
     z-index:                        1000;
@@ -109,2106 +40,668 @@ a#scrolltotop{
     backface-visibility:            hidden;
     -webkit-backface-visibility:    hidden;
     text-decoration:                none;
+    display:                        flex;
+    align-items:                    center;
+    justify-content:                center;
 }
 
-a#scrolltotop:before{ 
-    position:       relative;
+a#scrolltotop:hover{
+    background: var(--brass-bright);
+}
+
+a#scrolltotop::before{ 
     content:        "";
     display:        inline-block;
-    width:          6px;
-    height:         6px;
-    border:         solid #111111;
+    width:          8px;
+    height:         8px;
+    border:         solid var(--maroon-deep);
     border-width:   0 3px 3px 0;
     transform:      rotate(-135deg);
-    padding:        3px;
-    margin:         14px auto;
+    margin-top:     4px;
 }
 
 a#scrolltotop.scrollInvisible{
-    bottom:     -35px;
     opacity:    0;
-    transition: all ease-in 0.5s;
+    pointer-events: none;
+    transform:  translateY(10px);
+    transition: opacity .3s ease, transform .3s ease;
 }
 
 a#scrolltotop.scrollVisible{
-    bottom:     30px;
     opacity:    1;
+    pointer-events: auto;
+    transform:  translateY(0);
+    transition: opacity .3s ease, transform .3s ease;
+}
+
+section{
+    max-width:  1160px;
+    margin:     0 auto;
+    padding:    0 20px;
 }
 
 /*
-    ****    views/home.php  ****
+    ****    header (titre, menu, bouton login)    ****
 */
 
-section div.spotlight{
-    position:       relative;
-    display:        flex;
-    flex-direction: column;
-    word-wrap:      break-word;
-    margin:         0.8rem 0;
-    width:          70%;
-    height:         300px;
-    overflow:       hidden;
-    border-radius:  0.5rem;
-    box-shadow:     0 0 5px beige;    
+div.bulbs{
+    height:                 16px;
+    background-image:       radial-gradient(circle at 8px 8px, var(--brass) 3px, transparent 3.2px);
+    background-size:        26px 16px;
+    background-position:    6px center;
+    background-color:       var(--maroon-deep);
 }
 
-section div.spotlight img{
-    filter:     invert(35%);
-}
-
-section img{
-    border-style:   none;
-    max-width:      900px;
-    max-height:     300px;
-}
-
-section div.spotlight-img-overlay{
-    position:   absolute;
-    bottom:     0;
-    padding:    1.25rem;
-}
-
-section h1.spotlight-title{
-    margin-bottom:  1rem;
-    color:          #dadaa0;
-    font-size:      2rem;
-}
-
-section p.spotlight-text{
-    color: beige;
-}
-
-section p.spotlight-text:last-child {
-    margin-bottom:  0;
-    font-size:      0.7rem;
-}
-
-section a.spotlight-read{
-    background-image:   linear-gradient(to right, #251e09, #454335);
-    padding:            5px 12px 8px;
-    border-radius:      10px;
-    line-height:        20px;
-    font-weight:        600;
-    font-size:          14px;
-    color:              #fff;
-    text-decoration:    none;
-}
-
-section a.spotlight-read:hover {
-	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
-	text-decoration: 	none;
-	color: 				black;
-}
-
-section div.latest-card{
-    margin:             30px 0 20px 0;
-    border:             1px solid #251e09;
-    width:              70%;
-    height:             575px;
-    border-radius:      0.5rem;
-    background-color:   #251e09;
-    box-shadow:         0 0 5px beige;
-}
-
-section div.latest-card h1{
-    margin:         15px 0 20px 45px;
-    color:          beige;
-    text-decoration: underline;
-}
-
-section div.latest-deck{
-    display:                    flex;
-    flex-flow:                  row wrap;
-    margin-left:                -15px;
-    height:                     500px;
-    border-bottom-left-radius:  0.5rem;
-    border-bottom-right-radius: 0.5rem; 
-    overflow:                   hidden;
-}
-
-section div.latest{
+header.marquee{
+	margin:             0;
+	padding:            46px 20px 0;
+	background:
+        radial-gradient(ellipse 700px 300px at 50% 0%, rgba(201,151,63,0.18), transparent 65%),
+        var(--maroon);
+    text-align:         center;
     position:           relative;
+}
+
+div.marquee-frame{
+    max-width:      1000px;
+    margin:         0 auto;
+    border:         2px solid var(--brass);
+    padding:        34px 24px 26px;
+    position:       relative;
+}
+
+div.marquee-frame::before,
+div.marquee-frame::after{
+    content:"";
+    position:   absolute;
+    width:      22px;
+    height:     22px;
+    border:     2px solid var(--brass);
+    transform:  rotate(45deg);
+    top:        -12px;
+}
+div.marquee-frame::before{ left: -12px; }
+div.marquee-frame::after{ right: -12px; }
+
+header.marquee h1{
+    color:          var(--cream);
+    font-family:    'Cinzel', serif;
+    font-weight:    700;
+    font-size:      clamp(40px, 8vw, 84px);
+    letter-spacing: 0.06em;
+    margin:         0;
+    text-shadow:    0 0 18px rgba(224,180,92,0.35);
+}
+
+header.marquee p.site-sub{
+    font-family:    'Cinzel', serif;
+    font-size:      13px;
+    letter-spacing: 0.4em;
+    color:          var(--brass-bright);
+    margin:         10px 0 0 0;
+    text-transform: uppercase;
+}
+
+header.marquee a
+{
+    text-decoration: none;
+}
+
+header.marquee nav{
+    display:         flex;
+    justify-content: center;
+    flex-wrap:       wrap;
+    gap:             clamp(18px, 4vw, 44px);
+    padding:         22px 0 30px 0;
+}
+
+header.marquee nav a{
+    font-family:    'Cinzel', serif;
+    font-size:      17px;
+    letter-spacing: 0.15em;
+    color:          var(--cream-dim);
+    padding-bottom: 4px;
+    border-bottom:  1px solid transparent;
+}
+
+header.marquee nav a:hover{
+    color:        var(--brass-bright);
+    border-color: var(--brass);
+}
+
+header.marquee a.login{
+    position:           absolute;
+    top:                clamp(0.8rem, 3vw, 1.6rem);
+    right:              clamp(0.8rem, 3vw, 2rem);
+    display:            inline-block;
+    font-family:        'Cinzel', serif;
+    font-weight:        600;
+    user-select:        none;
+    background-color:   transparent;
+    border:             1px solid var(--brass);
+    padding:            .3rem 1rem;
+    font-size:          clamp(0.7rem, 1.4vw, 0.85rem);
+    letter-spacing:     0.08em;
+    transition:         color .15s ease-in-out, background-color .15s ease-in-out;
+    color:              var(--cream);
+    cursor:             pointer;
+}
+
+header.marquee a.login:hover{
+    color:            var(--maroon-deep);
+    background-color: var(--brass);
+}
+
+/* ---- ticket (article à la une) ---- */
+
+div.container-fluid{
+    width: 95%;
+}
+div.ticket-wrap{ padding: 40px 0px 10px 0px;}
+
+div.ticket{
+    display:                grid;
+    grid-template-columns:  1fr 220px;
+    background:             linear-gradient(160deg, #3a1414, #200a0a);
+    border:                 1px solid var(--line);
+    position:               relative;
+}
+
+@media (max-width: 640px){
+    div.ticket{ grid-template-columns: 1fr; }
+    div.ticket::before{ display:none; }
+}
+
+div.ticket::before{
+    content:        "";
+    position:       absolute;
+    top:            0; 
+    bottom:         0;
+    right:          220px;
+    width:          0;
+    border-left:    2px dashed var(--brass);
+    opacity:        .6;
+}
+
+div.ticket-main{ padding: 34px 38px; }
+
+p.ticket-kicker{
+    font-family:    'Cinzel', serif;
+    font-size:      12px;
+    letter-spacing: 0.3em;
+    color:          var(--brass-bright);
+    margin:         0 0 16px 0;
+    text-transform: uppercase;
+}
+
+h1.ticket-title{
+    font-family:    'Cinzel', serif;
+    font-weight:    600;
+    font-size:      32px;
+    margin:         0 0 16px 0;
+    color:          var(--cream);
+}
+
+p.ticket-text{
+    color:          var(--cream-dim);
+    font-size:      15px;
+    line-height:    1.7;
+    margin:         0 0 20px 0;
+    max-width:      52ch;
+}
+
+a.stub-btn{
+    display:            inline-block;
+    font-family:        'Cinzel', serif;
+    font-size:          12px;
+    letter-spacing:     0.15em;
+    color:              var(--maroon-deep);
+    background:         var(--brass);
+    padding:            10px 22px;
+    text-decoration:    none;
+    text-transform:     uppercase;
+}
+
+a.stub-btn:hover{ 
+    background:         var(--brass-bright); 
+    text-decoration:    none;
+    color:              var(--maroon-deep);
+}
+
+div.ticket-side{
     display:            flex;
     flex-direction:     column;
-    word-wrap:          break-word;
-    background-color:   #fff;
-    flex:               31.5%;
-    margin-left:        15px;
-    max-width:          290px;
-    max-height:         500px;
+    align-items:        center;
+    justify-content:    center;
+    padding:            24px;
+    text-align:         center;
+    gap:                10px;
 }
 
-section div.latest:first-child{
-    border-bottom-left-radius:  0.5rem;
+span.admit{
+    font-family:        'Cinzel', serif;
+    font-size:          22px;
+    letter-spacing:     0.1em;
+    color:              var(--brass-bright);
+    writing-mode:       vertical-rl;
+    text-orientation:   mixed;
 }
 
-section img.latest-img{
-    width:      100%;
-    max-height: 195px;
-    min-height: 195px;
+span.date-stub{
+    font-size:      11px;
+    letter-spacing: 0.1em;
+    color:          var(--cream-dim);
 }
 
-section div.latest-body{
-    flex:       1 1 auto;
-    min-height: 1px;
-    padding:    1.25rem;
+/* ---- titre de section avec ligne + losange ---- */
+
+div.section-heading{
+    display:        flex;
+    align-items:    center;
+    gap:            18px;
+    margin:         50px 0px 26px 0px;
 }
 
-section a.latest-read{
-    background-image:   linear-gradient(to right, #251e09, #454335);
-    padding:            5px 12px 8px;
-    border-radius:      10px;
-    line-height:        20px;
-    font-weight:        600;
-    font-size:          14px;
-    color:              #fff;
+div.section-heading h2{
+    font-family:    'Cinzel', serif;
+    font-weight:    600;
+    font-size:      22px;
+    letter-spacing: 0.08em;
+    margin:         0;
+    white-space:    nowrap;
+    color:          var(--cream);
+}
+
+div.section-heading span.rule{
+    flex:       1;
+    height:     1px;
+    background: var(--line);
+    position:   relative;
+}
+
+div.section-heading span.rule::after{
+    content:        "◆";
+    position:       absolute; right:0; top:-7px;
+    color:          var(--brass);
+    font-size:      11px;
+    background:     var(--maroon-deep);
+    padding-left:   10px;
+}
+
+/* ---- grille "Latest Posts" ---- */
+
+div.post-grid{
+    display:                 grid;
+    grid-template-columns:   repeat(auto-fill, minmax(230px, 1fr));
+    gap:                     26px;
+}
+
+article.post-card{
+    border:             1px solid var(--line);
+    background:         rgba(255,255,255,0.02);
+    display:            flex;
+    flex-direction:     column;
+}
+
+img.post-img{
+    width:          100%;
+    aspect-ratio:   4 / 3;
+    object-fit:     cover;
+    border-style:   none;
+    box-shadow:     inset 0 0 0 1px rgba(224,180,92,0.25);
+}
+
+div.post-card-body{
+    padding:        18px 20px 22px;
+    display:        flex;
+    flex-direction: column;
+    flex:           1 1 auto;
+}
+
+h4.post-title{
+    font-family:    'Cinzel', serif;
+    font-weight:    600;
+    font-size:      17px;
+    margin:         0 0 10px 0;
+    color:          var(--cream);
+}
+
+p.post-text{
+    font-size:      13.5px;
+    color:          var(--cream-dim);
+    line-height:    1.6;
+    margin:         0 0 12px 0;
+}
+
+div.post-card-body > p:has(> a.card-link){
+    margin-top:     auto;
+    margin-bottom:  10px;
+}
+
+small.post-date{
+    font-size:      11px;
+    color:          var(--cream-dim);
+    opacity:        .7;
+}
+
+a.card-link{
+    font-family:        'Cinzel', serif;
+    font-size:          11px;
+    letter-spacing:     0.1em;
+    color:              var(--brass-bright);
+    border-bottom:      1px solid var(--brass-bright);
+    padding-bottom:     1px;
     text-decoration:    none;
+    text-transform:     uppercase;
 }
 
-section a.latest-read:hover{
-	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
-	text-decoration: 	none;
-	color: 				black;
+a.card-link:hover{
+    color:        var(--brass);
+    border-color: var(--brass);
 }
 
-section a.latest-read.posts{
-    position:   absolute;
-    bottom:     4rem;
-    left:       1rem;
+/* ---- content-row : Latest Posts + aside côte à côte ---- */
+
+div.content-row{
+    display:            flex;
+    flex-direction:     column;
+    gap:                32px;
 }
 
-section a.latest-read.reviews{
-    position:   absolute;
-    bottom:     1rem;
-    left:       1rem;
+div.content-row > div.posts-col{
+    width: 100%;
 }
 
-section div.latest-footer{
-    padding:            .75rem 1.25rem;
-    background-color:   rgba(0,0,0,.03);
-    border-top:         1px solid rgba(0,0,0,.125);
+@media (min-width: 900px){
+    div.content-row{
+        flex-direction: row;
+        align-items:    flex-start;
+        gap:            40px;
+    }
+
+    div.content-row > div.posts-col{
+        flex:       1 1 480px;
+        min-width:  0;
+        width:      auto;
+    }
 }
+
+/* ---- aside (recherche + sondage) ---- */
 
 aside{
-    background-color:   #251e09;
-    box-shadow:         0px 0px 10px beige;
-    border:             0.1px solid beige;
-    border-radius:      0.5rem;
-    padding:            25px;
-    color:              white;
-    font-size:          0.9em;
-    position:           absolute;
-    top:                32.1rem;
-    left:               58rem;
+    width:              100%;
+    box-sizing:         border-box;
+    margin-top:         20px;
+}
+
+@media (min-width: 900px){
+    aside{
+        flex:       0 0 300px;
+        width:      300px;
+    }
+}
+
+aside div.box{
+    border:         1px solid var(--line);
+    padding:        24px;
+    margin-bottom:  30px;
+}
+
+aside div.box h3{
+    font-family:    'Cinzel', serif;
+    font-size:      16px;
+    letter-spacing: 0.08em;
+    margin:         0 0 18px 0;
+    color:          var(--brass-bright);
 }
 
 aside div.search-home{
     text-align: center;
-    margin:     20px;
 }
 
-aside input.search-home-text{
-    border: 		2px solid beige;
-    background:     #e7e7e7;
-    color: 			black;
-    line-height: 	35px;
-    padding: 		0 10px;
-    margin:         0 6px;
-    border-radius: 	40px;
-    width: 			250px;
+aside form.search-box{
+    display:        flex;
+    align-items:    center;
+    border-bottom:  1px solid var(--line);
+    padding-bottom: 8px;
+    transition:     border-color .2s ease;
 }
 
-aside input.search-home-text:focus{
-    background-color: white;
+aside form.search-box:focus-within{
+    border-color: var(--brass);
 }
 
-aside button.search-home-btn{
+aside input.search-text{
+    flex:               1;
+    border:             none;
+    background:         transparent;
+    box-shadow:         none;
+    color:              var(--cream);
+    padding:            4px 0;
+    font-family:        'Inter', sans-serif;
+    font-size:          13px;
+    -webkit-appearance: none;
+    -moz-appearance:    none;
+    appearance:         none;
+    border-radius:      0;
+}
+
+aside input.search-text::placeholder{
+    color:   var(--cream-dim);
+    opacity: 1;
+}
+
+aside input.search-text:focus{
+    outline: none;
+}
+
+aside input.search-text::-webkit-search-decoration,
+aside input.search-text::-webkit-search-cancel-button,
+aside input.search-text::-webkit-search-results-button,
+aside input.search-text::-webkit-search-results-decoration{
+    -webkit-appearance: none;
+    appearance:         none;
+}
+
+aside button.search-btn{
     background:     none;
-    border: 	    1px solid white;
-    border-radius:  0.5rem; 
-    color: 		    beige;
-    transition:     0.4s;
-    padding:        0.5rem 0.8rem;
+    border:         none;
+    color:          var(--brass-bright);
+    cursor:         pointer;
+    font-size:      15px;
+    padding:        0 0 0 8px;
+    transition:     color .2s ease;
 }
 
-aside button.search-home-btn:hover,
-aside div.poll button:hover{
-    color:              black;
-    background-color:   beige;
+aside button.search-btn:hover{
+    color: var(--brass);
 }
 
-aside div.poll{
-    border:     2px solid white;
-    padding:    35px;
-    margin:     40px 0 30px 0;
-    color:      beige;
-}
-
-aside div.poll h1{
-    text-decoration:    underline;
-    margin-bottom:      20px;
+aside div.poll p.poll-q{
+    font-size:      13px;
+    margin:         0 0 14px 0;
+    color:          var(--cream-dim);
 }
 
 aside div.poll-radio{
-    margin-left: 20px;
+    display:        flex;
+    align-items:    center;
+    gap:            10px;
+    padding:        8px 0;
+    font-size:      13px;
+    color:          var(--cream-dim);
+}
+
+aside div.poll-radio input[type="radio"]{
+    -webkit-appearance: none;
+    -moz-appearance:    none;
+    appearance:         none;
+    width:              10px;
+    height:             10px;
+    margin:             0;
+    border:             1px solid var(--brass);
+    background:         transparent;
+    transform:          rotate(45deg);
+    cursor:             pointer;
+    flex-shrink:        0;
+    transition:         background-color .15s ease;
 }
 
 aside div.poll button{
-    margin-top:     20px;
-    margin-left:    30px;
-    background:     none;
-    border: 	    1px solid white;
-    border-radius:  0.5rem; 
-    transition:     0.4s;
-    padding:        0.5rem 0.8rem;
-    color:          beige;
-    font-weight:    800;
-}
-
-/*
-    ****    view/blog.php    ****
-*/
-
-h1#title-blog{
-    text-align:     center;
-    margin:         20px;
-    color:          beige;
-    font-family:    fantasy, sans-serif;
-    font-size:      5.5rem;
-}
-
-section.top-blog{
-    border:         1px solid white;
-    height:         500px;
-    background:     #251e09;
-    box-shadow:     0px 0px 10px beige;
-    border-radius:  0.5rem;
-    overflow:       hidden;
-}
-
-section.top-blog h2{
-    margin:         25px 0 20px 45px;
-    color:          beige;
-    text-decoration: underline;
-}
-
-section div.last-post{
-    border:     2px solid #251e09;
-    height:     500px;
-    background: #251e09;
-    box-shadow: 0 25px 30px rgba(0, 0, 0, .5);
-    display:    flex;
-    overflow:   hidden;
-}
-
-section div.img-last-post{
-    width:                  calc(50% - 50px);
-    height:                 100%;
-    box-sizing:             border-box;
-    border-bottom:          400px solid transparent;
-    background-position:    -100px -150px;
-    transform:              skewx(-6deg);
-    transform-origin:       top left;
-}
-
-section div.img-last-post img{
-    min-height: 495px;
-    width:      100%;
-}
-
-section div.content-last-post{
-    width:          calc(60% + 50px);
-    height:         100%;
-    box-sizing:     border-box;
-    padding:        30px 50px;
-    font-family:    sans-serif;
-    color:          #fff;
-}
-
-section div.content-last-post span{
-    position:           relative;
-    top:                15%;
-    left:               80%;
-    background-color:   #454335;
-    padding:            12px;
-    border:             1px solid transparent;
-}
-
-section div.content-last-post a{
-    line-height:        20px;
-    font-weight:        600;
-    font-size:          14px;
-    color:              #fff;
-    text-decoration:    none;
-}
-
-section div.content-last-post span:hover{
-	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
-	text-decoration: 	none;
-    color: 				black;
-    border:             1px solid #fff;
-}
-
-div.bottom-blog{
-    margin-top: 70px;
-    color:      beige;
-}
-
-div.search-blog{
-    border: 1px solid white;
-    width:  300px;
-}
-
-section.all-post{
-    position:           relative;
-    top:                -43px;
-    width:              1085px;
-    border:             1px solid white;
-    border-radius:      0.5rem;
-    background-color:   #251e09;
-    box-shadow:         0px 0px 10px beige;
-    overflow:           hidden;
-}
-
-section.all-post h2#title-for-all-post{
-    margin:         25px 0 -20px 45px;
-    color:          beige;
-    text-decoration: underline;
-}
-
-section div.deck-all-post{
-    display:    flex;
-    flex-flow:  row wrap;
-}
-
-section div.box-all-post{
-    position:           relative;
-    display:            flex;
-    flex-direction:     column;
-    word-wrap:          break-word;
-    margin:             15px 0 15px 15px;
-    max-width:          340px;
-    max-height:         500px;
-    border:             1px solid beige;
-    transition:         .5s;
-}
-
-section div.box-all-post:hover{
-    box-shadow:         0px 0px 10px beige;
-}
-
-section div.img-all-post img{
-    width:      100%;
-    filter:     invert(35%);
-    transition: .5s;
-    height: 228px;
-}
-
-section div.box-all-post:hover div.img-all-post img{
-    filter:     invert(0%);
-    transition: .5s;
-}
-
-section div.content-all-post h2{
-    position:   relative;
-    text-align: center;
-    top:        -6rem;
-}
-
-section div.content-all-post{
-    margin-top: -3.5rem;
-    padding:    1.25rem;
-    flex:       1 1 auto;
-}
-
-section a.read-all-post{
-    position:           absolute;
-    top:                9.5rem;
-    left:               12rem;
-    background-image:   linear-gradient(to right, #251e09, #454335);
-    padding:            5px 12px 8px;
-    margin:             20px;
-    border-radius:      10px;
-    line-height:        20px;
-    font-weight:        600;
-    font-size:          14px;
-    color:              #fff;
-    text-decoration:    none;
-    transition:         0.5s;
-    transform:          translateY(-40px);
-    opacity:            0;
-    visibility:         hidden;
-}
-
-section  div.box-all-post:hover a.read-all-post{
-    visibility: visible;
-    transform:  translateY(0);
-	opacity:    1;
-	visibility: visible;
-}
-
-section a.read-all-post:hover{
-	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
-	text-decoration: 	none;
-	color: 				black;
-}
-
-section div.footer-all-post{
-    padding:            .75rem 1.25rem;
-    background-color:   rgba(0,0,0,.03);
-    border-top:         1px solid rgba(0,0,0,.125);
-}
-
-section div.pagination-all-post{
-    margin: 10px auto;
-    width:  200px;
-}
-
-section div.pagination-all-post ul{
-    display:    flex;
-    padding-left: 0;
-    list-style: none;
-    border-radius: .25rem;
-    text-align: center;
-}
-
-section div.pagination-all-post li.active a,
-section div.pagination-all-post a:hover{
-    color:              black;
-    background-color:   beige;
-}
-
-section div.pagination-all-post a{
-    color:           beige;
-    text-decoration: none;
-    font-weight:     600;
-    font-size:       14px;
-    border:          1px solid beige;
-    margin:          .3rem .1rem;
-    padding:         .5rem;
-}
-
-section div.pagination-all-post li.disabled a{
-    color: #6c757d;
-    pointer-events: none;
-    cursor: auto;
-}
-
-/*
-    ****    form seach reviews/blog.php    ****
-*/
-
-section.all-post form,
-section.all-reviews form{
-    display:    inline-block;
-    position:   relative;
-    top:        .5rem;
-    left:       45rem;
-    transform:  translate(-50%,-50%);
-}
-
-form.search-box{
-    background:     beige;
-    height:         60px;
-    border-radius:  40px;
-    padding:        10px;
-}
-
-button.search-btn{
-    color:              #2f3640;
-    float:              right;
-    width:              40px;
-    height:             40px;
-    border-radius:      50%;
-    background:         beige;
-    display:            flex;
-    justify-content:    center;
-    align-items:        center;
-    transition:         .4s;
-    border:             none;
-}
-
-input.search-text{
+    margin-top:     16px;
+    display:        inline-block;
+    font-family:    'Cinzel', serif;
+    font-size:      11px;
+    letter-spacing: 0.12em;
+    color:          var(--maroon-deep);
+    background:     var(--brass);
+    padding:        9px 20px;
     border:         none;
-    background:     none;
-    outline:        none;
-    float:          left;
-    padding:        0;
-    color:          #2f3640;
-    font-size:      16px;
-    transition:     .4s;
-    line-height:    40px;
-    width:          0px;
+    cursor:         pointer;
+    text-transform: uppercase;
 }
 
-form.search-box:hover > input.search-text{
-    width:      240px;
-    padding:    0 6px;
+aside div.poll button:hover,
+aside button.search-home-btn:hover{
+    background-color: var(--brass-bright);
 }
 
-form.search-box:hover >  button.search-btn,
-form input.search-text:focus > button.search-btn{
-    background: #251e09;
-    color:      beige;
+aside div.poll-radio input[type="radio"]:checked{
+    background: var(--brass);
 }
 
-input.search-text:focus{
-    width: 240px;
+aside div.poll-radio input[type="radio"]:hover{
+    border-color: var(--brass-bright);
 }
 
+/* ---- grille "Latest Reviews" ---- */
 
-/*
-    ****    view/reviews.php    ****
-*/
-
-h1#title-reviews{
-    text-align:     center;
-    margin:         20px;
-    color:          beige;
-    font-family:    fantasy, sans-serif;
-    font-size:      5.5rem;
+div.review-grid{
+    display:                 grid;
+    grid-template-columns:   repeat(auto-fill, minmax(270px, 1fr));
+    gap:                     30px;
 }
 
-.section-last-reviews{
-    border:             1px solid white;
-    border-radius:      0.5rem;
-    background-color:   #251e09;
-    box-shadow:         0px 0px 10px beige;
-    overflow:           hidden;   
+div.review-card{ display:flex; gap:16px; }
+
+img.review-poster{
+    width:          88px;
+    height:         128px;
+    flex-shrink:    0;
+    border:         1px solid var(--line);
+    object-fit:     cover;
 }
 
-section h1{
-    font-size:          2rem;
-    text-decoration:    underline;
-    color:              beige;
-    margin:             20px;
+div.review-body h4{
+    font-family:    'Cinzel', serif;
+    font-size:      15px;
+    margin:         0 0 6px 0;
+    color:          var(--cream);
 }
 
-section div.last-reviews{
-    position:       relative;
-    overflow:       hidden;
-    height:         500px;
-    border-top:     2px solid beige;  
-    background:     #251e09;
-    box-shadow:     0 25px 30px rgba(0, 0, 0, .5);
+div.review-body p{
+    font-size:      12.5px;
+    color:          var(--cream-dim);
+    line-height:    1.6;
+    margin:         0 0 8px 0;
 }
 
-section div.last-reviews figure div.deck-last-reviews{
-    float: left;
-    width: 20%;
+/* ---- footer ---- */
+
+footer.site-footer{
+    background:  var(--maroon);
+    padding:     30px 20px;
 }
 
-section div.img-last-reviews{
-    width:                  40%;
-    height:                 100%;
-    float:                  left;
-    box-sizing:             border-box;
-    border-bottom:          400px solid transparent;
-    background-position:    -100px -150px;
-}
-
-section div.img-last-reviews img{
-    width:      100%;
-    text-align: center;
-    min-height: 500px;
-}
-
-section div.content-last-reviews{
-    width:          60%;
-    height:         100%;
-    float:          right;
-    box-sizing:     border-box;
-    padding:        30px 50px;
-    font-family:    sans-serif;
-    color:          #fff;
-}
-
-section div.content-last-reviews h2{
-    font-size:  3rem;
-    color:      beige;
-}
-
-section div.content-last-reviews span{
-    position:           absolute;
-    transform:          translate(625%, -50%);
-    top:                400px;
-    background-color:   #454335;
-    padding:            12px;
-    border:             1px solid transparent;
-}
-
-section div.content-last-reviews a{
-    line-height:        20px;
-    font-weight:        600;
-    font-size:          14px;
-    color:              #fff;
-    text-decoration:    none;
-}
-
-section div.content-last-reviews span:hover{
-	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
-	text-decoration: 	none;
-    color: 				black;
-    border:             1px solid #fff;
-}
-
-section div.last-reviews figure{
-    position: absolute;
-    /* position:   relative;*/
-    width:      500%;
-    /* height:     500px; */
-    margin:     0px;
-    left:       0;
-    /* animation:  20s slide infinite; */
-}
-
-section div.last-reviews figure:nth-child(1){
-    left:       0px;
-    animation:  sliderfirst 45s linear infinite;
-}
-
-section div.last-reviews figure:nth-child(2){
-    left:       1450px;
-    animation:  slidersecond 45s linear infinite;
-}
-
-section div.last-reviews figure:nth-child(3){
-    left:       2900px;
-    animation:  sliderthird 45s linear infinite;
-}
-
-section div.last-reviews figure:nth-child(4){
-    left:       4350px;
-    animation:  sliderfourth 45s linear infinite;
-}
-
-section div.last-reviews figure:nth-child(5){
-    left:       -2800px;
-    animation:  sliderfifth 45s linear infinite;
-}
-
-@keyframes sliderfirst{
-    0%{ 
-        left: 0px; 
-    }
-    10%{
-        left:0px;
-    }
-    19%{
-        left: -1400px;
-        opacity: 1;
-    }
-    20%{
-        left: -2800px;
-        opacity: 0;
-    }
-    40%{
-        left: 4000px;
-        opacity: 0;
-    }
-    60%{
-        left: 2800px;
-    }
-    80%{
-        left: 1450px;
-    }
-    90%{
-        left: 1450px;
-    }
-    99%{
-        left: 0px;
-        opacity: 1;
-    }
-    100%{
-        left: 0px;
-    }
-}
-
-@keyframes slidersecond{
-    0%{ 
-        left: 1450px; 
-    }
-    10%{
-        left: 1450px;
-    }
-    19%{
-        left: 0px;
-        opacity: 1;
-    }
-    30%{
-        left:0px;
-        opacity: 1;
-    }
-    39%{
-        left: -1400px;
-        opacity: 1;
-    }
-    40%{
-        left: -2800px;
-        opacity: 0;
-    }
-    60%{
-        left: 4000px;
-        opacity: 0;
-    }
-    80%{
-        left: 2800px;
-    }
-    100%{
-        left: 1450px;
-    }
-}
-
-@keyframes sliderthird {
-    0%{ 
-        left: 2900px; 
-    }
-    20%{
-        left: 1450px;
-    }
-    30%{
-        left: 1450px;
-    }
-    39%{
-        left: 0px;
-        opacity: 1;
-    }
-    50%{
-        left:0px;
-        opacity: 1;
-    }
-    59%{
-        left: -1400px;
-        opacity: 1;
-    }
-    60%{
-        left: -2800px;
-        opacity: 0;
-    }
-    80%{
-        left: 4000px;
-        opacity: 0;
-    }
-    100%{
-        left: 2900px;
-    }
-}
-
-@keyframes sliderfourth {
-    0%{ 
-        left: 4350px; 
-    }
-    20%{
-        left: 2900px;
-    }
-    40%{
-        left: 1450px;
-    }
-    50%{
-        left: 1450px;
-    }
-    59%{
-        left: 0px;
-        opacity: 1;
-    }
-    70%{
-        left:0px;
-        opacity: 1;
-    }
-    79%{
-        left: -1400px;
-        opacity: 1;
-    }
-    80%{
-        left: -2800px;
-        opacity: 0;
-    }
-    100%{
-        left: 4350px;
-        opacity: 0;
-    }
-}
-
-@keyframes sliderfifth {
-    0%{ 
-        left: -2800px; 
-        opacity: 0;
-    }
-    20%{
-        left: 4350px;
-        opacity: 0;
-    }
-    40%{
-        left: 2900px;
-    }
-    60%{
-        left: 1450px;
-    }
-    70%{
-        left: 1450px;
-    }
-    79%{
-        left: 0px;
-        opacity: 1;
-    }
-    90%{
-        left:0px;
-        opacity: 1;
-    }
-    99%{
-        left: -1400px;
-        opacity: 1;
-    }
-    100%{
-        left: -2800px;
-        opacity: 0;
-    }
-}
-
-div.bottom-reviews{
-    margin: 50px 0;
-    color: beige;
-}
-
-section.all-reviews{
-    position:           relative;
-    top:                -20px;
-    left:               325px;
-    width:              900px;
-    min-height:         685px;
-    border:             1px solid white;
-    border-radius:      0.5rem;
-    background-color:   #251e09;
-    box-shadow:         0px 0px 10px beige;
-    overflow:           hidden;
-}
-
-section.all-reviews h1{
-    margin:         25px 0 -20px 45px;
-    color:          beige;
-    text-decoration: underline;
-}
-
-section div.deck-all-reviews{
-    display:            flex;
-    flex-flow:          row wrap;
-    justify-content:    space-around
-}
-
-section div.box-all-reviews{
-    position:           relative;
-    word-wrap:          break-word;
-    margin:             10px 10px;
-    width:              275px;
-    height:             450px;
-    border:             1px solid beige;
-    background:         rgb( 78, 77, 67);
-    overflow:           hidden;
-}
-
-section div.box-all-reviews div.img-all-reviews{
-    position: 			absolute;
-    bottom: 			0;
-    left: 				0;
-    width:              100%;
-    display: 			flex;
-    justify-content: 	center;
-	align-items: 		center;
-	overflow: 			hidden;
-}
-
-section div.box-all-reviews div.img-all-reviews img{
-    min-width:  340px;
-    min-height: 500px;
-    opacity:    1;
-    transition: 1.25s;
-}
-
-section div.box-all-reviews:hover div.img-all-reviews img{
-    opacity:	0;
-    width:      0;
-}
-
-section div.box-all-reviews div.content-all-reviews{
-    height:     100%;
-    width:      100%;
-    box-sizing: border-box;
-    padding:    2rem;
-    transition: 1s;
-    opacity:    0; 
-}
-
-section div.box-all-reviews:hover div.content-all-reviews{
-    z-index: 1000;
-    opacity: 1; 
-}
-
-section div.box-all-reviews:hover div.content-all-reviews:after{
-    content:        url(../img/other/film.png);
-    position:       absolute;
-    bottom:         10%;
-    opacity:        .1;
-    pointer-events: none;
-    rotate:         60deg;
-}
-
-section div.box-all-reviews div.content-all-reviews h2{
-    margin-bottom:  1rem; 
-    text-align:     center;
-}
-
-section div.box-all-reviews div.content-all-reviews h2.short-title{
-    margin-bottom: 2rem;
-}
-
-section div.box-all-reviews div.content-all-reviews p{
-    margin:     2rem 0;
-    text-align: justify;
-}
-
-section div.box-all-reviews div.content-all-reviews a{
-    position:           absolute;
-    text-decoration:    none;
-    top:                27rem;
-    left:               5rem;
-    background-image:   linear-gradient(to right, #251e09, #454335);
-    padding:            12px 8px;
-    border-radius:      10px;
-    line-height:        20px;
-    font-weight:        600;
-    font-size:          14px;
-    color:              #fff;
-    height:             3rem;
-    width:              50%;
-    text-align:         center;
-    z-index:            2000;
-}
-
-section div.box-all-reviews div.content-all-reviews a:hover{
-	background-image: 	linear-gradient(to right, #9e9978, #9e955e);
-	text-decoration: 	none;
-	color: 				black;
-}
-
-section div.pagination-all-reviews{
-    margin: 10px auto;
-    width:  200px;
-}
-
-section div.pagination-all-reviews ul{
+div.footer-inner{
+    max-width:      1160px;
+    margin:         0 auto;
     display:        flex;
-    padding-left:   0;
-    list-style:     none;
-    border-radius:  .25rem;
-    text-align:     center;
+    flex-wrap:      wrap;
+    align-items:    center;
+    justify-content: space-between;
+    gap:            16px;
 }
 
-section div.pagination-all-reviews li.active a{
-    color:              black;
-    background-color:   beige;
-}
-
-section div.pagination-all-reviews a{
-    color:           beige;
-    text-decoration: none;
-    font-weight:     600;
-    font-size:       14px;
-    border:          1px solid beige;
-    margin:          .3rem .1rem;
-    padding:         .5rem;
-}
-
-section div.pagination-all-reviews a:hover{
-    color:              black;
-    background-color:   beige;
-}
-
-section div.pagination-all-post li.disabled a{
-    color:          #6c757d;
-    pointer-events: none;
-    cursor:         auto;
-}
-
-aside.date-reviews{
-    background-color:   #251e09;
-    box-shadow:         0px 0px 10px beige;
-    border:             0.1px solid beige;
-    border-radius:      0.5rem;
-    color:              white;
-    font-size:          0.9em;
-    width:              300px;
-    left:               auto;
-    top:                auto;
-    display:            flex;
-    flex-direction:     column;
-    padding:            15px 15px;
-}
-
-aside.date-reviews h2{
-    color:              beige;
-    text-decoration:    underline;
-    margin-bottom:      2rem;
-    font-size:          1.5rem;
-}
-
-aside.date-reviews a.list-item,
-#display-all-movies{
-    text-decoration:    none;
-    width:              120px;
-    text-align:         center;
-    display:            block;
-    padding:            .75rem 1.25rem;
-    margin-bottom:      -1px;
-    background-color:   rgb( 78, 77, 67);
-    color:              #fff;
-    border:             1px solid rgba(0,0,0,.125);
-    margin-left:        2rem;
-}
-
-aside.date-reviews .list-item.years{
-    background-color:   transparent;
-    color:              white;
-    border:             0;
-}
-
-aside.date-reviews a.list-item.decades:hover{
-    background-color: rgb( 44, 44, 38);
-}
-
-aside.date-reviews .list-item.years:hover{
-    background-color: rgb(  202, 202, 162)
-}
-
-aside.date-reviews a.list-item.decades:first-child{
-    border-top-left-radius: .3rem;
-    border-top-right-radius:.3rem;
-}
-
-aside.date-reviews a.list-item.decades:last-child{
-    border-bottom-left-radius: .3rem;
-    border-bottom-right-radius:.3rem;
-}
-
-aside.date-reviews a.list-item.decades.active{
-    background-color:   white;
-    color:              #372c0c;
-    border-color:       transparent;
-    z-index:            0;
-}
-
-aside.date-reviews a.list-item.years.active{
-    background-color:   #fff;
-    color:              #372c0c;
-}
-
-aside.date-reviews a.list-item.years.disabled{
-    color:          grey;
-    pointer-events: none;
-    cursor:         not-allowed;
-}
-
-#display-all-movies.disabled{
-    background-color:   white;
-    color:              #372c0c;
-}
-
-#display-all-movies.active{
-    color:              white;
-}
-
-/*
-    ****    view/post.php    ****
-*/
-
-section.post,
-section.film,
-section.content-film article{
-    padding:            1rem;
-    margin:             1.5rem 0;
-    overflow:           hidden;  
-    color:              beige;
-    background-color:   #251e09;
-    border:             1px solid white;
-    border-radius:      0.5rem;
-    box-shadow:         0px 0px 10px beige;
-}
-
-section.post h2,
-section.film h2{
-    text-align:         center;
-    font-size:          2rem;
-    text-decoration:    underline;
-    margin:             2rem;
-}
-
-section div.comment-user{
-    border:     1px solid beige;
-    padding:    0 1.5rem 1.5rem 1.5rem;
-    margin:     1.3rem 0;
-}
-
-section.post span.photo-profile{
-    display:        inline-block;
-    position:       relative;
-    top:            2.5rem;
-    background:     beige;
-    border-radius:  50%;
-    width:          60px;
-    height:         60px;
-    border:         2px solid black;
-    overflow:       hidden;   
-}
-
-section.post span.photo-profile.member{
-    border: 3px solid rgb(89, 0, 255);
-}
-
-section.post span.photo-profile.admin{
-    border: 3px solid red;
-}
-
-section.post span.photo-profile img{
-    width:  100%;
-    height: 100%;
-}
-
-section.post h3{
-    font-size:          1rem;
-    margin-left:        4.5rem;
-    text-decoration:    underline;
-}
-
-section.post p.total-comments{
-    margin-left:        2.5rem;
-    font-size:          1.3rem;
-    text-decoration:    underline;
-    font-weight:        500;
-}
-
-section.post p.comment-content{
-    margin: 2rem 0 0 2.5rem;
-}
-
-section.post p.comment-empty{
-    margin: 2rem 2.5rem;
-}
-
-section.post span.date-comment{
-    float:      right;
-    font-size:  12px;
-}
-
-section.post form{
-    display:    flex;
-    flex-flow:  column wrap;
-}
-
-section.post.write-comment{
-    padding: 2.5rem 0;
-}
-
-section.post form label{
-    font-size:          1rem;
-    font-weight:        600;
-    text-decoration:    underline;
-    line-height:        1.5;
-    padding-top:        calc(.375rem + 1px);
-    padding-bottom:     calc(.375rem + 1px);
-}
-
-section.post form small{
-    margin: 0 auto 1.5rem 4.5rem;
-}
-
-section.post form input, 
-section.post form textarea {
-    border:         2px solid #372c0c;
-    border-radius:  0.5rem;
-    display:        block;
-    width:          90%;
-    margin:         auto;
-    height:         calc(1.5em + .75rem + 2px);
-    padding:        .5rem .8rem;
-    font-size:      1rem;
-    font-weight:    400;
-    line-height:    1.5;
-}
-
-section.post form textarea{
-    height: 20rem;
-}
-
-section.post form input:focus, 
-section.post form textarea:focus{
-    border: .15rem solid skyblue;
-}
-
-section.post form button{
-    display:            inline-block;
-    cursor:             pointer;
-    border:             2px solid beige;
-    background-color:   #372c0c;
-    color:              beige;
-    width:              10rem;
-    font-weight:        600;
-    font-size:          1.2rem;
-    margin:             1rem auto;
-    padding:            .4rem .8rem;
-    line-height:        1.5;
-    border-radius:      .25rem;
-    user-select:        none;
-}
-
-section.post div.vote{
-	width: 	150px;
-    float: 	right;
-    margin: 0 2rem 1.5rem 0;
-}
-
-section.post .vote-form {
-	display: inline-block;
-}
-
-section.post div.vote-bar{
-	width: 				100%;
-	height: 			4px;
-	background-color: 	#f2504b;
-}
-
-section.post div.vote-progress{
-    width: 				0%;
-    height: 			4px;
-    background-color: 	#63b96b;
-}
-
-section.post div.vote-btns{
-	margin-top: 10px;
-	text-align: right;
-}
-
-section.post button.vote-btn{
-	width:      2rem;
-    font-size:  1rem;
-    margin:     0 .6rem;
-    padding:    .4rem;
-    border:     none;
-    background: transparent;
-    display:    ruby-text-container;
-}
-
-section.post button.vote-like:hover, 
-section.post .is-liked button.vote-like{
-	color: #63b96b;
-}
-
-section.post button.vote-dislike:hover, 
-section.post .is-disliked button.vote-dislike{
-	color: #f2504b;
-}
-
-section.write-comment p.error,
-section.write-comment p.success{
-    color:          #372c0c;
-    background:     beige;
-    padding:        1rem;
-    border-radius:  40px;
+p.footer-brand{
+    font-family:    'Cinzel', serif;
     font-weight:    600;
-    margin:         .5rem 2rem;
-}
-
-section.post.write-comment textarea + p.error,
-section.post.write-comment p.success{
-    margin-top : 1.5rem;
-}
-
-/*
-    ****    view/film.php    ****
-*/
-
-section.header-film h1, 
-section.header-film p{
-    text-align: center;
-}
-
-section.header-film h1{
-    font-size: 7rem;
-}
-
-section.header-film img{
-    float:  left;
-    width:  200px;
-    height: 250px;
-}
-
-section.content-film{
-    display:            flex;
-    vertical-align:     wrap;
-    justify-content:    space-between;
-}
-
-section.content-film article.info-film{
-    width: 28%;
-}
-
-section.content-film article.info-film table, 
-th, 
-td{
-    border-collapse:    separate;
-}
-
-section.content-film article.info-film td,
-section.content-film article.info-film th{
-    border:         0px;
-    text-align:     left;
-}
-
-section.content-film article.info-film th{
-    white-space:    nowrap;
-    padding-right:  1.5em;
-    vertical-align: top;
-    line-height:    2em;
-}
-
-section.content-film article.info-film ul{
-    list-style:     none;
-    line-height:    inherit;
+    letter-spacing: 0.1em;
+    color:          var(--cream);
     margin:         0;
-    padding:        5px 0 0 0;
+    font-size:      15px;
 }
 
-section.content-film article.info-film p.reference{
-	margin-top: 1rem; 
-    font-size: .7rem;
+nav.footer-links{
+    display: flex;
+    gap:     26px;
 }
 
-section.content-film article.review-film{
-    width: 71%;
+nav.footer-links a{
+    font-family:    'Inter', sans-serif;
+    font-size:      12.5px;
+    color:          var(--cream-dim);
+    text-decoration: none;
+    transition:     color .15s ease;
 }
 
-section.film span.photo-profile{
-    display:        inline-block;
-    position:       relative;
-    top:            2.5rem;
-    background:     beige;
-    border-radius:  50%;
-    width:          60px;
-    height:         60px;
-    border:         2px solid black;
-    overflow:       hidden;   
+nav.footer-links a:hover{
+    color: var(--brass-bright);
 }
 
-section.film span.photo-profile.member{
-    border: 3px solid rgb(89, 0, 255);
+p.footer-copy{
+    font-size:  11.5px;
+    color:      var(--cream-dim);
+    opacity:    .7;
+    margin:     0;
 }
 
-section.film span.photo-profile.admin{
-    border: 3px solid red;
+/* ---- pages légales (mentions, confidentialité) ---- */
+
+div.legal-page{
+    max-width: 760px;
+    margin:    0 auto;
+    padding:   50px 20px 80px;
 }
 
-section.film span.photo-profile img{
-    width:  100%;
-    height: 100%;
-}
-
-section.film h3 {
-    font-size:      1rem;
-    margin-left:    4.5rem;
-}
-
-section.film p.total-comments{
-    margin-left:        2.5rem;
-    font-size:          1.3rem;
-    text-decoration:    underline;
-}
-
-section.film p.comment-content{
-    margin: 2rem 0 0 2.5rem;
-}
-
-section.film p.comment-empty{
-    margin: 2rem 2.5rem;
-}
-
-section.film span.rating-user{
-    float:      right;
-    font-size:  12px;
-}
-
-section.film form{
-    display:    flex;
-    flex-flow:  column wrap;
-    text-align: left;
-}
-
-section.film form label, 
-section.film form h3{
-    font-size:          1rem;
-    font-weight:        600;
-    text-decoration:    underline;
-    line-height:        1.5;
-    padding-left:       15px;
-    padding-top:        calc(.375rem + 1px);
-    padding-bottom:     calc(.375rem + 1px);
-    margin-left:        2.5rem;
-}
-
-section.film form small{
-    margin: 0 auto 1.5rem 4.5rem;
-}
-
-section.film form input[type=text], 
-section.film form textarea {
-    border:         2px solid #372c0c;
-    border-radius:  0.5rem;
-    display:        block;
-    width:          90%;
-    margin:         auto;
-    height:         calc(1.5em + .75rem + 2px);
-    padding:        .5rem .8rem;
-    font-size:      1rem;
-    font-weight:    400;
-    line-height:    1.5;
-}
-
-section.film form textarea{
-    height:         20rem;
-    margin-bottom:  2.5rem;
-}
-
-section.film form input:focus, 
-section.film form textarea:focus{
-    border: .15rem solid skyblue;
-}
-
-section.film form div:first-of-type{
-    margin-left: 3em;
-}
-
-section.film form div.rating-film{
-    margin-left:    6em;
-    transform:      translate(-85%) rotateY(180deg);
-}
-
-section.film form div.rating-film input,
-section.film form div:first-of-type input{
-    display: none;
-}
-
-section.film form div:first-of-type label{
-    text-decoration:    none;
-    font-size:          1.8em;
-    transition:         all 0.2s ease-in;
- }
-
-section.film form div.rating-film label{
-    text-decoration:    none;
-    margin-left:        0em;
-    padding-left:       0em;
-    font-size:          2em;
-    width:              .7em;
-    transition:         all 0.2s ease-in;
-}
-
-section.film form div.rating-film input:not(:checked) ~ label:hover,
-section.film form div.rating-film input:not(:checked) ~ label:hover ~ label,
-input#rating-film-5:checked ~ label:hover ~ label,
-input#rating-film-5:checked ~ label:hover{
-    color: #49aab0;
-}
-
-section.film form input:checked ~ label{
-    color: #ffdd44;
-}
-
-section.film form input#rating-film-0:checked ~ label{
-    color: #1ed009 ;
-}
-  
-section.film form input#rating-film-5:checked ~ label{
-    color:          #ffee77;
-    text-shadow:    10px 0 20px #952, 0 0 30px #952, -10px 0px 20px #952;
-}
-
-section.film form #display-rating-film{
-    position:       relative;
-    top:            -55px;
-    left:           330px;
+div.legal-page h1{
+    font-family:    'Cinzel', serif;
     font-weight:    600;
-    font-size:      1.5em;
-    transition:     all 0.2s ease;
+    font-size:      32px;
+    color:          var(--cream);
+    margin:         0 0 30px 0;
 }
 
-section.film form #display-rating-film:after{
-    padding-left: .8em;
+div.legal-page h2{
+    font-family:    'Cinzel', serif;
+    font-weight:    600;
+    font-size:      18px;
+    letter-spacing: 0.04em;
+    color:          var(--brass-bright);
+    margin:         36px 0 12px 0;
 }
 
-section.film form .rate-0::after{
-    content: "Worst moment of my life!!! 🤮";
+div.legal-page p,
+div.legal-page li{
+    font-size:   14.5px;
+    line-height: 1.7;
+    color:       var(--cream-dim);
 }
 
-section.film form .rate-1::after{
-    content: "Forgettable";
+div.legal-page ul{
+    margin:      0;
+    padding-left: 20px;
 }
 
-section.film form .rate-2:after{
-    content: "Tolerable";
+div.legal-page li{
+    margin-bottom: 6px;
 }
 
-section.film form  .rate-3:after{
-    content: "Good!";
-}
-
-section.film form  .rate-4:after{
-    content: "Great movie!";
-}
-
-section.film form .rate-5:after{
-    content: "Excellent!!! 😍";
-}
-
-section.film form button{
-    display:            inline-block;
-    cursor:             pointer;
-    border:             2px solid beige;
-    background-color:   #372c0c;
-    color:              beige;
-    width:              10rem;
-    font-weight:        600;
-    font-size:          1.2rem;
-    margin:             1rem auto;
-    padding:            .4rem .8rem;
-    line-height:        1.5;
-    border-radius:      .25rem;
-    user-select:        none;
-}
-
-section span.spoiler{
-	display: 	inline-block;
-	background: beige;
-}
-
-section span.spoiler.visible{
-	display: 	inline;
-	background: transparent;
-}
-
-section span.spoiler-content{
-	display: 	inline-block;
-	width: 		0;
-	height: 	0;
-	overflow: 	hidden;
-	opacity: 	0;
-	transition: opacity 0.5s;
-}
-
-section span.spoiler-content.visible{
-	display: 	inline;
-	color: 		red;
-	opacity: 	1;
-}
-
-section span.spoiler-header{
-    color: 		black;
-    padding:    .5rem;
-}
-
-/*
-    ****   view/forum.php   ****
-*/
-
-section.forum h2 a,
-section.forum h2 a:hover,
-section.forum,
-p.path-forum,
-h1.title-forum,
-section.forum a{
-    color: beige;
-}
-
-h1.title-forum{
-    text-align:     center;
-    margin:         20px;
-    font-family:    fantasy, sans-serif;
-    font-size:      5.5rem;
-}
-
-p.path-forum{
-    margin: 2rem 2rem;
-}
-
-section.forum{
-    border:             1px solid white;
-    border-radius:      0.5rem;
-    background-color:   #251e09;
-    box-shadow:         0px 0px 10px beige;
-    overflow:           hidden;  
-    margin: 		    30px 0;
-}
-
-section.forum h2{
-    margin:             20px 0 15px 40px;
-    text-decoration:    underline;
-    font-size:          1.5rem;
-}
-
-section.forum h2 a:hover{
-    text-decoration:    underline #dadaa0;
-    color:              #dadaa0;
-}
-
-section.forum div.separate-forum{
-    width: 			    100%;
-    height: 			2px;
-    background-color:   beige;
-    box-shadow:         0px 0px 10px beige;
-}
-
-section.forum.welcome p, 
-ul{
-    margin:         20px 25px;
-    text-align:     justify;
-    line-height:    1.5;
-}
-
-section.forum.welcome p:first-of-type{
-    margin-top: 40px;
-}
-
-section.forum.welcome p:last-of-type{
-    margin-bottom:  40px;
-    font-size:      1.5rem
-}
-
-section.forum.welcome strong{
-    margin-left:        25px;
-    text-decoration:    underline;
-}
-
-section.forum td {
-    border: 1px solid beige;
-}
-
-section.forum table{
-    border:             2.5px solid beige;
-    border-collapse:    collapse;
-    text-align:         center;
-}
-
-section.forum th{
-    background: beige;
-    color:      #251e09;
-    border:     1px solid #251e09;
-}
-
-section.forum.home td:first-of-type{
-    text-align:     left;
-    padding-left:   2.5rem;
-}
-
-section.forum tr{
-    height: 3rem;
-}
-
-section.forum a:hover,
-p.path-forum a:hover{
-    text-decoration:    none #dadaa0;
-    color:              #dadaa0;
-}
-
-p.path-forum a{
-    color:          beige;
+div.legal-page a{
+    color:           var(--brass-bright);
     text-decoration: underline;
 }
 
-/*
-    **** view/forum/category ****
-*/
-
-section.forum.category p{
-    margin:         20px 25px;
-    text-align:     justify;
-    line-height:    1.5;
-}
-
-section.category td:first-of-type{
-    text-align:     left;
-    padding-left:   2.5rem;
-}
-
-/*
-    **** view/forum/subCategory ****
-*/
-
-section.topic td.no-resolved{
-    color: green;
-}
-
-section.topic td.resolved{
-    color: red;
-}
-
-section.topic td.pending{
-    color: yellow;
-}
-
-section.forum.topic td:nth-child(2){
-    text-align:     left;
-    padding-left:   2.5rem;
-}
-
-section.forum.topic p{
-    margin: 1.5rem;
-}
-
-section.forum.topic a.link-add-topic{
-    position:       relative;
-    float:          right;
-    top:            -2.5rem;
-    margin-right:   2rem;
-}
-
-section.forum a.disabled{
-    pointer-events: none;
-    cursor:         auto;
-}
-
-/*
-    **** view/forum/addTopic ****
-*/
-
-section.forum.add-topic form{
-    margin: 3rem auto;
-    width:  1000px;
-}
-
-section.forum.add-topic label {
-    display:      inline-block;
-    width:        210px;
-    text-align:   right;
-    margin:       1.5rem;
-}
-
-section.forum.add-topic label.subject {
-    margin-top: 0;
- }
-
-section.forum.add-topic input, 
-section.forum.add-topic textarea {
-    font:           1em sans-serif;
-    width:          700px;
-    box-sizing:     border-box;
-    border:         2px solid beige;
-    padding:        .5rem;
-    border-radius:  5px;
-}
-
-section.forum.add-topic option{
-     width: 675px;
-}
-
-section.forum.add-topic input:focus, 
-textarea:focus {
-    border-color: #7aa7bd;
-}
-
-section.forum.add-topic textarea {
-    vertical-align: top;
-    margin-bottom: 1rem;
-}
-
-section.forum.add-topic div.success-button{
-    display: flex;
-    justify-content: center;
-}
-
-section.forum.add-topic input[type="submit"],
-section.forum.add-topic div.success-button input{
-	border:         2px solid #372c0c;
-    color:          #372c0c;
-	background:     beige;
-	padding:        10px;
-	cursor:         pointer;
-    border-radius:  5px;
-    font-weight:    1000;
-    font-size:      1rem;
-    width:          20rem;
-    box-shadow:     0px 0px 10px beige;
-}
-
-section.forum.add-topic input[type="submit"]{
-    margin: 2rem 16.5rem;
-}
-
-section.forum.add-topic div.success-button input{
-    margin: 2rem;
-}
-
-section.forum.add-topic input[type="submit"]:hover,
-section.forum.add-topic div.success-button input:hover{
-    background-color:#bfbea0;
-}
-
-section.forum.add-topic p.error{
-    text-align: left;
-    position:   relative;
-    left:       19rem;
-}
-
-/*
-    **** view/forum/topic ****
-*/
-
-section.forum.message div.row{
-    border-bottom: 3px solid;
-}
-
-section.forum.message div.title-topic{
-    display:            flex;
-    justify-content:    space-between;
-    justify-items:      center;
-}
-
-section.forum.message a.close-topic{
-    margin: 20px 40px 0 0;
-}
-
-section.forum.message div.pseudo{
-    width:      13rem;
-    min-height: 15rem;
-    text-align: center;
-    background: rgba( 251, 250, 218, .5);
-    padding:    2rem;
-    border:     1px solid;
-}
-
-section.forum.message div.pseudo img{
-    border-radius:  50%;
-    width:          90px;
-    height:         90px;
-    overflow:       hidden; 
-}
-
-section.forum.message p{
-    padding: 1rem 1rem 0 1rem;
-}
-
-section.forum.message div.subject{
-    background: rgba( 251, 250, 218, .2);
-}
-
-section.forum.message div.content, 
-section.forum.message div.subject{
-   width: 82.5%;
-}
-
-section.forum.message div.content p:first-of-type, 
-section.forum.message div.subject p:first-of-type{
-    font-size:          .9rem;
-    text-decoration:    underline;
-}
-
-h2.title-message-bottom{
-    color:      beige;
-    font-size:  1rem;
-    margin:     1rem 2rem
-}
-
-form{
-    text-align: center;
-}
-
-form label{
-    color:              beige;
-    margin-right:       1rem;
-    text-decoration:    underline;
-}
-
-form textarea{
-    border:         2px solid #372c0c;
-    box-shadow:     0px 0px 10px beige;
-    font:           1em sans-serif;
-    padding:        .5rem;
-    vertical-align: top;
-    border-radius:  5px;
- }
-
-form.write-message input[type="submit"]{
-	border:         2px solid #372c0c;
-    color:          #372c0c;
-	background:     beige;
-	padding:        10px;
-	cursor:         pointer;
-    border-radius:  5px;
-    font-weight:    1000;
-    font-size:      1rem;
-    margin:         2rem 8.5rem;
-    width:          10rem;
-    box-shadow:     0px 0px 10px beige;
-}
-
-form.write-message input[type="submit"]:hover{
-    background-color:#bfbea0;
-}
-
-form.write-message p.error,
-form.write-message p.success{
-    color:      beige;
-    font-size:  1.2rem;
-    margin:     2rem;
-}
-
-
-/*
-    **** view/presentationAdmin ****
-*/
-
-h1.admin-page{
-    text-align:     center;
-    margin:         50px;
-    color:          beige;
-    font-family:    fantasy, sans-serif;
-    font-size:      5.5rem;
-} 
-
-h2.title-admin-page{
-    text-align:         center;
-    color:              beige;
-    filter:             drop-shadow(5px 5px 3px #dadaa0);
-    font-size:          2.5em;
-    text-decoration:    underline;
-}
-
-div.profile-box{
-    border:             1px solid white;
-    border-radius:      0.5rem;
-    background-color:   #251e09;
-    box-shadow:         0px 0px 10px beige;
-    overflow:           scroll;  
-	padding : 			10px;
-    margin: 		    30px 0;
-    color:              beige;
-    width:              400px;
-    height:             290px;
-    position:           relative;
-    transition:         .5s;
-}
-
-section.modo-row div.profile-box{
-    width:              300px;
-    height:             290px;
-
-}
-
-section.admin-row, 
-section.modo-row{
-    display:            flex;
-    justify-content:    space-between;
-    flex-wrap:          wrap;
-    width:              95%;
-    margin:             auto;
-}
-
-div.profile-box img{
-    width:      100px;
-    position:   absolute;
-    top:        20px;
-    right:      20px;
-    
-}
-
-div.profile-box h4{
-    margin-top:     1em;
-    margin-left:    1em;
-    color:          #2196f3;
-}
-
-section.admin-row div.profile-box h4{
-    color: #2196f3;
-}
-
-div.social-box{
-    background:     beige;
-    margin:         60px auto 20px;
-    text-align:     center;
-    border-radius:  3px;
-    color:          #251e09;
-}
-
-div.social-box .fab{
-    margin: 0 15px;
-    cursor: pointer;
-}
-
-div.profile-box p{
-    text-align: center;
-}
-
-div.profile-box img:hover{
-    width: 350px;
-}
-
-section.modo-row div.profile-box img:hover{
-    width: 260px;
-}
-
-div.profile-box:hover{
-    background: beige;
-}
-
-div.profile-box:hover p{
-    color: #251e09;
-}
-
-.profile-box:hover .social-box{
-    background: #251e09;
-}
-
-.profile-box:hover .social-box .fab{
-    color: beige;
-}
-
-#separate-admin{
-    margin: 	        70px auto 50px auto;
-    width: 			    50%;
-    height: 			4px;
-    background-color:   beige;
-    border-radius:      50%;
-    filter:             blur(0.5px);  
-}
-
-/*
-    ****view/search****
-*/
-
-.section-error{
-    box-shadow: 0px 0px 10px beige;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    background: #251e09;
-}
-
-.result-search{
-    border:     2px solid beige;
-    box-shadow: 0 25px 30px rgba(0, 0, 0, .5);
-    margin:     2rem 1rem;
-}
-
-.section-error,
-.result-search{
-    color: beige;
-    padding: 2rem;
-}
-
-#p-error{
-    padding: 2rem;
-    text-align: center;
-    font-size: 1.3rem;
-}
-
-.section-error .result-search:hover{
-    background-image: linear-gradient(to right, #251e09, #3a3511);
-}
-
-.section-error a:hover{
-    text-decoration: none;
+div.legal-page a:hover{
+    color: var(--brass);
 }

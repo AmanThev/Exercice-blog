@@ -112,6 +112,16 @@ class Database extends Connection
         return true;
     }
 
+    public function existCaseInsensitive(string $field, string $key, string $tableName): bool
+    {
+        $stmt = $this->connect()->prepare("SELECT $field FROM $tableName WHERE LOWER($field) = LOWER(:keyValue)");
+        $stmt->execute(['keyValue' => $key]);
+        if($stmt->rowCount() == 1){
+            return false;
+        }
+        return true;
+    }
+
     public static function hydrate($object, array $data): void
     {
         foreach($data as $key => $value){

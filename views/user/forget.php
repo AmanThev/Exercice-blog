@@ -2,33 +2,49 @@
 
 use App\URL\CreateUrl;
 use App\Form\PasswordReset;
+use App\Security\Csrf;
 
-$tile = "Forgot password";
+$title = "Forgot password";
 
 if(!empty($_POST)){
     $data = new PasswordReset($_POST);
-    if($data->validEmail()->resultValidator()){
-        $data->sendEmail();
-        dd($data);
-        // $data->checkPassword()->resultValidator();
-        // $_SESSION['name'] = $data->getField('name');
-        // header('Location: ' . CreateUrl::url('authentication/success'));
+    if(!Csrf::validate($_POST['csrf_token'] ?? null)){
+        $errors = ['csrf' => ['Your session expired, please try again.']];
     }else{
-        $errors = $data->returnErrors();
+        if($data->validEmail()->resultValidator()){
+            $data->sendEmail();
+            $success = "If an account exists with this email, a reset link has been sent.";
+        }else{
+            $errors = $data->returnErrors();
+        }
     }
 }
 ?>
 
-<h1 class="auth">Reset your Password</h1>
+<div class="auth-wrap">
+    <p class="auth-kicker">Lost your ticket?</p>
+    <h1 class="auth-title">Reset your Password</h1>
 
-<section class="auth forget">
-    <form action="" method="post">
-        <div class="inputBox">
-            <input type="email" id="email" name="email">
-            <label for="email">Enter your email :</label>
-            <?php if(!empty($errors)): ?>
-                <?= $data->arrayKeyExist('email', $errors) ?>
+    <div class="auth-card">
+        <section class="auth forget">
+            <?php if(!empty($success)): ?>
+                <p><?= $success ?></p>
+            <?php else: ?>
+                <?php if(!empty($errors['csrf'])): ?>
+                    <p class="error"><i class="fas fa-exclamation-circle"></i> <?= $errors['csrf'][0] ?></p>
+                <?php endif; ?>
+                <form action="" method="post">
+                    <?= Csrf::field() ?>
+                    <div class="inputBox">
+                        <input type="text" name="email" id="email" required>
+                        <label for="email">Enter your mail</label>
+                        <?php if(!empty($errors)): ?>
+                            <?= $data->arrayKeyExist('email', $errors) ?>
+                        <?php endif; ?>
+                    </div>
+                    <input type="submit" name="reset" value="Reset">
+                </form>
             <?php endif; ?>
-        </div>
-        <input type="submit" name="reset" value="Reset">
-    </form>
+        </section>
+    </div>
+</div>

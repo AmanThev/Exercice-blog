@@ -1,161 +1,249 @@
-body{
-    margin:             0;
-    padding:            0;
-    background-color:   #372c0c !important;
-    background:         no-repeat top/80% url(../img/layout/ticket.png);
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=Inter:wght@400;500;600&display=swap');
+
+/*
+    ****    Cinéma — palette « Marquee » (dupliquée ici car auth.php
+    charge auth.css et non style.css — chaque type de page garde son
+    propre fichier)    ****
+*/
+:root{
+    --maroon:       #2b0f0f;
+    --maroon-deep:  #1a0808;
+    --brass:        #c9973f;
+    --brass-bright: #e0b45c;
+    --cream:        #f1e6c8;
+    --cream-dim:    #cbb98f;
+    --line:         #6b3a2e;
 }
 
-h1.auth{
-    color:          beige;
-    font-family:    'Kaushan Script', cursive;
-    font-size:      5rem;
-    margin:         1rem;
-    text-align:     center;
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin:      0;
+    padding:     0;
+    min-height:  100vh;
+    background:
+        radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,151,63,0.14), transparent 60%),
+        var(--maroon-deep);
+    color:       var(--cream);
+    font-family: 'Inter', sans-serif;
+}
+
+/*
+    ****    header (lien "back to home")    ****
+*/
+
+header{
+    padding: 24px clamp(20px, 4vw, 40px);
 }
 
 a.homepage{
-    font-size:  1rem;
-    color:      beige;
-    position:   absolute;
-    top:        2rem;
-    right:      2rem;
+    font-family:     'Cinzel', serif;
+    font-size:       13px;
+    letter-spacing:  0.1em;
+    color:           var(--cream-dim);
+    text-decoration: none;
+    display:         inline-flex;
+    align-items:     center;
+    gap:             6px;
+    transition:      color .15s ease;
 }
 
 a.homepage:hover{
-	color: beige;
+    color: var(--brass-bright);
 }
 
-a.homepage i.fas:last-child{
-    padding-right: .4rem;
-}
-
-a.homepage:hover i.fas:last-child{
-    animation: slide 1s infinite;
+a.homepage:hover i.fas{
+    animation: slide 1s ease-in-out infinite;
 }
 
 @keyframes slide{
-    0%{
-		padding-right: .4rem;
-    }
-    100%{
-        padding-right: 1rem;
-    }
+    0%, 100%{ transform: translateX(0); }
+    50%{      transform: translateX(-3px); }
 }
 
-section{
-	position:       relative;
-	left:           50%;
-	transform:      translate(-50%, -50%);
-	width:          590px;
-	background:     rgba(0, 0, 0,.5);
-	box-sizing:     border-box;
-	box-shadow:     0 15px 25px rgba(0, 0, 0,.9);
-    border-radius:  10px;
-    top:            13.5rem;
+div.container-fluid{
+    display:         flex;
+    justify-content: center;
+    padding:         20px 20px 80px;
 }
 
-section.login,
-section.forget{
-	padding:    50px;
-	
+/*
+    ****    carte d'authentification (login/signup/forget)    ****
+*/
+
+div.auth-wrap{
+    width:      100%;
+    max-width:  440px;
+    text-align: center;
 }
 
-section.signup{
-	padding:    30px;
+p.auth-kicker{
+    font-family:    'Cinzel', serif;
+    font-size:      12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color:          var(--brass-bright);
+    margin:         0 0 10px 0;
 }
 
-section .inputBox{
-	position: relative;
+h1.auth-title{
+    font-family:    'Cinzel', serif;
+    font-weight:    700;
+    font-size:      42px;
+    letter-spacing: 0.04em;
+    color:          var(--cream);
+    margin:         0 0 30px 0;
 }
 
-section .inputBox input{
-	width:          100%;
-	padding:        10px 0;
-	font-size:      16px;
-	color:          beige;
-	letter-spacing: 1px;
-	margin-bottom:  30px;
-	border:         none;
-	border-bottom:  1px solid #fff;
-	outline:        none; 
-	background:     transparent;
+div.auth-card{
+    border:     1px solid var(--brass);
+    background: linear-gradient(160deg, #3a1414, #200a0a);
+    padding:    40px 34px;
+    text-align: left;
+    position:   relative;
 }
 
+div.auth-card::before,
+div.auth-card::after{
+    content:   "";
+    position:  absolute;
+    width:     16px;
+    height:    16px;
+    border:    1px solid var(--brass);
+    transform: rotate(45deg);
+    top:       -9px;
+}
+div.auth-card::before{ left: -9px; }
+div.auth-card::after{ right: -9px; }
 
-section .inputBox label{
-	position:       absolute;
-	top:            0;
-	left:           0;
-	padding:        10px 0;
-	font-size:      16px;
-	color:          beige;
-	pointer-events: none;
-	transition:     .5s;
+section.auth > p.error{
+    margin-bottom: 24px;
+}
+/* champs */
+
+div.inputBox{
+    position:      relative;
+    margin-bottom: 30px;
 }
 
-section .inputBox input:focus ~ label, 
-section .inputBox input:valid ~ label{
-	top:        -18px;
-	left:       0;
-	font-size:  12px;
+div.inputBox input{
+    width:           100%;
+    padding:         10px 0;
+    font-size:       15px;
+    color:           var(--cream);
+    letter-spacing:  0.5px;
+    border:          none;
+    border-bottom:   1px solid var(--line);
+    outline:         none;
+    background:      transparent;
+    font-family:     'Inter', sans-serif;
+    transition:      border-color .2s ease;
 }
 
-section input[type="submit"]{
-	border:         none;
-	outline:        none;
-	color:          #372c0c;
-	background:     beige;
-	padding:        10px 20px;
-	cursor:         pointer;
-    border-radius:  5px;
-    font-weight:    1000;
-    font-size:      .8rem;
+div.inputBox input:focus{
+    border-color: var(--brass);
 }
 
-section input[type="submit"]:hover{
-    background-color:#bfbea0;
+div.inputBox input:-webkit-autofill,
+div.inputBox input:-webkit-autofill:hover,
+div.inputBox input:-webkit-autofill:focus{
+    -webkit-text-fill-color: var(--cream);
+    -webkit-box-shadow: 0 0 0px 1000px var(--maroon) inset;
+    transition: background-color 5000s ease-in-out 0s;
+    caret-color: var(--cream);
 }
 
-section p{
-	margin-top: 1rem;
-	color:      beige;
+div.inputBox label{
+    position:        absolute;
+    top:             10px;
+    left:            0;
+    font-size:       13px;
+    letter-spacing:  0.08em;
+    text-transform:  uppercase;
+    color:           var(--cream-dim);
+    pointer-events:  none;
+    transition:      .2s;
 }
 
-section a{
-	color: beige;
+div.inputBox input:focus ~ label,
+div.inputBox input:valid ~ label{
+    top:       -14px;
+    font-size: 10.5px;
+    color:     var(--brass-bright);
 }
 
-section a:hover{
+div.inputBox small{
+    display:     block;
+    margin-top:  8px;
+    font-size:   12px;
+    color:       var(--cream-dim);
+    line-height: 1.5;
+}
+
+div.inputBox small a{
+    color:           var(--brass-bright);
     text-decoration: underline;
-    color:          beige;
 }
 
+/* erreurs — #e07a5f utilisé en dur, pas encore une variable du thème */
+div.inputBox p.error,
 section.auth p.error{
-    color: 			#372c0c;
-	background: 	beige;
-	padding: 		1rem;
-	border-radius: 	5px;
-	margin: 		-1rem 0 1rem 0;
+    margin:     8px 0 0 0;
+    font-size:  12px;
+    color:      #e07a5f;
 }
 
-section.success{
-	top: 		24rem;
-	padding : 	30px;
+/* bouton */
+
+input[type="submit"]{
+    border:          none;
+    outline:         none;
+    font-family:     'Cinzel', serif;
+    font-weight:     600;
+    letter-spacing:  0.1em;
+    text-transform:  uppercase;
+    font-size:       13px;
+    color:           var(--maroon-deep);
+    background:      var(--brass);
+    padding:         12px 30px;
+    cursor:          pointer;
+    transition:      background-color .15s ease;
 }
 
-section.success p{
-	text-align: center;
-	font-size: 	2rem;
+input[type="submit"]:hover{
+    background-color: var(--brass-bright);
 }
 
-section.login .inputBox small{
-    color: beige;
+/* pied du formulaire */
+
+section.auth p{
+    margin-top: 22px;
+    font-size:  13px;
+    color:      var(--cream-dim);
 }
 
-section.login small a{
-	text-decoration: underline;
+section.auth a{
+    text-decoration: underline;
 }
 
-section.login .inputBox:nth-child(2){
-	margin-bottom: 30px;
+a.auth-btn{
+    display:         inline-block;
+    text-decoration: none;
+    font-family:     'Cinzel', serif;
+    font-weight:     600;
+    letter-spacing:  0.1em;
+    text-transform:  uppercase;
+    font-size:       13px;
+    color:           var(--maroon-deep);
+    background:      var(--brass);
+    padding:         12px 30px;
+    cursor:          pointer;
+    margin-top:      10px;
+    transition:      background-color .15s ease;
+}
+
+a.auth-btn:hover{
+    background-color: var(--brass-bright);
 }

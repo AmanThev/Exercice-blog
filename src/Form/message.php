@@ -11,10 +11,11 @@ return array(
     'numberBetween'     => "must be between %d and %d",
     'numberMin'         => "must be greater than %d",
     'numberMax'         => "must be smaller than %d",
-    'equals'            => "must be the same as %s",
+    'equals'            => "doesn't match",
     'different'         => "must be different than %s",
     'email'             => "is not a valid email address",
     'numeric'           => "must be numeric",
     'exist'             => "doesn't exist",
-    'password'          => "Your password is incorrect"
+    'password'          => "Your password is incorrect",
+    'token'             => "is invalid or has expired",
 );

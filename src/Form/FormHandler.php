@@ -44,13 +44,19 @@ class FormHandler
         return $this->data[$key] ?? $default;
     }
 
+    private function buildSetClause(array $data): string
+    {
+        $fields = [];
+        foreach($data as $key => $value){
+            $fields[] = "$key = :$key";
+        }
+        return implode(', ', $fields);
+    }
+
     public function create(array $data, $tabName): int
     {
-        foreach($data as $key => $value){
-            $keyFields[] = "$key = :$key";
-        }
+        $sqlFields = $this->buildSetClause($data);
 
-        $sqlFields = implode(', ', $keyFields);
         $stmt = new Connection();
         $sql = $stmt->connect()->prepare("INSERT INTO $tabName SET " . $sqlFields);
         $addObject = $sql->execute($data);
@@ -58,5 +64,21 @@ class FormHandler
             throw new \Exception("Error, impossible to add id to {$tabName}");
         }
         return $stmt->pdo->lastInsertId();
+    }
+
+    public function update(array $data, $tabName, string $whereColumn, $whereValue): bool
+    {
+        $sqlFields = $this->buildSetClause($data);
+
+        $stmt = new Connection();
+        $sql = $stmt->connect()->prepare("UPDATE $tabName SET " . $sqlFields . " WHERE $whereColumn = :whereValue");
+
+        $data['whereValue'] = $whereValue;
+
+        $updateObject = $sql->execute($data);
+        if($updateObject === false){
+            throw new \Exception("Error, impossible to update {$tabName}");
+        }
+        return true;
     }
 }

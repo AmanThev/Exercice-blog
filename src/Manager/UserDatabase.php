@@ -5,8 +5,6 @@ use \PDO;
 use App\Model\Member;
 use App\Model\Admin;
 use App\SQL\CountSql;
-use App\Manager\Exception\NotFoundException;
-
 
 class UserDatabase extends Database
 {   
@@ -35,14 +33,7 @@ class UserDatabase extends Database
 
     public function getAdminByName(string $name): Admin
     {
-        $stmt = $this->connect()->prepare("$this->queryAdmins WHERE name=:name");
-        $stmt->execute(['name' => $name]);
-        if($stmt->rowCount() == 1){
-            $stmt->setFetchMode(PDO::FETCH_CLASS,Admin::class);
-            $admin = $stmt->fetch();
-            return $admin;
-        }
-        throw new NotFoundException('Admin', $name);
+        return $this->getDataByField($this->queryAdmins, 'name', $name, 'Admin');
     }
 
     public function getMemberByName(string $name): Member
@@ -50,6 +41,17 @@ class UserDatabase extends Database
         return $this->getDataByField(
             $this->queryMembers, 'name', $name, 'Member');
     }
+
+    public function getMemberByEmail(string $email): Member
+    {
+        return $this->getDataByField($this->queryMembers, 'email', $email, 'Member');
+    }
+
+    public function getMemberByToken(string $token): Member
+    {
+        return $this->getDataByField($this->queryMembers, 'token', $token, 'Member');
+    }
+
 
     public function getAdminsPresentationPage($position): array
     {
@@ -75,5 +77,4 @@ class UserDatabase extends Database
         $stmt->execute(['pseudo' => $pseudo]);
         return $stmt->rowCount();
     }
-
 }

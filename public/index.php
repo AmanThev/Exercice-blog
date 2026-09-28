@@ -24,6 +24,9 @@ $router = new Router($_GET['url']);
 $router->get('/',  VIEWS . 'home');
 $router->get('/home', VIEWS . 'home');
 
+$router->get('/legal', VIEWS . 'legal');
+$router->get('/privacy', VIEWS . 'privacy');
+
 $router->get('/blog', VIEWS . 'blog');
 $router->get('/blog/:slug-:id', VIEWS . 'post', 'post');
 $router->post('/blog/:slug-:id', VIEWS . 'post');
@@ -54,6 +57,9 @@ $router->get('/authentication/success', VIEWS . 'user/success');
 $router->get('/authentication/logout', VIEWS . 'user/logout');
 $router->get('/authentication/forget', VIEWS . 'user/forget');
 $router->post('/authentication/forget', VIEWS . 'user/forget');
+$router->get('/authentication/reset/:token', VIEWS . 'user/reset');
+$router->post('/authentication/reset/:token', VIEWS . 'user/reset');
+$router->get('/authentication/reset-success', VIEWS . 'user/reset-success');
 
 $router->get('/user/:slug', VIEWS . 'user/profileMember');
 
