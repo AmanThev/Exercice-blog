@@ -9,6 +9,7 @@ use App\Manager\UserDatabase;
 use App\URL\CreateUrl;
 use App\Form\AddComment;
 use App\HTML\Form;
+use App\Security\Csrf;
 
 $url            = new ExplodeUrl($_GET['url']);
 $id             = $url->getId();
@@ -23,9 +24,10 @@ $totalComment       = $commentDatabase->totalComment('comments_post', $id);
 $post           = new PostDatabase();
 $post           = $post->getPostById($id);
 
-// $userId	    = $_SESSION['id'];
-$voteUser       = new VoteDatabase();
-$voteUser       = $voteUser->voteUser('posts', $id, 2);
+$voteUser = false;
+if(!empty($_SESSION['id'])){
+    $voteUser = (new VoteDatabase())->voteUser('posts', $id, $_SESSION['id']);
+}
 
 $commentForm = new Form($_POST);
 
@@ -33,43 +35,53 @@ if(strtolower($post->getUrlTitleCheck()) !== strtolower($slug)){
     $url = CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $id]);
     http_response_code(301);
     header('Location: ' . $url);
+    exit;
 }
 
 if(!empty($_POST)){
     $data = new AddComment($_POST);
-    //if($member or admin is connnect){
-        //if($data->validateComment('admins' or 'members')->resultValidator())
-            //$data->createComment();
-    //}
-    if($data->validateComment()->resultValidator()){
-        $data->createCommentPost($id);
-        $_SESSION["success"] = "Your comment has been added";
-        header('Location: ' . CreateUrl::url('blog', ['slug' => $slug, 'id' => $id]));
-        exit();
+    if(!Csrf::validate($_POST['csrf_token'] ?? null)){
+        $errors = ['csrf' => ['Your session expired, please try again.']];
     }else{
-        $errors = $data->returnErrors();
+        //if($member or admin is connnect){
+            //if($data->validateComment('admins' or 'members')->resultValidator())
+                //$data->createComment();
+        //}
+        if($data->validateComment()->resultValidator()){
+            $data->createCommentPost($id);
+            $_SESSION["success"] = "Your comment has been added";
+            header('Location: ' . CreateUrl::url('blog', ['slug' => $slug, 'id' => $id]));
+            exit();
+        }else{
+            $errors = $data->returnErrors();
+        }
     }
 }
 
 $title = $slug;
 ?>
 
-<section class="post">
-	<h2><?= $post->getTitle() ?></h2>
-	<p><?= $post->getContent() ?></p>
-	<p class="blog-meta">By <?= $post->getAuthor() ?>,
-		<span class="date-post">
+<section class="post-single">
+    <p class="post-single-kicker">Now reading</p>
+    <h1 class="post-single-title"><?= $post->getTitle() ?></h1>
+    <p class="post-single-meta">By <?= $post->getAuthor() ?> ·
+        <span class="date-post">
             <?php if($post->getEdit() != NULL): ?>
                 <?= $post->getDate()->format('d F Y') ?> (Edited)
-			<?php else: ?>
-				<?= $post->getDate()->format('d F Y') ?>
-			<?php endif; ?>
+            <?php else: ?>
+                <?= $post->getDate()->format('d F Y') ?>
+            <?php endif; ?>
         </span>
-	</p>
+    </p>
+
+    <div class="post-single-content">
+        <p><?= $post->getContent() ?></p>
+    </div>
+
     <div class="vote <?php if($voteUser !== false){
-                                if($voteUser->getVote() == 1){ 
+                                if($voteUser->getVote() == 1){
                                     echo "is-liked";
-                                }elseif($voteUser->getVote() == -1){ 
+                                }elseif($voteUser->getVote() == -1){
                                     echo "is-disliked";
                                 }
                             } ?>">
@@ -77,48 +89,50 @@ $title = $slug;
             <div class="vote-progress" style="width:<?= ($post->getLike() + $post->getDislike()) == 0 ? 100 : round(100 * ($post->getLike() / ($post->getLike() + $post->getDislike()))); ?>%;"></div>
         </div>
         <div class="vote-btns">
-            <form class="vote-form" action="vote.php?ref=posts&refId=<?= $id ?>&vote=1" method="POST">
-                <div class="vote-form">
+            <?php if(!empty($_SESSION['id'])): ?>
+                <form class="vote-form" action="<?= CreateUrl::url('actions/vote', ['ref' => 'posts', 'refId' => $id, 'vote' => 1]) ?>" method="POST">
+                    <?= Csrf::field() ?>
                     <button type="submit" class="vote-btn vote-like"><i class="fas fa-thumbs-up"></i> <?= $post->getLike() ?></button>
-                </div>
-            </form>
-            <form class="vote-form" action="vote.php?ref=posts&refId=<?= $id ?>&vote=-1" method="POST">
-                <div class="vote-form">
+                </form>
+                <form class="vote-form" action="<?= CreateUrl::url('actions/vote', ['ref' => 'posts', 'refId' => $id, 'vote' => -1]) ?>" method="POST">
+                    <?= Csrf::field() ?>
                     <button type="submit" class="vote-btn vote-dislike"><i class="fas fa-thumbs-down"></i> <?= $post->getDislike() ?></button>
-                </div>
-            </form>
+                </form>
+            <?php else: ?>
+                <span class="vote-count"><i class="fas fa-thumbs-up"></i> <?= $post->getLike() ?></span>
+                <span class="vote-count"><i class="fas fa-thumbs-down"></i> <?= $post->getDislike() ?></span>
+                <p class="vote-login-prompt"><a href="<?= CreateUrl::url('authentication/login', ['redirect' => $_SERVER['REQUEST_URI']]) ?>">Log in</a> to like or dislike this post.</p>
+            <?php endif; ?>
         </div>
     </div>
 </section>
 
-<section class="post comment-post">
-    <h2>Comment Users</h2>
+<section class="post-comments">
+    <div class="section-heading"><h2>Comment Users</h2><span class="rule"></span></div>
+
     <?php if($comments != false): ?>
-        <p class="total-comments"><?php echo $totalComment > 1 ? ' '.$totalComment.' Comments' : ' '.$totalComment.' Comment' ?></p>
+        <p class="total-comments"><?php echo $totalComment > 1 ? $totalComment.' Comments' : $totalComment.' Comment' ?></p>
         <?php foreach ($comments as $comment): ?>
             <div class="comment-user">
-                <span class="photo-profile <?php if($userDatabase->statutUser($comment->getPseudo(), 'members') === 1){ 
-                                    echo 'member'; 
-                                }elseif($userDatabase->statutUser($comment->getPseudo(), 'admins') === 1){ 
+                <span class="photo-profile <?php if($userDatabase->statutUser($comment->getPseudo(), 'members') === 1){
+                                    echo 'member';
+                                }elseif($userDatabase->statutUser($comment->getPseudo(), 'admins') === 1){
                                     echo 'admin';
                                 } ?>">
                     <img src="<?= PUBLIC_PATH ?>/img/photoProfile/default.jpg">
                 </span>
-                <h3><?= $comment->getPseudo() ?> :
-                    <span class="date-comment">
-                        <?php if($comment->getEdit() != NULL): ?>
-                                <?= $comment->getDate()->format('d F Y') ?> (Edited) 
-                        <?php else: ?>
-                                <?= $comment->getDate()->format('d F Y') ?>
-                        <?php endif; ?>
-                    </span>
-                </h3>
-                <p class="comment-content"><?= $comment->getComment() ?></p>
-                <span>
-                    <?php //if (is_connect() && $_SESSION['connect'] == $comment->pseudo): ?> 
-                    <!-- <a id="editComment" href="http://localhost/blogCinema/view/postEdit.php?id=<?php //$post->id ?>">Edit your comment</a> -->
-                    <?php // endif; ?>          
-                </span>
+                <div class="comment-body">
+                    <h3><?= $comment->getPseudo() ?>
+                        <span class="date-comment">
+                            <?php if($comment->getEdit() != NULL): ?>
+                                    <?= $comment->getDate()->format('d F Y') ?> (Edited)
+                            <?php else: ?>
+                                    <?= $comment->getDate()->format('d F Y') ?>
+                            <?php endif; ?>
+                        </span>
+                    </h3>
+                    <p class="comment-content"><?= $comment->getComment() ?></p>
+                </div>
             </div>
         <?php endforeach; ?>
     <?php else: ?>
@@ -126,24 +140,20 @@ $title = $slug;
     <?php endif; ?>
 </section>
 
-<!-- "< ?php 
-                // if(isset($pseudo))
-                // { echo $pseudo; 
-                // }elseif (is_connect())
-                // { echo ($_SESSION['connect']);
-                //} ?//>"
-            
-            À rajouter dans value pseudo
--->
+<section class="post-write-comment" id="post-write-comment">
+    <div class="section-heading"><h2>Write your Comment</h2><span class="rule"></span></div>
 
-<section class="post write-comment">
-    <h2>Write your Comment</h2>
-    <form action="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>" method="post">
+    <?php if(!empty($errors['csrf'])): ?>
+        <p class="error"><i class="fas fa-exclamation-circle"></i> <?= $errors['csrf'][0] ?></p>
+    <?php endif; ?>
+
+    <form action="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>" method="post" class="comment-form">
+        <?= Csrf::field() ?>
         <?= $commentForm->inputText('pseudo', 'Your name', 'size', '20'); ?>
             <?php if(!empty($errors)): ?>
                 <?= $data->arrayKeyExist('pseudo', $errors) ?>
             <?php endif; ?>
-        <?= $commentForm->textArea('comment', 'Your comment', '10'); ?>
+        <?= $commentForm->textArea('comment', 'Your comment', '6'); ?>
             <?php if(!empty($errors)): ?>
                 <?= $data->arrayKeyExist('comment', $errors) ?>
             <?php endif; ?>

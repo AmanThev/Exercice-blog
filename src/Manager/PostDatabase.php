@@ -49,7 +49,7 @@ class PostDatabase extends Database
     public function getPostsPublic(): array
     {
         $sql = $this->queryPublic;
-        $pagination = new Paginate($sql);
+        $pagination = new Paginate($sql, 8);
         $pagination = $pagination->getPagination();
         $sql .= "ORDER BY date DESC $pagination";
         return $this->getAllData($sql, 'Post');
@@ -87,7 +87,7 @@ class PostDatabase extends Database
     public function postPaginationNumber(string $status): ?int
     {
         if($status === 'public'){
-            $pagination = new Paginate($this->queryPublic);
+            $pagination = new Paginate($this->queryPublic, 8);
             $pagination = $pagination->getPaginationNumber();
             return $pagination; 
         }

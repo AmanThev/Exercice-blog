@@ -2,6 +2,7 @@
 
 use App\URL\CreateUrl;
 use App\Form\Authentication;
+use App\Manager\UserDatabase;
 use App\Security\Csrf;
 
 $title = "Login";
@@ -14,8 +15,21 @@ if(!empty($_POST)){
     }else{
         if($data->validateAuth()->resultValidator()){
             if($data->checkPassword()->resultValidator()){
-                $_SESSION['name'] = $data->getField('name');
-                header('Location: ' . CreateUrl::url('authentication/success'));
+                $member = (new UserDatabase())->getMemberByName($data->getField('name'));
+                $_SESSION['id']   = $member->getId();
+                $_SESSION['name'] = $member->getName();
+
+                // Si on vient d'une page précise (ex: le lien "Log in" sous
+                // le vote), on y retourne directement plutôt que d'afficher
+                // la page "Welcome". On vérifie que $redirect reste bien un
+                // chemin interne au site (commence par WWW_ROOT), pour
+                // éviter qu'un lien piégé ne redirige vers un autre site.
+                $redirect = $_GET['redirect'] ?? null;
+                if($redirect && str_starts_with($redirect, WWW_ROOT)){
+                    header('Location: ' . $redirect);
+                }else{
+                    header('Location: ' . CreateUrl::url('authentication/success'));
+                }
                 exit;
             }else{
                 $errors = $data->returnErrors();

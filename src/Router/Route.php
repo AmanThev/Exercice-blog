@@ -82,6 +82,10 @@ class Route{
                 require $view . '.php';
                 return $this;
                 break;
+            case 'actions':
+                require $view . '.php';
+                return $this;
+                break;
             default:
                 ob_start();
                 require $view . '.php';

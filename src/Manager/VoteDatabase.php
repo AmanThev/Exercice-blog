@@ -10,6 +10,13 @@ class VoteDatabase extends Database
 {
     private $queryVote = "SELECT * FROM votes";
 
+    /**
+     * @var array Tables autorisées à recevoir un vote (whitelist de
+     * sécurité : $ref vient de l'URL, on ne veut jamais l'interpoler
+     * directement dans une requête SQL sans le vérifier avant).
+     */
+    private $allowedRefs = ['posts', 'reviews'];
+
     public function voteUser(string $ref,int $refId,int $userId)
     {
         $stmt = $this->connect()->prepare("$this->queryVote WHERE ref=:ref AND ref_id=:refId AND user_id=:userId");
@@ -28,56 +35,76 @@ class VoteDatabase extends Database
     {
         return CountSql::totalData("$this->queryVote WHERE user_id= ? AND vote = -1", $idName);
     }
-    
-    // function refIdExist($refId){
-    //     require('manager.php');
-    //     $req = $db->prepare("SELECT * FROM posts WHERE id = ?");
-    //     $req->execute(array($refId));
-    //     $exist = $req->rowCount();
-    //     return $exist;
-    // }
-    
-    // function userHasVoted($ref, $refId, $userId){
-    //     require('manager.php');
-    //     $req = $db->prepare("SELECT ref, ref_id, user_id FROM votes WHERE ref = ? AND ref_id = ? AND user_id = ?");
-    //       $req->execute(array($ref, $refId, $userId));
-    //       $exist = $req->rowCount();
-    //       return $exist;
-    
-    //       $req->closeCursor();
-    // }
-    
-    // function changeVote($vote, $refId, $userId){
-    //     require('manager.php');
-    //     $req = $db->prepare("UPDATE votes SET vote = ? WHERE ref_id = ? AND user_id=?");
-    //     $req->execute(array($vote, $refId, $userId));
-        
-    //     $req->closeCursor();
-    // }
-    
-    // function insertVote($ref, $refId, $userId, $vote){
-    //     require('manager.php');
-    //     $req = $db->prepare("INSERT INTO votes SET ref=?, ref_id=?, user_id=?, vote=?");
-    //     $req->execute(array($ref, $refId, $userId, $vote));
-    
-    //     $req->closeCursor();
-    // }
-    
-    // function countVote($ref, $refId){
-    //     require('manager.php');
-    //     $req = $db->prepare("SELECT COUNT(id) as count, vote FROM votes WHERE ref = ? AND ref_id = ? GROUP BY vote");
-    //     $req->execute(array($ref, $refId));
-    //     $votes = $req->fetchAll();
-    //     $counts = [
-    //       '-1' => 0,
-    //       '1' => 0
-    //     ];
-    //     foreach ($votes as $vote){
-    //       $counts[$vote['vote']] = $vote['count'];
-    //     }
-    //     $req1 = $db->query("UPDATE $ref SET count_like = {$counts[1]}, count_dislike = {$counts[-1]} WHERE id = $refId");
-    
-    //     $req->closeCursor();    
-    //     $req1->closeCursor();
-    // }
+
+    public function insertVote(string $ref, int $refId, int $userId, int $vote): void
+    {
+        $stmt = $this->connect()->prepare(
+            "INSERT INTO votes SET ref = :ref, ref_id = :refId, user_id = :userId, vote = :vote"
+        );
+        $inserted = $stmt->execute([
+            'ref'    => $ref,
+            'refId'  => $refId,
+            'userId' => $userId,
+            'vote'   => $vote
+        ]);
+        if($inserted === false){
+            throw new Exception("Error, impossible to add the vote");
+        }
+    }
+
+    public function updateVote(string $ref, int $refId, int $userId, int $vote): void
+    {
+        $stmt = $this->connect()->prepare(
+            "UPDATE votes SET vote = :vote WHERE ref = :ref AND ref_id = :refId AND user_id = :userId"
+        );
+        $stmt->execute([
+            'vote'   => $vote,
+            'ref'    => $ref,
+            'refId'  => $refId,
+            'userId' => $userId
+        ]);
+    }
+
+    public function deleteVote(string $ref, int $refId, int $userId): void
+    {
+        $stmt = $this->connect()->prepare(
+            "DELETE FROM votes WHERE ref = :ref AND ref_id = :refId AND user_id = :userId"
+        );
+        $stmt->execute([
+            'ref'    => $ref,
+            'refId'  => $refId,
+            'userId' => $userId
+        ]);
+    }
+
+    /**
+     * Recompte les votes d'un post/review et met à jour ses colonnes
+     * count_like / count_dislike en conséquence.
+     */
+    public function countAndUpdateVotes(string $ref, int $refId): void
+    {
+        if(!in_array($ref, $this->allowedRefs, true)){
+            throw new Exception("Invalid ref table: $ref");
+        }
+
+        $stmt = $this->connect()->prepare(
+            "SELECT vote, COUNT(id) as total FROM votes WHERE ref = :ref AND ref_id = :refId GROUP BY vote"
+        );
+        $stmt->execute(['ref' => $ref, 'refId' => $refId]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $counts = ['1' => 0, '-1' => 0];
+        foreach($rows as $row){
+            $counts[(string)$row['vote']] = (int)$row['total'];
+        }
+
+        $stmt = $this->connect()->prepare(
+            "UPDATE $ref SET count_like = :like, count_dislike = :dislike WHERE id = :refId"
+        );
+        $stmt->execute([
+            'like'    => $counts['1'],
+            'dislike' => $counts['-1'],
+            'refId'   => $refId
+        ]);
+    }
 }

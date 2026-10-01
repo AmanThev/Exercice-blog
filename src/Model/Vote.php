@@ -31,7 +31,7 @@ class Vote
 
     public function getRefId()
     {
-        return $this->$ref_id;    
+        return $this->ref_id;
     }
 
     public function getRef()

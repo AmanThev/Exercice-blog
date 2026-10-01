@@ -247,7 +247,7 @@ p.ticket-text{
     font-size:      15px;
     line-height:    1.7;
     margin:         0 0 20px 0;
-    max-width:      52ch;
+    /* max-width:      52ch; */
 }
 
 a.stub-btn{
@@ -704,4 +704,366 @@ div.legal-page a{
 
 div.legal-page a:hover{
     color: var(--brass);
+}
+
+/* ---- blog: ticket "Last post" avec vraie image (au lieu du côté décoratif "ADMIT ONE") ---- */
+div.ticket-side.image-side{
+    padding:    0;
+    margin:     0;
+    min-height: 0;
+    overflow:   hidden;
+}
+div.ticket-side.image-side img{
+    width:      100%;
+    height:     100%;
+    object-fit: cover;
+    display:    block;
+}
+
+/* ---- blog: barre de recherche dans le contenu principal ---- */
+div.blog-search{
+    margin: 0 0 40px 0;
+}
+div.blog-search form.search-box{
+    display:        flex;
+    align-items:    center;
+    max-width:      420px;
+    border-bottom:  1px solid var(--line);
+    padding-bottom: 8px;
+}
+div.blog-search input.search-text{
+    flex:               1;
+    border:             none;
+    background:         transparent;
+    box-shadow:         none;
+    color:              var(--cream);
+    padding:            4px 0;
+    font-family:        'Inter', sans-serif;
+    font-size:          14px;
+    -webkit-appearance: none;
+    appearance:         none;
+}
+div.blog-search input.search-text::placeholder{
+    color: var(--cream-dim);
+}
+div.blog-search button.search-btn{
+    background:     none;
+    border:         none;
+    color:          var(--brass-bright);
+    cursor:         pointer;
+    font-size:      16px;
+    padding-left:   8px;
+}
+div.blog-search button.search-btn:hover{
+    color: var(--brass);
+}
+
+div.blog-search input.search-text:focus{
+    outline: none;
+}
+
+/* ---- blog: auteur du post (en plus de la date déjà stylée) ---- */
+small.post-author{
+    display:    block;
+    font-size:  11px;
+    color:      var(--cream-dim);
+    opacity:    .8;
+    margin-top: 4px;
+}
+
+/* ---- blog: pagination ---- */
+nav.pagination-blog{
+    margin-top:         50px;
+    display:            flex;
+    justify-content:    center;
+}
+nav.pagination-blog ul{
+    display:    flex;
+    gap:        8px;
+    list-style: none;
+    padding:    0;
+    margin:     0;
+}
+nav.pagination-blog li a,
+nav.pagination-blog li span{
+    display:            inline-flex;
+    align-items:        center;
+    justify-content:    center;
+    min-width:          34px;
+    height:             34px;
+    padding:            0 8px;
+    font-family:        'Cinzel', serif;
+    font-size:          13px;
+    color:              var(--cream-dim);
+    border:             1px solid var(--line);
+    text-decoration:    none;
+}
+nav.pagination-blog li a:hover{
+    color:          var(--brass-bright);
+    border-color:   var(--brass);
+}
+nav.pagination-blog li.active a,
+nav.pagination-blog li.active span{
+    color:          var(--maroon-deep);
+    background:     var(--brass);
+    border-color:   var(--brass);
+}
+
+nav.pagination-blog li.disabled a{
+    color:          var(--cream-dim);
+    opacity:        .35;
+    pointer-events: none;
+    border-color:   var(--line);
+}
+
+/* ---- post-single (contenu de l'article) ---- */
+
+section.post-single{
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 50px 20px 0;
+}
+
+p.post-single-kicker{
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--brass-bright);
+    margin: 0 0 14px 0;
+}
+
+h1.post-single-title{
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 40px);
+    color: var(--cream);
+    margin: 0 0 14px 0;
+}
+
+p.post-single-meta{
+    font-size: 13px;
+    color: var(--cream-dim);
+    margin: 0 0 30px 0;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+}
+
+div.post-single-content p{
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--cream-dim);
+    margin: 0 0 40px 0;
+}
+
+/* ---- vote (like/dislike) ---- */
+
+div.vote{ margin: 30px 0 10px 0; }
+
+div.vote-bar{
+    height: 4px;
+    background: var(--line);
+    margin-bottom: 18px;
+    overflow: hidden;
+}
+
+div.vote-progress{
+    height: 100%;
+    background: var(--brass);
+}
+
+div.vote-btns{
+    display: flex;
+    gap: 14px;
+}
+
+form.vote-form{ margin: 0; }
+
+p.vote-login-prompt{
+    width: 100%;
+    font-size: 13px;
+    color: var(--cream-dim);
+    font-style: italic;
+    margin: 10px 0 0 0;
+}
+
+p.vote-login-prompt a{
+    color: var(--brass-bright);
+    text-decoration: underline;
+    font-style: normal;
+}
+
+p.vote-login-prompt a:hover{
+    color: var(--brass);
+}
+
+div.vote.is-liked button.vote-like,
+div.vote.is-disliked button.vote-dislike{
+    border-color: var(--brass);
+    color: var(--brass-bright);
+    background: rgba(201,151,63,0.08);
+}
+
+button.vote-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--cream-dim);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 8px 16px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: border-color .15s ease, color .15s ease;
+}
+
+button.vote-btn:hover{
+    border-color: var(--brass);
+    color: var(--brass-bright);
+}
+
+/* ---- commentaires ---- */
+
+section.post-comments,
+section.post-write-comment{
+    max-width: 720px;
+    margin: 60px auto 0;
+    padding: 0 20px;
+}
+
+p.total-comments{
+    font-size: 13px;
+    color: var(--cream-dim);
+    margin: -10px 0 30px 0;
+}
+
+p.comment-empty{
+    color: var(--cream-dim);
+    font-size: 14px;
+}
+
+div.comment-user{
+    display: flex;
+    gap: 16px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+span.photo-profile{
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--line);
+}
+
+span.photo-profile.admin{
+    border-color: var(--brass);
+}
+
+span.photo-profile img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+div.comment-body h3{
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--cream);
+    margin: 0 0 4px 0;
+}
+
+span.date-comment{
+    font-size: 11px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    color: var(--cream-dim);
+    margin-left: 8px;
+}
+
+p.comment-content{
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--cream-dim);
+    margin: 0;
+}
+
+/* ---- formulaire de commentaire ---- */
+/* (généré par App\HTML\Form : label + input/textarea + small.form-info) */
+
+form.comment-form{ margin-top: 20px; }
+
+form.comment-form label{
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    margin: 20px 0 8px 0;
+}
+
+form.comment-form label:first-child{
+    margin-top: 0;
+}
+
+form.comment-form input[type="text"],
+form.comment-form textarea{
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    padding: 10px 14px;
+    box-sizing: border-box;
+    transition: border-color .15s ease;
+}
+
+form.comment-form input[type="text"]:focus,
+form.comment-form textarea:focus{
+    outline: none;
+    border-color: var(--brass);
+}
+
+form.comment-form small.form-info{
+    display: block;
+    font-size: 11px;
+    color: var(--cream-dim);
+    opacity: .7;
+    margin: 6px 0 0 0;
+}
+
+form.comment-form button[type="submit"]{
+    display: block;
+    margin-top: 24px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--maroon-deep);
+    background: var(--brass);
+    border: none;
+    padding: 11px 26px;
+    cursor: pointer;
+    transition: background-color .15s ease;
+}
+
+form.comment-form button[type="submit"]:hover{
+    background-color: var(--brass-bright);
+}
+
+p.error{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 6px 0 0 0;
+    font-size: 13px;
+    color: #e07a5f;
 }

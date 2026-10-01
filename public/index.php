@@ -8,6 +8,7 @@ use App\Router\Router;
 define('VIEWS', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'views/');
 define('AJAX', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'ajax/');
 define('IMAGE', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'img/');
+define('ACTIONS', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'actions/');
 define('DEBUG_TIME', microtime(true));
 $rootEnd = strpos($_SERVER['SCRIPT_NAME'], '/cinema') + 7;
 $www_root = substr($_SERVER['SCRIPT_NAME'], 0, $rootEnd);
@@ -92,5 +93,7 @@ $router->post('/dashboard/posts/:id/delete', VIEWS . 'dashboard/post/delete', 'p
  */
 $router->post('/ajax/addPostAjax', AJAX . 'addPostAjax');
 $router->post('/ajax/addFilmAjax', AJAX . 'addFilmAjax');
+
+$router->post('/actions/vote', ACTIONS . 'vote');
 
 $router->run();

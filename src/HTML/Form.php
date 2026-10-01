@@ -135,7 +135,7 @@ HTML;
     {
         if($info){
             $smallText = $this->info($key, $info);
-            return '<small class="form-info">'.$smallText.'</small><br>';
+            return '<small class="form-info">'.$smallText.'</small>';
         }
         return '';
     }
