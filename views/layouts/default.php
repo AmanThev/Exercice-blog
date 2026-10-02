@@ -33,9 +33,9 @@ use App\URL\CreateUrl;
     <a href="<?= CreateUrl::url('forum') ?>">Forum</a>
 </nav>
 <?php if(isset($_SESSION['name'])): ?>
-    <a class="login" href="<?= CreateUrl::url('authentication/logout') ?>">Logout</a>
+    <a class="login" href="<?= CreateUrl::url('authentication/logout', ['redirect' => $_SERVER['REQUEST_URI']]) ?>">Logout</a>
 <?php else: ?>    
-    <a class="login" href="<?= CreateUrl::url('authentication/login') ?>">Login</a>    
+    <a class="login" href="<?= CreateUrl::url('authentication/login', ['redirect' => $_SERVER['REQUEST_URI']]) ?>">Login</a>  
     <?php endif ?>
 </header>
 <div class="bulbs"></div>

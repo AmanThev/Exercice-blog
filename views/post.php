@@ -43,11 +43,8 @@ if(!empty($_POST)){
     if(!Csrf::validate($_POST['csrf_token'] ?? null)){
         $errors = ['csrf' => ['Your session expired, please try again.']];
     }else{
-        //if($member or admin is connnect){
-            //if($data->validateComment('admins' or 'members')->resultValidator())
-                //$data->createComment();
-        //}
-        if($data->validateComment()->resultValidator()){
+        $commenterType = !empty($_SESSION['name']) ? 'members' : null;
+        if($data->validateComment($commenterType)->resultValidator()){
             $data->createCommentPost($id);
             $_SESSION["success"] = "Your comment has been added";
             header('Location: ' . CreateUrl::url('blog', ['slug' => $slug, 'id' => $id]));
@@ -149,7 +146,12 @@ $title = $slug;
 
     <form action="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>" method="post" class="comment-form">
         <?= Csrf::field() ?>
-        <?= $commentForm->inputText('pseudo', 'Your name', 'size', '20'); ?>
+        <?php if(!empty($_SESSION['name'])): ?>
+            <label for="pseudo">Your name :</label>
+            <input type="text" name="pseudo" id="pseudo" value="<?= htmlspecialchars($_SESSION['name']) ?>" readonly>
+        <?php else: ?>
+            <?= $commentForm->inputText('pseudo', 'Your name', 'size', '20'); ?>
+        <?php endif; ?>
             <?php if(!empty($errors)): ?>
                 <?= $data->arrayKeyExist('pseudo', $errors) ?>
             <?php endif; ?>

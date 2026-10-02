@@ -5,6 +5,16 @@ use App\Form\Authentication;
 use App\Manager\UserDatabase;
 use App\Security\Csrf;
 
+
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Pragma: no-cache');
+
+
+if(!empty($_SESSION['id'])){
+    header('Location: ' . CreateUrl::url('home'));
+    exit;
+}
+
 $title = "Login";
 
 

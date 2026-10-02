@@ -3,5 +3,12 @@
 use App\URL\CreateUrl;
 
 session_destroy();
-header('location: ' . CreateUrl::url('home'));
+
+$redirect = $_GET['redirect'] ?? null;
+
+if($redirect && str_starts_with($redirect, WWW_ROOT)){
+    header('Location: ' . $redirect);
+}else{
+    header('Location: ' . CreateUrl::url('home'));
+}
 exit();

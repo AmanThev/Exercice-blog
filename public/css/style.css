@@ -961,8 +961,14 @@ span.photo-profile{
     border: 1px solid var(--line);
 }
 
+span.photo-profile.member{
+    border-color: var(--cream-dim);
+    border-width: 3px;
+}
+
 span.photo-profile.admin{
-    border-color: var(--brass);
+    border-color: var(--brass-bright);
+    border-width: 3px;
 }
 
 span.photo-profile img{
@@ -1030,6 +1036,13 @@ form.comment-form input[type="text"]:focus,
 form.comment-form textarea:focus{
     outline: none;
     border-color: var(--brass);
+}
+
+form.comment-form input[readonly]{
+    background: rgba(255,255,255,0.03);
+    color: var(--cream-dim);
+    cursor: not-allowed;
+    border-color: var(--line);
 }
 
 form.comment-form small.form-info{
