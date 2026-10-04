@@ -4,6 +4,14 @@ use App\URL\CreateUrl;
 use App\Form\PasswordReset;
 use App\Security\Csrf;
 
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Pragma: no-cache');
+
+if(!empty($_SESSION['id'])){
+    header('Location: ' . CreateUrl::url('home'));
+    exit;
+}
+
 $title = "Forgot password";
 
 if(!empty($_POST)){
@@ -36,8 +44,8 @@ if(!empty($_POST)){
                 <form action="" method="post">
                     <?= Csrf::field() ?>
                     <div class="inputBox">
-                        <input type="text" name="email" id="email" required>
-                        <label for="email">Enter your mail</label>
+                        <label for="email">Enter your email :</label>
+                        <input type="email" id="email" name="email">
                         <?php if(!empty($errors)): ?>
                             <?= $data->arrayKeyExist('email', $errors) ?>
                         <?php endif; ?>

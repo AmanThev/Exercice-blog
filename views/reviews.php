@@ -21,9 +21,6 @@ $decadesSelected    = empty($_GET['decades']) ? null : (int)$_GET['decades'];
 $searchForm = new Form($_POST);
 
 if($decadesSelected){
-    // htmlspecial sur $_GET['decade']
-    //vérifier que c'est bien un int
-    //si le nombre de page est trop grand, l'erreur ne s'affiche pas
     $reviews = DateReviews::getFilmByDecade($decadesSelected);
 }
 
@@ -33,66 +30,74 @@ if($yearSelected){
 }
 ?>
 
-<h1 id="title-reviews">Reviews</h1>
+<section>
 
-<section class="section-last-reviews">
-    <h1>Last reviews</h1>
-    <div class="last-reviews">
-        <?php foreach($lastReviews as $lastReview): ?>
-        <figure>
-            <div class="deck-last-reviews">
-                <div class="img-last-reviews">
-                    <img src="<?= PUBLIC_PATH ?>/img/posterFilm/<?= $lastReview->getPoster() ?>" alt="">
-                </div>
-                <div class="content-last-reviews">
-                    <h2><?= $lastReview->getTitle() ?></h2>
-                    <p><?= $lastReview->getSynopsis() ?></p>
-                    <span><a href="<?= CreateUrl::url('reviews', ['slug' => $lastReview->getUrlTitle(), 'id' => $lastReview->getId()]); ?>">Read More</a></span>
-                </div>
+<div class="section-heading"><h2>Last Reviews</h2><span class="rule"></span></div>
+<div class="reviews-slider">
+    <?php foreach($lastReviews as $lastReview): ?>
+        <figure class="slider-slide">
+            <div class="slider-img">
+                <img src="<?= PUBLIC_PATH ?>/img/posterFilm/<?= $lastReview->getPoster() ?>" alt="">
+            </div>
+            <div class="slider-content">
+                <h4><?= $lastReview->getTitle() ?></h4>
+                <p><?= $lastReview->getSynopsis() ?></p>
+                <a href="<?= CreateUrl::url('reviews', ['slug' => $lastReview->getUrlTitle(), 'id' => $lastReview->getId()]); ?>" class="card-link">Read more</a>
             </div>
         </figure>
-        <?php endforeach; ?>
-    </div>
-</section>
+    <?php endforeach; ?>
+</div>
 
-<div class="bottom-reviews">
+<div class="reviews-layout">
     <aside class="date-reviews">
-        <h2>Choose a decade or a year :</h2>
-        <a id="display-all-movies" class="<?= empty($decadesSelected) == TRUE ? 'disabled' : '' ?>" href="<?= CreateUrl::url('reviews') ?>">All movies</a>
-        <?php foreach (DateReviews::listDecades() as $num => $decade): ?>
-            <a class="list-item decades <?= $num == $decadesSelected ? 'active' : ''; ?>" href="?decades=<?= $num ?>"><?= $decade ?></a>
+        <div class="box">
+            <h3>Choose a decade or a year</h3>
+            <a id="display-all-movies" class="date-link <?= empty($decadesSelected) ? 'active' : '' ?>" href="<?= CreateUrl::url('reviews') ?>">All movies</a>
+            <?php foreach (DateReviews::listDecades() as $num => $decade): ?>
+                <a class="date-link decades <?= $num == $decadesSelected ? 'active' : ''; ?>" href="?decades=<?= $num ?>"><?= $decade ?></a>
                 <?php if($num == $decadesSelected): ?>
-                    <?php foreach (DateReviews::getListYears($decadesSelected) as $listYear): ?>
-                        <a class="list-item years <?= $listYear == $yearSelected ? 'active' : ''; ?><?= DateReviews::filmsExists($listYear) === 0 ? 'disabled' : ''; ?>" href="?decades=<?= $num ?>&year=<?= $listYear ?>">
-                        <?= $listYear ?></a>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-        <?php endforeach; ?>
-    </aside>
-    <section class="all-reviews">
-        <h1>All reviews</h1>
-        <form class="search-box" method="post" action="<?= CreateUrl::url('search') ?>">
-            <?= $searchForm->searchBox('search', 'film'); ?>
-        </form>
-        <div class="deck-all-reviews">
-            <?php foreach($reviews as $review): ?>
-                <div class="box-all-reviews">
-                    <div class="content-all-reviews">
-                        <h2 class="<?php 
-                            if(strlen($review->getTitle()) <= 30){ 
-                                echo 'short-title';
-                            } ?>"><?= $review->getTitle() ?></h2>
-                        <span>Directed by <?= $review->getDirector() ?>, <?= $review->getDate() ?></span>
-                        <p class="text-film"><?= $review->getExcerptSynopsis(); ?></p>
-                        <a href="<?= CreateUrl::url('reviews', ['slug' => $review->getUrlTitle(), 'id' => $review->getId()]); ?>">Read More</a>
+                    <div class="date-sublist">
+                        <?php foreach (DateReviews::getListYears($decadesSelected) as $listYear): ?>
+                            <a class="date-link years <?= $listYear == $yearSelected ? 'active' : ''; ?> <?= DateReviews::filmsExists($listYear) === 0 ? 'disabled' : ''; ?>" href="?decades=<?= $num ?>&year=<?= $listYear ?>">
+                            <?= $listYear ?></a>
+                        <?php endforeach; ?>
                     </div>
-                    <div class="img-all-reviews">
-                        <img src="<?= PUBLIC_PATH ?>/img/posterFilm/<?= $review->getPoster() ?>" alt="<?= $review->getTitle() ?>">
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    </aside>
+
+    <div class="reviews-col" id="all-reviews">
+        <div class="section-heading"><h2>All Reviews</h2><span class="rule"></span></div>
+
+        <div class="blog-search">
+            <form class="search-box" method="post" action="<?= CreateUrl::url('search') ?>">
+                <?= $searchForm->searchBox('search', 'film'); ?>
+            </form>
+        </div>
+
+        <div class="review-flip-grid">
+            <?php foreach($reviews as $review): ?>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="<?= PUBLIC_PATH ?>/img/posterFilm/<?= $review->getPoster() ?>" alt="<?= $review->getTitle() ?>">
+                        </div>
+                        <div class="flip-card-back">
+                            <img src="<?= PUBLIC_PATH ?>/img/posterFilm/<?= $review->getPoster() ?>" class="flip-card-back-bg" alt="">
+                            <div class="flip-card-back-content">
+                                <h3><?= $review->getTitle() ?></h3>
+                                <p class="flip-card-meta">Directed by <?= $review->getDirector() ?> · <?= $review->getDate() ?></p>
+                                <p class="flip-card-text"><?= $review->getExcerptSynopsis(); ?></p>
+                                <a href="<?= CreateUrl::url('reviews', ['slug' => $review->getUrlTitle(), 'id' => $review->getId()]); ?>" class="card-link">Read more</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
-        <div class="pagination-all-post">
+
+        <nav class="pagination-blog">
             <ul>
                 <?php if(isset($decadesSelected) && $yearSelected == null): ?>
                     <?php DateReviews::filmPaginationNumberDecade($decadesSelected); ?>
@@ -102,6 +107,16 @@ if($yearSelected){
                     <?= $pagination->filmPaginationNumber(); ?>
                 <?php endif; ?>
             </ul>
-        </div>
-    </section>
+        </nav>
+    </div>
 </div>
+
+</section>
+
+<?php if($decadesSelected || $yearSelected): ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        document.getElementById('all-reviews').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+</script>
+<?php endif; ?>

@@ -5,6 +5,14 @@ use App\HTML\Form;
 use App\Form\AddUser;
 use App\Security\Csrf;
 
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Pragma: no-cache');
+
+if(!empty($_SESSION['id'])){
+    header('Location: ' . CreateUrl::url('home'));
+    exit;
+}
+
 $title = "Register";
 
 if(!empty($_POST)){
@@ -13,8 +21,9 @@ if(!empty($_POST)){
         $errors = ['csrf' => ['Your session expired, please try again.']];
     }else{
         if($data->validateUser()->resultValidator()){
-            $data->addMembers();
+            $id = $data->addMembers();
             // session_regenerate_id(true); // décommente si tu veux éviter la fixation de session
+            $_SESSION['id']   = $id;
             $_SESSION['name'] = $data->getField('name');
             header('Location: ' . CreateUrl::url('authentication/success'));
             exit;
@@ -44,7 +53,7 @@ if(!empty($_POST)){
                     <?php endif; ?>
                 </div>
                 <div class="inputBox">
-                    <input type="email" name="email" id="email" required>
+                    <input type="text" name="email" id="email" required>
                     <label for="email">Email</label>
                     <?php if(!empty($errors)): ?>
                         <?= $data->arrayKeyExist('email', $errors) ?>
@@ -58,7 +67,7 @@ if(!empty($_POST)){
                     <input type="password" name="password2" id="password2" required>
                     <label for="password2">Confirm password</label>
                     <?php if(!empty($errors)): ?>
-                        <?= $data->arrayKeyExist('password', $errors) ?>
+                        <?= $data->arrayKeyExist('password2', $errors) ?>
                     <?php endif; ?>
                 </div>
                     <input type="submit" name="signup" value="Sign up">

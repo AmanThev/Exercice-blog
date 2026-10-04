@@ -1080,3 +1080,257 @@ p.error{
     font-size: 13px;
     color: #e07a5f;
 }
+
+/* ---- reviews: sidebar filtre décennie/année ---- */
+
+div.reviews-layout{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 60px;
+}
+
+@media (min-width: 900px){
+    div.reviews-layout{
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    div.reviews-layout > aside.date-reviews{
+        flex: 0 0 240px;
+    }
+    div.reviews-layout > div.reviews-col{
+        flex: 1 1 480px;
+        min-width: 0;
+    }
+}
+
+aside.date-reviews div.box{
+    border: 1px solid var(--line);
+    padding: 24px;
+}
+
+aside.date-reviews h3{
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    color: var(--brass-bright);
+    margin: 0 0 16px 0;
+}
+
+a.date-link{
+    display: block;
+    padding: 7px 0;
+    font-size: 13px;
+    color: var(--cream-dim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    transition: color .15s ease;
+}
+
+a.date-link:last-child{ border-bottom: none; }
+
+a.date-link:hover{ color: var(--brass-bright); }
+
+a.date-link.active{
+    color: var(--brass-bright);
+    font-weight: 600;
+}
+
+a.date-link.disabled{
+    color: var(--line);
+    pointer-events: none;
+}
+
+div.date-sublist{
+    padding-left: 14px;
+    border-left: 1px solid var(--line);
+    margin: 4px 0 4px 6px;
+}
+
+/* ---- reviews: slider "Last Reviews" (fondu auto, 5 items, pas de JS) ---- */
+
+div.reviews-slider{
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    aspect-ratio: 16 / 7;
+    min-height: 280px;
+}
+
+figure.slider-slide{
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--maroon);
+    animation: sliderFade 25s infinite;
+}
+
+figure.slider-slide:nth-child(1){ animation-delay: 0s; }
+figure.slider-slide:nth-child(2){ animation-delay: 5s; }
+figure.slider-slide:nth-child(3){ animation-delay: 10s; }
+figure.slider-slide:nth-child(4){ animation-delay: 15s; }
+figure.slider-slide:nth-child(5){ animation-delay: 20s; }
+
+@keyframes sliderFade{
+    0%   { opacity: 0; pointer-events: none; }
+    2%   { opacity: 1; pointer-events: auto; }
+    18%  { opacity: 1; pointer-events: auto; }
+    20%  { opacity: 0; pointer-events: none; }
+    100% { opacity: 0; pointer-events: none; }
+}
+
+div.slider-img{
+    overflow: hidden;
+}
+
+div.slider-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+div.slider-content{
+    padding: clamp(20px, 4vw, 50px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+div.slider-content h4{
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: clamp(22px, 3vw, 32px);
+    color: var(--cream);
+    margin: 0 0 14px 0;
+}
+
+div.slider-content p{
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--cream-dim);
+    margin: 0 0 16px 0;
+    display: -webkit-box;
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+@media (max-width: 640px){
+    figure.slider-slide{
+        grid-template-columns: 1fr;
+        grid-template-rows: 45% 55%;
+    }
+}
+
+/* ---- reviews: grille de cartes retournables ---- */
+
+div.review-flip-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+@media (min-width: 700px){
+    div.review-flip-grid{ grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 699px) and (min-width: 460px){
+    div.review-flip-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+
+div.flip-card{
+    perspective: 1200px;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+}
+
+div.flip-card-inner{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform .6s;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+}
+
+div.flip-card:hover div.flip-card-inner{
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+}
+
+div.flip-card-front,
+div.flip-card-back{
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border: 1px solid var(--line);
+    overflow: hidden;
+}
+
+div.flip-card-back{
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    background: var(--maroon);
+    overflow: hidden;
+}
+
+div.flip-card-front img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+img.flip-card-back-bg{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: .15;
+}
+
+div.flip-card-back-content{
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(16px, 3vw, 26px);
+}
+
+div.flip-card-back-content h3{
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--cream);
+    margin: 0 0 12px 0;
+}
+
+p.flip-card-meta{
+    font-size: 11px;
+    color: var(--cream-dim);
+    opacity: .8;
+    margin: 0 0 10px 0;
+}
+
+p.flip-card-text{
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--cream-dim);
+    margin: 0 0 12px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
