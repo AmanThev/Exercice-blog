@@ -1334,3 +1334,204 @@ p.flip-card-text{
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+/* ---- film-hero (affiche + titre) ---- */
+
+section.film-hero{
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 40px;
+    padding: 50px 0;
+    align-items: center;
+}
+
+@media (max-width: 560px){
+    section.film-hero{ grid-template-columns: 140px 1fr; gap: 24px; }
+}
+
+div.film-hero-poster img{
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border: 1px solid var(--line);
+    display: block;
+}
+
+p.film-hero-kicker{
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--brass-bright);
+    margin: 0 0 10px 0;
+}
+
+h1.film-hero-title{
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(28px, 5vw, 44px);
+    color: var(--cream);
+    margin: 0 0 10px 0;
+}
+
+p.film-hero-director{
+    font-size: 14px;
+    color: var(--cream-dim);
+    margin: 0;
+}
+
+/* ---- info-film + review-film ---- */
+
+div.content-film{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding-bottom: 20px;
+}
+
+@media (min-width: 900px){
+    div.content-film{ flex-direction: row; align-items: flex-start; }
+    article.info-film{ flex: 0 0 320px; }
+    article.review-film{ flex: 1 1 480px; min-width: 0; }
+}
+
+article.info-film,
+article.review-film{
+    border: 1px solid var(--line);
+    padding: 30px;
+}
+
+article.info-film h2,
+article.review-film h2{
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--cream);
+    margin: 0 0 20px 0;
+}
+
+article.review-film h2:not(:first-child){ margin-top: 30px; }
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th,
+table td{
+    text-align: left;
+    padding: 10px 0;
+    font-size: 13px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+}
+
+table th{
+    color: var(--cream-dim);
+    font-weight: 500;
+    width: 110px;
+}
+
+table td{ color: var(--cream); }
+
+table ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+p.reference{
+    font-size: 11px;
+    color: var(--cream-dim);
+    opacity: .7;
+    margin: 14px 0 0 0;
+}
+
+span.averageScore{ margin-right: 8px; }
+
+article.review-film p{
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--cream-dim);
+}
+
+/* ---- spoilers dans la critique (spoiler.js) ---- */
+
+span.spoiler-header{
+    background: var(--brass);
+    color: var(--maroon-deep);
+    padding: 1px 8px;
+    font-size: 12px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+span.spoiler-content{ display: none; }
+
+span.spoiler.visible span.spoiler-content,
+span.spoiler-content.visible{
+    display: inline;
+    background: var(--line);
+    padding: 1px 4px;
+}
+
+/* ---- note sous forme d'étoiles dans chaque commentaire ---- */
+
+span.rating-user{
+    margin-left: 8px;
+    font-size: 12px;
+}
+
+/* ---- sélecteur d'étoiles interactif (formulaire) ---- */
+
+form.comment-form h3{
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    margin: 20px 0 8px 0;
+}
+
+form.comment-form label.fa-trash{
+    display: inline-block;
+    font-size: 14px;
+    color: var(--cream-dim);
+    cursor: pointer;
+    margin-left: 4px;
+}
+
+div.rating-film{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+div.rating-film input[type="radio"]{ display: none; }
+
+div.rating-film label.fa-star{
+    font-size: 22px;
+    color: var(--line);
+    cursor: pointer;
+    transition: color .15s ease;
+}
+
+div.rating-film input:checked ~ label.fa-star,
+div.rating-film label.fa-star:hover,
+div.rating-film label.fa-star:hover ~ label.fa-star{
+    color: var(--brass-bright);
+}
+
+div#display-rating-film{
+    font-size: 12px;
+    color: var(--brass-bright);
+    margin: 6px 0 16px 0;
+}
+
+div#display-rating-film.rate-0::before{ content: "No rating selected"; color: var(--cream-dim); }
+div#display-rating-film.rate-1::before{ content: "1 / 5"; }
+div#display-rating-film.rate-2::before{ content: "2 / 5"; }
+div#display-rating-film.rate-3::before{ content: "3 / 5"; }
+div#display-rating-film.rate-4::before{ content: "4 / 5"; }
+div#display-rating-film.rate-5::before{ content: "5 / 5"; }

@@ -8,8 +8,7 @@ use App\Manager\UserDatabase;
 use App\URL\CreateUrl;
 use App\Form\AddComment;
 use App\HTML\Form;
-
-
+use App\Security\Csrf;
 
 $url            = new ExplodeUrl($_GET['url']);
 $id             = $url->getId();
@@ -38,86 +37,95 @@ if(strtolower($film->getUrlTitleCheck()) !== strtolower($slug)){
     $url = CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $id]);
     http_response_code(301);
     header('Location: ' . $url);
+    exit;
 }
 
 if(!empty($_POST)){
     $data = new AddComment($_POST);
-    //if($member or admin is connnect){
-        //if($data->validateComment('admins' or 'members')->resultValidator())
-            //$data->createComment();
-    //}
-    if($data->validateComment()->validateRating()->resultValidator()){
-        $data->createCommentFilm($id);
-        $_SESSION["success"] = "Your comment has been added";
-        header('Location: ' . CreateUrl::url('reviews', ['slug' => $slug, 'id' => $id]));
-        exit();
+    if(!Csrf::validate($_POST['csrf_token'] ?? null)){
+        $errors = ['csrf' => ['Your session expired, please try again.']];
     }else{
-        $errors = $data->returnErrors();
+        $commenterType = !empty($_SESSION['name']) ? 'members' : null;
+        if($data->validateComment($commenterType)->validateRating()->resultValidator()){
+            $data->createCommentFilm($id);
+            $_SESSION["success"] = "Your comment has been added";
+            header('Location: ' . CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $id]));
+            exit();
+        }else{
+            $errors = $data->returnErrors();
+        }
     }
 }
 
 $title = $slug;
 ?>
 
-<section class="film header-film">
-    <img src="<?= PUBLIC_PATH ?>/img/posterFilm/<?= $film->getPoster() ?>" alt="$film->title">
-    <h2><?= $film->getTitle() ?></h2>
-    <p>Directed by <?= $film->getDirector() ?></p>
+<section>
+
+<section class="film-hero">
+    <div class="film-hero-poster">
+        <img src="<?= PUBLIC_PATH ?>/img/posterFilm/<?= $film->getPoster() ?>" alt="<?= $film->getTitle() ?>">
+    </div>
+    <div class="film-hero-info">
+        <p class="film-hero-kicker">Now showing</p>
+        <h1 class="film-hero-title"><?= $film->getTitle() ?></h1>
+        <p class="film-hero-director">Directed by <?= $film->getDirector() ?></p>
+    </div>
 </section>
 
-<section class="content-film">
+<div class="content-film">
     <article class="info-film">
-    <h2>Film Info</h2>
-    <table>
-        <tbody>
-            <tr>
-                <th scope="row">Director</th>
-                <td><?= $film->getDirector() ?></td>
-            </tr>
-            <tr>
-                <th scope="row">Production</th>
-                <td><?= $film->getProduction() ?></td>
-            </tr>
-            <tr>
-                <th scope="row">Writer</th>
-                <td><?= $film->getWriter() ?></td>
-            </tr>
-            <tr>
-                <th scope="row">Starring</th>
-                <td>
-                    <ul>
-                        <?php foreach($film->getListCast() as $actor): ?>
-                            <li><?= $actor ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">Year</th>
-                <td><?= $film->getDate() ?></td>
-            </tr>
-            <tr>
-                <th scope="row">Genre</th>
-                <td><?= $film->getGenre() ?></td>
-            </tr>
-            <tr>
-                <th scope="row">Score<sup>*</sup></th>
-                <td>
-                    <span class="averageScore">   
-                        <i class="fas fa-star" style="color:<?= $totalRating >= 1 ? 'yellow' : 'grey'; ?>;"></i>
-                        <i class="fas fa-star" style="color:<?= $totalRating >= 2 ? 'yellow' : 'grey'; ?>;"></i>
-                        <i class="fas fa-star" style="color:<?= $totalRating >= 3 ? 'yellow' : 'grey'; ?>;"></i>
-                        <i class="fas fa-star" style="color:<?= $totalRating >= 4 ? 'yellow' : 'grey'; ?>;"></i>
-                        <i class="fas fa-star" style="color:<?= $totalRating >= 5 ? 'yellow' : 'grey'; ?>;"></i>
-                    </span>
+        <h2>Film Info</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <th scope="row">Director</th>
+                    <td><?= $film->getDirector() ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Production</th>
+                    <td><?= $film->getProduction() ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Writer</th>
+                    <td><?= $film->getWriter() ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Starring</th>
+                    <td>
+                        <ul>
+                            <?php foreach($film->getListCast() as $actor): ?>
+                                <li><?= $actor ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Year</th>
+                    <td><?= $film->getDate() ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Genre</th>
+                    <td><?= $film->getGenre() ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Score<sup>*</sup></th>
+                    <td>
+                        <span class="averageScore">
+                            <i class="fas fa-star" style="color:<?= $totalRating >= 1 ? 'var(--brass-bright)' : 'var(--line)'; ?>;"></i>
+                            <i class="fas fa-star" style="color:<?= $totalRating >= 2 ? 'var(--brass-bright)' : 'var(--line)'; ?>;"></i>
+                            <i class="fas fa-star" style="color:<?= $totalRating >= 3 ? 'var(--brass-bright)' : 'var(--line)'; ?>;"></i>
+                            <i class="fas fa-star" style="color:<?= $totalRating >= 4 ? 'var(--brass-bright)' : 'var(--line)'; ?>;"></i>
+                            <i class="fas fa-star" style="color:<?= $totalRating >= 5 ? 'var(--brass-bright)' : 'var(--line)'; ?>;"></i>
+                        </span>
 
-                    <?= $totalRating ?>
-                    <span id="totalVote"><?= ' ('.$totalVote.' votes)' ?></span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <p class="reference">* Average votes of users and admins site</p>
+                        <?= $totalRating ?>
+                        <span id="totalVote"><?= ' ('.$totalVote.' votes)' ?></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="reference">* Average votes of users and admins site</p>
     </article>
 
     <article class="review-film">
@@ -126,48 +134,38 @@ $title = $slug;
         <h2>Review from <?= $film->getAuthor() ?></h2>
         <p><?= $film->getReview() ?></p>
     </article>
-</section>
+</div>
 
-<section class="film comment-film">
-    <h2>Review User</h2>
+<section class="post-comments">
+    <div class="section-heading"><h2>Review User</h2><span class="rule"></span></div>
     <?php if($comments): ?>
-        <p class="total-comments"><?php echo $totalComment > 1 ? ' '.$totalComment.' Comments' : ' '.$totalComment.' Comment' ?></p>
+        <p class="total-comments"><?php echo $totalComment > 1 ? $totalComment.' Comments' : $totalComment.' Comment' ?></p>
         <?php foreach ($comments as $comment): ?>
             <div class="comment-user">
-                <span class="photo-profile <?php if($userDatabase->statutUser($comment->getPseudo(), 'members') === 1){ 
-                                                echo 'member'; 
-                                            }elseif($userDatabase->statutUser($comment->getPseudo(), 'admins') === 1){ 
+                <span class="photo-profile <?php if($userDatabase->statutUser($comment->getPseudo(), 'members') === 1){
+                                                echo 'member';
+                                            }elseif($userDatabase->statutUser($comment->getPseudo(), 'admins') === 1){
                                                 echo 'admin';
-                                            } ?>"><img src="<?= PUBLIC_PATH ?>/img/photoProfile/default.jpg" alt=""></span><h3><?= $comment->getPseudo() ?>,
-                    <span class="date-comment">
-                        <?php if($comment->getEdit() != NULL): ?>
-                            <?= $comment->getDate()->format('d F Y') ?>: (Edited)
-                        <?php else: ?>
-                            <?= $comment->getDate()->format('d F Y') ?>:
-                        <?php endif; ?>
-                    </span>
-                    <span class="rating-user">
-                        <?php if($comment->getRatingFilm() == 0): ?>
-                            <i class="fas fa-trash"></i>
-                        <?php elseif($comment->getRatingFilm() == 1): ?>
-                            <i class="fas fa-star"></i>
-                        <?php elseif ($comment->getRatingFilm() == 2): ?>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        <?php elseif ($comment->getRatingFilm()== 3): ?>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        <?php elseif ($comment->getRatingFilm() == 4): ?>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        <?php elseif ($comment->getRatingFilm() == 5): ?>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        <?php endif; ?>
-                    </span>
-                </h3>
-                <p class="comment-content"><?= $comment->getCommentFilm() ?></p>
-                    <span>
-                        <?php //if (is_connect() && $_SESSION['connect'] == $comment->pseudo): ?>
-                            <!-- <a id="editComment" href="http://localhost/blogCinema/view/reviewFilmEdit.php?id=<?php // $film->id ?>">Edit your comment</a> -->
-                        <?php //endif; ?>
-                    </span>
+                                            } ?>">
+                    <img src="<?= PUBLIC_PATH ?>/img/photoProfile/default.jpg" alt="">
+                </span>
+                <div class="comment-body">
+                    <h3><?= $comment->getPseudo() ?>
+                        <span class="date-comment">
+                            <?php if($comment->getEdit() != NULL): ?>
+                                <?= $comment->getDate()->format('d F Y') ?> (Edited)
+                            <?php else: ?>
+                                <?= $comment->getDate()->format('d F Y') ?>
+                            <?php endif; ?>
+                        </span>
+                        <span class="rating-user">
+                            <?php for($s = 1; $s <= 5; $s++): ?>
+                                <i class="fas fa-star" style="color:<?= $comment->getRatingFilm() >= $s ? 'var(--brass-bright)' : 'var(--line)'; ?>;"></i>
+                            <?php endfor; ?>
+                        </span>
+                    </h3>
+                    <p class="comment-content"><?= $comment->getCommentFilm() ?></p>
+                </div>
             </div>
         <?php endforeach; ?>
     <?php else: ?>
@@ -175,18 +173,24 @@ $title = $slug;
     <?php endif; ?>
 </section>
 
-<section class="film write-comment">
-    <h2>Write your Comment</h2>
-    <form action="" method="post">
-        <?= $commentForm->inputText('pseudo', 'Your name', 'size', '20'); ?>
+<section class="post-write-comment">
+    <div class="section-heading"><h2>Write your Comment</h2><span class="rule"></span></div>
+
+    <?php if(!empty($errors['csrf'])): ?>
+        <p class="error"><i class="fas fa-exclamation-circle"></i> <?= $errors['csrf'][0] ?></p>
+    <?php endif; ?>
+
+    <form action="" method="post" class="comment-form">
+        <?= Csrf::field() ?>
+        <?php if(!empty($_SESSION['name'])): ?>
+            <label for="pseudo">Your name :</label>
+            <input type="text" name="pseudo" id="pseudo" value="<?= htmlspecialchars($_SESSION['name']) ?>" readonly>
+        <?php else: ?>
+            <?= $commentForm->inputText('pseudo', 'Your name', 'size', '20'); ?>
+        <?php endif; ?>
             <?php if(!empty($errors)): ?>
                 <?= $data->arrayKeyExist('pseudo', $errors) ?>
             <?php endif; ?>
-            <!-- //if(isset($pseudo))
-            //{ echo $pseudo;
-            //}elseif (is_connect())
-            //{ echo ($_SESSION['connect']);
-            //} ?>" -->
         <?= $commentForm->textArea('comment', 'Your comment', 10, 'spoilers'); ?>
             <?php if(!empty($errors)): ?>
                 <?= $data->arrayKeyExist('comment', $errors) ?>
@@ -204,11 +208,13 @@ $title = $slug;
     </form>
 </section>
 
+</section>
+
 <script src="<?= PUBLIC_PATH ?>/js/spoiler.js"></script>
 <script>
         var inputStars = document.getElementsByName('rating-film');
         var commentStar = document.getElementById('display-rating-film');
-        
+
         var commentRateLoad = function(element){
             document.addEventListener('DOMContentLoaded', function() {
                 if(element.checked){

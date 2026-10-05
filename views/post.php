@@ -47,7 +47,7 @@ if(!empty($_POST)){
         if($data->validateComment($commenterType)->resultValidator()){
             $data->createCommentPost($id);
             $_SESSION["success"] = "Your comment has been added";
-            header('Location: ' . CreateUrl::url('blog', ['slug' => $slug, 'id' => $id]));
+            header('Location: ' . CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $id]));
             exit();
         }else{
             $errors = $data->returnErrors();
