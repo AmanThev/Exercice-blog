@@ -20,33 +20,52 @@ $message        = new ForumDatabase();
 $subCats        = new ForumDatabase();
 $subCats        = $subCats->getSubCategories($id);
 
-$title          = $slug;
+$title          = $category->getName();
 ?>
 
-<h1 class="title-forum"><?= $slug ?></h1>
+<section>
 
-<p class="path-forum"><i class="fas fa-home"></i><a href="<?= CreateUrl::url('forum') ?>"> Home</a> > <?= $slug ?></p>
+<nav class="forum-breadcrumb">
+    <a href="<?= CreateUrl::url('forum') ?>"><i class="fas fa-home"></i> Home</a>
+    <span class="sep">/</span>
+    <?= $category->getName() ?>
+</nav>
 
-<section class="forum category">
-    <h2>Introduction </h2>
-    <div class="separate-forum"></div>
+<div class="section-heading"><h1><?= $category->getName() ?></h1><span class="rule"></span></div>
 
+<div class="forum-intro">
+    <h2>Introduction</h2>
     <p><?= $category->getIntro() ?></p>
-    <table style="width:100%">
+</div>
+
+<table class="forum-table">
+    <thead>
         <tr>
             <th>Title</th>
-            <th>Topic</th>
-            <th>Message(s)</th>
-            <th>Last Message</th>
+            <th>Topics</th>
+            <th>Messages</th>
+            <th>Last message</th>
         </tr>
+    </thead>
+    <tbody>
         <?php foreach($subCats as $subCat): ?>
             <tr>
-            <td><a href="<?= CreateUrl::url('forum/' . $category->getUrlName(), ['slug' => $subCat->getUrlName(), 'id' => $subCat->getId()]) ?>"><?= $subCat->getName() ?></a></td>
-            <td><?= $countTopics->countTopics($subCat->getId()) ?></td>
-            <td><?= $idSubCat = $countMessages->countMessagesWithSubCat($subCat->getId()); ?></td>
-            <td><?php echo $countMessages->countMessagesWithSubCat($subCat->getId()) === 0 ? "No Message" : 'by ' . $message->getLastMessageIndex($subCat->getId())->getName() . '<br>' .  $message->getLastMessageIndex($subCat->getId())->getDateTimeMessage()->format('d-m-Y, h:i'); ?></td>
-        </tr>
+                <td data-label="Title">
+                    <a href="<?= CreateUrl::url('forum/' . $category->getUrlName(), ['slug' => $subCat->getUrlName(), 'id' => $subCat->getId()]) ?>" class="forum-subcat-link"><?= $subCat->getName() ?></a>
+                </td>
+                <td data-label="Topics"><?= $countTopics->countTopics($subCat->getId()) ?></td>
+                <td data-label="Messages"><?= $countMessages->countMessagesWithSubCat($subCat->getId()); ?></td>
+                <td data-label="Last message">
+                    <?php if($countMessages->countMessagesWithSubCat($subCat->getId()) === 0): ?>
+                        <span class="forum-no-message">No message</span>
+                    <?php else: ?>
+                        <span class="forum-last-author">by <?= $message->getLastMessageIndex($subCat->getId())->getName() ?></span>
+                        <span class="forum-last-date"><?= $message->getLastMessageIndex($subCat->getId())->getDateTimeMessage()->format('d-m-Y, h:i') ?></span>
+                    <?php endif; ?>
+                </td>
+            </tr>
         <?php endforeach; ?>
-    </table> 
-</section>
+    </tbody>
+</table>
 
+</section>
