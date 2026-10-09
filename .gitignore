@@ -12,6 +12,8 @@ src/manager/Connection.php
 # Ignoring directories
 # Both the directory itself and its contents will be ignored.
 vendor/
+public/img/postPicture/*
+public/img/posterFilm/*
 
 # Glob pattern can also be used here to ignore paths with certain characters.
 # For example, [bB]uild/ rule will match both build/ and Build/

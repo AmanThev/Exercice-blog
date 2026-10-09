@@ -105,7 +105,7 @@ class Post
     
     public function getPicture()
     {
-        return htmlentities($this->picture);
+        return htmlentities((string)$this->picture);
     }
 
     public function setPicture($picture): void
@@ -177,7 +177,7 @@ class Post
 
     public function getAuthor(): string
     {
-        return $this->name;
+        return (string)$this->name;
     }
 
     public function setAuthor($author): void

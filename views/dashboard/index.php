@@ -99,76 +99,136 @@ $totalTopics    = new ForumDatabase();
 $totalTopics    = $totalTopics->countAllTopics();
 
 $topicNonResolved   = new ForumDatabase();
-$topicNonResolved   = $topicNonResolved->countOpenTopics()
+$topicNonResolved   = $topicNonResolved->countOpenTopics();
+
+// "1 comment" / "2 comments"
+$plural = fn(int $n, string $word) => $n . ' ' . $word . ($n === 1 ? '' : 's');
 ?>
 
-<section class="dash-home">
-<article>
-    <h2>Post</h2>
-    <h3>Last Post:</h3>
-    <p class="title-table"><img src="<?= PUBLIC_PATH ?>/img/postPicture/<?= $lastPost->getPicture() ?>" alt="<?= $lastPost->getTitle() ?>"><?= $lastPost->getTitle() ?></p>
-    <p><span><i class="fas fa-comment"></i><?php echo $postCom > 1 ? ' '.$postCom.' Comments' : ' '.$postCom.' Comment' ?></span><span><i class="fas fa-thumbs-up"></i><?php echo $lastPost->getLike() > 1 ? ' '.$lastPost->getLike().' Likes ' : ' '.$lastPost->getLike().' Like '; ?></span><span><i class="fas fa-thumbs-down"></i><?php echo $lastPost->getDislike() > 1 ? ' '.$lastPost->getDislike().' Dislikes ' : ' '.$lastPost->getDislike().' Dislike '; ?></span></p>
-    <div class="separate"></div>
-    <h3>Last Comment:</h3>
-    <p class="post-title">Post's Title: <span><?= $titleLastCom->getTitle() ?></span></p>
-    <p>By <?= $lastComPost->getPseudo() ?><span class="last-comment"><?= $lastComPost->getDate()->format('d F Y')?></span></p>
-    <p class="last-comment"><?= $lastComPost->getComment() ?></p>
-    <div class="separate"></div>
-    <h3>Best Post:</h3>
-        <p>Post with the most comments:</p>
-        <?php foreach($mostComPost as $k): ?>
-            <p class="best"><?= $bestComPost->getPostById($k['index_id'])->getTitle(); ?>: <span><i class="fas fa-comment"></i><?php echo $bestComNumberPost->countCommentByIndexId($k['index_id'], 'comments_post')->getBest() > 1 ? ' '.$bestComNumberPost->countCommentByIndexId($k['index_id'], 'comments_post')->getBest().' Comments ' : ' '.$bestComNumberPost->countCommentByIndexId($k['index_id'], 'comments_post')->getBest().' Comment '; ?></span></p>
-        <?php endforeach; ?>
-        <p>Post with the most likes:</p>
-        <?php foreach($bestPosts as $bestPost): ?>
-            <p class="best"><?= $bestPost->getTitle() ?>: <span><i class="fas fa-thumbs-up"></i><?php echo $bestPost->getLike() > 1 ? ' '.$bestPost->getLike().' Likes ' : ' '.$bestPost->getLike().' Like '; ?></span></p>
-        <?php endforeach; ?>
-</article>
-<article>
-    <h2>Statistic</h2>
-    <h3><i class="fas fa-edit"></i> Post:</h3>
-    <p><span><i class="fas fa-pen"></i> <?= $totalPost ?> Posts</span><span><i class="fas fa-comment"></i> <?= $totalComPost ?> Comments</span></p>
-    <div class="separate"></div>
-    <h3><i class="fas fa-film"></i> Film:</h3>
-    <p><span><i class="fas fa-file-video"></i> <?= $totalFilm ?> Reviews</span><span><i class="fas fa-comment"></i> <?= $totalComFilm ?> Comments</span></p>
-    <div class="separate"></div>
-    <h3><i class="fab fa-forumbee"></i> Forum:</h3>
-    <p><span><i class="fas fa-folder"></i> <?= $totalCat ?> Categories</span><span><i class="fas fa-file"></i> <?= $totalSubCat ?> Sub-Categories</span></p>
-    <p><span><i class="fas fa-paper-plane"></i> <?= $totalTopics ?> Topics</span><span><i class="fas fa-paper-plane"></i> <?= $topicNonResolved ?> Topics non resolved</span></p>
-    <p><span><i class="fas fa-comments"></i> <?= $totalMessages ?> messages</span></p>
-    <div class="separate"></div>
-    <h3><i class="fas fa-users"></i> Users:</h3>
-    <!-- <p>Nombre de visite</p> -->
-    <p><i class="fas fa-user"></i> <?= $totalMembers ?> Members</p>
-    <p><i class="fas fa-user-cog"></i> <?= $totalAdmins ?> Administrator</p>
-</article>
+<h2 class="dash-title">Overview</h2>
 
-<article>
-    <h2>Reviews</h2>
-    <h3>Last Review:</h3>
-    <p class="title-table"><img src="<?= PUBLIC_PATH ?>/img/posterFilm/<?= $lastFilm->getPoster() ?>" alt="<?= $lastFilm->getTitle() ?>"><?= $lastFilm->getTitle() ?></p>
-    <p><span><i class="fas fa-comment"></i><?php echo $filmCom > 1 ? ' '.$filmCom.' Comments' : ' '.$filmCom.' Comment' ?></span><span><i class="fas fa-poll-h"></i><?php echo $totalVote > 1 ? ' '.$totalVote.' Votes ' : ' '.$totalVote.' Vote '; ?></span><span>Score <?= $totalRating.' ' ?><i class="fas fa-star"></i></span></p>
-    <div class="separate"></div>
-    <h3>Last Comment:</h3>
-    <p class="post-title">Film's Title: <span><?= $titleLastFilm->getTitle() ?></span></p>
-    <p>By <?= $lastComFilm->getPseudo() ?><span><?= $lastComFilm->getDate()->format('d F Y')?></span></p>
-    <p class="last-comment"><?= $lastComFilm->getComment() ?></p>
-    <div class="separate"></div>
-    <h3>Best Review:</h3>
-        <p>Reviews with the most comments:</p>
-        <?php foreach($mostComFilm as $l): ?>
-            <p class="best"><?= $bestComFilm->getFilmById($l['index_id'])->getTitle(); ?>: <span><i class="fas fa-comment"></i><?php echo $bestComNumberFilm->countCommentByIndexId($l['index_id'], 'comments_film')->getBest() > 1 ? ' '.$bestComNumberFilm->countCommentByIndexId($l['index_id'], 'comments_film')->getBest().' Comments ' : ' '.$bestComNumberFilm->countCommentByIndexId($l['index_id'], 'comments_film')->getBest().' Comment '; ?></span></p>
-        <?php endforeach; ?>
-          
-        <p>Reviews with the best average:</p>
-        <?php foreach($bestRating as $m): ?>
-            <p class="best"><?= $bestRatFilm->getFilmById($m['index_id'])->getTitle(); ?>: <span><i class="fas fa-star"></i> <?= number_format($m['rating'], 2, ',', '.') ?></span></p>
-        <?php endforeach; ?>
-</article>
+<div class="dash-tiles">
+    <div class="dash-tile"><i class="fas fa-edit"></i><strong><?= $totalPost ?></strong><span>Posts</span></div>
+    <div class="dash-tile"><i class="fas fa-film"></i><strong><?= $totalFilm ?></strong><span>Reviews</span></div>
+    <div class="dash-tile"><i class="fas fa-comment"></i><strong><?= $totalComPost + $totalComFilm ?></strong><span>Comments</span></div>
+    <div class="dash-tile"><i class="fas fa-users"></i><strong><?= $totalMembers ?></strong><span>Members</span></div>
+    <div class="dash-tile"><i class="fas fa-paper-plane"></i><strong><?= $totalTopics ?></strong><span>Topics</span></div>
+    <div class="dash-tile"><i class="fas fa-comments"></i><strong><?= $totalMessages ?></strong><span>Messages</span></div>
+</div>
 
-<article>
-<h2>Most Active</h2>
-<p>Photo du membre</p>
-<p>Nombre de comment</p>
-</article>
-</section>
+<div class="dash-grid">
+
+    <article class="dash-card">
+        <h3 class="dash-card-title">Posts</h3>
+
+        <p class="dash-label">Last post</p>
+        <div class="dash-last">
+            <img class="dash-thumb" src="<?= PUBLIC_PATH ?>/img/postPicture/<?= $lastPost->getPicture() ?>" alt="">
+            <div>
+                <p class="dash-last-title"><?= $lastPost->getTitle() ?></p>
+                <p class="dash-meta">
+                    <span><i class="fas fa-comment"></i><?= $plural((int)$postCom, 'comment') ?></span>
+                    <span><i class="fas fa-thumbs-up"></i><?= $plural((int)$lastPost->getLike(), 'like') ?></span>
+                    <span><i class="fas fa-thumbs-down"></i><?= $plural((int)$lastPost->getDislike(), 'dislike') ?></span>
+                </p>
+            </div>
+        </div>
+
+        <p class="dash-label">Last comment</p>
+        <div class="dash-quote">
+            <p class="dash-quote-meta">on <strong><?= $titleLastCom->getTitle() ?></strong> &middot; by <?= $lastComPost->getPseudo() ?> &middot; <?= $lastComPost->getDate()->format('d F Y') ?></p>
+            <p class="dash-quote-text"><?= $lastComPost->getComment() ?></p>
+        </div>
+
+        <p class="dash-label">Most commented</p>
+        <ul class="dash-list">
+            <?php foreach($mostComPost as $k): ?>
+                <?php $nb = (int)$bestComNumberPost->countCommentByIndexId($k['index_id'], 'comments_post')->getBest(); ?>
+                <li>
+                    <span><?= $bestComPost->getPostById($k['index_id'])->getTitle() ?></span>
+                    <strong><i class="fas fa-comment"></i><?= $plural($nb, 'comment') ?></strong>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+
+        <p class="dash-label">Most liked</p>
+        <ul class="dash-list">
+            <?php foreach($bestPosts as $bestPost): ?>
+                <li>
+                    <span><?= $bestPost->getTitle() ?></span>
+                    <strong><i class="fas fa-thumbs-up"></i><?= $plural((int)$bestPost->getLike(), 'like') ?></strong>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </article>
+
+    <article class="dash-card">
+        <h3 class="dash-card-title">Reviews</h3>
+
+        <p class="dash-label">Last review</p>
+        <div class="dash-last">
+            <img class="dash-thumb dash-thumb-film" src="<?= PUBLIC_PATH ?>/img/posterFilm/<?= $lastFilm->getPoster() ?>" alt="">
+            <div>
+                <p class="dash-last-title"><?= $lastFilm->getTitle() ?></p>
+                <p class="dash-meta">
+                    <span><i class="fas fa-comment"></i><?= $plural((int)$filmCom, 'comment') ?></span>
+                    <span><i class="fas fa-poll-h"></i><?= $plural((int)$totalVote, 'vote') ?></span>
+                    <span><i class="fas fa-star"></i>Score <?= $totalRating ?></span>
+                </p>
+            </div>
+        </div>
+
+        <p class="dash-label">Last comment</p>
+        <div class="dash-quote">
+            <p class="dash-quote-meta">on <strong><?= $titleLastFilm->getTitle() ?></strong> &middot; by <?= $lastComFilm->getPseudo() ?> &middot; <?= $lastComFilm->getDate()->format('d F Y') ?></p>
+            <p class="dash-quote-text"><?= $lastComFilm->getComment() ?></p>
+        </div>
+
+        <p class="dash-label">Most commented</p>
+        <ul class="dash-list">
+            <?php foreach($mostComFilm as $l): ?>
+                <?php $nb = (int)$bestComNumberFilm->countCommentByIndexId($l['index_id'], 'comments_film')->getBest(); ?>
+                <li>
+                    <span><?= $bestComFilm->getFilmById($l['index_id'])->getTitle() ?></span>
+                    <strong><i class="fas fa-comment"></i><?= $plural($nb, 'comment') ?></strong>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+
+        <p class="dash-label">Best average</p>
+        <ul class="dash-list">
+            <?php foreach($bestRating as $m): ?>
+                <li>
+                    <span><?= $bestRatFilm->getFilmById($m['index_id'])->getTitle() ?></span>
+                    <strong><i class="fas fa-star"></i><?= number_format($m['rating'], 2, ',', '.') ?></strong>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </article>
+
+    <article class="dash-card">
+        <h3 class="dash-card-title">Community</h3>
+
+        <p class="dash-label">Users</p>
+        <ul class="dash-list">
+            <li><span><i class="fas fa-user"></i>Members</span><strong><?= $totalMembers ?></strong></li>
+            <li><span><i class="fas fa-user-cog"></i>Administrators</span><strong><?= $totalAdmins ?></strong></li>
+        </ul>
+
+        <p class="dash-label">Forum</p>
+        <ul class="dash-list">
+            <li><span><i class="fas fa-folder"></i>Categories</span><strong><?= $totalCat ?></strong></li>
+            <li><span><i class="fas fa-file"></i>Sub-categories</span><strong><?= $totalSubCat ?></strong></li>
+            <li><span><i class="fas fa-paper-plane"></i>Topics</span><strong><?= $totalTopics ?></strong></li>
+            <li><span><i class="fas fa-lock-open"></i>Open topics</span><strong><?= $topicNonResolved ?></strong></li>
+            <li><span><i class="fas fa-comments"></i>Messages</span><strong><?= $totalMessages ?></strong></li>
+        </ul>
+
+        <p class="dash-label">Comments</p>
+        <ul class="dash-list">
+            <li><span><i class="fas fa-pen"></i>On posts</span><strong><?= $totalComPost ?></strong></li>
+            <li><span><i class="fas fa-file-video"></i>On reviews</span><strong><?= $totalComFilm ?></strong></li>
+        </ul>
+    </article>
+
+</div>

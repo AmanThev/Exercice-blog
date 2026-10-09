@@ -18,6 +18,10 @@ class Text
             return $content;
         }
         $lastSpace = mb_strpos($content, ' ', $limit);
+        // No space after the limit (long last word, or line breaks only) : cut at the limit
+        if($lastSpace === false){
+            $lastSpace = $limit;
+        }
         return mb_substr($content, 0, $lastSpace) . ' ...';
     }
 }

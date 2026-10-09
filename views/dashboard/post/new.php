@@ -1,170 +1,140 @@
 <?php
 
 use App\URL\CreateUrl;
+use App\Security\Csrf;
 
 $title = "New Post";
 ?>
 
-<h3 class="title-page">New Post</h3>
+<div class="dash-pagehead">
+    <h2 class="dash-title">New post</h2>
+    <a class="dash-btn-ghost" href="<?= CreateUrl::url('dashboard/posts') ?>"><i class="fas fa-chevron-left"></i> Back to posts</a>
+</div>
 
-<form class="dashboard-form" action="<?= CreateUrl::url('ajax/addPostAjax'); ?>" method="post" enctype="multipart/form-data">
-    <div class="input inputAuthor">
-        <label for="author">Your Name</label>
-        <input type="text" name="author" id="author" value="" aria-describedby="authorInfo" placeholder="Write your name">
-        <small id="authorInfo">Your name must not exceed 20 characters</small>
+<form id="post-form" class="dash-form" action="<?= CreateUrl::url('ajax/addPostAjax'); ?>" method="post" enctype="multipart/form-data" novalidate>
+    <?= Csrf::field() ?>
+
+    <div class="field">
+        <label for="author">Author</label>
+        <input type="text" name="author" id="author" placeholder="Name of an administrator" autocomplete="off">
+        <small class="hint">Must be the name of an administrator (2 to 20 characters).</small>
+        <p class="field-error" data-error="author"></p>
     </div>
 
-    <div class="input">
-        <label for="title">Post's Title</label>
-        <input type="text" name="title" id="title" value="" aria-describedby="titleInfo" placeholder="Write your title">
-        <p id="title-error"></p>
+    <div class="field">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" placeholder="Write your title" autocomplete="off">
+        <p class="field-error" data-error="title"></p>
     </div>
 
-    <div class="textarea">
-        <label for="content">Your Post</label>
-        <textarea type="text" name="content" id="content" rows="20"></textarea>
-        <p id="content-error"></p>
+    <div class="field">
+        <label for="content">Content</label>
+        <textarea name="content" id="content" rows="14"></textarea>
+        <small class="hint">At least 20 characters.</small>
+        <p class="field-error" data-error="content"></p>
     </div>
 
-    <div class="picture">
-        <label for="picture">Upload</label>
-        <input type="hidden" name="MAX_FILE_SIZE" value="250000">
-        <input type="file" name="picture" id="picture">
-        <button type="button" onclick="document.getElementById('picture').value=''" class="delete-file deleteImage">
-            <i class="fas fa-times-circle"></i>
-        </button>
-        <small>Choose a picture to illustrate your post</small>
-        <p id="picture-error"></p>
+    <div class="field">
+        <label for="picture">Picture</label>
+        <div class="file-row">
+            <input type="file" name="picture" id="picture" accept="image/png,image/jpeg,image/gif">
+            <button type="button" class="file-clear" id="clear-picture" aria-label="Remove the picture" hidden><i class="fas fa-times"></i></button>
+        </div>
+        <div class="picture-preview" id="picture-preview" hidden><img src="" alt="Preview"></div>
+        <small class="hint">Optional. PNG, JPG or GIF, 2 MB maximum.</small>
+        <p class="field-error" data-error="picture"></p>
     </div>
 
-    <div>
+    <div class="field">
+        <span class="field-label">Visibility</span>
         <label class="switch">
             <input class="switch-input" type="checkbox" id="checkbox">
-            <span class="switch-label" data-public="public" data-private="private"></span> 
-            <span class="switch-handle"></span> 
+            <span class="switch-label" data-public="public" data-private="private"></span>
+            <span class="switch-handle"></span>
         </label>
-    </div> 
-
-    <div>
-        <p id="message"></p>
     </div>
 
-    <div class="button">
-        <button id="validateForm" type="submit" name="submit"><span>Submit</span></button>
+    <p id="message" class="dash-message" role="status"></p>
+    <p id="form-done" class="dash-message valid" hidden>Post published. <a href="<?= CreateUrl::url('dashboard/posts') ?>">Back to the posts list</a></p>
+
+    <div class="form-actions">
+        <button id="validateForm" class="dash-submit" type="submit"><span>Publish</span></button>
     </div>
 </form>
 
+<script src="<?= PUBLIC_PATH ?>/js/imagePreview.js"></script>
 <script>
-    $(function(){
-    $("form").submit(function(e){
+$(function(){
+    var $form  = $('#post-form');
+    var $btn   = $('#validateForm');
+    var $label = $btn.find('span');
+    var $msg   = $('#message');
+    var $done  = $('#form-done');
+
+    function setMessage(text, type){
+        $msg.text(text).removeClass('error valid').addClass(type);
+    }
+
+    function clearFeedback(){
+        $('.field-error').text('');
+        $msg.text('').removeClass('error valid');
+        $done.prop('hidden', true);
+    }
+
+    $form.on('submit', function(e){
         e.preventDefault();
-        var url     = $("form").attr("action");
-        var button  = $("#validateForm span");
-        var error; 
+        clearFeedback();
 
-        $("#validateForm").addClass("submit");
-        button.fadeOut("slow", function(){
-            button.empty().html('<i class="fas fa-spinner"></i>').fadeIn("slow");
-        });
-
-        $(".inputAuthor p").remove();
-        $(".error").empty().removeClass("error");
-
-		if (!$("input:text").val()) {
-			error = "Please write your name and a title!";
-            setTimeout(function() {
-			    $("#message").html(error);
-                $("#message").addClass("error");
-            }, 2000);
-            setTimeout(function() {
-                button.fadeOut(function(){
-                    button.empty().append("Submit").fadeIn();
-                    $("#button").removeClass("submit");
-                });
-            }, 2800);
-            return false;
+        if(!$.trim($('#author').val()) || !$.trim($('#title').val())){
+            setMessage('Please write the author name and a title.', 'error');
+            return;
         }
 
-        var formData = new FormData(); 
-        var author = $("#author").val();
-            formData.append('author', author);
-        var title = $("#title").val();
-            formData.append('title', title);
-        var content = $("#content").val();
-            formData.append('content', content);
-        if ($('#picture').val() != ''){
-            var picture = $('#picture').prop('files')[0];
-                formData.append('picture', picture);
+        var formData = new FormData();
+        formData.append('csrf_token', $form.find('input[name="csrf_token"]').val());
+        formData.append('author',  $('#author').val());
+        formData.append('title',   $('#title').val());
+        formData.append('content', $('#content').val());
+        formData.append('public',  $('#checkbox').is(':checked'));
+
+        var file = $('#picture').prop('files')[0];
+        if(file){
+            formData.append('picture', file);
         }
-        var checkbox = $("#checkbox").is(':checked');
-            formData.append('public', checkbox);
+
+        $btn.prop('disabled', true);
+        $label.text('Sending...');
 
         $.ajax({
-            type: "POST",
-            url: url,
+            type: 'POST',
+            url: $form.attr('action'),
             data: formData,
             contentType: false,
-            cache: false,
             processData: false,
-            success:function(data){
-                data = JSON.parse(data)
-                if(data.status === 'ok'){
-                    setTimeout(function() {
-                        $("#message").addClass("valid");
-                        $('#message').text(data.good);
-                        $("form")[0].reset();
-                    }, 2000);
-                    setTimeout(function() {
-                        button.fadeOut(function(){
-                            $("#validateForm").removeClass("submit").prop('disabled', true);
-                            button.empty().html('<i class="fas fa-check"></i>').fadeIn("slow");
-                        });
-                    }, 2800);  
-                }else{
-                    setTimeout(function() {
-                            if(data.error.author){
-                                $.each(data.error.author, function (key, value){
-                                    $(".inputAuthor").append("<p class='error'>" + value + "</p>");
-                                })
-                            }
-                            if(data.error.title){
-                                var titleError = "";
-                                $.each(data.error.title, function (key, value){
-                                    titleError += value;
-                                    $("#title-error").text(titleError);
-                                    $("#title-error").addClass("error");
-                                })
-                            }
-                            if(data.error.content){
-                                var contentError = "";
-                                $.each(data.error.content, function (key, value){
-                                    contentError += value;
-                                    $("#content-error").text(contentError);
-                                    $("#content-error").addClass("error");
-                                })
-                            }
-                            if(data.error.picture){
-                                var pictureError = "";
-                                $.each(data.error.picture, function (key, value){
-                                    pictureError += value;
-                                    $("#picture-error").text(pictureError);
-                                    $("#picture-error").addClass("error");
-                                })
-                            }
-                            $("#message").text("Please, correct your error(s)");
-                            $("#message").addClass("error");
-                        // });
-                    }, 2000);
-                    setTimeout(function() {
-                        button.fadeOut(function(){
-                            button.empty().append("Submit").fadeIn();
-                            $("#validateForm").removeClass("submit");
-                        });
-                }, 2800);
-                } 
+            cache: false,
+            dataType: 'json'
+        })
+        .done(function(data){
+            if(data.status === 'ok'){
+                setMessage(data.good, 'valid');
+                $form[0].reset();
+                $('#clear-picture').trigger('click');
+                $done.prop('hidden', false);
+            }else{
+                var errors = data.error || {};
+                $.each(errors, function(field, messages){
+                    $('[data-error="' + field + '"]').text(messages.join(' '));
+                });
+                setMessage(errors.form ? errors.form.join(' ') : 'Please correct the highlighted errors.', 'error');
             }
         })
-        return false;
+        .fail(function(){
+            setMessage('Something went wrong on the server. Please try again.', 'error');
+        })
+        .always(function(){
+            $btn.prop('disabled', false);
+            $label.text('Publish');
+        });
     });
 });
 </script>

@@ -5,12 +5,15 @@ use \PDO;
 use App\Model\Post;
 use App\SQL\CountSql;
 use App\SQL\Paginate;
-use App\URL\CreateUrl;
-use App\Manager\Exception\NotFoundException;
 
 class PostDatabase extends Database
-{    
-    
+{
+    /**
+     * Number of posts per page (blog and home) : defined once, used everywhere
+     */
+    private const PER_PAGE_BLOG = 8;
+    private const PER_PAGE_HOME = 3;
+
     /**
      * @var string
      */
@@ -19,104 +22,89 @@ class PostDatabase extends Database
      * @var string
      */
     private $queryAllPost = "SELECT * FROM posts";
-    
+    /**
+     * Post + name of its author.
+     * "p.*" keeps the id of the post : with a plain "SELECT *" the id of the admin
+     * overwrote it (both tables have an "id" column).
+     *
+     * @var string
+     */
+    private $queryWithAuthor = "SELECT p.*, a.name FROM posts p LEFT JOIN admins a ON p.admin_id = a.id";
+
     /**
      * @var array
      */
     private $status = [
-        "public"    => '1',
-        "private"   => '0',
-        "all"       => "'0' OR '1'"
+        "public"    => 1,
+        "private"   => 0
     ];
 
 
-    public function getPosts($display)
-    {
-        $status = $this->status[$display];
-        $sql = "SELECT * FROM admins a
-            RIGHT JOIN posts 
-            ON a.id = admin_id 
-            WHERE public=$status 
-            ORDER BY date DESC";
-        return $this->getAllData($sql, "POST");
-    }
-
     /**
-     * get all the public posts with limit from the table post
-     *
-     * @return array
+     * @param  string $display "public" or "private" ; anything else = all the posts
      */
-    public function getPostsPublic(): array
+    public function getPosts(string $display = 'all'): array
     {
-        $sql = $this->queryPublic;
-        $pagination = new Paginate($sql, 8);
-        $pagination = $pagination->getPagination();
-        $sql .= "ORDER BY date DESC $pagination";
-        return $this->getAllData($sql, 'Post');
+        $sql = $this->queryWithAuthor;
+        if(isset($this->status[$display])){
+            $sql .= " WHERE p.public = " . $this->status[$display];
+        }
+        return $this->getAllData("$sql ORDER BY p.date DESC", 'Post');
     }
 
     public function getAllPosts(): array
     {
-        $stmt = $this->connect()->query("
-            SELECT * FROM admins a
-            RIGHT JOIN posts
-            ON a.id = admin_id 
-            ORDER BY date DESC");
-        $posts = $stmt->fetchAll(PDO::FETCH_CLASS, Post::class);
-        return $posts;
+        return $this->getPosts('all');
+    }
+
+    /**
+     * get the public posts of one page (the page comes from the url, see Paginate)
+     */
+    private function getPublicPage(int $perPage): array
+    {
+        $pagination = (new Paginate($this->queryPublic, $perPage))->getPagination();
+        return $this->getAllData("$this->queryPublic ORDER BY date DESC $pagination", 'Post');
+    }
+
+    public function getPostsPublic(): array
+    {
+        return $this->getPublicPage(self::PER_PAGE_BLOG);
     }
 
     public function getPostsHome(): array
     {
-        $sql = $this->queryPublic;
-        $pagination = new Paginate($sql, 3);
-        $pagination = $pagination->getPagination();
-        $sql .= "ORDER BY date DESC $pagination";
-        $stmt = $this->connect()->query($sql);
-        $posts = $stmt->fetchAll(PDO::FETCH_CLASS, Post::class);
-        return $posts;
+        return $this->getPublicPage(self::PER_PAGE_HOME);
     }
-    
+
     public function getLastPost(): Post
     {
-        $sql = $this->queryPublic;
-        $sql .= "ORDER BY date DESC LIMIT 1";
-        return $this->getData($sql, 'Post');
+        return $this->getData("$this->queryPublic ORDER BY date DESC LIMIT 1", 'Post');
     }
 
     public function postPaginationNumber(string $status): ?int
     {
         if($status === 'public'){
-            $pagination = new Paginate($this->queryPublic, 8);
-            $pagination = $pagination->getPaginationNumber();
-            return $pagination; 
+            return (new Paginate($this->queryPublic, self::PER_PAGE_BLOG))->getPaginationNumber();
         }
+        return null;
     }
 
     public function getPostById(int $id): Post
     {
-        $sql  = $this->queryAllPost;
-        $sql .= " p LEFT JOIN admins a ON admin_id = a.id";
-        return $this->getDataByField($sql, 'p.id', $id, "Post");
+        return $this->getDataByField($this->queryWithAuthor, 'p.id', $id, 'Post');
     }
 
+    /**
+     * The "index_id" of a comment is the id of its post
+     */
     public function getPostByCommentId(int $idPost): Post
     {
-        $stmt = $this->connect()->prepare("
-            $this->queryAllPost p
-            INNER JOIN comments_post
-            ON p.id = index_id
-            WHERE index_id=:idPost");
-        $stmt->execute(['idPost' => $idPost]);
-        $stmt->setFetchMode(PDO::FETCH_CLASS,Post::class);
-        $post = $stmt->fetch();
-        return $post;
+        return $this->getPostById($idPost);
     }
 
-    public function getPostByAdminId(int $idAdmin)
+    public function getPostByAdminId(int $idAdmin): array
     {
-        $sql = "SELECT * FROM admins a INNER JOIN posts ON admin_id = a.id";
-        return $this->getAllDataByField($sql, 'a.id', $idAdmin, "Post");
+        return $this->getAllDataByField($this->queryWithAuthor, 'p.admin_id', $idAdmin, 'Post');
     }
 
     public function totalPosts(): int
@@ -135,25 +123,25 @@ class PostDatabase extends Database
         return CountSql::totalData("$this->queryAllPost WHERE admin_id= ?", $idName);
     }
 
-    public function createPost(Post $post): void
+    /**
+     * Delete a post with its comments and votes.
+     * The picture files are NOT deleted : several posts can share the same image.
+     */
+    public function deletePost(int $id): void
     {
-        $stmt = $this->connect()->prepare("INSERT INTO posts SET 
-            title = :title,
-            admin_id = :admin_id, 
-            content = :content, 
-            public = :public, 
-            date = NOW()"
-        );
-        $addPost = $stmt->execute([
-            'title'     => $post->getTitle(),
-            'admin_id'  => $post->getIdAdmin(),
-            'content'   => $post->getContent(),
-            'public'    => $post->getPublic()
-        ]);
-        if($addPost === false){
-            throw new \Exception("Error, impossible to add the post");
+        $pdo = $this->connect();
+        try{
+            $pdo->beginTransaction();
+            $pdo->prepare("DELETE FROM comments_post WHERE index_id = :id")->execute(['id' => $id]);
+            $pdo->prepare("DELETE FROM votes WHERE ref = 'posts' AND ref_id = :id")->execute(['id' => $id]);
+            $pdo->prepare("DELETE FROM posts WHERE id = :id")->execute(['id' => $id]);
+            $pdo->commit();
+        }catch(\Throwable $e){
+            if($pdo->inTransaction()){
+                $pdo->rollBack();
+            }
+            throw $e;
         }
-        $post->setId($this->pdo->lastInsertId());
     }
 
     public function findPost(string $keyword): array
@@ -163,6 +151,6 @@ class PostDatabase extends Database
                 AGAINST (:keyword IN NATURAL LANGUAGE MODE)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute(['keyword' => $keyword]);
-        return $stmt->fetchAll(PDO::FETCH_CLASS, POST::class);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, Post::class);
     }
 }

@@ -1,47 +1,58 @@
 <?php
 use App\URL\UrlPublic;
 use App\URL\CreateUrl;
-?>
 
+$current  = rtrim((string)parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+$navItems = [
+    ['dashboard',          'Dashboard', 'fas fa-tachometer-alt', true],
+    ['dashboard/posts',    'Posts',     'fas fa-edit',           false],
+    ['dashboard/reviews',  'Reviews',   'fas fa-film',           false],
+    ['dashboard/comments', 'Comments',  'fas fa-comment',        false],
+    ['dashboard/forum',    'Forum',     'fab fa-forumbee',       false],
+    ['dashboard/users',    'Users',     'fas fa-user',           false],
+];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?? 'Dashboard'; ?></title>
-    <link rel="stylesheet" type="text/css" href="<?= URLPublic::publicPath('css/dashboard.css'); ?>">
-    <link rel="stylesheet" type="text/css" href="<?= URLPublic::publicPath('css/profile.css'); ?>">
+    <!-- Bootstrap provisoire : à retirer quand toutes les pages du dashboard auront été refaites -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="<?= URLPublic::publicPath('css/profile.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?= URLPublic::publicPath('css/dashboard.css'); ?>">
     <link rel="icon" type="image/x-icon" href="<?= URLPublic::publicPath('img/layout/favicon.ico'); ?>">
     <script src="https://kit.fontawesome.com/2c5e081666.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script
-			src="https://code.jquery.com/jquery-3.6.0.js"
-			integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-			crossorigin="anonymous">
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous">
     </script>
 </head>
-<body>
-    <div class="title-dash"> 
-        <h1>Admin Panel</h1>
-        <a href="<?= CreateUrl::url('home') ?>"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>Back to website</a>
-    </div>
-<header>
-    <nav>
-        <h2>Administration</h2>
-        <a href="<?= CreateUrl::url('dashboard') ?>"><i class="fas fa-tachometer-alt"></i>DashBoard</a>
-        <a href="<?= CreateUrl::url('dashboard/posts') ?>"><i class="fas fa-edit"></i>Posts</a>
-        <a href="<?= CreateUrl::url('dashboard/reviews') ?>"><i class="fas fa-film"></i>Reviews</a>
-        <a href="<?= CreateUrl::url('dashboard/comments') ?>"><i class="fas fa-comment"></i>Comments</a>
-        <a href="<?= CreateUrl::url('dashboard/forum') ?>"><i class="fab fa-forumbee"></i>Forum</a>
-        <a href="<?= CreateUrl::url('dashboard/users') ?>"><i class="fas fa-user"></i>Users</a>
-    </nav>    
-</header>
+<body class="dash">
 
-<div class="container-fluid">
-    <?= $content ?>
-
-    <?php require_once('debugTime.php'); ?>
+<div class="dash-topbar">
+    <h1>Admin Panel</h1>
+    <a href="<?= CreateUrl::url('home') ?>"><i class="fas fa-chevron-left"></i> Back to website</a>
 </div>
+
+<div class="dash-shell">
+    <nav class="dash-nav">
+        <p class="dash-nav-title">Administration</p>
+        <?php foreach($navItems as [$path, $label, $icon, $exact]): ?>
+            <?php
+                $href   = CreateUrl::url($path);
+                $active = $exact ? ($current === $href) : str_starts_with($current, $href);
+            ?>
+            <a href="<?= $href ?>" class="<?= $active ? 'active' : '' ?>"><i class="<?= $icon ?>"></i><span><?= $label ?></span></a>
+        <?php endforeach; ?>
+    </nav>
+
+    <main class="dash-main">
+        <?= $content ?>
+    </main>
+</div>
+
 </body>
 </html>
