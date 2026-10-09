@@ -39,6 +39,7 @@ if(strtolower($post->getUrlTitleCheck()) !== strtolower($slug)){
 }
 
 if(!empty($_POST)){
+    if(!empty($_SESSION['name'])){ $_POST['pseudo'] = $_SESSION['name']; }
     $data = new AddComment($_POST);
     if(!Csrf::validate($_POST['csrf_token'] ?? null)){
         $errors = ['csrf' => ['Your session expired, please try again.']];

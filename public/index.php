@@ -43,7 +43,7 @@ $router->get('/forum/:slugCat/:slugSubCat/:slug-:id', VIEWS . 'forum/topic');
 $router->post('/forum/:slugCat/:slugSubCat/:slug-:id', VIEWS . 'forum/topic');
 $router->get('/forum/newTopic', VIEWS . 'forum/addTopic');
 $router->post('/forum/newTopic', VIEWS . 'forum/addTopic');
-$router->get('/forum/topic/:id/closeTopic', VIEWS . 'forum/closeTopic');
+$router->post('/forum/topic/:id/closeTopic', VIEWS . 'forum/closeTopic');
 
 $router->get('/search', VIEWS . 'search');
 $router->post('/search', VIEWS . 'search');
