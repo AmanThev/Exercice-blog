@@ -88,7 +88,12 @@ class Member
 
     public function getDescription(): string
     {
-        return nl2br(htmlspecialchars($this->description));
+        return nl2br(htmlspecialchars((string)$this->description));
+    }
+
+    public function getRawDescription(): string
+    {
+        return (string)$this->description;
     }
 
     public function getnbrLike(): int

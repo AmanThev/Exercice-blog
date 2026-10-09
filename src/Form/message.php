@@ -4,7 +4,7 @@ return array(
     'required'          => "is required",
     'lengthBetween'     => "must be between %d and %d characters",
     'lengthMax'         => "must not exceed %d characters",
-    'lengthMin'         => "must exceed %d characters",
+    'lengthMin'         => "must be at least %d characters",
     'used'              => "already used",
     'extensionPicture'  => "This extension is not valid",
     'year'              => "is not a valid year",

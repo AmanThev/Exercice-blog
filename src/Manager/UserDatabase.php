@@ -42,6 +42,11 @@ class UserDatabase extends Database
             $this->queryMembers, 'name', $name, 'Member');
     }
 
+    public function getMemberById(int $id): Member
+    {
+        return $this->getDataByField($this->queryMembers, 'id', $id, 'Member');
+    }
+
     public function getMemberByEmail(string $email): Member
     {
         return $this->getDataByField($this->queryMembers, 'email', $email, 'Member');

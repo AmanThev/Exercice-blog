@@ -64,6 +64,9 @@ $router->get('/authentication/reset-success', VIEWS . 'user/reset-success');
 
 $router->get('/user/:slug', VIEWS . 'user/profileMember');
 
+$router->get('/account', VIEWS . 'user/account');
+$router->post('/account', VIEWS . 'user/account');
+
 /**
  * Dashboard
  */

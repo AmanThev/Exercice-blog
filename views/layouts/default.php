@@ -21,7 +21,7 @@ use App\URL\CreateUrl;
 <div class="marquee-frame">
     <h1>Cinéma</h1>
     <?php if(isset($_SESSION['name'])): ?>
-        <p class="site-sub">Your seat is waiting, <?= $_SESSION['name']  ?></p>
+        <p class="site-sub">Your seat is waiting, <a href="<?= CreateUrl::urlSlugOnly('user', (string)$_SESSION['id']) ?>"><?= $_SESSION['name'] ?></a></p>
     <?php else: ?>
         <p class="site-sub">Now Playing</p>
     <?php endif; ?>

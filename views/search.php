@@ -1,85 +1,102 @@
 <?php
+
 use App\Form\Search;
 use App\URL\CreateUrl;
 
-$title  = "Search";
+$title        = "Search";
+$allowedTypes = ['post', 'film', 'all'];
 
-if(!empty($_POST)){
+$searched     = isset($_POST['search']) && is_string($_POST['search']);
+$term         = '';
+$errors       = [];
+$posts        = [];
+$films        = [];
+$totalResults = 0;
+
+if($searched){
+    $term = trim($_POST['search']);
+    $type = (isset($_POST['submit']) && in_array($_POST['submit'], $allowedTypes, true)) ? $_POST['submit'] : 'all';
+
+    $_POST['search'] = $term;
+    $_POST['submit'] = $type;
+
     $data = new Search($_POST);
-    $totalResults = 0;
-
     if($data->validateSearch()->resultValidator()){
-        $results = ($data->findResult());
-        $totalResults = count($results);
-        $type = $_POST['submit'];
+        $results = $data->findResult();
+        if($type === 'all'){
+            $posts = $results['posts'];
+            $films = $results['films'];
+        }elseif($type === 'post'){
+            $posts = $results;
+        }else{
+            $films = $results;
+        }
+        $totalResults = count($posts) + count($films);
+    }else{
+        $errors = $data->returnErrors();
     }
-    $errors = $data->returnErrors();
 }
-
 ?>
 
-<h1 id="title-blog">Result search</h1>
+<section>
 
-<section class="section-error">
-    <h2>We have found <?php echo $totalResults > 1 ? ' '.$totalResults.' results' : ' '.$totalResults.' result' ?> matching your search : <?= htmlspecialchars($_POST['search']); ?> </h2>
-    <?php if(!empty($errors)): ?>
-        <?php foreach ($errors['search'] as $error): ?>
-            <p id="p-error">Your <?= $error; ?></p>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <?php switch($type): case 'post': ?>
-            <?php foreach ($results as $result): ?>
-                <a href="<?= CreateUrl::url('blog', ['slug' => $result->getUrlTitle(), 'id' => $result->getId()]); ?>">
-                    <div class="result-search">
-                        <h3><?= $result->getTitle() ?></h3>
-                        <p><?= $result->getExcerptContent() ?></p>
-                    </div>
-                </a>
-            <?php endforeach; ?>
-        <?php break; ?>
-        <?php case 'film': ?>
-            <?php foreach ($results as $result): ?>
-                <a href="<?= CreateUrl::url('reviews', ['slug' => $result->getUrlTitle(), 'id' => $result->getId()]); ?>">
-                    <div class="result-search">
-                        <h3><?= $result->getTitle() ?></h3>
-                        <p>Directed by <?= $result->getDirector() ?></p>
-                        <p>Writer : <?= $result->getWriter() ?></p>
-                        <p>Casting : <?= $result->getCast() ?></p>
-                        <p>Production : <?= $result->getProduction() ?></p>
-                        <p>Genre : <?= $result->getGenre() ?></p>
-                        <p class=""><?= $result->getExcerptSynopsis(); ?></p>
-                    </div>
-                </a>
-            <?php endforeach; ?>
-        <?php break; ?>
-        <?php case 'all': ?>
-            <?php if(!empty($results['posts'])): ?>
-                <?php foreach($results['posts'] as $post): ?>
-                    <a href="<?= CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $post->getId()]); ?>">
-                        <div class="result-search">
-                                <h3><?= $post->getTitle() ?></h3>
-                                <p><?= $post->getExcerptContent() ?></p>
-                        </div>
-                    </a>
-                <?php endforeach; ?>
-            <?php endif; ?>
-            <?php if(!empty($results['films'])): ?>
-                <?php foreach($results['films'] as $film): ?>
-                    <a href="<?= CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $film->getId()]); ?>">
-                        <div class="result-search">
-                            <h3><?= $film->getTitle() ?></h3>
-                            <p>Writer : <?= $film->getWriter() ?></p>
-                            <p>Casting : <?= $film->getCast() ?></p>
-                            <p>Production : <?= $film->getProduction() ?></p>
-                            <p>Genre : <?= $film->getGenre() ?></p>
-                            <p class=""><?= $film->getExcerptSynopsis(); ?></p>
-                        </div>
-                    </a>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        <?php break; ?>
-            <?php default: ?>
-                <p>Nothing</p>
-        <?php endswitch; ?>
+<div class="section-heading"><h1>Search results</h1><span class="rule"></span></div>
+
+<?php if(!$searched): ?>
+    <p class="forum-empty">Type a few words in a search box to look for a post or a review. You can start from the <a href="<?= CreateUrl::url('blog') ?>">blog</a> or the <a href="<?= CreateUrl::url('reviews') ?>">reviews</a>.</p>
+
+<?php elseif(!empty($errors)): ?>
+    <?php foreach(($errors['search'] ?? []) as $error): ?>
+        <p class="error"><i class="fas fa-exclamation-circle"></i> <?= $error ?></p>
+    <?php endforeach; ?>
+
+<?php else: ?>
+    <p class="search-summary">
+        <strong><?= $totalResults ?></strong> <?= $totalResults > 1 ? 'results' : 'result' ?> matching &ldquo;<em><?= htmlspecialchars($term) ?></em>&rdquo;
+    </p>
+
+    <?php if($totalResults === 0): ?>
+        <p class="forum-empty">Nothing matches your search. Try fewer or different words.</p>
     <?php endif; ?>
+
+    <?php if(!empty($posts)): ?>
+        <h2 class="search-group-title">Blog posts <span>(<?= count($posts) ?>)</span></h2>
+        <div class="search-results">
+            <?php foreach($posts as $post): ?>
+                <a class="search-result" href="<?= CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $post->getId()]); ?>">
+                    <img class="search-result-img" src="<?= PUBLIC_PATH ?>/img/postPicture/<?= $post->getPicture() ?>" alt="">
+                    <div class="search-result-body">
+                        <h3><?= $post->getTitle() ?></h3>
+                        <p class="search-result-text"><?= $post->getExcerptContent() ?></p>
+                        <span class="search-result-more">Read more</span>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if(!empty($films)): ?>
+        <h2 class="search-group-title">Reviews <span>(<?= count($films) ?>)</span></h2>
+        <div class="search-results">
+            <?php foreach($films as $film): ?>
+                <a class="search-result search-result-film" href="<?= CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $film->getId()]); ?>">
+                    <img class="search-result-img" src="<?= PUBLIC_PATH ?>/img/posterFilm/<?= $film->getPoster() ?>" alt="">
+                    <div class="search-result-body">
+                        <h3><?= $film->getTitle() ?></h3>
+                        <dl class="search-result-meta">
+                            <div><dt>Director</dt><dd><?= $film->getDirector() ?></dd></div>
+                            <div><dt>Writer</dt><dd><?= $film->getWriter() ?></dd></div>
+                            <div><dt>Cast</dt><dd><?= $film->getCast() ?></dd></div>
+                            <div><dt>Production</dt><dd><?= $film->getProduction() ?></dd></div>
+                            <div><dt>Genre</dt><dd><?= $film->getGenre() ?></dd></div>
+                        </dl>
+                        <p class="search-result-text"><?= $film->getExcerptSynopsis(); ?></p>
+                        <span class="search-result-more">Read more</span>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+
 </section>
