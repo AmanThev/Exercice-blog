@@ -822,3 +822,79 @@ main.dash-main a.dash-btn-ghost:hover{
     background: var(--brass);
     color: var(--maroon-deep);
 }
+
+/* ---- formulaire des reviews ---- */
+
+h3.form-section{
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--brass-bright);
+    margin: 40px 0 22px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+}
+
+div.field-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+}
+
+@media (max-width: 640px){
+    div.field-row{ grid-template-columns: 1fr; }
+}
+
+form.dash-form select{
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    padding: 11px 14px;
+}
+
+form.dash-form select:focus{
+    outline: none;
+    border-color: var(--brass);
+}
+
+form.dash-form select option{
+    background: var(--maroon-deep);
+    color: var(--cream);
+}
+
+form.dash-form textarea#synopsis{ min-height: 140px; }
+
+div.score-row{
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+div.score-row input[type="range"]{
+    flex: 1;
+    max-width: 360px;
+    accent-color: var(--brass);
+}
+
+div.score-row output{
+    min-width: 56px;
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    color: var(--brass-bright);
+}
+
+span.genre-tag{
+    display: inline-block;
+    padding: 3px 10px;
+    border: 1px solid var(--genre, var(--line));
+    color: var(--genre, var(--cream-dim));
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}

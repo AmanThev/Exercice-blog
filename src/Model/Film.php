@@ -105,7 +105,7 @@ class Film
     
     public function getPoster(): string
     {
-        return htmlspecialchars($this->poster);
+        return htmlspecialchars((string)$this->poster);
     }
 
     public function setPoster($poster): void
@@ -209,6 +209,27 @@ class Film
         return $review;
     }
     
+    /**
+     * The review as it is saved in the database (the [Spoiler] markers are kept)
+     */
+    public function getRawReview(): string
+    {
+        return (string)$this->review;
+    }
+
+    /**
+     * The review for the edit form : the spoiler tags are turned back into [Spoiler] markers
+     * (works for a review saved with markers as well as one saved with <span> tags).
+     */
+    public function getReviewForEdit(): string
+    {
+        return str_ireplace(
+            ['<span class="spoiler">', '</span>'],
+            ['[Spoiler]', '[/Spoiler]'],
+            (string)$this->review
+        );
+    }
+
     public function setReview(string $review): void
     {
         $this->review = htmlspecialchars(trim($review));
@@ -226,7 +247,7 @@ class Film
 
     public function getAuthor(): string
     {
-        return htmlspecialchars($this->name);
+        return htmlspecialchars((string)$this->name);
     }
 
     public function setAuthor(string $author): void

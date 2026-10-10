@@ -1,12 +1,17 @@
 <?php
 namespace App\Form;
 
-use App\Helpers\File;
 use App\Manager\UserDatabase;
 use App\Model\Post;
 
 class AddPost extends FormHandler
 {
+    use UploadsPicture;
+
+    protected const TABLE  = 'posts';
+    protected const FOLDER = 'postPicture';
+    protected const COLUMN = 'picture';
+
     public function validatePost(array $file = []): self
     {
         $this->ensureStrings(['author', 'title', 'content']);
@@ -45,20 +50,6 @@ class AddPost extends FormHandler
     }
 
     /**
-     * Check the picture : adds the errors to the ones of the form.
-     */
-    protected function checkPicture(array $file): self
-    {
-        $pictureErrors = File::pictureErrors($file);
-        if(!empty($pictureErrors)){
-            $this->errors['picture'] = $pictureErrors;
-        }
-        $this->resultValidator = empty($this->errors);
-
-        return $this;
-    }
-
-    /**
      * The titles in the database are encoded by the Post model ("Café" is stored "Caf&eacute;"),
      * so the "used" rule must compare the encoded title, otherwise a duplicate is never found
      * as soon as the title has an accent, an & or an apostrophe.
@@ -88,45 +79,5 @@ class AddPost extends FormHandler
         $value = $this->data['public'] ?? '';
 
         return $value === 'true' || $value === '1' || $value === 1;
-    }
-
-    /**
-     * ['picture' => 'name.jpg'] if a file was sent, otherwise nothing to add.
-     */
-    protected function savedPicture(array $file): array
-    {
-        if(empty($file['tmp_name'])){
-            return [];
-        }
-
-        return ['picture' => File::moveUploadedPicture($file, 'postPicture')];
-    }
-
-    /**
-     * One INSERT, picture included. If the INSERT fails, the saved file is removed.
-     */
-    private function createWithPicture(array $fields, array $file): int
-    {
-        $picture = $this->savedPicture($file);
-
-        try{
-            return $this->create($fields + $picture, 'posts');
-        }catch(\Throwable $e){
-            if($picture){
-                @unlink(IMAGE . 'postPicture' . DIRECTORY_SEPARATOR . $picture['picture']);
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Makes sure the fields exist and are strings (a hand-made POST with title[]=x
-     * would crash the Validator).
-     */
-    protected function ensureStrings(array $keys): void
-    {
-        foreach($keys as $key){
-            $this->data[$key] = (isset($this->data[$key]) && is_string($this->data[$key])) ? trim($this->data[$key]) : '';
-        }
     }
 }

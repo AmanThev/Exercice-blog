@@ -92,6 +92,10 @@ $router->post('/dashboard/posts/newPost', VIEWS . 'dashboard/post/new', 'new_pos
 $router->post('/dashboard/posts/:id/delete', VIEWS . 'dashboard/post/delete', 'post_delete');
 $router->post('/dashboard/posts/:id', VIEWS . 'dashboard/post/edit', 'post_edited');
 
+$router->post('/dashboard/reviews/newFilm', VIEWS . 'dashboard/review/new', 'new_film_added');
+$router->post('/dashboard/reviews/:id', VIEWS . 'dashboard/review/edit', 'new_film_edited');
+$router->post('/dashboard/reviews/:id/delete', VIEWS . 'dashboard/review/delete');
+
 /**
  * Ajax
  */

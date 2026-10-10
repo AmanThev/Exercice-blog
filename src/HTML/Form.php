@@ -17,7 +17,7 @@ class Form
         $infoText = array_slice(func_get_args(), 2);
         return <<<HTML
             <label for="{$key}">{$label} :</label>
-            <input type="text" name="{$key}" id="{$key}" value="{$value}" aria-describebdy="{$key}Info">
+            <input type="text" name="{$key}" id="{$key}" value="{$value}" aria-describedby="{$key}Info">
             {$this->smallText($key, $infoText)}
 HTML;
     }
@@ -54,45 +54,6 @@ HTML;
 HTML;
     }
 
-    public function pictureWithoutDisplay(string $key, string $label, $info = null)
-    {
-        $infoText = array_slice(func_get_args(), 2);
-        $value = $this->getValue($key);
-        return <<<HTML
-        <label for="{$key}">Upload</label>
-        <input type="hidden" name="MAX_FILE_SIZE" value="250000">
-        <input type="file" name="{$key}" id="{$key}">
-        <button type="button" onclick="document.getElementById('{$key}').value=''" class="delete-file deleteImage">
-            <i class="fas fa-times-circle"></i>
-        </button>
-        {$this->smallText($key, $infoText)}
-HTML;
-    }
-    
-    public function displayPicture(string $key, string $label, $info = null)
-    {
-        $infoText = array_slice(func_get_args(), 2);
-        $value = $this->getValue($key);
-        $picture = PUBLIC_PATH."/img/postPicture/$value";
-        return <<<HTML
-        <img src="$picture" alt="Preview">
-        {$this->smallText($key, $infoText)}
-HTML;
-    }
-
-    public function switchButton(string $key, string $switchLeft, string $switchRight)
-    {
-        $value = $this->getValue($key);
-        $checked = $this->getValue($key) == "1" ? "checked" : "";
-        return <<<HTML
-        <label class="switch">
-            <input class="switch-input" type="checkbox" id="checkbox" {$checked}>
-            <span class="switch-label" data-{$switchLeft}="{$switchLeft}" data-{$switchRight}="{$switchRight}"></span> 
-            <span class="switch-handle"></span> 
-        </label>
-HTML;
-    }
-
     public function searchBox(string $key, string $value){
         return <<<HTML
         <input class="search-text" type="search" name="{$key}" placeholder="search">
@@ -110,7 +71,10 @@ HTML;
     private function getValue(string $key)
     {
         if(is_array($this->data)){
-            return $this->data[$key] ?? null;
+            // Data typed by the visitor ($_POST) : always escaped before it is printed.
+            // (the values of a model object, below, are already encoded by the model)
+            $value = $this->data[$key] ?? null;
+            return is_string($value) ? htmlspecialchars($value) : null;
         }
         $method = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
         return $this->data->$method();
@@ -135,7 +99,7 @@ HTML;
     {
         if($info){
             $smallText = $this->info($key, $info);
-            return '<small class="form-info">'.$smallText.'</small>';
+            return '<small class="form-info" id="'.$key.'Info">'.$smallText.'</small><br>';
         }
         return '';
     }

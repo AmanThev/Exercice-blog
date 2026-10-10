@@ -34,6 +34,6 @@ class EditPost extends AddPost
             'content' => $this->encoded()->getContent(),
             'public'  => $this->isPublic() ? 1 : 0,
             'edit'    => 1,
-        ] + $this->savedPicture($file), 'posts', 'id', $id);
+        ] + $this->savedPicture($file), static::TABLE, 'id', $id);
     }
 }

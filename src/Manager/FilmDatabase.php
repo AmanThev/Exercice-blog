@@ -5,15 +5,27 @@ use \PDO;
 use App\Model\Film;
 use App\SQL\CountSql;
 use App\SQL\Paginate;
-use App\Manager\Exception\NotFoundException;
 
 #[\AllowDynamicProperties]
 class FilmDatabase extends Database
 {
+    /**
+     * Number of reviews per page (reviews page and home) : defined once, used everywhere
+     */
+    private const PER_PAGE_REVIEWS = 6;
+    private const PER_PAGE_HOME    = 3;
 
     private $query = "SELECT * FROM films ";
     private $queryRating = "SELECT rating_film FROM comments_film";
-    
+    /**
+     * Film + name of its author.
+     * "f.*" keeps the id of the film : with a plain "SELECT *" the id of the admin
+     * overwrote it (both tables have an "id" column).
+     *
+     * @var string
+     */
+    private $queryWithAuthor = "SELECT f.*, a.name FROM films f LEFT JOIN admins a ON f.admin_id = a.id";
+
     /**
      * get All reviews with a limit
      *
@@ -21,78 +33,52 @@ class FilmDatabase extends Database
      */
     public function getFilms(): array
     {
-        $sql = $this->query;
-        $pagination = new Paginate($sql);
-        $pagination = $pagination->getPagination();
-        $sql .= "ORDER BY date DESC $pagination";
-        return $this->getAllData($sql, "Film");
+        $pagination = (new Paginate($this->query, self::PER_PAGE_REVIEWS))->getPagination();
+        return $this->getAllData("$this->query ORDER BY date DESC $pagination", "Film");
     }
 
     public function getAllFilms(): array
     {
-        $sql = "SELECT * FROM admins a 
-            RIGHT JOIN films
-            ON a.id = admin_id
-            ORDER BY date DESC";
-        return $this->getAllData($sql, "Film");
+        return $this->getAllData("$this->queryWithAuthor ORDER BY f.date DESC", "Film");
     }
 
     public function getFilmsHome(): array
     {
-        $sql = $this->query;
-        $pagination = new Paginate($sql, 3);
-        $pagination = $pagination->getPagination();
-        $sql .= "ORDER BY id DESC $pagination";
-        $stmt = $this->connect()->query($sql);
-        $films = $stmt->fetchAll(PDO::FETCH_CLASS, Film::class);
-        return $films;
+        $pagination = (new Paginate($this->query, self::PER_PAGE_HOME))->getPagination();
+        return $this->getAllData("$this->query ORDER BY id DESC $pagination", "Film");
     }
 
     public function getLastFilm(): Film
     {
-        $sql = $this->query;
-        $sql .= " ORDER BY id DESC Limit 1";
-        return $this->getData($sql, "Film");
+        return $this->getData("$this->query ORDER BY id DESC LIMIT 1", "Film");
     }
 
     public function getLastFilms(): array
     {
-        $sql = $this->query;
-        $sql .= " ORDER BY id DESC Limit 5";
-        return $this->getAllData($sql,"Film");
+        return $this->getAllData("$this->query ORDER BY id DESC LIMIT 5", "Film");
     }
 
     public function getFilmById(int $id): Film
     {
-        $sql = $this->query;
-        $sql .= " f LEFT JOIN admins a ON admin_id = a.id";
-        return $this->getDataByField($sql, 'f.id', $id, "Film");
-    }
-    
-    public function getFilmByCommentId(int $idFilm)
-    {
-        $stmt = $this->connect()->prepare("
-            $this->query f
-            INNER JOIN comments_film
-            ON f.id = index_id
-            WHERE index_id=:idFilm");
-        $stmt->execute(['idFilm' => $idFilm]);
-        $stmt->setFetchMode(PDO::FETCH_CLASS,Film::class);
-        $film = $stmt->fetch();
-        return $film;
+        return $this->getDataByField($this->queryWithAuthor, 'f.id', $id, "Film");
     }
 
-    public function getFilmByAdminId(int $idAdmin)
+    /**
+     * The "index_id" of a comment is the id of its film
+     */
+    public function getFilmByCommentId(int $idFilm): Film
     {
-        $sql = "SELECT * FROM admins a INNER JOIN films ON admin_id = a.id";
-        return $this->getAllDataByField($sql, 'a.id', $idAdmin, "Film");
+        return $this->getFilmById($idFilm);
+    }
+
+    public function getFilmByAdminId(int $idAdmin): array
+    {
+        return $this->getAllDataByField($this->queryWithAuthor, 'f.admin_id', $idAdmin, "Film");
     }
 
     public function filmPaginationNumber(): ?int
     {
-        $pagination = new Paginate($this->query);
-        $pagination = $pagination->getPaginationNumber();
-        return $pagination; 
+        return (new Paginate($this->query, self::PER_PAGE_REVIEWS))->getPaginationNumber();
     }
 
     public function totalVote(int $id): int
@@ -106,7 +92,7 @@ class FilmDatabase extends Database
         $sql = "$this->queryRating WHERE index_id = ?";
         $totalVoteUser = CountSql::totalColumn($sql, $id);
     
-        $stmt = $this->connect()->prepare("SELECT score FROM Films WHERE id = :id");
+        $stmt = $this->connect()->prepare("SELECT score FROM films WHERE id = :id");
         $stmt->execute(['id' => $id]);
         $totalVoteAdmin = (int)$stmt->fetchColumn(0);
 
@@ -125,38 +111,24 @@ class FilmDatabase extends Database
         return CountSql::totalData("$this->query WHERE admin_id = ?", $idName);
     }
 
-    public function createFilm(Film $film): void
+    /**
+     * Delete a film with its comments.
+     * The poster file is NOT deleted : it could be shared by several rows.
+     */
+    public function deleteFilm(int $id): void
     {
-        $stmt = $this->connect()->prepare("INSERT INTO films SET 
-            title = :title, 
-            admin_id = :admin_id, 
-            date = :date, 
-            director = :director, 
-            writer = :writer, 
-            cast = :cast, 
-            production = :production, 
-            genre = :genre, 
-            synopsis = :synopsis, 
-            review = :review, 
-            score = :score"
-        );
-        $addFilm = $stmt->execute([
-            'title'         => $film->getTitle(),
-            'admin_id'      => $film->getIdAdmin(),
-            'date'          => $film->getDate(),
-            'director'      => $film->getDirector(),
-            'writer'        => $film->getWriter(),
-            'cast'          => $film->getCast(),
-            'production'    => $film->getProduction(),
-            'genre'         => $film->getGenre(),
-            'synopsis'      => $film->getSynopsis(),
-            'review'        => $film->getReview(),
-            'score'         => $film->getScore()
-        ]);
-        if($addFilm === false){
-            throw new \Exception("Error, impossible to add the film");
+        $pdo = $this->connect();
+        try{
+            $pdo->beginTransaction();
+            $pdo->prepare("DELETE FROM comments_film WHERE index_id = :id")->execute(['id' => $id]);
+            $pdo->prepare("DELETE FROM films WHERE id = :id")->execute(['id' => $id]);
+            $pdo->commit();
+        }catch(\Throwable $e){
+            if($pdo->inTransaction()){
+                $pdo->rollBack();
+            }
+            throw $e;
         }
-        $film->setId($this->pdo->lastInsertId());
     }
 
     public function findFilm(string $keyword): array
@@ -166,6 +138,6 @@ class FilmDatabase extends Database
                 AGAINST (:keyword IN NATURAL LANGUAGE MODE)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute(['keyword' => $keyword]);
-        return $stmt->fetchAll(PDO::FETCH_CLASS, FILM::class);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, Film::class);
     }
 }

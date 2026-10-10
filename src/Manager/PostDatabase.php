@@ -123,10 +123,6 @@ class PostDatabase extends Database
         return CountSql::totalData("$this->queryAllPost WHERE admin_id= ?", $idName);
     }
 
-    /**
-     * Delete a post with its comments and votes.
-     * The picture files are NOT deleted : several posts can share the same image.
-     */
     public function deletePost(int $id): void
     {
         $pdo = $this->connect();
