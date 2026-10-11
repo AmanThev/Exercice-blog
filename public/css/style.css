@@ -2398,3 +2398,98 @@ form.comment-form input:-webkit-autofill{
     }
 }
 
+/* ---- page "Our team" ---- */
+
+h2.team-title{
+    margin: 40px 0 20px 0;
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brass-bright);
+}
+
+div.team-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 24px;
+    align-items: start;
+}
+
+article.team-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 26px 22px;
+    text-align: center;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.02);
+    transition: border-color .15s ease;
+    position: relative;
+}
+
+article.team-card:hover{ border-color: var(--brass); }
+
+img.team-photo{
+    width: 140px;
+    height: 140px;
+    margin-bottom: 18px;
+    padding: 4px;
+    object-fit: cover;
+    border: 1px solid var(--brass);
+}
+
+article.team-card h3{
+    margin: 0 0 10px 0;
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--cream);
+    overflow-wrap: anywhere;
+}
+
+article.team-card p{
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--cream-dim);
+}
+
+article.team-card input.team-toggle{
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+article.team-card p.team-full{
+    display: none;
+    max-height: 15em;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+article.team-card input.team-toggle:checked ~ p.team-short{ display: none; }
+article.team-card input.team-toggle:checked ~ p.team-full{ display: block; }
+
+label.team-more{
+    margin-top: 14px;
+    padding-bottom: 1px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brass-bright);
+    border-bottom: 1px solid var(--brass-bright);
+    cursor: pointer;
+}
+
+label.team-more span.less{ display: none; }
+
+input.team-toggle:checked ~ label.team-more span.more{ display: none; }
+input.team-toggle:checked ~ label.team-more span.less{ display: inline; }
+
+input.team-toggle:focus-visible ~ label.team-more{
+    outline: 2px solid var(--brass);
+    outline-offset: 4px;
+}

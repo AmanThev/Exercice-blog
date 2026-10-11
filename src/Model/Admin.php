@@ -1,6 +1,7 @@
 <?php
 namespace App\Model;
 
+use App\Helpers\Text;
 use DateTime;
 
 class Admin
@@ -67,6 +68,15 @@ class Admin
     public function getDescription(): string
     {
         return htmlspecialchars((string)$this->description);
+    }
+
+    /**
+     * The beginning of the description (cut after a word, then " ..."), for the team page.
+     * The text is cut before it is escaped, so an HTML entity is never cut in half.
+     */
+    public function getExcerptDescription(int $limit = 150): string
+    {
+        return htmlspecialchars(Text::excerpt(trim((string)$this->description), $limit));
     }
 
     public function getPosition(): string

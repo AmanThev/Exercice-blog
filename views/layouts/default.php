@@ -52,6 +52,7 @@ use App\URL\CreateUrl;
     <div class="footer-inner">
         <p class="footer-brand">Cinéma</p>
         <nav class="footer-links">
+            <a href="<?= CreateUrl::url('admin') ?>">Our team</a>
             <a href="<?= CreateUrl::url('legal') ?>">Legal Notice</a>
             <a href="<?= CreateUrl::url('privacy') ?>">Privacy</a>
         </nav>
