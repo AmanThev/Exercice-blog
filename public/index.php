@@ -1,5 +1,7 @@
 <?php
 // The session cookie cannot be read by JavaScript, and is not sent along with a request made by another site
+// An identifier chosen by somebody else is never accepted : the server gives a new one
+ini_set('session.use_strict_mode', '1');
 session_set_cookie_params([
     'lifetime' => 0,
     'path'     => '/',
@@ -18,12 +20,16 @@ define('AJAX', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'ajax/');
 define('IMAGE', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'img/');
 define('ACTIONS', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'actions/');
 define('DEBUG_TIME', microtime(true));
-$rootEnd = strpos($_SERVER['SCRIPT_NAME'], '/cinema') + 7;
-$www_root = substr($_SERVER['SCRIPT_NAME'], 0, $rootEnd);
-define("WWW_ROOT", $www_root);
-$publicEnd = strpos($_SERVER['SCRIPT_NAME'], '/public') + 7;
-$public_root = substr($_SERVER['SCRIPT_NAME'], 0, $publicEnd);
-define("PUBLIC_PATH", $public_root);
+// The folder of the site in the address : "/cinema/public" with the current installation, "" when the
+// DocumentRoot of the web server is the folder "public"
+$publicFolder = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/');
+define("PUBLIC_PATH", $publicFolder);
+define("WWW_ROOT", preg_replace('#/public$#', '', $publicFolder));
+
+// Written in the configuration, never read from the request (see CreateUrl::baseUrl).
+// In production : set them in the web server (Apache : SetEnv SITE_URL https://www.mysite.tld) or write them here.
+define('SITE_URL', rtrim(getenv('SITE_URL') ?: 'http://localhost', '/'));
+define('MAIL_FROM', getenv('MAIL_FROM') ?: 'no-reply@localhost');
 
 // The detailed error page (it shows the code, the session and the tokens) only for a visitor who is on
 // the machine itself. Elsewhere, a visitor only sees a short message.
@@ -86,6 +92,8 @@ $router->get('/authentication/reset/:token', VIEWS . 'user/reset');
 $router->post('/authentication/reset/:token', VIEWS . 'user/reset');
 $router->get('/authentication/reset-success', VIEWS . 'user/reset-success');
 
+$router->get('/authentication/account-deleted', VIEWS . 'user/account-deleted');
+
 $router->get('/authentication/admin', VIEWS . 'user/adminLogin');
 $router->post('/authentication/admin', VIEWS . 'user/adminLogin');
 
@@ -114,6 +122,7 @@ $router->get('/dashboard/users', VIEWS .'dashboard/user/index');
 
 $router->get('/dashboard/forum', VIEWS .'dashboard/forum/forum');
 $router->post('/dashboard/forum/action', VIEWS . 'dashboard/forum/action');
+
 $router->get('/dashboard/forum/newCategory', VIEWS . 'dashboard/forum/category');
 $router->post('/dashboard/forum/newCategory', VIEWS . 'dashboard/forum/category');
 $router->get('/dashboard/forum/category/:id', VIEWS . 'dashboard/forum/category');

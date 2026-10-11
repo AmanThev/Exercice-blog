@@ -26,7 +26,7 @@ class CreateURL {
             return WWW_ROOT. '/' . $name . '/' . $id . '/' . $action;
         }
 
-       return WWW_ROOT. '/' . $name . '/' . $id;
+        return WWW_ROOT. '/' . $name . '/' . $id;
     }
 
     public static function urlSlugOnly(string $name, string $slug)
@@ -62,9 +62,7 @@ class CreateURL {
 
     public static function baseUrl(): string
     {
-        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-        $host   = $_SERVER['HTTP_HOST'];
-        return $scheme . '://' . $host;
+        return SITE_URL;
     }
 
     public static function absoluteUrl(string $name, ?array $params = []): string

@@ -2493,3 +2493,54 @@ input.team-toggle:focus-visible ~ label.team-more{
     outline: 2px solid var(--brass);
     outline-offset: 4px;
 }
+
+/* ---- My profile : supprimer mon compte ---- */
+
+div.danger-zone{
+    margin-bottom: 60px;
+    padding: clamp(18px, 3vw, 28px);
+    border: 1px solid #e07a5f;
+}
+
+div.danger-zone > p{
+    margin: 0 0 20px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--cream-dim);
+}
+
+div.danger-zone > p strong{
+    font-weight: 600;
+    color: var(--cream);
+}
+
+form.comment-form label.confirm-check{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 18px 0 0 0;
+    font-size: 13.5px;
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--cream-dim);
+    cursor: pointer;
+}
+
+form.comment-form label.confirm-check input{
+    flex-shrink: 0;
+    margin-top: 3px;
+    accent-color: #e07a5f;
+}
+
+form.comment-form button.danger-btn{
+    margin-top: 22px;
+    background: none;
+    border: 1px solid #e07a5f;
+    color: #e07a5f;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+form.comment-form button.danger-btn:hover{
+    background: #e07a5f;
+    color: var(--maroon-deep);
+}

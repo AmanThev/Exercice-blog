@@ -1,6 +1,7 @@
 <?php
 
 use App\Form\EditProfile;
+use App\Form\DeleteAccount;
 use App\Manager\UserDatabase;
 use App\Manager\Exception\NotFoundException;
 use App\URL\CreateUrl;
@@ -51,6 +52,18 @@ if(!empty($_POST)){
             exit;
         }
         $errors = $form->returnErrors();
+    }elseif($action === 'delete'){
+        $deletion = new DeleteAccount($_POST);
+        if($deletion->validateDeletion($member->getPassword())->resultValidator()){
+            $deletion->deleteAccount($member->getId());
+
+            // The member is signed out, and his session starts again from nothing
+            unset($_SESSION['id'], $_SESSION['name'], $_SESSION['csrf_token'], $_SESSION['flash_profile']);
+            session_regenerate_id(true);
+            header('Location: ' . CreateUrl::url('authentication/account-deleted'));
+            exit;
+        }
+        $errors = $deletion->returnErrors();
     }
 }
 
@@ -126,6 +139,33 @@ $descriptionValue = (($_POST['action'] ?? '') === 'description' && is_string($_P
 
         <button type="submit">Change password</button>
     </form>
+
+    <div class="section-heading"><h2>Delete my account</h2><span class="rule"></span></div>
+
+    <div class="danger-zone">
+        <p>Your account, your profile and your votes are deleted. What you wrote stays : your comments, your topics and your messages of the forum are kept, signed <strong>&ldquo;<?= UserDatabase::DELETED_MEMBER_NAME ?>&rdquo;</strong>. <strong>This cannot be undone.</strong></p>
+
+        <form class="comment-form" method="post" action="" onsubmit="return confirm('Delete your account for good ?')">
+            <?= Csrf::field() ?>
+            <input type="hidden" name="action" value="delete">
+
+            <label for="delete_password">Your password :</label>
+            <input type="password" name="delete_password" id="delete_password" autocomplete="current-password" required>
+            <?php if(!empty($errors)): ?>
+                <?= $form->arrayKeyExist('delete_password', $errors) ?>
+            <?php endif; ?>
+
+            <label class="confirm-check" for="delete_confirm">
+                <input type="checkbox" name="delete_confirm" id="delete_confirm" value="1">
+                I understand that my account will be deleted for good.
+            </label>
+            <?php if(!empty($errors)): ?>
+                <?= $form->arrayKeyExist('delete_confirm', $errors) ?>
+            <?php endif; ?>
+
+            <button type="submit" class="danger-btn">Delete my account</button>
+        </form>
+    </div>
 
 </div>
 

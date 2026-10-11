@@ -10,7 +10,7 @@ class PasswordReset extends Authentication
     public function sendEmail()
     {
         try{
-            $this->data['id'] = (new UserDatabase())->getMemberByEmail($this->data['email'])->getId();
+            (new UserDatabase())->getMemberByEmail($this->data['email']);
         }catch(NotFoundException $e){
             return;
         }
@@ -22,8 +22,7 @@ class PasswordReset extends Authentication
 
     private function generateToken()
     {
-        return $token = bin2hex(random_bytes(32));
-        
+        return bin2hex(random_bytes(32));
     }
 
     private function hashToken(string $token): string
@@ -38,7 +37,7 @@ class PasswordReset extends Authentication
         ], 'members', 'email', $this->data['email']);
     }
 
-    private function sendResetLink($email, $token) 
+    private function sendResetLink($email, $token)
     {
         $subject = "Password Reset";
         $resetLink = CreateUrl::absoluteUrl('authentication/reset/' . $token);
@@ -48,16 +47,23 @@ class PasswordReset extends Authentication
                         </head>
                         <body>
                             To reset your password click here : <a href="'.$resetLink.'">this page</a>:
-                            <br/>Email: '.$email.'
+                            <br/>Email: '.htmlspecialchars($email).'
                             <br/><br/>After inserting this information, you will need to choose a password.
                         </body>
                     </html>';
-        $headers = "From: me@example.com\r\n";
+        $headers = "From: " . MAIL_FROM . "\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
         return mail($email, $subject, $message, $headers);
     }
 
+    /**
+     * Vérifie si un token est valide (existe en base ET pas expiré),
+     * sans avoir besoin de $_POST. Utilisée à la fois par la règle
+     * "token" du Validator (à la soumission) et par reset-password.php
+     * (à l'affichage de la page, avant même que l'utilisateur ne tape quoi
+     * que ce soit) pour éviter de dupliquer cette logique à deux endroits.
+     */
     public static function tokenIsValid(string $token): bool
     {
         try{
@@ -70,7 +76,6 @@ class PasswordReset extends Authentication
         return ($now->getTimestamp() - $member->getDate()->getTimestamp()) <= 900;
     }
 
-
     public function resetPassword(string $token): self
     {
         $this->data['token'] = $token;
@@ -78,7 +83,7 @@ class PasswordReset extends Authentication
         $data = new Validator($this->data);
         $data->check('required', ['token', 'password', 'password2']);
         $data->check('token', 'token');
-        $data->check('lengthMin', 'password', 6);
+        $data->check('lengthMin', 'password', 8);
         $data->check('equals', 'password', 'password2');
 
         $this->resultValidator = $data->validateForm();
@@ -86,13 +91,12 @@ class PasswordReset extends Authentication
 
         if($this->resultValidator){
             $this->update([
-            'password' => password_hash($this->data['password'], PASSWORD_ARGON2ID),
-            'token'    => null,
-            'reset_at' => null
-        ], 'members', 'token', $this->hashToken($token));
+                'password' => password_hash($this->data['password'], PASSWORD_ARGON2ID),
+                'token'    => null,
+                'reset_at' => null
+            ], 'members', 'token', $this->hashToken($token));
         }
 
         return $this;
     }
-
 }

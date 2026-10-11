@@ -14,6 +14,7 @@ class AddUser extends FormHandler
         $data->check('used', 'name', 'members', 'name');
         $data->check('used', 'email', 'members', 'email');
         $data->check('email', 'email');
+        $data->check('lengthMin', 'password', 8);
         $data->check('equals', 'password', 'password2');
 
         $this->resultValidator  = $data->validateForm();

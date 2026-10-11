@@ -32,7 +32,7 @@ class EditProfile extends FormHandler
 
         $data = new Validator($this->data);
         $data->check('required', ['current_password', 'password', 'password2']);
-        $data->check('lengthMin', 'password', 6);
+        $data->check('lengthMin', 'password', 8);
         $data->check('equals', 'password2', 'password');
 
         $this->resultValidator = $data->validateForm();

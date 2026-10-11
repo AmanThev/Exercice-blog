@@ -8,6 +8,13 @@ use App\SQL\CountSql;
 
 class UserDatabase extends Database
 {   
+    /**
+     * The account that receives what a deleted member wrote (his topics and his messages in the forum).
+     * It is recognized by its e-mail, never by its name : the registration form refuses this address
+     * (it has no dot), so nobody can create an account with it.
+     */
+    public const DELETED_MEMBER_NAME  = 'Deleted member';
+    public const DELETED_MEMBER_EMAIL = 'deleted-member@invalid';
 
     private $queryMembers = "SELECT * FROM members";
     private $queryAdmins = "SELECT * FROM admins";
@@ -69,7 +76,7 @@ class UserDatabase extends Database
     public function getMembersWithStats(): array
     {
         $pdo     = $this->connect();
-        $members = $pdo->query("SELECT id, name, email FROM members ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
+        $members = $pdo->query("SELECT id, name, email FROM members WHERE email <> '" . self::DELETED_MEMBER_EMAIL . "' ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
 
         $likes    = [];
         $dislikes = [];
@@ -140,6 +147,86 @@ class UserDatabase extends Database
         return $stmt->rowCount() === 1;
     }
 
+    /**
+     * Delete the account of a member, and keep what he wrote :
+     *  - his topics and his messages of the forum go to the account "Deleted member"
+     *  - his comments (they only keep his pseudo) are signed "Deleted member"
+     *  - his votes and his account are deleted
+     * Everything is done in one transaction : if a step fails, nothing is changed.
+     *
+     * @return array the votes that were deleted [['ref' => ..., 'ref_id' => ...], ...] : the counters of
+     *               those posts have to be recounted
+     */
+    public function deleteMember(int $id): array
+    {
+        $pdo = $this->connect();
+        try{
+            $pdo->beginTransaction();
+
+            $stmt = $pdo->prepare("SELECT name, email FROM members WHERE id = :id");
+            $stmt->execute(['id' => $id]);
+            $member = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($member === false){
+                throw new \Exception("There is no member with the id $id");
+            }
+            if($member['email'] === self::DELETED_MEMBER_EMAIL){
+                throw new \Exception("The account \"Deleted member\" cannot be deleted");
+            }
+
+            $deletedId = $this->deletedMemberId($pdo);
+
+            $stmt = $pdo->prepare("SELECT DISTINCT ref, ref_id FROM votes WHERE user_id = :id");
+            $stmt->execute(['id' => $id]);
+            $votes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach(['f_topics', 'f_messages'] as $table){
+                $pdo->prepare("UPDATE $table SET id_members = :deleted WHERE id_members = :id")
+                    ->execute(['deleted' => $deletedId, 'id' => $id]);
+            }
+
+            // The pseudo of a comment is the name of the member, escaped once or twice depending on the page
+            // that wrote it : both forms are looked for.
+            foreach(['comments_post', 'comments_film'] as $table){
+                $pdo->prepare("UPDATE $table SET pseudo = :deleted WHERE pseudo IN (:raw, :escaped)")
+                    ->execute([
+                        'deleted' => self::DELETED_MEMBER_NAME,
+                        'raw'     => $member['name'],
+                        'escaped' => htmlspecialchars($member['name']),
+                    ]);
+            }
+
+            $pdo->prepare("DELETE FROM votes WHERE user_id = :id")->execute(['id' => $id]);
+            $pdo->prepare("DELETE FROM members WHERE id = :id")->execute(['id' => $id]);
+
+            $pdo->commit();
+            return $votes;
+        }catch(\Throwable $e){
+            if($pdo->inTransaction()){
+                $pdo->rollBack();
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * The id of the account "Deleted member" : it is created the first time it is needed
+     * (with the same three columns as a registration). Nobody can log in with it : "!" is not a valid hash.
+     */
+    private function deletedMemberId(PDO $pdo): int
+    {
+        $stmt = $pdo->prepare("SELECT id FROM members WHERE email = :email");
+        $stmt->execute(['email' => self::DELETED_MEMBER_EMAIL]);
+        $id = $stmt->fetchColumn();
+        if($id !== false){
+            return (int)$id;
+        }
+
+        $pdo->prepare("INSERT INTO members (name, email, password) VALUES (:name, :email, '!')")
+            ->execute(['name' => self::DELETED_MEMBER_NAME, 'email' => self::DELETED_MEMBER_EMAIL]);
+
+        return (int)$pdo->lastInsertId();
+    }
+
     public function getAdminsPresentationPage($position): array
     {
         $stmt = $this->connect()->prepare("$this->queryAdmins WHERE position=:position");
@@ -148,9 +235,12 @@ class UserDatabase extends Database
         return $admins;
     }
 
+    /**
+     * The real members (the account "Deleted member" is not one)
+     */
     public function countMembers(): int
     {
-        return CountSql::totalData($this->queryMembers);
+        return CountSql::totalData("$this->queryMembers WHERE email <> '" . self::DELETED_MEMBER_EMAIL . "'");
     }
 
     public function countAdmins(): int
