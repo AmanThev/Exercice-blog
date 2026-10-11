@@ -7,6 +7,26 @@ use App\SQL\CountSql;
 
 class CommentDatabase extends Database
 {
+    /**
+     * The comment tables, and the table of what they are about.
+     * A table name is only put in a query after being checked against this list.
+     */
+    private const TABLES = [
+        'comments_post' => 'posts',
+        'comments_film' => 'films',
+    ];
+
+    /**
+     * @return string the table the comments are about ('posts' or 'films')
+     */
+    private function targetTable(string $tabName): string
+    {
+        if(!isset(self::TABLES[$tabName])){
+            throw new \Exception("Unknown comment table: $tabName");
+        }
+        return self::TABLES[$tabName];
+    }
+
     public function getCommentById(string $tabName, int $id): array
     {
         $sql = "SElECT * FROM $tabName";
@@ -38,17 +58,16 @@ class CommentDatabase extends Database
 
     public function mostComments(string $table): array
     {
+        $this->targetTable($table);
         $stmt = $this->connect()->query("SELECT index_id, count(index_id) AS best FROM $table GROUP BY index_id");
-        $mostCom = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $max = 0;
-        $result = [];
-        foreach( $mostCom as $k => $v ){
-            $max = max(array($max, $v['best']));
-            if($v['best'] === $max){
-                $result [] = $v;
-            }
+        $counts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if(!$counts){
+            return [];
         }
-        return $result;
+        // the highest number first, then every post / film that reaches it
+        $max = max(array_column($counts, 'best'));
+        return array_values(array_filter($counts, fn($row) => $row['best'] == $max));
     }
     
     /**
@@ -85,6 +104,34 @@ class CommentDatabase extends Database
     public function userComment(string $name): int
     {
         return CountSql::totalData("SELECT * FROM comments_post WHERE pseudo = ?", $name);
+    }
+
+    /**
+     * Every comment of a table, the most recent first, with the title of the post / film
+     * it is about (null if that post / film does not exist any more).
+     * Each comment is an array with all the columns + "target_title".
+     *
+     * @param string $tabName "comments_post" or "comments_film"
+     */
+    public function getCommentsWithTitle(string $tabName): array
+    {
+        $target = $this->targetTable($tabName);
+        $stmt = $this->connect()->query("
+            SELECT c.*, t.title AS target_title
+            FROM $tabName c
+            LEFT JOIN $target t ON c.index_id = t.id
+            ORDER BY c.comment_date DESC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @param string $tabName "comments_post" or "comments_film"
+     */
+    public function deleteComment(string $tabName, int $id): void
+    {
+        $this->targetTable($tabName);
+        $stmt = $this->connect()->prepare("DELETE FROM $tabName WHERE id = :id");
+        $stmt->execute(['id' => $id]);
     }
 
     public function findTitle(int $idTable, string $tableComment, string $table): Comment

@@ -87,7 +87,9 @@ class Comment
 
     public function getCommentFilm(): string
     {
-        $comment        = htmlspecialchars($this->comment);
+        // The comment is already encoded when it is saved (see setComment) : the last argument
+        // (double_encode = false) escapes what is not encoded yet, without encoding twice.
+        $comment        = htmlspecialchars($this->comment, ENT_QUOTES, 'UTF-8', false);
         $spoilerMarker 	= array('[Spoiler]', '[/Spoiler]');
         $replaceSpoiler = array('<span class="spoiler">', '</span>');
         return nl2br(str_ireplace($spoilerMarker, $replaceSpoiler, $comment));

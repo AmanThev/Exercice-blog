@@ -898,3 +898,32 @@ span.genre-tag{
     text-transform: uppercase;
     white-space: nowrap;
 }
+
+/* ---- page Comments ---- */
+
+span.dash-count{
+    display: inline-block;
+    min-width: 22px;
+    margin-left: 6px;
+    padding: 1px 6px;
+    font-size: 11px;
+    text-align: center;
+    border: 1px solid currentColor;
+    opacity: .85;
+}
+
+td.comment-cell{
+    max-width: 480px;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+}
+
+span.dash-muted{
+    font-style: italic;
+    opacity: .6;
+}
+
+i.rating-star{
+    color: var(--brass-bright);
+    margin-left: 2px;
+}

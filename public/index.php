@@ -80,7 +80,8 @@ $router->get('/dashboard/reviews', VIEWS .'dashboard/review/index');
 $router->get('/dashboard/reviews/newReview', VIEWS . 'dashboard/review/new', 'new_review');
 $router->get('/dashboard/reviews/:id', VIEWS . 'dashboard/review/edit', 'review_edit');
 
-$router->get('/dashboard/comments', VIEWS .'dashboard/comment');
+$router->get('/dashboard/comments', VIEWS .'dashboard/comment/comment');
+$router->post('/dashboard/comments/delete', VIEWS . 'dashboard/comment/delete');
 
 $router->get('/dashboard/users', VIEWS .'dashboard/user/index');
 
