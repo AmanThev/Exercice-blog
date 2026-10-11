@@ -85,7 +85,8 @@ $router->post('/dashboard/comments/delete', VIEWS . 'dashboard/comment/delete');
 
 $router->get('/dashboard/users', VIEWS .'dashboard/user/index');
 
-$router->get('/dashboard/forum', VIEWS .'dashboard/forum');
+$router->get('/dashboard/forum', VIEWS .'dashboard/forum/forum');
+$router->post('/dashboard/forum/action', VIEWS . 'dashboard/forum/action');
 
 $router->get('/dashboard/users/:slug', VIEWS .'dashboard/user/profileAdmin');
 

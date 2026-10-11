@@ -1,88 +1,87 @@
 <?php
 
 use App\Manager\UserDatabase;
-use App\Manager\PostDatabase;
-use App\Manager\FilmDatabase;
-use App\Manager\VoteDatabase;
-use App\Manager\CommentDatabase;
-use App\SQL\Paginate;
 use App\URL\CreateUrl;
 
-$title          = 'Dashboard/Users';
+$title = 'Dashboard/Users';
 
-$admins         = new UserDatabase();
-$admins         = $admins->getAdmins();
+// ?users=members or ?users=admins : any other value shows the members
+$requested = $_GET['users'] ?? 'members';
+$kind      = (is_string($requested) && in_array($requested, ['members', 'admins'], true)) ? $requested : 'members';
+$isAdmins  = $kind === 'admins';
 
-$members        = new UserDatabase();
-$members        = $members->getMembers();
+$userDb = new UserDatabase();
+$users  = $isAdmins ? $userDb->getAdminsWithStats() : $userDb->getMembersWithStats();
+$totals = ['members' => $userDb->countMembers(), 'admins' => $userDb->countAdmins()];
 
-$memberComment  = new CommentDatabase();
-
-$memberDislike  = new VoteDatabase();
-
-$memberLike     = new VoteDatabase();
-
-$postWritten    = new PostDatabase();
-
-$reviewWritten  = new FilmDatabase();
-
-if(!empty($_GET['users'])){
-    $users = $_GET['users'];
-}
+$e = fn($value) => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
 ?>
 
-<h3 class="title-page">Users</h3>
+<div class="dash-pagehead">
+    <h2 class="dash-title">Users</h2>
+</div>
 
-<form class="choose-button only-choose" method="get">
-    <label for="status">Choose users :</label>
-    <span class="custom-dropdown">
-        <select class="custom-dropdown-select" id="users" name="users">
-            <option value="members" <?php if (isset($users) && $users === "members") echo "selected"?>>Members</option>
-            <option value="admins" <?php if (isset($users) && $users === "admins") echo "selected"?>>Admins</option>
-        </select>
-    </span>
-    <button class="submit" type="submit">Submit</button>
-</form>
+<nav class="dash-filter">
+    <a href="?users=members" class="<?= $isAdmins ? '' : 'active' ?>">Members <span class="dash-count"><?= $totals['members'] ?></span></a>
+    <a href="?users=admins" class="<?= $isAdmins ? 'active' : '' ?>">Admins <span class="dash-count"><?= $totals['admins'] ?></span></a>
+</nav>
 
-<?php if(isset($_GET['users']) && $_GET['users'] == 'admins'): ?>
-    <button class="create-button">Add new Admin</button>
-    
-    <table style="width:86%">
-        <tr>
-            <th style="width:40%">Name</th>
-            <th style="width:15%">Email</th>
-            <th style="width:15%">Post Written</th>
-            <th style="width:15%">Review Written</th>
-            <th style="width:15%">Action</th>
-        </tr>
-        <?php foreach($admins as $admin): ?>
+<?php if(empty($users)): ?>
+    <p class="dash-empty">No <?= $isAdmins ? 'admin' : 'member' ?> yet.</p>
+<?php elseif($isAdmins): ?>
+    <table class="dash-table">
+        <thead>
             <tr>
-                <td><?= $admin->getName() ?></td>
-                <td><?= $admin->getEmail() ?></td>
-                <td><?= $postWritten->postWritten($admin->getId()) ?></td>
-                <td><?= $reviewWritten->reviewWritten($admin->getId())?></td>
-                <td><a href="<?= CreateUrl::urlSlugOnly('dashboard/users', $admin->getName()) ?>"><i class="fas fa-user-circle"></i> View Profile</a></td> 
-                <!-- Chaque admin a seulement accès à son compte -->
+                <th><div><span>Name</span><span class="sort-table"><i class="fas fa-sort"></i></span></div></th>
+                <th><div><span>Position</span><span class="sort-table"><i class="fas fa-sort"></i></span></div></th>
+                <th><div><span>Email</span><span class="sort-table"><i class="fas fa-sort"></i></span></div></th>
+                <th><div><span>Posts</span><span class="sort-table"><i class="fas fa-sort"></i></span></div></th>
+                <th><div><span>Reviews</span><span class="sort-table"><i class="fas fa-sort"></i></span></div></th>
+                <th>Action</th>
             </tr>
-        <?php endforeach; ?>
+        </thead>
+        <tbody>
+            <?php foreach($users as $admin): ?>
+                <tr>
+                    <td data-label="Name"><?= $e($admin['name']) ?></td>
+                    <td data-label="Position"><?= $e($admin['position']) ?></td>
+                    <td data-label="Email"><?= $e($admin['email']) ?></td>
+                    <td data-label="Posts"><?= $admin['posts'] ?></td>
+                    <td data-label="Reviews"><?= $admin['reviews'] ?></td>
+                    <td data-label="Action" class="dash-actions">
+                        <a href="<?= CreateUrl::urlSlugOnly('dashboard/users', (string)$admin['id']) ?>"><i class="fas fa-user-circle"></i>View profile</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
     </table>
 <?php else: ?>
-    <table style="width:86%">
-        <tr>
-            <th style="width:40%">Name</th>
-            <th style="width:15%">Email</th>
-            <th style="width:15%">Like</th>
-            <th style="width:15%">Dislike</th>
-            <th style="width:15%">Comment</th>
-        </tr>
-        <?php foreach($members as $member): ?>
+    <table class="dash-table">
+        <thead>
             <tr>
-                <td><?= $member->getName() ?></td>
-                <td><?= $member->getEmail() ?></td>
-                <td><?= $memberLike->userLike($member->getId()) ?></td>
-                <td><?= $memberDislike->userDislike($member->getId()) ?></td>
-                <td class="title-table"><?= $memberComment->userComment($member->getName()) ?></td>
+                <th><div><span>Name</span><span class="sort-table"><i class="fas fa-sort"></i></span></div></th>
+                <th><div><span>Email</span><span class="sort-table"><i class="fas fa-sort"></i></span></div></th>
+                <th><div><span>Likes</span><span class="sort-table"><i class="fas fa-sort"></i></span></div></th>
+                <th><div><span>Dislikes</span><span class="sort-table"><i class="fas fa-sort"></i></span></div></th>
+                <th><div><span>Comments</span><span class="sort-table"><i class="fas fa-sort"></i></span></div></th>
+                <th>Action</th>
             </tr>
-        <?php endforeach; ?>
+        </thead>
+        <tbody>
+            <?php foreach($users as $member): ?>
+                <tr>
+                    <td data-label="Name"><?= $e($member['name']) ?></td>
+                    <td data-label="Email"><?= $e($member['email']) ?></td>
+                    <td data-label="Likes"><?= $member['likes'] ?></td>
+                    <td data-label="Dislikes"><?= $member['dislikes'] ?></td>
+                    <td data-label="Comments"><?= $member['comments'] ?></td>
+                    <td data-label="Action" class="dash-actions">
+                        <a href="<?= CreateUrl::urlSlugOnly('user', (string)$member['id']) ?>"><i class="fas fa-user-circle"></i>View profile</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
     </table>
 <?php endif; ?>
+
+<script src="<?= PUBLIC_PATH ?>/js/sortTable.js"></script>

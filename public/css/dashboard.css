@@ -927,3 +927,219 @@ i.rating-star{
     color: var(--brass-bright);
     margin-left: 2px;
 }
+
+/* ---- page Forum ---- */
+
+p.forum-summary{
+    font-size: 13px;
+    color: var(--cream-dim);
+    margin: 0 0 24px 0;
+}
+
+div.forum-tree{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+details.forum-cat{
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.02);
+}
+
+details.forum-sub{
+    margin-top: 10px;
+    border-left: 2px solid var(--line);
+    background: rgba(255,255,255,0.015);
+}
+
+details.forum-cat > summary,
+details.forum-sub > summary{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    padding: 14px 18px;
+    cursor: pointer;
+    list-style: none;
+}
+
+details.forum-cat > summary::-webkit-details-marker,
+details.forum-sub > summary::-webkit-details-marker{ display: none; }
+
+details.forum-cat > summary::before,
+details.forum-sub > summary::before{
+    content: "";
+    flex: 0 0 auto;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid var(--brass);
+    border-bottom: 2px solid var(--brass);
+    transform: rotate(-45deg);
+    transition: transform .15s ease;
+}
+
+details.forum-cat[open] > summary::before,
+details.forum-sub[open] > summary::before{ transform: rotate(45deg); }
+
+details.forum-cat > summary:hover,
+details.forum-sub > summary:hover{ background: rgba(255,255,255,0.03); }
+
+span.forum-name{
+    flex: 1 1 200px;
+    min-width: 0;
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    color: var(--cream);
+    overflow-wrap: anywhere;
+}
+
+details.forum-sub span.forum-name{ font-size: 14px; }
+
+span.forum-meta{
+    font-size: 12px;
+    color: var(--cream-dim);
+}
+
+div.forum-body{ padding: 4px 18px 18px 38px; }
+
+div.forum-actions,
+span.forum-actions{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 18px;
+}
+
+div.forum-actions{
+    padding: 6px 0 14px 0;
+    margin-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+}
+
+main.dash-main .forum-actions a,
+.forum-actions button{
+    padding: 0;
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    color: var(--brass-bright);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color .15s ease;
+}
+
+main.dash-main .forum-actions a:hover,
+.forum-actions button:hover{ color: var(--cream); }
+
+.forum-actions button.delete:hover{ color: var(--danger); }
+
+.forum-actions form{
+    display: inline;
+    margin: 0;
+}
+
+.forum-actions i{ margin-right: 6px; }
+
+ul.forum-topics{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li.forum-topic{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(107,58,46,0.55);
+}
+
+li.forum-topic:last-child{ border-bottom: none; }
+
+li.forum-topic span.status-badge{
+    min-width: 74px;
+    text-align: center;
+}
+
+span.forum-topic-title{
+    flex: 1 1 220px;
+    min-width: 0;
+    font-size: 14px;
+    color: var(--cream);
+    overflow-wrap: anywhere;
+}
+
+span.status-badge.resolved{
+    border-color: var(--brass);
+    color: var(--brass-bright);
+}
+
+span.status-badge.pending{ opacity: .55; }
+
+p.dash-muted{
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    font-style: italic;
+    opacity: .6;
+}
+
+@media (max-width: 640px){
+    div.forum-body{ padding-left: 14px; }
+}
+
+/* ---- page Users : profil d'un admin ---- */
+
+div.dash-profile{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.02);
+}
+
+div.dash-profile > div{
+    flex: 1 1 280px;
+    min-width: 0;
+}
+
+img.dash-avatar{
+    flex-shrink: 0;
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+    border: 1px solid var(--brass);
+}
+
+h3.dash-profile-name{
+    margin: 0 0 6px 0;
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--cream);
+    overflow-wrap: anywhere;
+}
+
+p.dash-profile-position{
+    margin: 0 0 12px 0;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brass-bright);
+}
+
+p.dash-profile-description{
+    max-width: 620px;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--cream-dim);
+}
+
+span.dash-stat{ margin-left: 14px; }

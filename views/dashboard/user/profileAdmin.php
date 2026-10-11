@@ -1,70 +1,109 @@
 <?php
 
-use App\URL\ExplodeUrl;
 use App\Manager\UserDatabase;
-use App\Manager\FilmDatabase;
 use App\Manager\PostDatabase;
+use App\Manager\FilmDatabase;
 use App\Manager\CommentDatabase;
-use App\HTML\Profile;
+use App\Manager\Exception\NotFoundException;
+use App\URL\CreateUrl;
 
-$url            = new ExplodeUrl($_GET['url']);
-$slug           = $url->getSlugName();
+// dashboard/users/3  ->  $_GET['url'] = "dashboard/users/3" : the admin is identified by his id
+// (a name in the url breaks with spaces)
+$parts = explode('/', trim($_GET['url'], '/'));
+$id    = $parts[2] ?? '';
+$admin = null;
 
-$title          = $slug;
+if(ctype_digit($id)){
+    try{
+        $admin = (new UserDatabase())->getAdminById((int)$id);
+    }catch(NotFoundException $e){
+        $admin = null;
+    }
+}
 
-$profile        = new Profile('admin');
+if($admin === null){
+    http_response_code(404);
+    $title = 'Admin not found';
+}else{
+    $title = $admin->getName();
 
-$admin          = new UserDatabase();
-$admin          = $admin->getAdminByName($slug);
+    $filmDb    = new FilmDatabase();
+    $commentDb = new CommentDatabase();
+    $posts     = (new PostDatabase())->getPostByAdminId($admin->getId());
+    $films     = $filmDb->getFilmByAdminId($admin->getId());
 
-$filmsDatabase  = new FilmDatabase();
-$films          = $filmsDatabase->getFilmByAdminId($admin->getId());
-$totalComFilms  = new CommentDatabase();
-$totalReviews   = count($films);
-
-$postsDatabase  = new PostDatabase();
-$posts          = $postsDatabase->getPostByAdminId($admin->getId());
-$totalComPosts  = new CommentDatabase();
-$totalPosts     = count($posts);
+    // "1 post" / "2 posts"
+    $plural = fn(int $n, string $word) => $n . ' ' . $word . ($n === 1 ? '' : 's');
+}
 ?>
 
-<?= $profile->topProfile($slug); ?>
+<?php if($admin === null): ?>
+    <div class="dash-pagehead">
+        <h2 class="dash-title">Admin not found</h2>
+        <a class="dash-btn-ghost" href="<?= CreateUrl::url('dashboard/users', ['users' => 'admins']) ?>"><i class="fas fa-chevron-left"></i> Back to users</a>
+    </div>
+    <p class="dash-empty">This profile doesn't exist.</p>
 
-<section class="data-admin">
-    <h2>What have you done?</h2>
-    <h3>Posts</h3>
-    <?php if($totalPosts === 0):?>
-        <p class="admin-empty">🤔 It seems you have write nothing</p>
-    <?php else: ?>
-        <p class="admin-data">You have write <?php echo $totalPosts > 1 ? ' '.$totalPosts.' Posts' : ' '.$totalPosts.' Post' ?> :</p>
-        <ul>
-            <?php foreach($posts as $post): ?>
-                <li><p><i class="fas fa-edit"></i><?= $post->getTitle() ?></p>
-                    <span><i class="fas fa-comment"></i><?= $totalComPosts->totalComment('comments_post', $post->getId()) ?></span>
-                    <span><i class="fas fa-thumbs-up"></i><?= $post->getLike() ?></span>
-                    <span><i class="fas fa-thumbs-down"></i><?= $post->getDislike() ?></span>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    <?php endif; ?>
+<?php else: ?>
+    <div class="dash-pagehead">
+        <h2 class="dash-title">Admin profile</h2>
+        <a class="dash-btn-ghost" href="<?= CreateUrl::url('dashboard/users', ['users' => 'admins']) ?>"><i class="fas fa-chevron-left"></i> Back to users</a>
+    </div>
 
-            <div id="separate-profile-admin"></div>
+    <div class="dash-profile">
+        <img class="dash-avatar" src="<?= PUBLIC_PATH ?>/img/photoProfile/default.jpg" alt="">
+        <div>
+            <h3 class="dash-profile-name"><?= $admin->getName() ?></h3>
+            <?php if($admin->getPosition() !== ''): ?>
+                <p class="dash-profile-position"><?= $admin->getPosition() ?></p>
+            <?php endif; ?>
+            <?php if($admin->getDescription() !== ''): ?>
+                <p class="dash-profile-description"><?= nl2br($admin->getDescription()) ?></p>
+            <?php else: ?>
+                <p class="dash-profile-description dash-muted">No description yet.</p>
+            <?php endif; ?>
+        </div>
+    </div>
 
-    <h3>Reviews</h3>
-    <?php if($totalReviews === 0):?>
-        <p class="admin-empty">🤔 It seems you have write nothing</p>
-    <?php else: ?>
-        <p class="admin-data">You have write <?php echo $totalReviews > 1 ? ' '.$totalReviews.' Reviews' : ' '.$totalReviews.' Review' ?> :</p>
-        <ul>
-            <?php foreach($films as $film): ?>
-                <li><p><i class="fas fa-film"></i><?= $film->getTitle() ?></p>
-                    <span><i class="fas fa-comment"></i><?= $totalComFilms->totalComment('comments_film', $film->getId()) ?></span>
-                    <span><i class="fas fa-poll-h"></i><?= $filmsDatabase->totalVote($film->getId()) ?></span>
-                    <span><i class="fas fa-star"></i><?= $filmsDatabase->totalRating($film->getId()) ?></span>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    <?php endif; ?>
-</section>
+    <div class="dash-grid">
+        <article class="dash-card">
+            <h3 class="dash-card-title">Posts <span class="dash-count"><?= count($posts) ?></span></h3>
+            <?php if(empty($posts)): ?>
+                <p class="dash-muted">No post written yet.</p>
+            <?php else: ?>
+                <ul class="dash-list">
+                    <?php foreach($posts as $post): ?>
+                        <li>
+                            <span><a href="<?= CreateUrl::url('blog', ['slug' => $post->getUrlTitle(), 'id' => $post->getId()]) ?>"><?= $post->getTitle() ?></a></span>
+                            <strong>
+                                <span class="dash-stat"><i class="fas fa-comment"></i><?= $commentDb->totalComment('comments_post', $post->getId()) ?></span>
+                                <span class="dash-stat"><i class="fas fa-thumbs-up"></i><?= $post->getLike() ?></span>
+                                <span class="dash-stat"><i class="fas fa-thumbs-down"></i><?= $post->getDislike() ?></span>
+                            </strong>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </article>
 
-<?= $profile->bottomProfile(); ?>
+        <article class="dash-card">
+            <h3 class="dash-card-title">Reviews <span class="dash-count"><?= count($films) ?></span></h3>
+            <?php if(empty($films)): ?>
+                <p class="dash-muted">No review written yet.</p>
+            <?php else: ?>
+                <ul class="dash-list">
+                    <?php foreach($films as $film): ?>
+                        <li>
+                            <span><a href="<?= CreateUrl::url('reviews', ['slug' => $film->getUrlTitle(), 'id' => $film->getId()]) ?>"><?= $film->getTitle() ?></a></span>
+                            <strong>
+                                <span class="dash-stat"><i class="fas fa-comment"></i><?= $commentDb->totalComment('comments_film', $film->getId()) ?></span>
+                                <span class="dash-stat"><i class="fas fa-poll-h"></i><?= $filmDb->totalVote($film->getId()) ?></span>
+                                <span class="dash-stat"><i class="fas fa-star"></i><?= $filmDb->totalRating($film->getId()) ?></span>
+                            </strong>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </article>
+    </div>
+<?php endif; ?>

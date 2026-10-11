@@ -1,6 +1,7 @@
 <?php
 namespace App\Model;
 
+use DateTime;
 
 class Admin
 {      
@@ -45,7 +46,7 @@ class Admin
 
     public function getName(): string
     {
-        return htmlspecialchars($this->name);
+        return htmlspecialchars((string)$this->name);
     }
 
     public function getEmail(): string
@@ -65,22 +66,25 @@ class Admin
 
     public function getDescription(): string
     {
-        return htmlspecialchars($this->description);
+        return htmlspecialchars((string)$this->description);
     }
 
     public function getPosition(): string
     {
-        return htmlspecialchars($this->position);
+        return htmlspecialchars((string)$this->position);
     }
 
-    public function getToken(): varchar
+    public function getToken(): ?string
     {
         return $this->token;
     }
 
-    public function getDate()
+    /**
+     * Date of the last password reset request (null if there never was one)
+     */
+    public function getDate(): ?DateTime
     {
-        return new DateTime($this->reset_at);
+        return $this->reset_at !== null ? new DateTime($this->reset_at) : null;
     }
 
 }

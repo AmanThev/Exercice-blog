@@ -125,6 +125,7 @@ class ForumDatabase extends Database
             LEFT JOIN members m
             ON id_members = m.id
             WHERE id_sub_categories=:idSubCat
+            ORDER BY date_time_message DESC
             LIMIT 1");
         $stmt->execute(['idSubCat' => $idSubCat]);
         $stmt->setFetchMode(PDO::FETCH_CLASS,Message::class);
@@ -139,6 +140,7 @@ class ForumDatabase extends Database
             LEFT JOIN members m
             ON id_members = m.id
             WHERE id_topic=:idTopic
+            ORDER BY date_time_message DESC
             LIMIT 1");
         $stmt->execute(['idTopic' => $idTopic]);
         $stmt->setFetchMode(PDO::FETCH_CLASS,Message::class);
@@ -207,6 +209,17 @@ class ForumDatabase extends Database
     }
     
     /**
+     * Number of messages of every topic, in one query
+     *
+     * @return array [id of the topic => number of messages] (a topic without message is not in the list)
+     */
+    public function countMessagesByTopic(): array
+    {
+        $stmt = $this->connect()->query("SELECT id_topic, COUNT(*) AS total FROM f_messages GROUP BY id_topic");
+        return $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+    }
+
+    /**
      * Count messages of all the topic from the subCat
      */
     public function countMessagesWithSubCat(int $idSubCat): int
@@ -220,6 +233,75 @@ class ForumDatabase extends Database
         $updated = $stmt->execute(['id' => $idTopic]);
         if($updated === false){
             throw new \Exception("Impossible to update the table f_topics");
+        }
+    }
+
+    public function reopenTopic(int $idTopic): void
+    {
+        $stmt = $this->connect()->prepare("UPDATE f_topics SET resolved = NULL WHERE id = :id");
+        $updated = $stmt->execute(['id' => $idTopic]);
+        if($updated === false){
+            throw new \Exception("Impossible to update the table f_topics");
+        }
+    }
+
+    /**
+     * Delete a topic with its messages
+     */
+    public function deleteTopic(int $id): void
+    {
+        $this->runInTransaction([
+            "DELETE FROM f_messages WHERE id_topic = :id",
+            "DELETE FROM f_topics WHERE id = :id",
+        ], $id);
+    }
+
+    /**
+     * Delete a sub-category with its topics and their messages
+     */
+    public function deleteSubCategory(int $id): void
+    {
+        $this->runInTransaction([
+            "DELETE FROM f_messages WHERE id_topic IN (SELECT id FROM f_topics WHERE id_sub_categories = :id)",
+            "DELETE FROM f_topics WHERE id_sub_categories = :id",
+            "DELETE FROM f_sub_categories WHERE id = :id",
+        ], $id);
+    }
+
+    /**
+     * Delete a category with its sub-categories, their topics and their messages
+     */
+    public function deleteCategory(int $id): void
+    {
+        $this->runInTransaction([
+            "DELETE FROM f_messages WHERE id_topic IN (
+                SELECT t.id FROM f_topics t
+                INNER JOIN f_sub_categories s ON t.id_sub_categories = s.id
+                WHERE s.id_categories = :id)",
+            "DELETE FROM f_topics WHERE id_sub_categories IN (SELECT id FROM f_sub_categories WHERE id_categories = :id)",
+            "DELETE FROM f_sub_categories WHERE id_categories = :id",
+            "DELETE FROM f_categories WHERE id = :id",
+        ], $id);
+    }
+
+    /**
+     * Run the queries one after the other (each one has exactly one ":id").
+     * If one fails, none of them is kept.
+     */
+    private function runInTransaction(array $queries, int $id): void
+    {
+        $pdo = $this->connect();
+        try{
+            $pdo->beginTransaction();
+            foreach($queries as $sql){
+                $pdo->prepare($sql)->execute(['id' => $id]);
+            }
+            $pdo->commit();
+        }catch(\Throwable $e){
+            if($pdo->inTransaction()){
+                $pdo->rollBack();
+            }
+            throw $e;
         }
     }
 }
