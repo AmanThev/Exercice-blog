@@ -66,6 +66,10 @@ unset($_SESSION['flash_dash']);
 
 <div class="dash-pagehead">
     <h2 class="dash-title">Forum</h2>
+    <div class="dash-pagehead-actions">
+        <a class="dash-btn" href="<?= CreateUrl::url('dashboard/forum/newCategory') ?>"><i class="fas fa-plus"></i> New category</a>
+        <a class="dash-btn-ghost" href="<?= CreateUrl::url('dashboard/forum/newSubCategory') ?>"><i class="fas fa-plus"></i> New sub-category</a>
+    </div>
 </div>
 
 <?php if($flash): ?>
@@ -94,6 +98,8 @@ unset($_SESSION['flash_dash']);
                 <div class="forum-body">
                     <div class="forum-actions">
                         <a href="<?= CreateUrl::url('forum', ['slug' => $category->getUrlName(), 'id' => $category->getId()]) ?>"><i class="fas fa-eye"></i>View on the site</a>
+                        <a href="<?= CreateUrl::url('dashboard/forum/category/' . $category->getId()) ?>"><i class="fas fa-pen"></i>Edit</a>
+                        <a href="<?= CreateUrl::url('dashboard/forum/newSubCategory', ['category' => $category->getId()]) ?>"><i class="fas fa-plus"></i>Add a sub-category</a>
                         <?= $actionForm('delete_category', $category->getId(), 'Delete the category', 'fa-times-circle',
                             "Delete this category with its {$plural(count($cat['subs']), 'sub-category')}, {$plural($cat['topics'], 'topic')} and {$plural($cat['messages'], 'message')}? This cannot be undone.") ?>
                     </div>
@@ -109,6 +115,7 @@ unset($_SESSION['flash_dash']);
                             <div class="forum-body">
                                 <div class="forum-actions">
                                     <a href="<?= CreateUrl::url('forum/' . $category->getUrlName(), ['slug' => $subCategory->getUrlName(), 'id' => $subCategory->getId()]) ?>"><i class="fas fa-eye"></i>View on the site</a>
+                                    <a href="<?= CreateUrl::url('dashboard/forum/subCategory/' . $subCategory->getId()) ?>"><i class="fas fa-pen"></i>Edit</a>
                                     <?= $actionForm('delete_subcategory', $subCategory->getId(), 'Delete the sub-category', 'fa-times-circle',
                                         "Delete this sub-category with its {$plural(count($sub['topics']), 'topic')} and {$plural($sub['messages'], 'message')}? This cannot be undone.") ?>
                                 </div>

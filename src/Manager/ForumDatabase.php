@@ -74,6 +74,11 @@ class ForumDatabase extends Database
         throw new \Exception("No sub-category matches with this id : $id or this name : $name");
     }
 
+    public function getSubCategoryById(int $id): SubCategory
+    {
+        return $this->getDataByField($this->querySubCat, 'id', $id, 'SubCategory', 'Forum');
+    }
+
     public function getSubCategoryName(string $name): SubCategory
     {
         return $this->getDataByField($this->querySubCat, 'name', $name, 'SubCategory', 'Forum');

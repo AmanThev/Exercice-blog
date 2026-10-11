@@ -114,6 +114,14 @@ $router->get('/dashboard/users', VIEWS .'dashboard/user/index');
 
 $router->get('/dashboard/forum', VIEWS .'dashboard/forum/forum');
 $router->post('/dashboard/forum/action', VIEWS . 'dashboard/forum/action');
+$router->get('/dashboard/forum/newCategory', VIEWS . 'dashboard/forum/category');
+$router->post('/dashboard/forum/newCategory', VIEWS . 'dashboard/forum/category');
+$router->get('/dashboard/forum/category/:id', VIEWS . 'dashboard/forum/category');
+$router->post('/dashboard/forum/category/:id', VIEWS . 'dashboard/forum/category');
+$router->get('/dashboard/forum/newSubCategory', VIEWS . 'dashboard/forum/subCategory');
+$router->post('/dashboard/forum/newSubCategory', VIEWS . 'dashboard/forum/subCategory');
+$router->get('/dashboard/forum/subCategory/:id', VIEWS . 'dashboard/forum/subCategory');
+$router->post('/dashboard/forum/subCategory/:id', VIEWS . 'dashboard/forum/subCategory');
 
 $router->get('/dashboard/users/:slug', VIEWS .'dashboard/user/profileAdmin');
 

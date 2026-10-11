@@ -1190,3 +1190,9 @@ form.dash-logout button:hover{
     border-color: var(--brass);
     color: var(--brass-bright);
 }
+
+div.dash-pagehead-actions{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
