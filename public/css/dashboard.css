@@ -1143,3 +1143,50 @@ p.dash-profile-description{
 }
 
 span.dash-stat{ margin-left: 14px; }
+
+/* ---- bandeau du dashboard : nom de l'admin + Logout ---- */
+
+div.dash-topbar{ flex-wrap: wrap; }
+
+div.dash-topbar-links{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 22px;
+}
+
+form.dash-logout{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0;
+}
+
+span.dash-user{
+    font-size: 13px;
+    color: var(--cream);
+    white-space: nowrap;
+}
+
+span.dash-user i{
+    margin-right: 6px;
+    color: var(--brass);
+}
+
+form.dash-logout button{
+    padding: 6px 12px;
+    background: none;
+    border: 1px solid var(--line);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease;
+}
+
+form.dash-logout button:hover{
+    border-color: var(--brass);
+    color: var(--brass-bright);
+}

@@ -115,6 +115,31 @@ class UserDatabase extends Database
         ], $admins);
     }
 
+    /**
+     * What the login of the administrators needs.
+     *
+     * @return array|null [id, name, password (the hash)], or null if there is no admin with this name
+     */
+    public function getAdminCredentials(string $name): ?array
+    {
+        $stmt = $this->connect()->prepare("SELECT id, name, password FROM admins WHERE name = :name");
+        $stmt->execute(['name' => $name]);
+        $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $admin === false ? null : $admin;
+    }
+
+    /**
+     * Set the password of an administrator (see scripts/set-admin-password.php)
+     *
+     * @return bool false if there is no administrator with this name
+     */
+    public function setAdminPassword(string $name, string $password): bool
+    {
+        $stmt = $this->connect()->prepare("UPDATE admins SET password = :password WHERE name = :name");
+        $stmt->execute(['password' => password_hash($password, PASSWORD_ARGON2ID), 'name' => $name]);
+        return $stmt->rowCount() === 1;
+    }
+
     public function getAdminsPresentationPage($position): array
     {
         $stmt = $this->connect()->prepare("$this->queryAdmins WHERE position=:position");

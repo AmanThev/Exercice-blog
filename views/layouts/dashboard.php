@@ -1,6 +1,8 @@
 <?php
 use App\URL\UrlPublic;
 use App\URL\CreateUrl;
+use App\Security\Csrf;
+use App\Security\AdminGuard;
 
 $current  = rtrim((string)parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 $navItems = [
@@ -31,7 +33,14 @@ $navItems = [
 
 <div class="dash-topbar">
     <h1>Admin Panel</h1>
-    <a href="<?= CreateUrl::url('home') ?>"><i class="fas fa-chevron-left"></i> Back to website</a>
+    <div class="dash-topbar-links">
+        <a href="<?= CreateUrl::url('home') ?>"><i class="fas fa-chevron-left"></i> Back to website</a>
+        <form action="<?= CreateUrl::url('dashboard/logout') ?>" method="post" class="dash-logout">
+            <?= Csrf::field() ?>
+            <span class="dash-user"><i class="fas fa-user-circle"></i> <?= htmlspecialchars(AdminGuard::name()) ?></span>
+            <button type="submit"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </form>
+    </div>
 </div>
 
 <div class="dash-shell">

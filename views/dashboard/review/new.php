@@ -2,6 +2,7 @@
 
 use App\URL\CreateUrl;
 use App\Security\Csrf;
+use App\Security\AdminGuard;
 
 $title = "New Review";
 
@@ -10,6 +11,7 @@ $isEdit        = false;
 $currentPoster = '';
 $values        = array_fill_keys(['author', 'title', 'date', 'director', 'writer', 'cast', 'production', 'genre', 'synopsis', 'review'], '') + ['score' => 0];
 $fieldError    = fn(string $key) => '';
+$values['author'] = htmlspecialchars(AdminGuard::name());   // the review is published under the name of the signed-in administrator
 ?>
 
 <div class="dash-pagehead">

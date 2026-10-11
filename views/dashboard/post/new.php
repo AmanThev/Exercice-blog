@@ -2,6 +2,7 @@
 
 use App\URL\CreateUrl;
 use App\Security\Csrf;
+use App\Security\AdminGuard;
 
 $title = "New Post";
 ?>
@@ -16,9 +17,8 @@ $title = "New Post";
 
     <div class="field">
         <label for="author">Author</label>
-        <input type="text" name="author" id="author" placeholder="Name of an administrator" autocomplete="off">
-        <small class="hint">Must be the name of an administrator (2 to 20 characters).</small>
-        <p class="field-error" data-error="author"></p>
+        <input type="text" id="author" value="<?= htmlspecialchars(AdminGuard::name()) ?>" readonly>
+        <small class="hint">The post is published under your name.</small>
     </div>
 
     <div class="field">
@@ -85,14 +85,13 @@ $(function(){
         e.preventDefault();
         clearFeedback();
 
-        if(!$.trim($('#author').val()) || !$.trim($('#title').val())){
-            setMessage('Please write the author name and a title.', 'error');
+        if(!$.trim($('#title').val())){
+            setMessage('Please write a title.', 'error');
             return;
         }
 
         var formData = new FormData();
         formData.append('csrf_token', $form.find('input[name="csrf_token"]').val());
-        formData.append('author',  $('#author').val());
         formData.append('title',   $('#title').val());
         formData.append('content', $('#content').val());
         formData.append('public',  $('#checkbox').is(':checked'));

@@ -12,14 +12,8 @@ $yearMax = (int)date('Y');
 ?>
 <div class="field">
     <label for="author">Author</label>
-    <?php if($isEdit): ?>
-        <input type="text" id="author" value="<?= $values['author'] ?>" readonly>
-        <small class="hint">The author cannot be changed.</small>
-    <?php else: ?>
-        <input type="text" name="author" id="author" value="<?= $values['author'] ?>" placeholder="Name of an administrator" autocomplete="off">
-        <small class="hint">Must be the name of an administrator (2 to 20 characters).</small>
-        <p class="field-error" data-error="author"><?= $fieldError('author') ?></p>
-    <?php endif; ?>
+    <input type="text" id="author" value="<?= $values['author'] ?>" readonly>
+    <small class="hint"><?= $isEdit ? 'The author cannot be changed.' : 'The review is published under your name.' ?></small>
 </div>
 
 <h3 class="form-section">Film's information</h3>

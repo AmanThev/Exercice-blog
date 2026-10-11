@@ -1,7 +1,6 @@
 <?php
 namespace App\Form;
 
-use App\Manager\UserDatabase;
 use App\Model\Post;
 
 class AddPost extends FormHandler
@@ -14,16 +13,12 @@ class AddPost extends FormHandler
 
     public function validatePost(array $file = []): self
     {
-        $this->ensureStrings(['author', 'title', 'content']);
+        $this->ensureStrings(['title', 'content']);
 
         $data = new Validator($this->dataForValidator());
-        $data->check('required', ['author', 'title']);
-        $data->check('lengthBetween', 'author', 2, 20);
+        $data->check('required', ['title']);
         $data->check('used', 'title', 'posts');
         $data->check('lengthMin', 'content', 20);
-        if($this->data['author'] !== ''){
-            $data->check('exist', 'author', 'admins', 'name');
-        }
         $data->validateForm();
         $this->errors = $data->getErrors();
 
@@ -32,17 +27,18 @@ class AddPost extends FormHandler
 
     /**
      * Create the post (and save its picture, if there is one).
+     * The author is the signed-in administrator : he is never read from the form, so nobody can
+     * publish under the name of somebody else.
      *
+     * @param  int   $adminId id of the signed-in administrator (AdminGuard::id())
      * @param  array $file the entry $_FILES['picture']
      * @return int id of the new post
      */
-    public function createPost(array $file = []): int
+    public function createPost(int $adminId, array $file = []): int
     {
-        $admin = (new UserDatabase())->getAdminByName($this->data['author']);
-
         return $this->createWithPicture([
             'title'    => $this->encoded()->getTitle(),
-            'admin_id' => $admin->getId(),
+            'admin_id' => $adminId,
             'content'  => $this->encoded()->getContent(),
             'public'   => $this->isPublic() ? 1 : 0,
             'date'     => date('Y-m-d'),

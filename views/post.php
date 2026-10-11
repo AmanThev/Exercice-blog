@@ -10,6 +10,8 @@ use App\URL\CreateUrl;
 use App\Form\AddComment;
 use App\HTML\Form;
 use App\Security\Csrf;
+use App\Security\AdminGuard;
+use App\Manager\Exception\NotFoundException;
 
 $url            = new ExplodeUrl($_GET['url']);
 $id             = $url->getId();
@@ -23,6 +25,9 @@ $totalComment       = $commentDatabase->totalComment('comments_post', $id);
 
 $post           = new PostDatabase();
 $post           = $post->getPostById($id);
+if($post->getPublic() !== 1 && !AdminGuard::isAdmin()){
+    throw new NotFoundException('Post', $id);
+}
 
 $voteUser = false;
 if(!empty($_SESSION['id'])){

@@ -1,7 +1,6 @@
 <?php
 namespace App\Form;
 
-use App\Manager\UserDatabase;
 use App\Model\Film;
 
 class AddFilm extends FormHandler
@@ -13,21 +12,16 @@ class AddFilm extends FormHandler
     protected const COLUMN = 'poster';
 
     /**
-     * The text fields of the form (the author, the score and the poster are handled apart)
+     * The text fields of the form (the score and the poster are handled apart)
      */
     protected const TEXT_FIELDS = ['title', 'date', 'director', 'writer', 'cast', 'production', 'genre', 'synopsis', 'review'];
 
     public function validateFilm(array $file = []): self
     {
-        $this->ensureStrings(array_merge(['author', 'score'], self::TEXT_FIELDS));
+        $this->ensureStrings(array_merge(['score'], self::TEXT_FIELDS));
 
         $data = new Validator($this->dataForValidator());
-        $data->check('required', ['author']);
-        $data->check('lengthBetween', 'author', 2, 20);
         $data->check('used', 'title', 'films');
-        if($this->data['author'] !== ''){
-            $data->check('exist', 'author', 'admins', 'name');
-        }
         $this->checkFilmFields($data);
         $data->validateForm();
         $this->errors = $data->getErrors();
@@ -37,15 +31,15 @@ class AddFilm extends FormHandler
 
     /**
      * Create the film (and save its poster, if there is one).
+     * The author is the signed-in administrator : he is never read from the form.
      *
+     * @param  int   $adminId id of the signed-in administrator (AdminGuard::id())
      * @param  array $file the entry $_FILES['poster']
      * @return int id of the new film
      */
-    public function createFilm(array $file = []): int
+    public function createFilm(int $adminId, array $file = []): int
     {
-        $admin = (new UserDatabase())->getAdminByName($this->data['author']);
-
-        return $this->createWithPicture(['admin_id' => $admin->getId()] + $this->filmFields(), $file);
+        return $this->createWithPicture(['admin_id' => $adminId] + $this->filmFields(), $file);
     }
 
     /**

@@ -1,4 +1,12 @@
 <?php
+// The session cookie cannot be read by JavaScript, and is not sent along with a request made by another site
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path'     => '/',
+    'httponly' => true,
+    'samesite' => 'Lax',
+    'secure'   => !empty($_SERVER['HTTPS']),
+]);
 session_start();
 
 require '../vendor/autoload.php';
@@ -17,9 +25,25 @@ $publicEnd = strpos($_SERVER['SCRIPT_NAME'], '/public') + 7;
 $public_root = substr($_SERVER['SCRIPT_NAME'], 0, $publicEnd);
 define("PUBLIC_PATH", $public_root);
 
-$whoops = new \Whoops\Run;
-$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-$whoops->register();
+// The detailed error page (it shows the code, the session and the tokens) only for a visitor who is on
+// the machine itself. Elsewhere, a visitor only sees a short message.
+// (It is the address of the visitor that is checked : the name of the site comes from a header that
+// anybody can write. Behind a reverse proxy every visitor looks local : use another condition then.)
+$isLocal = in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true);
+
+if($isLocal){
+    $whoops = new \Whoops\Run;
+    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+    $whoops->register();
+}else{
+    ini_set('display_errors', '0');
+    set_exception_handler(function(\Throwable $e){
+        error_log((string)$e);
+        $notFound = $e instanceof \App\Manager\Exception\NotFoundException || $e instanceof \App\Router\RouterException;
+        http_response_code($notFound ? 404 : 500);
+        echo $notFound ? 'Page not found.' : 'Something went wrong, please try again later.';
+    });
+}
 
 $router = new Router($_GET['url']);
 $router->get('/',  VIEWS . 'home');
@@ -62,6 +86,9 @@ $router->get('/authentication/reset/:token', VIEWS . 'user/reset');
 $router->post('/authentication/reset/:token', VIEWS . 'user/reset');
 $router->get('/authentication/reset-success', VIEWS . 'user/reset-success');
 
+$router->get('/authentication/admin', VIEWS . 'user/adminLogin');
+$router->post('/authentication/admin', VIEWS . 'user/adminLogin');
+
 $router->get('/user/:slug', VIEWS . 'user/profileMember');
 
 $router->get('/account', VIEWS . 'user/account');
@@ -89,6 +116,8 @@ $router->get('/dashboard/forum', VIEWS .'dashboard/forum/forum');
 $router->post('/dashboard/forum/action', VIEWS . 'dashboard/forum/action');
 
 $router->get('/dashboard/users/:slug', VIEWS .'dashboard/user/profileAdmin');
+
+$router->post('/dashboard/logout', VIEWS . 'dashboard/logout');
 
 $router->post('/dashboard/posts/newPost', VIEWS . 'dashboard/post/new', 'new_post_added');
 $router->post('/dashboard/posts/:id/delete', VIEWS . 'dashboard/post/delete', 'post_delete');
