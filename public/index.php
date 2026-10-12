@@ -151,5 +151,6 @@ $router->post('/ajax/addPostAjax', AJAX . 'addPostAjax');
 $router->post('/ajax/addFilmAjax', AJAX . 'addFilmAjax');
 
 $router->post('/actions/vote', ACTIONS . 'vote');
+$router->post('/actions/poll', ACTIONS . 'poll');
 
 $router->run();

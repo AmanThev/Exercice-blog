@@ -14,7 +14,7 @@ It is a learning project: it is not hosted online.
 ## Features
 
 **Public site**
-* Home page with the latest post, the latest reviews and a search box
+* Home page with the latest post, the latest reviews, a search box and a poll (one vote for each member, results as animated bars, sent with AJAX)
 * Blog with pagination and a page for each post: comments, like / dislike
 * Movie reviews: slider, filter by decade or year, a page for each film with a star rating, comments and `[Spoiler]` tags
 * Forum: categories, sub-categories, topics and messages. A topic can be closed

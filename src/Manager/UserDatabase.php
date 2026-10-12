@@ -195,6 +195,7 @@ class UserDatabase extends Database
                     ]);
             }
 
+               $pdo->prepare("DELETE FROM poll_votes WHERE user_id = :id")->execute(['id' => $id]);
             $pdo->prepare("DELETE FROM votes WHERE user_id = :id")->execute(['id' => $id]);
             $pdo->prepare("DELETE FROM members WHERE id = :id")->execute(['id' => $id]);
 
