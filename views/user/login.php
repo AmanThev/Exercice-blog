@@ -29,11 +29,11 @@ if(!empty($_POST)){
                 $_SESSION['id']   = $member->getId();
                 $_SESSION['name'] = $member->getName();
 
-                // Si on vient d'une page précise (ex: le lien "Log in" sous
-                // le vote), on y retourne directement plutôt que d'afficher
-                // la page "Welcome". On vérifie que $redirect reste bien un
-                // chemin interne au site (commence par WWW_ROOT), pour
-                // éviter qu'un lien piégé ne redirige vers un autre site.
+                // If we come from a specific page (e.g. the "Log in" link under
+                // the vote), go back to it directly instead of showing
+                // the "Welcome" page. We check that $redirect is still an
+                // internal path of the site (starts with WWW_ROOT), to
+                // prevent a trapped link from redirecting to another site.
                 $redirect = $_GET['redirect'] ?? null;
                 if($redirect && str_starts_with($redirect, WWW_ROOT)){
                     header('Location: ' . $redirect);

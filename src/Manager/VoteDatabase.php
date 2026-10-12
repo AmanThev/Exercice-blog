@@ -11,9 +11,9 @@ class VoteDatabase extends Database
     private $queryVote = "SELECT * FROM votes";
 
     /**
-     * @var array Tables autorisées à recevoir un vote (whitelist de
-     * sécurité : $ref vient de l'URL, on ne veut jamais l'interpoler
-     * directement dans une requête SQL sans le vérifier avant).
+     * @var array Tables allowed to receive a vote (security whitelist:
+     * $ref comes from the URL, we never want to put it
+     * directly in an SQL query without checking it first).
      */
     private $allowedRefs = ['posts', 'reviews'];
 
@@ -78,8 +78,8 @@ class VoteDatabase extends Database
     }
 
     /**
-     * Recompte les votes d'un post/review et met à jour ses colonnes
-     * count_like / count_dislike en conséquence.
+     * Recounts the votes of a post/review and updates its columns
+     * count_like / count_dislike accordingly.
      */
     public function countAndUpdateVotes(string $ref, int $refId): void
     {

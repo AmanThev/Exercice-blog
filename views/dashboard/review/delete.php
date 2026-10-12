@@ -5,7 +5,7 @@ use App\URL\CreateUrl;
 use App\Manager\FilmDatabase;
 use App\Security\Csrf;
 
-// Cette route n'existe qu'en POST : un simple lien ne peut jamais supprimer une review
+// This route only exists in POST: a simple link can never delete a review
 if(Csrf::validate($_POST['csrf_token'] ?? null)){
     $id = (new ExplodeUrl($_GET['url']))->getId();
     (new FilmDatabase())->deleteFilm($id);

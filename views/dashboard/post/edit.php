@@ -32,8 +32,8 @@ if(!empty($_POST)){
     }
 }
 
-// Valeurs affichées : ce que l'utilisateur vient de taper, sinon celles de la base
-// (celles de la base sont déjà encodées par le modèle Post, on ne les ré-échappe pas)
+// Displayed values: what the user has just typed, otherwise those of the database
+// (those of the database are already encoded by the Post model, so they are not escaped again)
 $titleValue   = isset($_POST['title'])   ? htmlspecialchars($_POST['title'])   : $post->getTitle();
 $contentValue = isset($_POST['content']) ? htmlspecialchars($_POST['content']) : $post->getContent();
 $isPublic     = !empty($_POST) ? !empty($_POST['public']) : $post->getPublic() === 1;

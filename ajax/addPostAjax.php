@@ -12,12 +12,12 @@ $send = function(array $result){
     exit;
 };
 
-// Second verrou : la route est déjà réservée aux administrateurs, mais ce fichier ne doit jamais travailler sans eux
+// Second lock: the route is already reserved for administrators, but this file must never work without them
 if(!AdminGuard::isAdmin()){
     $send(['status' => 'error', 'error' => ['form' => ['Your administrator session has expired, please log in again.']]]);
 }
 
-// Fichier plus gros que ce que PHP accepte : $_POST est alors vide
+// File bigger than what PHP accepts: $_POST is then empty
 if(!empty($_SERVER['CONTENT_LENGTH']) && $_SERVER['CONTENT_LENGTH'] >= File::maxUpload()){
     $send(['status' => 'error', 'error' => ['picture' => ['The file is too big.']]]);
 }

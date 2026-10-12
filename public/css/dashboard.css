@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 /*
-    ****    Dashboard admin : même palette que le site, sans ornements    ****
-    (variables dupliquées ici : le layout du dashboard ne charge pas style.css)
+    ****    Admin dashboard: same palette as the site, without ornaments    ****
+    (variables duplicated here: the dashboard layout does not load style.css)
 */
 :root{
     --maroon:       #2b0f0f;
@@ -24,7 +24,7 @@ body.dash{
     font-family:        'Inter', sans-serif;
 }
 
-/* ---- barre du haut ---- */
+/* ---- top bar ---- */
 
 div.dash-topbar{
     display:         flex;
@@ -57,7 +57,7 @@ div.dash-topbar a{
 
 div.dash-topbar a:hover{ color: var(--brass-bright); }
 
-/* ---- structure : menu à gauche, contenu à droite ---- */
+/* ---- structure: menu on the left, content on the right ---- */
 
 div.dash-shell{
     display:               grid;
@@ -139,7 +139,7 @@ main.dash-main{
     nav.dash-nav a.active{ border-bottom-color: var(--brass); }
 }
 
-/* ---- accueil du dashboard ---- */
+/* ---- dashboard home ---- */
 
 h2.dash-title{
     font-family: 'Cinzel', serif;
@@ -327,7 +327,7 @@ ul.dash-list i{
     margin-right: 6px;
 }
 
-/* ---- base minimale pour les pages pas encore refaites (tableaux, liens, champs) ---- */
+/* ---- minimal base for the pages not redone yet (tables, links, fields) ---- */
 
 main.dash-main a{ color: var(--brass-bright); }
 
@@ -388,7 +388,7 @@ main.dash-main select option{
     nav.dash-nav a i{ font-size: 16px; }
 }
 
-/* ---- en-tête de page + filtre ---- */
+/* ---- page header + filter ---- */
 
 div.dash-pagehead{
     display: flex;
@@ -490,7 +490,7 @@ span.status-badge.public{
     color: var(--brass-bright);
 }
 
-/* ---- actions d'une ligne (preview / edit / delete) ---- */
+/* ---- actions of a row (preview / edit / delete) ---- */
 
 td.dash-actions form{ display: inline; margin: 0; }
 
@@ -517,7 +517,7 @@ td.dash-actions button.delete:hover{ color: var(--danger); }
 
 td.dash-actions i{ margin-right: 6px; }
 
-/* ---- tableaux : empilés en cartes sur téléphone ---- */
+/* ---- tables: stacked as cards on a phone ---- */
 
 @media (max-width: 760px){
     table.dash-table thead{ display: none; }
@@ -823,7 +823,7 @@ main.dash-main a.dash-btn-ghost:hover{
     color: var(--maroon-deep);
 }
 
-/* ---- formulaire des reviews ---- */
+/* ---- reviews form ---- */
 
 h3.form-section{
     font-family: 'Cinzel', serif;

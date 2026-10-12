@@ -58,11 +58,11 @@ class PasswordReset extends Authentication
     }
 
     /**
-     * Vérifie si un token est valide (existe en base ET pas expiré),
-     * sans avoir besoin de $_POST. Utilisée à la fois par la règle
-     * "token" du Validator (à la soumission) et par reset-password.php
-     * (à l'affichage de la page, avant même que l'utilisateur ne tape quoi
-     * que ce soit) pour éviter de dupliquer cette logique à deux endroits.
+     * Checks that a token is valid (it exists in the database AND is not expired),
+     * without needing $_POST. Used both by the rule
+     * "token" of the Validator (on submission) and by reset-password.php
+     * (when the page is displayed, before the user has typed anything)
+     * so that this logic is not duplicated in two places.
      */
     public static function tokenIsValid(string $token): bool
     {

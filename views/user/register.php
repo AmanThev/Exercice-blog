@@ -22,7 +22,7 @@ if(!empty($_POST)){
     }else{
         if($data->validateUser()->resultValidator()){
             $id = $data->addMembers();
-            // session_regenerate_id(true); // décommente si tu veux éviter la fixation de session
+            // session_regenerate_id(true); // uncomment to prevent session fixation
             $_SESSION['id']   = $id;
             $_SESSION['name'] = $data->getField('name');
             header('Location: ' . CreateUrl::url('authentication/success'));

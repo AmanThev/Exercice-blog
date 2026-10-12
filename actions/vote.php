@@ -34,7 +34,7 @@ $existingVote = $voteDatabase->voteUser($ref, $refId, $userId);
 if($existingVote === false){
     $voteDatabase->insertVote($ref, $refId, $userId, $vote);
 }elseif((int)$existingVote->getVote() === $vote){
-    // Recliquer sur le même vote le retire (toggle)
+    // Clicking the same vote again removes it (toggle)
     $voteDatabase->deleteVote($ref, $refId, $userId);
 }else{
     $voteDatabase->updateVote($ref, $refId, $userId, $vote);

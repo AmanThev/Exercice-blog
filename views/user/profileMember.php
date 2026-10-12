@@ -5,7 +5,7 @@ use App\Manager\VoteDatabase;
 use App\Manager\Exception\NotFoundException;
 use App\URL\CreateUrl;
 
-// /user/12  ->  $_GET['url'] = "user/12" : on identifie le membre par son id
+// /user/12  ->  $_GET['url'] = "user/12": the member is identified by his id
 $parts  = explode('/', trim($_GET['url'], '/'));
 $id     = $parts[1] ?? '';
 $member = null;

@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=Inter:wght@400;500;600&display=swap');
 
 /*
-    ****    Cinéma — palette « Marquee » (dupliquée ici car auth.php
-    charge auth.css et non style.css — chaque type de page garde son
-    propre fichier)    ****
+    ****    Cinéma — « Marquee » palette (duplicated here because auth.php
+    loads auth.css and not style.css — each type of page keeps its
+    own file)    ****
 */
 :root{
     --maroon:       #2b0f0f;
@@ -187,7 +187,7 @@ div.inputBox small a{
     text-decoration: underline;
 }
 
-/* erreurs — #e07a5f utilisé en dur, pas encore une variable du thème */
+/* errors — #e07a5f is hard-coded, not a theme variable yet */
 div.inputBox p.error,
 section.auth p.error{
     margin:     8px 0 0 0;
@@ -216,7 +216,7 @@ input[type="submit"]:hover{
     background-color: var(--brass-bright);
 }
 
-/* pied du formulaire */
+/* form footer */
 
 section.auth p{
     margin-top: 22px;

@@ -264,9 +264,4 @@ class Validator
         }
         return true;
     }
-
-    private function token(string $field, string $value): bool
-{
-    return PasswordReset::tokenIsValid($value);
-}
 }

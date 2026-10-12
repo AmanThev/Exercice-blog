@@ -18,7 +18,7 @@ if(empty($_SESSION['id'])){
 try{
     $member = (new UserDatabase())->getMemberById((int)$_SESSION['id']);
 }catch(NotFoundException $e){
-    // Le compte n'existe plus : on referme la session
+    // The account no longer exists: close the session
     header('Location: ' . CreateUrl::url('authentication/logout'));
     exit;
 }
@@ -67,7 +67,7 @@ if(!empty($_POST)){
     }
 }
 
-// Si le formulaire "description" vient d'échouer, on garde ce que l'utilisateur a tapé
+// If the "description" form has just failed, keep what the user typed
 $descriptionValue = (($_POST['action'] ?? '') === 'description' && is_string($_POST['description'] ?? null))
     ? $_POST['description']
     : $member->getRawDescription();

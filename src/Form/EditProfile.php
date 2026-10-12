@@ -24,7 +24,7 @@ class EditProfile extends FormHandler
     }
 
     /**
-     * @param string $currentHash le hash du mot de passe actuel (en base)
+     * @param string $currentHash the hash of the current password (in the database)
      */
     public function validatePassword(string $currentHash): self
     {
@@ -38,8 +38,8 @@ class EditProfile extends FormHandler
         $this->resultValidator = $data->validateForm();
         $this->errors          = $data->getErrors();
 
-        // Vérification de l'ancien mot de passe, par le hash du membre connecté
-        // (et non par son nom, qui n'est pas fiable pour retrouver le compte)
+        // Check of the old password, using the hash of the logged-in member
+        // (and not by his name, which is not reliable to find the account)
         if(empty($this->errors['current_password']) && !password_verify($this->data['current_password'], $currentHash)){
             $this->errors['current_password'][] = 'Your current password is incorrect';
             $this->resultValidator = false;
@@ -56,8 +56,8 @@ class EditProfile extends FormHandler
     }
 
     /**
-     * Garantit que les champs existent et sont bien des chaînes
-     * (un POST truqué avec password[]=x ferait planter le Validator).
+     * Makes sure the fields exist and are strings
+     * (a forged POST with password[]=x would crash the Validator).
      */
     private function ensureStrings(array $keys): void
     {

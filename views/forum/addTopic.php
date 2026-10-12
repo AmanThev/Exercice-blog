@@ -15,8 +15,8 @@ $errors = [];
 $title      = "New Topic";
 
 if(!empty($_POST) && !empty($_SESSION['id'])){
-    // Le champ "name" est en lecture seule dans le formulaire, mais ça ne
-    // protège pas côté serveur : on impose donc le nom de la session.
+    // The "name" field is read-only in the form, but that does not
+    // protect on the server side: so the name from the session is forced.
     $_POST['name'] = $_SESSION['name'];
 
     $data = new AddTopic($_POST);

@@ -15,7 +15,7 @@ $posts  = $status === 'all' ? $postDb->getAllPosts() : $postDb->getPosts($status
 
 $filters = ['all' => 'All posts', 'public' => 'Public', 'private' => 'Private'];
 
-// Message laissé par l'édition ou la suppression d'un post
+// Message left by the edit or the deletion of a post
 $flash = $_SESSION['flash_dash'] ?? null;
 unset($_SESSION['flash_dash']);
 ?>

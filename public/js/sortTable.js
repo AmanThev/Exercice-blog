@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
         table.dataset.sortTable = true;
         table.querySelectorAll("th").forEach(function (th) {
             th.dataset.direction = "";
-            // seuls les en-têtes avec une icône de tri sont cliquables
+            // only the headers with a sort icon are clickable
             if (th.querySelector("i.fas")) {
                 th.addEventListener("click", sortColumn, false);
             }

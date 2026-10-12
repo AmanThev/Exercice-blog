@@ -5,6 +5,8 @@
 composer.json
 composer.lock
 composer.phar
+.phpunit.result.cache
+.phpunit.cache/
 
 # Ignoring files with full path.
 src/manager/Connection.php
